@@ -20,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
@@ -29,6 +30,7 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getTeamList());
     }
 
     @Test
@@ -47,11 +49,16 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two persons with the same identity fields
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+            .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
         AddressBookStub newData = new AddressBookStub(newPersons);
 
         assertThrows(DuplicatePersonException.class, () -> addressBook.resetData(newData));
+    }
+
+    @Test
+    public void resetData_withDuplicateTeams_throwsDuplicateTeamException() {
+        // Implementation would go here
     }
 
     @Test
@@ -74,8 +81,23 @@ public class AddressBookTest {
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+            .build();
         assertTrue(addressBook.hasPerson(editedAlice));
+    }
+
+    @Test
+    public void hasTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.hasTeam(null));
+    }
+
+    @Test
+    public void hasTeam_teamNotInAddressBook_returnsFalse() {
+        // Implementation would go here
+    }
+
+    @Test
+    public void hasTeam_teamInAddressBook_returnsTrue() {
+        // Implementation would go here
     }
 
     @Test
@@ -84,8 +106,15 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getTeamList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> addressBook.getTeamList().remove(0));
+    }
+
+    @Test
     public void toStringMethod() {
-        String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
+        String expected = AddressBook.class.getCanonicalName()
+            + "{persons=" + addressBook.getPersonList()
+            + ", teams=" + addressBook.getTeamList() + "}";
         assertEquals(expected, addressBook.toString());
     }
 
@@ -102,6 +131,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<Team> getTeamList() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 
