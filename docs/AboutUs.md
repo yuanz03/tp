@@ -52,10 +52,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### James Doe
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/juink4i.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/juink4i)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Other player metadata
