@@ -21,15 +21,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Chin Yuan Tian
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/yuanz03.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/yuanz03)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
-* Responsibilities: UI
+* Responsibilities: Injury Status of Players
 
 ### Johnny Doe
 
