@@ -288,14 +288,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​   | I want to …​                                            | So that I can…​                                                      |
+|----------|-----------|---------------------------------------------------------|----------------------------------------------------------------------|
+| `* * *`  | new user  | see usage instructions                                  | refer to instructions when I forget how to use the App               |
+| `* * *`  | user      | add a new person                                        |                                                                      |
+| `* * *`  | user      | delete a person                                         | remove entries that I no longer need                                 |
+| `* * *`  | coach     | create a named injury status with a timeframe           | standardize how injuries are tracked and managed                     |
+| `* * *`  | coach     | assign an existing injury status to a player            | view and track their availability and rehab timeline                 |
+| `* *`    | coach     | remove an assigned injury status from a player          | identify and select players who are fully fit                        |
+| `* *`    | coach     | save players' past injury details                       | identify higher-risk players and manage their workload appropriately |
+| `*`      | coach     | create a shortlist of transfer targets                  | consolidate potential signings for evaluation and outreach           |
+|          |           |                                                         |                                                                      |
+| `*`      | _help_    | _add a new row by clicking on the left gray bar thingy_ | _realign the table when needed by pressing space_                    |
 
 *{More to be added}*
 
