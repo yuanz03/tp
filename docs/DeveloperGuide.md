@@ -288,18 +288,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​   | I want to …​                                            | So that I can…​                                                      |
-|----------|-----------|---------------------------------------------------------|----------------------------------------------------------------------|
-| `* * *`  | new user  | see usage instructions                                  | refer to instructions when I forget how to use the App               |
-| `* * *`  | user      | add a new person                                        |                                                                      |
-| `* * *`  | user      | delete a person                                         | remove entries that I no longer need                                 |
-| `* * *`  | coach     | create a named injury status with a timeframe           | standardize how injuries are tracked and managed                     |
-| `* * *`  | coach     | assign an existing injury status to a player            | view and track their availability and rehab timeline                 |
-| `* *`    | coach     | remove an assigned injury status from a player          | identify and select players who are fully fit                        |
-| `* *`    | coach     | save players' past injury details                       | identify higher-risk players and manage their workload appropriately |
-| `*`      | coach     | create a shortlist of transfer targets                  | consolidate potential signings for evaluation and outreach           |
-|          |           |                                                         |                                                                      |
-| `*`      | _help_    | _add a new row by clicking on the left gray bar thingy_ | _realign the table when needed by pressing space_                    |
+| Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
+|----------|----------|------------------------------------------------|----------------------------------------------------------------------|
+| `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
+| `* * *`  | user     | add a new person                               |                                                                      |
+| `* * *`  | user     | delete a person                                | remove entries that I no longer need                                 |
+| `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
+| `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
+| `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
+| `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
+|          |          |                                                |                                                                      |
+| `*`      |          |                                                |                                                                      |
 
 *{More to be added}*
 
@@ -329,6 +329,51 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. AddressBook shows an error message.
 
       Use case resumes at step 2.
+
+**Use case: UC05 - Assign an injury status to a player**
+
+**Guarantees**: Player's injury status and rehab timeline are updated and persisted
+
+**MSS**
+
+1.  User requests to list players
+2.  AddressBook shows a list of players
+3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
+4.  AddressBook updates the player's availability and rehab timeline
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given player selection is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+  
+* 3b. The specified injury status does not exist.
+  
+    * 3b1. AddressBook shows an error message and prompts User to create a new injury status.
+    
+    * 3b2. User creates the new injury status.
+
+      Use case resumes at step 3.
+    
+* 3c. The specified timeframe is invalid.
+
+    * 3c1. AddressBook shows an error message.
+
+      Use case resumes at step 3.
+
+* 3d. The specified injury status has already been assigned to the selected player.
+
+    * 3d1. AddressBook shows an error message.
+
+      Use case ends.
 
 *{More to be added}*
 
