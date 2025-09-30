@@ -384,12 +384,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  Should be packaged into a single JAR file such that no additional installation steps are required.
 5.  Should work fully offline and must not depend on any custom remote server for normal operations.
-6.  User data should be stored locally in a human editable CSV file, without using a DBMS.
+6.  User data should be stored locally in a human editable JSON file, without using a DBMS.
 7.  GUI should render optimally at 1920x1080 and above (for 100% & 125% scaling) and remain fully functional at 1280x720 and above (for 150% scaling) on any _mainstream OS_.
 8.  Response to any single user command should be visible within 3 seconds on any _mainstream OS_.
-9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once. 
-10. Development should follow a regular feature delivery schedule, targeting at least two feature sets per week.
-11. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
+9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once.
+10. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
 
 *{More to be added}*
 
