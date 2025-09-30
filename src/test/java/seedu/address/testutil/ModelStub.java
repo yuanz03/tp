@@ -96,5 +96,4 @@ public class ModelStub implements Model {
     public void addTeam(Team team) {
         throw new AssertionError("This method should not be called.");
     }
-
 }
