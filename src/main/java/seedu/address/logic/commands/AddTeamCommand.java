@@ -27,6 +27,9 @@ public class AddTeamCommand extends Command {
 
     private final Team toAdd;
 
+    /**
+     * Creates an AddTeamCommand to add the specified {@code Team}
+     */
     public AddTeamCommand(Team team) {
         requireNonNull(team);
         this.toAdd = team;
