@@ -293,7 +293,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
 |----------|----------|------------------------------------------------|----------------------------------------------------------------------|
 | `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
-| `* * *`  | coach    | add a new player                               | keep a record of their persona information                           |
+| `* * *`  | coach    | add a new player                               | keep a record of their personal information                          |
 | `* * *`  | coach    | add a new team                                 | organize players by teams                                            |
 | `* * *`  | coach    | add a player to a team                         | maintain accurate team list for training and match selection         |
 | `* * *`  | coach    | remove a player from a team                    | maintain accurate team list when player leaves team                  |
@@ -416,11 +416,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. The player list is empty.
 
   Use case ends.
 
-* 4a. The list is empty.
+* 4a. The team list is empty.
 
   Use case ends.
 
