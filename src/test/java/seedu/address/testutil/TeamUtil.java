@@ -5,6 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import seedu.address.logic.commands.AddTeamCommand;
 import seedu.address.model.team.Team;
 
+/**
+ * A utility class for Team.
+ */
 public class TeamUtil {
     /**
      * Returns an add command string for adding the {@code team}.

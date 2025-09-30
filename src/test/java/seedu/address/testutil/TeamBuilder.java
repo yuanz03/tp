@@ -7,6 +7,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.team.Team;
 
+/**
+ * A utility class to help with building Team objects.
+ */
 public class TeamBuilder {
 
     public static final String DEFAULT_TEAM_NAME = "TeamA";

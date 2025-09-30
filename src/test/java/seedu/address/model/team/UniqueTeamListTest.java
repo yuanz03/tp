@@ -43,7 +43,8 @@ public class UniqueTeamListTest {
 
     @Test
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> uniqueTeamList.asUnmodifiableObservableList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () ->
+            uniqueTeamList.asUnmodifiableObservableList().remove(0));
     }
 
     @Test

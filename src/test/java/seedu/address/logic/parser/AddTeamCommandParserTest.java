@@ -43,7 +43,8 @@ public class AddTeamCommandParserTest {
     @Test
     public void parse_duplicatePrefix_failure() {
         // duplicate name prefix
-        assertParseFailure(parser, TEAM_NAME_DESC_16 + TEAM_NAME_DESC_16, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertParseFailure(parser, TEAM_NAME_DESC_16 + TEAM_NAME_DESC_16,
+            Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
     }
 
 
