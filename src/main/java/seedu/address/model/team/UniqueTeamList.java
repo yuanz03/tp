@@ -4,6 +4,7 @@ package seedu.address.model.team;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,13 +104,7 @@ public class UniqueTeamList implements Iterable<Team> {
      * Returns true if {@code teams} contains only unique teams.
      */
     private boolean teamsAreUnique(List<Team> teams) {
-        for (int i = 0; i < teams.size() - 1; i++) {
-            for (int j = i + 1; j < teams.size(); j++) {
-                if (teams.get(i).isSameTeam(teams.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        HashSet<Team> teamSet = new HashSet<>(teams);
+        return teamSet.size() == teams.size();
     }
 }

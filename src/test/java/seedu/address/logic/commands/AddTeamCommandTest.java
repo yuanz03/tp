@@ -61,7 +61,7 @@ public class AddTeamCommandTest {
         assertTrue(addU12Command.equals(addTeamACommandCopy));
 
         // different types -> returns false
-        assertTrue(!addU12Command.equals(1));
+        assertFalse(addU12Command.equals(1));
 
         // null -> returns false
         assertFalse(addU12Command.equals(null));
