@@ -31,7 +31,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Team Lead
 * Responsibilities: Injury Status of Players
 
-### Johnny Doe
+### Low Qi Jun, Cheka
 
 <img src="images/chekalowqijun.png" width="200px">
 
@@ -50,7 +50,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Position-related features
 
-### James Doe
+### Juinn Kai
 
 <img src="images/juink4i.png" width="200px">
 
