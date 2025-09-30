@@ -50,7 +50,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Position-related features
 
-### Juinn Kai
+### Foo Juinn Kai
 
 <img src="images/juink4i.png" width="200px">
 
@@ -58,4 +58,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Other player metadata
+* Responsibilities: Other player metadata features
