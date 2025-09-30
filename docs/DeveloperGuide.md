@@ -275,26 +275,31 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* prefer desktop apps over other types and can type fast
+* prefers typing to mouse interactions and is reasonably comfortable using CLI apps
+* **for this evolution: semi-professional youth football coaches managing multiple teams**
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: 
+- manage contacts faster than a typical mouse/GUI driven app
+- **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
+  - optimised for fast, command-line style data entry and squad management
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
+|----------|----------|------------------------------------------------|----------------------------------------------------------------------|
+| `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
+| `* * *`  | user     | add a new person                               |                                                                      |
+| `* * *`  | user     | delete a person                                | remove entries that I no longer need                                 |
+| `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
+| `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
+| `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
+| `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
+|          |          |                                                |                                                                      |
+| `*`      |          |                                                |                                                                      |
 
 *{More to be added}*
 
@@ -325,13 +330,65 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+**Use case: UC05 - Assign an injury status to a player**
+
+**Guarantees**: Player's injury status and rehab timeline are updated and persisted
+
+**MSS**
+
+1.  User requests to list players
+2.  AddressBook shows a list of players
+3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
+4.  AddressBook updates the player's availability and rehab timeline
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given player selection is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+  
+* 3b. The specified injury status does not exist.
+  
+    * 3b1. AddressBook shows an error message and prompts User to create a new injury status.
+    
+    * 3b2. User creates the new injury status.
+
+      Use case resumes at step 3.
+    
+* 3c. The specified timeframe is invalid.
+
+    * 3c1. AddressBook shows an error message.
+
+      Use case resumes at step 3.
+
+* 3d. The specified injury status has already been assigned to the selected player.
+
+    * 3d1. AddressBook shows an error message.
+
+      Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 football players without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  Should be packaged into a single JAR file such that no additional installation steps are required.
+5.  Should work fully offline and must not depend on any custom remote server for normal operations.
+6.  User data should be stored locally in a human editable JSON file, without using a DBMS.
+7.  GUI should render optimally at 1920x1080 and above (for 100% & 125% scaling) and remain fully functional at 1280x720 and above (for 150% scaling) on any _mainstream OS_.
+8.  Response to any single user command should be visible within 3 seconds on any _mainstream OS_.
+9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once.
+10. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
 
 *{More to be added}*
 
