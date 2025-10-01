@@ -2,9 +2,12 @@ package seedu.address.model.team;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalTeams.U12;
+
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +48,23 @@ public class UniqueTeamListTest {
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () ->
             uniqueTeamList.asUnmodifiableObservableList().remove(0));
+    }
+
+    @Test
+    public void setTeams_duplicateTeams_throwsDuplicateTeamException() {
+        assertThrows(DuplicateTeamException.class, () -> uniqueTeamList
+                .setTeams(Arrays.asList(U12, U12)));
+    }
+
+    @Test
+    public void equalsMethod() {
+        UniqueTeamList anotherList = new UniqueTeamList();
+        assertEquals(uniqueTeamList, anotherList);
+        anotherList.add(U12);
+        assertNotEquals(uniqueTeamList, anotherList);
+        uniqueTeamList.add(U12);
+        assertEquals(uniqueTeamList, anotherList);
+        assertNotEquals(null, uniqueTeamList);
     }
 
     @Test

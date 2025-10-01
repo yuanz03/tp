@@ -8,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTeams.U12;
+import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,6 +23,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.team.Team;
+import seedu.address.model.team.exceptions.DuplicateTeamException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
@@ -51,14 +54,17 @@ public class AddressBookTest {
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
             .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
-        AddressBookStub newData = new AddressBookStub(newPersons);
+        AddressBookPersonStub newData = new AddressBookPersonStub(newPersons);
 
         assertThrows(DuplicatePersonException.class, () -> addressBook.resetData(newData));
     }
 
     @Test
     public void resetData_withDuplicateTeams_throwsDuplicateTeamException() {
-        // Implementation would go here
+        List<Team> newTeams = Arrays.asList(U12, U12);
+        AddressBookTeamStub newData = new AddressBookTeamStub(newTeams);
+
+        assertThrows(DuplicateTeamException.class, () -> addressBook.resetData(newData));
     }
 
     @Test
@@ -92,12 +98,14 @@ public class AddressBookTest {
 
     @Test
     public void hasTeam_teamNotInAddressBook_returnsFalse() {
-        // Implementation would go here
+        addressBook.addTeam(U12);
+        assertFalse(addressBook.hasTeam(U16));
     }
 
     @Test
     public void hasTeam_teamInAddressBook_returnsTrue() {
-        // Implementation would go here
+        addressBook.addTeam(U12);
+        assertTrue(addressBook.hasTeam(U12));
     }
 
     @Test
@@ -121,10 +129,10 @@ public class AddressBookTest {
     /**
      * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class AddressBookPersonStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons) {
+        AddressBookPersonStub(Collection<Person> persons) {
             this.persons.setAll(persons);
         }
 
@@ -135,7 +143,28 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<Team> getTeamList() {
-            throw new AssertionError("This method should not be called.");
+            return FXCollections.observableArrayList();
+        }
+    }
+
+    /**
+     * A stub ReadOnlyAddressBook whose teams list can violate interface constraints.
+     */
+    private static class AddressBookTeamStub implements ReadOnlyAddressBook {
+        private final ObservableList<Team> teams = FXCollections.observableArrayList();
+
+        AddressBookTeamStub(Collection<Team> teams) {
+            this.teams.setAll(teams);
+        }
+
+        @Override
+        public ObservableList<Person> getPersonList() {
+            return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public ObservableList<Team> getTeamList() {
+            return teams;
         }
     }
 
