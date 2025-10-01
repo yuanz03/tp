@@ -290,7 +290,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
+| Priority | As a …​  | I want to …​                                   | So that I can…​                                                         |
 |----------|----------|------------------------------------------------|----------------------------------------------------------------------|
 | `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
 | `* * *`  | coach    | add a new player                               | keep a record of their personal information                          |
@@ -301,6 +301,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | delete a team                                  | clean up records of teams I no longer coach                          |
 | `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* * *`  | coach    | list all the players                           | view all player information                                          |
+| `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
+| `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
+| `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
+| `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
 | `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
 | `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
@@ -474,6 +479,148 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3d1. AddressBook shows an error message.
 
       Use case ends.
+
+**Use case: UC07 - List all players**
+
+**MSS**
+
+1.  User requests to list all players.
+2.  PlayBook shows a list of players
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    * 2a1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC08 - Search for a player**
+
+**MSS**
+
+1.  User requests to search for a player by name.
+2.  PlayBook shows the player's details.
+    
+    Use case ends.
+
+**Extensions**
+
+* 1a. The player name is missing.
+
+    * 1a1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 1b. The player name is invalid (contains non-letter characters).
+
+    * 1b1. PlayBook shows an message.
+
+      Use case ends.
+
+* 2a. No player matches the given name.
+
+    * 2a1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC09 - Filter players by team**
+
+**MSS**
+
+1. User requests to filter players by a team name.
+
+2. PlayBook shows the list of players in that team.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The team name is missing.
+
+  * 1a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 1b. The team name is invalid (contains non-alphanumeric characters).
+    
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. The team does not exist.
+    
+  * 2a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2b. The team exists but has no players.
+    
+  * 2b1. PlayBook shows an error message.
+
+    Use case ends.
+
+**Use case: UC10 - Filter players by injury**
+
+**MSS**
+
+1. User requests to filter players by an injury status.
+
+2. PlayBook shows the list of players with that injury status.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The injury status is missing.
+
+  * 1a1. PlayBook shows an message.
+
+    Use case ends.
+
+* 1b. The injury status is invalid (contains non-alphanumeric characters).
+  
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. No players match the given injury status.
+
+  * 2a1. PlayBook shows an error message.
+
+    Use case ends.
+
+**Use case: UC11 - Filter players by position**
+
+**MSS**
+
+1. User requests to filter players by a position.
+
+2. PlayBook shows the list of players in that position.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The position is missing.
+  
+  * 1a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 1b. The position is invalid (contains non-alphanumeric characters).
+  
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. No players are in that position.
+
+  * 2a1. PlayBook shows an error message.
+    
+    Use case ends.
 
 *{More to be added}*
 
