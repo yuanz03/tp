@@ -21,7 +21,7 @@ public class TeamUtil {
      */
     public static String getTeamDetails(Team team) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + team.getName().fullName + " ");
+        sb.append(PREFIX_NAME + team.getName() + " ");
         return sb.toString();
     }
 }

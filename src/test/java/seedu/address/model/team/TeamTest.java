@@ -3,7 +3,6 @@ package seedu.address.model.team;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalTeams.U12;
 import static seedu.address.testutil.TypicalTeams.U16;
 
@@ -12,11 +11,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.TeamBuilder;
 
 public class TeamTest {
-    @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Team team = new TeamBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> team.getMembers().remove(0));
-    }
 
     @Test
     public void isSameTeam() {
@@ -55,8 +49,7 @@ public class TeamTest {
 
     @Test
     public void toStringMethod() {
-        String expectedString = Team.class.getCanonicalName() + "{name=" + U12.getName()
-            + ", members=" + U12.getMembers().toString() + "}";
+        String expectedString = Team.class.getCanonicalName() + "{name=" + U12.getName() + "}";
         assertEquals(expectedString, U12.toString());
     }
 }
