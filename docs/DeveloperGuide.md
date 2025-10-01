@@ -290,20 +290,23 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
-|----------|----------|------------------------------------------------|----------------------------------------------------------------------|
-| `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
-| `* * *`  | coach    | add a new player                               | keep a record of their personal information                          |
-| `* * *`  | coach    | add a new team                                 | organize players by teams                                            |
-| `* * *`  | coach    | add a player to a team                         | maintain accurate team list for training and match selection         |
-| `* * *`  | coach    | remove a player from a team                    | maintain accurate team list when player leaves team                  |
-| `* * *`  | coach    | delete a player                                | clean up records of players I no longer coach                        |
-| `* * *`  | coach    | delete a team                                  | clean up records of teams I no longer coach                          |
-| `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
-| `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
-| `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
-| `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
-| `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
+| Priority | As a …​  | I want to …​                                   | So that I can…​                                                     |
+|---------|----------|------------------------------------------------|---------------------------------------------------------------------|
+| `* * *` | new user | see usage instructions                         | refer to instructions when I forget how to use the App              |
+| `* * *` | coach    | add a new player                               | keep a record of their personal information                         |
+| `* * *` | coach    | add a new team                                 | organize players by teams                                           |
+| `* * *` | coach    | add a player to a team                         | maintain accurate team list for training and match selection        |
+| `* * *` | coach    | remove a player from a team                    | maintain accurate team list when player leaves team                 |
+| `* * *` | coach    | delete a player                                | clean up records of players I no longer coach                       |
+| `* * *` | coach    | delete a team                                  | clean up records of teams I no longer coach                         |
+| `* * *` | coach    | create a position                              | assign a position to a player                                       |
+| `* * *` | coach    | delete a position                              | delete a position that I created                                    |
+| `* * *` | coach    | assign a player a position                     | keep track of a player's position                                   |
+| `* * *` | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                    |
+| `* * *` | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                |
+| `* *`   | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                       |
+| `* *`   | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
+| `*`     | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach          |
 
 *{More to be added}*
 
