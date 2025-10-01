@@ -2,27 +2,16 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-
-import java.util.HashSet;
-import java.util.stream.Stream;
+import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
 import seedu.address.logic.commands.AddTeamCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Name;
 import seedu.address.model.team.Team;
 
 /**
  * Parses input arguments and creates a new AddTeamCommand object
  */
 public class AddTeamCommandParser implements Parser<AddTeamCommand> {
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddTeamCommand
@@ -41,8 +30,7 @@ public class AddTeamCommandParser implements Parser<AddTeamCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Team team = new Team(name, new HashSet<>());
+        Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_NAME).get());
         return new AddTeamCommand(team);
     }
 }
