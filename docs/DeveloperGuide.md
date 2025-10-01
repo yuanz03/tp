@@ -480,7 +480,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC07 - List all playuers**
+**Use case: UC07 - List all players**
 
 **MSS**
 
@@ -493,7 +493,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty.
 
-    * 2a1. PlayBook shows the message: "There are currently no players in the PlayBook!"
+    * 2a1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -510,19 +510,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The player name is missing.
 
-    * 1a1. PlayBook shows the message: "Missing <player_name> for search command."
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
 * 1b. The player name is invalid (contains non-letter characters).
 
-    * 1b1. PlayBook shows the message: "<player_name> can only contain letters and spaces!"
+    * 1b1. PlayBook shows an message.
 
       Use case ends.
 
 * 2a. No player matches the given name.
 
-    * 2a1. PlayBook shows the message: "No such player, <player_name>, exists in the PlayBook."
+    * 2a1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -540,25 +540,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The team name is missing.
 
-  * 1a1. PlayBook shows the message: “Missing <team_name> for filter command.”
+  * 1a1. PlayBook shows an error message.
 
     Use case ends.
 
 * 1b. The team name is invalid (contains non-alphanumeric characters).
     
-  * 1b1. PlayBook shows the message: “<team_name> can only contain alphanumeric values.”
+  * 1b1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2a. The team does not exist.
     
-  * 2a1. PlayBook shows the message: “No such team, <team_name>, exists in the PlayBook.”
+  * 2a1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2b. The team exists but has no players.
     
-  * 2b1. PlayBook shows the message: “The team, <team_name>, currently has no players.”
+  * 2b1. PlayBook shows an error message.
 
     Use case ends.
 
@@ -576,19 +576,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The injury status is missing.
 
-  * 1a1. PlayBook shows the message: “Missing <injury_name> for filter command.”
+  * 1a1. PlayBook shows an message.
 
     Use case ends.
 
 * 1b. The injury status is invalid (contains non-alphanumeric characters).
   
-  * 1b1. PlayBook shows the message: “<injury_name> can only contain alphanumeric values!”
+  * 1b1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2a. No players match the given injury status.
 
-  * 2a1. PlayBook shows the message: “There are currently no players that <injury_name>!”
+  * 2a1. PlayBook shows an error message.
 
     Use case ends.
 
@@ -606,19 +606,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The position is missing.
   
-  * 1a1. PlayBook shows the message: “Missing <position_name> for filter command.”
+  * 1a1. PlayBook shows an error message.
 
     Use case ends.
 
 * 1b. The position is invalid (contains non-alphanumeric characters).
   
-  * 1b1. PlayBook shows the message: “<position_name> can only contain alphanumeric values.”
+  * 1b1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2a. No players are in that position.
 
-  * 2a1. PlayBook shows the message: “There are currently no players playing the position <position_name>!”
+  * 2a1. PlayBook shows an error message.
     
     Use case ends.
 
@@ -636,7 +636,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 8.  Response to any single user command should be visible within 3 seconds on any _mainstream OS_.
 9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once.
 10. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
-11. The list, search, and filter commands should return results within 1 second for datasets up to 500 players.
 
 *{More to be added}*
 
