@@ -306,6 +306,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
+| `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
+| `* * *`  | coach    | save a player's dietary restriction            | save players dietary restrictions                                    |
+| `* * *`  | coach    | save a player's jersey number                  | easily know what jersey number each player is wearing                |
+| `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
 | `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
 | `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
@@ -501,7 +505,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-
 **Use case: UC08 - Search for a player**
 
 **MSS**
@@ -541,7 +544,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-=======
+**Extensions**
+
 * 1a. The team name is missing.
 
   * 1a1. PlayBook shows an error message.
@@ -704,6 +708,74 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4a1. AddressBook shows an error message
 
       Use case ends. 
+
+**Use case: UC15 - Save player's email**
+
+**MSS**
+
+1.  User requests to save a player's email under player's details
+2.  AddressBook updates email under player's detail
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC16 - Save player's dietary restriction**
+
+**MSS**
+
+1.  User requests to save a player's dietary restriction under player's details
+2.  AddressBook updates dietary restriction under player's detail
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC17 - Save player's jersey number**
+
+**MSS**
+
+1.  User requests to save a player's jersey number under player's details
+2.  AddressBook updates jersey number under player's detail
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC18 - Save a player as captain**
+
+**MSS**
+
+1.  User requests to save a player as captain under player's details
+2.  AddressBook updates if player is captain under player's detail
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
 
 *{More to be added}*
 
