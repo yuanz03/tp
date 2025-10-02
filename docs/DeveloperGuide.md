@@ -478,6 +478,88 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+
+**Use case: UC12 - Create a position**
+
+**MSS**
+
+1.  User requests to create a position with specific details 
+2.  AddressBook adds a position with given details
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Position detail is invalid
+
+  * 1a1. AddressBook shows an error message
+
+    Use case ends.
+
+* 2a. Position already exists
+
+  * 2a1. AddressBook shows an error message
+    
+    Use case ends. 
+
+**Use case: UC13 - Delete a position**
+
+**MSS**
+
+1.  User requests to delete a position with specific details
+2.  AddressBook deletes a position with given details
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Position detail is invalid
+
+    * 1a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 2a. Position does not exist
+
+    * 2a1. AddressBook shows an error message
+
+      Use case ends.
+
+**Use case: UC14 - Assign position to a player**
+
+**MSS**
+
+1.  User requests to assign a position to a player with specific details
+2.  AddressBook assigns a position to a player with given details
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Position detail is invalid
+
+    * 1a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 2a. Player detail is invalid
+
+    * 2a1. AddressBook shows an error message
+
+      Use case ends.  
+
+* 3a. Position does not exist
+
+    * 3a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 4a. Player does not exist
+
+    * 4a1. AddressBook shows an error message
+
+      Use case ends. 
+
 *{More to be added}*
 
 ### Non-Functional Requirements
