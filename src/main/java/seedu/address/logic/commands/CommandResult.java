@@ -61,7 +61,7 @@ public class CommandResult {
     }
 
     public boolean isShowPersons() {
-        return showPersons; 
+        return showPersons;
     }
 
     public boolean isExit() {
