@@ -275,31 +275,40 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types and can type fast
-* prefers typing to mouse interactions and is reasonably comfortable using CLI apps
+* prefer desktop apps over other types
+* can type fast
+* prefers typing to mouse interactions
+* is reasonably comfortable using CLI apps
 * **for this evolution: semi-professional youth football coaches managing multiple teams**
 
 **Value proposition**: 
 - manage contacts faster than a typical mouse/GUI driven app
 - **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
-  - optimised for fast, command-line style data entry and squad management
+- optimised for fast, command-line style data entry and squad management
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​  | I want to …​                                   | So that I can…​                                                      |
+| Priority | As a …​  | I want to …​                                   | So that I can…​                                                         |
 |----------|----------|------------------------------------------------|----------------------------------------------------------------------|
 | `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
-| `* * *`  | user     | add a new person                               |                                                                      |
-| `* * *`  | user     | delete a person                                | remove entries that I no longer need                                 |
+| `* * *`  | coach    | add a new player                               | keep a record of their personal information                          |
+| `* * *`  | coach    | add a new team                                 | organize players by teams                                            |
+| `* * *`  | coach    | add a player to a team                         | maintain accurate team list for training and match selection         |
+| `* * *`  | coach    | remove a player from a team                    | maintain accurate team list when player leaves team                  |
+| `* * *`  | coach    | delete a player                                | clean up records of players I no longer coach                        |
+| `* * *`  | coach    | delete a team                                  | clean up records of teams I no longer coach                          |
 | `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* * *`  | coach    | list all the players                           | view all player information                                          |
+| `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
+| `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
+| `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
+| `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
 | `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
 | `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
-|          |          |                                                |                                                                      |
-| `*`      |          |                                                |                                                                      |
 
 *{More to be added}*
 
@@ -307,14 +316,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Add a player**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a player with all relevant details
+2.  AddressBook adds the player
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player details are invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 1b. The player to be added already exists in the list.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC02 - Delete a player**
+
+**MSS**
+
+1.  User requests to list players
+2.  AddressBook shows a list of players
+3.  User requests to delete a specific player in the list
+4.  AddressBook deletes the player
 
     Use case ends.
 
@@ -330,7 +362,80 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: UC05 - Assign an injury status to a player**
+
+**Use case: UC03 - Add a team**
+
+**MSS**
+
+1.  User requests to add a team with a unique name
+2.  AddressBook adds the team
+
+**Extensions**
+
+* 1a. The given team name is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 1b. The team to be added already exists.
+    *  1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC04 - Delete a team**
+
+**MSS**
+
+1. User requests to list teams
+2. AddressBook shows a list of teams
+3. User requests to delete a specific team in the list
+4. AddressBook deletes the team
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given team name does not exist.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: UC05 - Add a player to a team**
+
+**MSS**
+
+1.  User requests to list players
+2.  AddressBook shows a list of players
+3.  User requests to list teams
+4.  AddressBook shows a list of teams
+5.  User requests to add a specific player to a specific team
+6.  AddressBook adds the player to the team
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The player list is empty.
+
+  Use case ends.
+
+* 4a. The team list is empty.
+
+  Use case ends.
+
+* 5a. The given player or team selection is invalid.
+
+    * 5a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: UC06 - Assign an injury status to a player**
 
 **Guarantees**: Player's injury status and rehab timeline are updated and persisted
 
@@ -375,6 +480,148 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+**Use case: UC07 - List all players**
+
+**MSS**
+
+1.  User requests to list all players.
+2.  PlayBook shows a list of players
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    * 2a1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC08 - Search for a player**
+
+**MSS**
+
+1.  User requests to search for a player by name.
+2.  PlayBook shows the player's details.
+    
+    Use case ends.
+
+**Extensions**
+
+* 1a. The player name is missing.
+
+    * 1a1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 1b. The player name is invalid (contains non-letter characters).
+
+    * 1b1. PlayBook shows an message.
+
+      Use case ends.
+
+* 2a. No player matches the given name.
+
+    * 2a1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC09 - Filter players by team**
+
+**MSS**
+
+1. User requests to filter players by a team name.
+
+2. PlayBook shows the list of players in that team.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The team name is missing.
+
+  * 1a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 1b. The team name is invalid (contains non-alphanumeric characters).
+    
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. The team does not exist.
+    
+  * 2a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2b. The team exists but has no players.
+    
+  * 2b1. PlayBook shows an error message.
+
+    Use case ends.
+
+**Use case: UC10 - Filter players by injury**
+
+**MSS**
+
+1. User requests to filter players by an injury status.
+
+2. PlayBook shows the list of players with that injury status.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The injury status is missing.
+
+  * 1a1. PlayBook shows an message.
+
+    Use case ends.
+
+* 1b. The injury status is invalid (contains non-alphanumeric characters).
+  
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. No players match the given injury status.
+
+  * 2a1. PlayBook shows an error message.
+
+    Use case ends.
+
+**Use case: UC11 - Filter players by position**
+
+**MSS**
+
+1. User requests to filter players by a position.
+
+2. PlayBook shows the list of players in that position.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The position is missing.
+  
+  * 1a1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 1b. The position is invalid (contains non-alphanumeric characters).
+  
+  * 1b1. PlayBook shows an error message.
+
+    Use case ends.
+
+* 2a. No players are in that position.
+
+  * 2a1. PlayBook shows an error message.
+    
+    Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
@@ -396,6 +643,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Player**: An individual footballer managed by the coach
+* **Team**: A named group of players (eg. U15, First Team) managed by the coach
+* **Position**: The role of a player on the field (eg. Goalkeeper (GK), Center Back (CB), Striker (ST))
 
 --------------------------------------------------------------------------------------------------------------------
 
