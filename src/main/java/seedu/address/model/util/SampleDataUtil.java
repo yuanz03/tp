@@ -19,7 +19,7 @@ import seedu.address.model.team.Team;
  */
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
-        return new Person[]{
+        return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"),
                     getSampleTeams()[0],
@@ -48,7 +48,7 @@ public class SampleDataUtil {
     }
 
     public static Team[] getSampleTeams() {
-        return new Team[]{
+        return new Team[] {
             new Team("U12"),
             new Team("U16"),
             new Team("U21")

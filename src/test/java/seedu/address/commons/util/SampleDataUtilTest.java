@@ -74,15 +74,15 @@ public class SampleDataUtilTest {
         Team[] sampleTeams = SampleDataUtil.getSampleTeams();
 
         boolean u12Found = Arrays.stream(sampleTeams)
-                .anyMatch(team -> team.getName().toString().equals("U12"));
+                .anyMatch(team -> team.getName().equals("U12"));
         assertTrue(u12Found);
 
         boolean u16Found = Arrays.stream(sampleTeams)
-                .anyMatch(team -> team.getName().toString().equals("U16"));
+                .anyMatch(team -> team.getName().equals("U16"));
         assertTrue(u16Found);
 
         boolean u21Found = Arrays.stream(sampleTeams)
-                .anyMatch(team -> team.getName().toString().equals("U21"));
+                .anyMatch(team -> team.getName().equals("U21"));
         assertTrue(u21Found);
     }
 
