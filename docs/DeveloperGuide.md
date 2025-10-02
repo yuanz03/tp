@@ -290,7 +290,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​  | I want to …​                                   | So that I can…​                                                         |
+| Priority | As a …   | I want to …                                    | So that I can…                                                       |
 |----------|----------|------------------------------------------------|----------------------------------------------------------------------|
 | `* * *`  | new user | see usage instructions                         | refer to instructions when I forget how to use the App               |
 | `* * *`  | coach    | add a new player                               | keep a record of their personal information                          |
@@ -299,6 +299,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | remove a player from a team                    | maintain accurate team list when player leaves team                  |
 | `* * *`  | coach    | delete a player                                | clean up records of players I no longer coach                        |
 | `* * *`  | coach    | delete a team                                  | clean up records of teams I no longer coach                          |
+| `* * *`  | coach    | create a position                              | assign a position to a player                                        |
+| `* * *`  | coach    | delete a position                              | delete a position that I created                                     |
+| `* * *`  | coach    | assign a player a position                     | keep track of a player's position                                    |
 | `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
@@ -479,15 +482,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3d1. AddressBook shows an error message.
 
       Use case ends.
-
+      
+=======
 **Use case: UC07 - List all players**
 
 **MSS**
 
 1.  User requests to list all players.
 2.  PlayBook shows a list of players
-    
-    Use case ends.
+
+  Use case ends.
 
 **Extensions**
 
@@ -496,6 +500,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. PlayBook shows an error message.
 
       Use case ends.
+
 
 **Use case: UC08 - Search for a player**
 
@@ -536,8 +541,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Extensions**
-
+=======
 * 1a. The team name is missing.
 
   * 1a1. PlayBook shows an error message.
@@ -569,8 +573,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User requests to filter players by an injury status.
 
 2. PlayBook shows the list of players with that injury status.
-
-    Use case ends.
 
 **Extensions**
 
@@ -621,6 +623,87 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2a1. PlayBook shows an error message.
     
     Use case ends.
+
+**Use case: UC12 - Create a position**
+
+**MSS**
+
+1.  User requests to create a position with specific details 
+
+2.  AddressBook adds a position with given details
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Position detail is invalid
+
+  * 1a1. AddressBook shows an error message
+
+    Use case ends.
+
+* 2a. Position already exists
+
+  * 2a1. AddressBook shows an error message
+    
+    Use case ends. 
+
+**Use case: UC13 - Delete a position**
+
+**MSS**
+
+1.  User requests to delete a position with specific details
+
+2.  AddressBook deletes a position with given details
+      
+**Extensions**
+
+* 1a. Position detail is invalid
+
+    * 1a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 2a. Position does not exist
+
+    * 2a1. AddressBook shows an error message
+
+      Use case ends.
+
+**Use case: UC14 - Assign position to a player**
+
+**MSS**
+
+1.  User requests to assign a position to a player with specific details
+2.  AddressBook assigns a position to a player with given details
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Position detail is invalid
+
+    * 1a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 2a. Player detail is invalid
+
+    * 2a1. AddressBook shows an error message
+
+      Use case ends.  
+
+* 3a. Position does not exist
+
+    * 3a1. AddressBook shows an error message
+
+      Use case ends.
+
+* 4a. Player does not exist
+
+    * 4a1. AddressBook shows an error message
+
+      Use case ends. 
 
 *{More to be added}*
 
