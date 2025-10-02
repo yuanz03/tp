@@ -19,7 +19,7 @@ Given below are my contributions to the project.
 
 * **Code contributed**: [RepoSense link]()
 
-* **Project management**: 
+* **Project management**:
   * Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 
 * **Enhancements to existing features**:
