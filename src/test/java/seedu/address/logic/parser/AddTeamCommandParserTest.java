@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddTeamCommand;
-import seedu.address.model.person.Name;
 import seedu.address.model.team.Team;
 import seedu.address.testutil.TeamBuilder;
 
@@ -37,15 +36,14 @@ public class AddTeamCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid team name
-        assertParseFailure(parser, INVALID_TEAM_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_TEAM_NAME_DESC, Team.MESSAGE_CONSTRAINTS);
     }
 
     @Test
     public void parse_duplicatePrefix_failure() {
         // duplicate name prefix
         assertParseFailure(parser, TEAM_NAME_DESC_16 + TEAM_NAME_DESC_16,
-            Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
     }
-
 
 }

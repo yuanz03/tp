@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.team.Team;
 
 /**
  * Represents a Person in the address book.
@@ -24,16 +25,19 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Team team;
 
     /**
+     * Creates a Person object with a team assigned.
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, team, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.team = team;
         this.tags.addAll(tags);
     }
 
@@ -51,6 +55,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     /**
@@ -94,13 +102,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && team.equals(otherPerson.team)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, team);
     }
 
     @Override
@@ -111,6 +120,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("team", team)
                 .toString();
     }
 

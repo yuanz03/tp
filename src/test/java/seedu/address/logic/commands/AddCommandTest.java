@@ -17,6 +17,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
@@ -47,6 +48,16 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class,
             AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_teamNotFound_throwsCommandException() {
+        Person validPerson = new PersonBuilder().build();
+        AddCommand addCommand = new AddCommand(validPerson);
+        ModelStubWithoutTeam modelStub = new ModelStubWithoutTeam();
+
+        assertThrows(CommandException.class, String.format(AddCommand.MESSAGE_TEAM_NOT_FOUND,
+                validPerson.getTeam().getName()), () -> addCommand.execute(modelStub));
     }
 
     @Test
@@ -96,6 +107,26 @@ public class AddCommandTest {
             requireNonNull(person);
             return this.person.isSamePerson(person);
         }
+
+        @Override
+        public boolean hasTeam(Team team) {
+            return true;
+        }
+    }
+
+    /**
+     * A Model stub that does not have the team.
+     */
+    private class ModelStubWithoutTeam extends ModelStub {
+        @Override
+        public boolean hasPerson(Person person) {
+            return false;
+        }
+
+        @Override
+        public boolean hasTeam(Team team) {
+            return false;
+        }
     }
 
     /**
@@ -114,6 +145,11 @@ public class AddCommandTest {
         public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public boolean hasTeam(Team team) {
+            return true;
         }
 
         @Override

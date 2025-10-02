@@ -19,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.team.Team;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -26,6 +27,7 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TEAM = "U@16";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +35,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TEAM = "U16";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -43,8 +46,8 @@ public class ParserUtilTest {
 
     @Test
     public void parseIndex_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-            -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+        assertThrows(ParseException.class,
+                MESSAGE_INVALID_INDEX, () -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
     }
 
     @Test
@@ -146,6 +149,29 @@ public class ParserUtilTest {
         String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
+    }
+
+    @Test
+    public void parseTeam_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseTeam((String) null));
+    }
+
+    @Test
+    public void parseTeam_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseTeam(INVALID_TEAM));
+    }
+
+    @Test
+    public void parseTeam_validValueWithoutWhitespace_returnsTeam() throws Exception {
+        Team expectedTeam = new Team(VALID_TEAM);
+        assertEquals(expectedTeam, ParserUtil.parseTeam(VALID_TEAM));
+    }
+
+    @Test
+    public void parseTeam_validValueWithWhitespace_returnsTrimmedTeam() throws Exception {
+        String teamWithWhitespace = WHITESPACE + VALID_TEAM + WHITESPACE;
+        Team expectedTeam = new Team(VALID_TEAM);
+        assertEquals(expectedTeam, ParserUtil.parseTeam(teamWithWhitespace));
     }
 
     @Test

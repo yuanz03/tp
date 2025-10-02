@@ -7,7 +7,7 @@ import static seedu.address.testutil.TypicalTeams.U12;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
+import seedu.address.model.team.Team;
 
 public class JsonAdaptedTeamTest {
     private static final String INVALID_NAME = "T@am1";
@@ -17,7 +17,7 @@ public class JsonAdaptedTeamTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedTeam team = new JsonAdaptedTeam(INVALID_NAME);
-        String expectedMessage = Name.MESSAGE_CONSTRAINTS;
+        String expectedMessage = Team.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, team::toModelType);
     }
 

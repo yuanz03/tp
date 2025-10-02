@@ -6,6 +6,9 @@
       "phone": "94351253",
       "email": "alice@example.com",
       "address": "123, Jurong West Ave 6, #08-111",
+      "team": {
+        "name": "U12"
+      },
       "tags": [
         "friends"
       ]
@@ -15,6 +18,9 @@
       "phone": "98765432",
       "email": "johnd@example.com",
       "address": "311, Clementi Ave 2, #02-25",
+      "team": {
+        "name": "U12"
+      },
       "tags": [
         "owesMoney",
         "friends"
@@ -25,6 +31,9 @@
       "phone": "95352563",
       "email": "heinz@example.com",
       "address": "wall street",
+      "team": {
+        "name": "U12"
+      },
       "tags": []
     },
     {
@@ -32,6 +41,9 @@
       "phone": "87652533",
       "email": "cornelia@example.com",
       "address": "10th street",
+      "team": {
+        "name": "U12"
+      },
       "tags": [
         "friends"
       ]
@@ -41,6 +53,9 @@
       "phone": "9482224",
       "email": "werner@example.com",
       "address": "michegan ave",
+      "team": {
+        "name": "U16"
+      },
       "tags": []
     },
     {
@@ -48,6 +63,9 @@
       "phone": "9482427",
       "email": "lydia@example.com",
       "address": "little tokyo",
+      "team": {
+        "name": "U16"
+      },
       "tags": []
     },
     {
@@ -55,8 +73,18 @@
       "phone": "9482442",
       "email": "anna@example.com",
       "address": "4th street",
+      "team": {
+        "name": "U16"
+      },
       "tags": []
     }
   ],
-  "teams": []
+  "teams": [
+    {
+      "name": "U12"
+    },
+    {
+      "name": "U16"
+    }
+  ]
 }

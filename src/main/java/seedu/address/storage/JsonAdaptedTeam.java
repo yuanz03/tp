@@ -1,12 +1,9 @@
 package seedu.address.storage;
 
-import java.util.HashSet;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
 import seedu.address.model.team.Team;
 
 /**
@@ -29,7 +26,7 @@ public class JsonAdaptedTeam {
      * Converts a given {@code Team} into this class for Jackson use.
      */
     public JsonAdaptedTeam(Team source) {
-        name = source.getName().fullName;
+        name = source.getName();
     }
 
     /**
@@ -41,10 +38,9 @@ public class JsonAdaptedTeam {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
         }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        if (!Team.isValidTeamName(name)) {
+            throw new IllegalValueException(Team.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name);
-        return new Team(modelName, new HashSet<>());
+        return new Team(name);
     }
 }

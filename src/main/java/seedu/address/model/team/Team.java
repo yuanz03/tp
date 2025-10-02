@@ -1,45 +1,41 @@
 package seedu.address.model.team;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 
 /**
  * Represents a Team in the address book.
  */
 public class Team {
-    // Identity fields
-    private final Name name;
 
-    // Data fields
-    private final Set<Person> members = new HashSet<>();
+    public static final String MESSAGE_CONSTRAINTS = "Team names should be alphanumeric";
+    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+
+    // Identity fields
+    private final String name;
 
     /**
      * Every field must be present and not null.
      */
-    public Team(Name name, Set<Person> members) {
-        requireAllNonNull(name, members);
+    public Team(String name) {
+        requireAllNonNull(name);
+        checkArgument(isValidTeamName(name), MESSAGE_CONSTRAINTS);
         this.name = name;
-        this.members.addAll(members);
-    }
-
-    public Name getName() {
-        return name;
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
+     * Returns true if a given string is a valid team name.
      */
-    public Set<Person> getMembers() {
-        return Collections.unmodifiableSet(members);
+    public static boolean isValidTeamName(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**
@@ -52,7 +48,7 @@ public class Team {
         }
 
         return otherTeam != null
-            && otherTeam.getName().equals(getName());
+            && otherTeam.getName().equalsIgnoreCase(getName());
     }
 
     /**
@@ -68,21 +64,18 @@ public class Team {
             return false;
         }
         Team otherTeam = (Team) other;
-        return otherTeam.getName().equals(getName())
-            && otherTeam.getMembers().equals(getMembers());
+        return otherTeam.getName().equalsIgnoreCase(getName());
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, members);
+        return Objects.hash(name.toLowerCase());
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
             .add("name", name)
-            .add("members", members)
             .toString();
     }
 }
