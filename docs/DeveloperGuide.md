@@ -514,7 +514,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* 1b. The player name is invalid (contains non-letter characters).
+* 1b. The player name is invalid.
 
     * 1b1. PlayBook shows an message.
 
@@ -544,7 +544,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-* 1b. The team name is invalid (contains non-alphanumeric characters).
+* 1b. The team name is invalid.
     
   * 1b1. PlayBook shows an error message.
 
@@ -580,7 +580,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-* 1b. The injury status is invalid (contains non-alphanumeric characters).
+* 1b. The injury status is invalid.
 
   * 1b1. PlayBook shows an error message.
 
@@ -610,7 +610,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-* 1b. The position is invalid (contains non-alphanumeric characters).
+* 1b. The position is invalid.
 
   * 1b1. PlayBook shows an error message.
 
