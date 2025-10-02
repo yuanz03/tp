@@ -7,6 +7,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalTeams.U12;
+import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -91,6 +93,23 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void hasTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasTeam(null));
+    }
+
+    @Test
+    public void hasTeam_teamNotInAddressBook_returnsFalse() {
+        modelManager.addTeam(U16);
+        assertFalse(modelManager.hasTeam(U12));
+    }
+
+    @Test
+    public void hasTeam_teamInAddressBook_returnsTrue() {
+        modelManager.addTeam(U12);
+        assertTrue(modelManager.hasTeam(U12));
     }
 
     @Test
