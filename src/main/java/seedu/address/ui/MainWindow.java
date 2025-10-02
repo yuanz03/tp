@@ -10,7 +10,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import seedu.address.ui.TeamListPanel;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -216,7 +215,7 @@ public class MainWindow extends UiPart<Stage> {
         teamListPanelPlaceholder.setManaged(true);
         personListPanelPlaceholder.setVisible(false);
         personListPanelPlaceholder.setManaged(false);
-}
+    }
 
     private void showPersonsView() {
         teamListPanelPlaceholder.setVisible(false);

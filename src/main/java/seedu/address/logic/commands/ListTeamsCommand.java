@@ -1,11 +1,13 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TEAMS;
 
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 
+/**
+ * Lists all teams in the Play Book to the user.
+ */
 public class ListTeamsCommand extends Command {
     public static final String COMMAND_WORD = "listteams";
 
@@ -14,7 +16,7 @@ public class ListTeamsCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredTeamList(Model.PREDICATE_SHOW_ALL_TEAMS);
+        model.updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
         return new CommandResult(MESSAGE_SUCCESS, false, false, true, false);
     }
 }
