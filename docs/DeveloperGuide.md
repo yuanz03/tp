@@ -709,7 +709,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends. 
 
-**Use case: UC15- Save player's email**
+**Use case: UC15 - Save player's email**
 
 **MSS**
 
@@ -726,7 +726,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC16- Save player's dietary restriction**
+**Use case: UC16 - Save player's dietary restriction**
 
 **MSS**
 
@@ -743,7 +743,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17- Save player's jersey number**
+**Use case: UC17 - Save player's jersey number**
 
 **MSS**
 
@@ -760,7 +760,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC18- Save a player as captain**
+**Use case: UC18 - Save a player as captain**
 
 **MSS**
 
