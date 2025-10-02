@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.ui.TeamListPanel;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -34,6 +35,10 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private TeamListPanel teamListPanel;
+
+    @FXML
+    private StackPane teamListPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -113,6 +118,12 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        teamListPanel = new TeamListPanel(logic.getFilteredTeamList());
+        teamListPanelPlaceholder.getChildren().add(teamListPanel.getRoot());
+
+        // Initially show persons, hide teams
+        showPersonsView();
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -186,11 +197,31 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isShowTeams()) {
+                showTeamsView();
+            } else if (commandResult.isShowPersons()) {
+                showPersonsView();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    private void showTeamsView() {
+        teamListPanelPlaceholder.setVisible(true);
+        teamListPanelPlaceholder.setManaged(true);
+        personListPanelPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setManaged(false);
+}
+
+    private void showPersonsView() {
+        teamListPanelPlaceholder.setVisible(false);
+        teamListPanelPlaceholder.setManaged(false);
+        personListPanelPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setManaged(true);
     }
 }

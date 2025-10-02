@@ -15,6 +15,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Team> PREDICATE_SHOW_ALL_TEAMS = unused -> true;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -96,4 +99,15 @@ public interface Model {
      * {@code team} must not already exist in the address book.
      */
     void addTeam(Team team);
+
+    /**
+     * Returns an unmodifiable view of the filtered team list
+    */
+    ObservableList<Team> getFilteredTeamList();
+
+    /**
+     * Updates the filter of the filtered team list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTeamList(Predicate<Team> predicate);
 }
