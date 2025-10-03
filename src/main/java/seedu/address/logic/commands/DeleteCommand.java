@@ -12,14 +12,14 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a person identified by name from the address book.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the .\n"
+            + ": Deletes the person specified by name.\n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " "
@@ -29,6 +29,9 @@ public class DeleteCommand extends Command {
 
     private final Name personNameToDelete;
 
+    /**
+     * Creates a DeleteCommand to delete the specified {@code Person} by name.
+     */
     public DeleteCommand(Name personNameToDelete) {
         requireNonNull(personNameToDelete);
         this.personNameToDelete = personNameToDelete;
