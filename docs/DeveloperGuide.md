@@ -763,12 +763,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1b. The jersey number already taken
 
     * 1b1. AddressBook ask for confirmation to give number to this player despite another player having this number.
+    * 1b2. User confirms decision
+    * 1b3. AddressBook removes old player's number
+    * 1b4. AddressBook updates jersey number of player
 
-        * 1b1a. User confirms decision
-        * 1b1b. AddressBook removes old player's number
-        * 1b1c. AddressBook updates jersey number of player
-
-        Use case ends.
+      Use case ends.
 
 **Use case: UC18 - Save a player as captain**
 
