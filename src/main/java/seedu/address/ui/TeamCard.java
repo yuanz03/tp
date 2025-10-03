@@ -31,7 +31,7 @@ public class TeamCard extends UiPart<Region> {
     private Label id;
 
     /**
-     * Creates a {@code TeamCode} with the given {@code Team} and index to display.
+     * Creates a {@code TeamCard} with the given {@code Team} and index to display.
      */
     public TeamCard(Team team, int displayedIndex) {
         super(FXML);

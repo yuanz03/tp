@@ -28,12 +28,12 @@ public class CommandResult {
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
-            boolean showTeams, boolean showPersons) {
+    public CommandResult(String feedbackToUser, boolean isHelpVisible, boolean exit,
+            boolean isTeamsVisible, boolean isPersonsVisible) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.showHelp = showHelp;
-        this.showTeams = showTeams;
-        this.showPersons = showPersons;
+        this.showHelp = isHelpVisible;
+        this.showTeams = isTeamsVisible;
+        this.showPersons = isPersonsVisible;
         this.exit = exit;
     }
 

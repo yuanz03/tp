@@ -101,7 +101,7 @@ public interface Model {
     void addTeam(Team team);
 
     /**
-     * Returns an unmodifiable view of the filtered team list
+     * Returns an unmodifiable view of the filtered team list.
     */
     ObservableList<Team> getFilteredTeamList();
 
