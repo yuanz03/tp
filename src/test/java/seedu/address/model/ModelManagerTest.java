@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTeams.U12;
 import static seedu.address.testutil.TypicalTeams.U16;
 
@@ -16,8 +17,10 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -110,6 +113,29 @@ public class ModelManagerTest {
     public void hasTeam_teamInAddressBook_returnsTrue() {
         modelManager.addTeam(U12);
         assertTrue(modelManager.hasTeam(U12));
+    }
+
+    @Test
+    public void getFilteredTeamList_returnsUnfilteredTeamList() {
+        ModelManager modelManager = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        // The default filteredTeams should contain all teams in the typical address book
+        ObservableList<Team> filteredList = modelManager.getFilteredTeamList();
+        assertEquals(getTypicalAddressBook().getTeamList(), filteredList);
+    }
+
+    @Test
+    public void equals_filteredTeamListDifferent_notEqual() {
+        AddressBook ab = getTypicalAddressBook();
+        UserPrefs prefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(ab, prefs);
+        ModelManager modelManagerCopy = new ModelManager(ab, prefs);
+
+        // Both start equal
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // Apply a filter on modelManager only
+        modelManager.updateFilteredTeamList(team -> team.getName().equals(U12.getName()));
+        assertFalse(modelManager.equals(modelManagerCopy));
     }
 
     @Test

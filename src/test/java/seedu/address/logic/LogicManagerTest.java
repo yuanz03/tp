@@ -5,11 +5,13 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDE
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_NAME_DESC_12;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTeams.U12;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,7 @@ import seedu.address.model.team.Team;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
+import seedu.address.testutil.StorageManagerStub;
 import seedu.address.testutil.TeamBuilder;
 
 public class LogicManagerTest {
@@ -82,6 +85,23 @@ public class LogicManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void getFilteredTeamList_initiallyUnfiltered_returnsAllTeams() {
+        Logic logic = new LogicManager(new ModelManager(getTypicalAddressBook(), new UserPrefs()),
+                new StorageManagerStub());
+        List<Team> expected = getTypicalAddressBook().getTeamList();
+        assertEquals(expected, logic.getFilteredTeamList());
+    }
+
+    @Test
+    public void getFilteredTeamList_afterListTeams_returnsUnfiltered() throws Exception {
+        Logic logic = new LogicManager(new ModelManager(getTypicalAddressBook(), new UserPrefs()),
+                new StorageManagerStub());
+        logic.execute("listteams");
+        List<Team> expected = getTypicalAddressBook().getTeamList();
+        assertEquals(expected, logic.getFilteredTeamList());
     }
 
     /**
