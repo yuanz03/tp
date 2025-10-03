@@ -281,7 +281,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * is reasonably comfortable using CLI apps
 * **for this evolution: semi-professional youth football coaches managing multiple teams**
 
-**Value proposition**: 
+**Value proposition**:
 - manage contacts faster than a typical mouse/GUI driven app
 - **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
 - optimised for fast, command-line style data entry and squad management
@@ -466,15 +466,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. AddressBook shows an error message.
 
       Use case resumes at step 2.
-  
+
 * 3b. The specified injury status does not exist.
-  
+
     * 3b1. AddressBook shows an error message and prompts User to create a new injury status.
-    
+
     * 3b2. User creates the new injury status.
 
       Use case resumes at step 3.
-    
+
 * 3c. The specified timeframe is invalid.
 
     * 3c1. AddressBook shows an error message.
@@ -495,7 +495,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list all players.
 2.  PlayBook shows a list of players
 
-  Use case ends.
+    Use case ends.
 
 **Extensions**
 
@@ -511,7 +511,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to search for a player by name.
 2.  PlayBook shows the player's details.
-    
+
     Use case ends.
 
 **Extensions**
@@ -587,7 +587,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 * 1b. The injury status is invalid.
-  
+
   * 1b1. PlayBook shows an error message.
 
     Use case ends.
@@ -611,13 +611,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The position is missing.
-  
+
   * 1a1. PlayBook shows an error message.
 
     Use case ends.
 
 * 1b. The position is invalid.
-  
+
   * 1b1. PlayBook shows an error message.
 
     Use case ends.
@@ -625,7 +625,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. No players are in that position.
 
   * 2a1. PlayBook shows an error message.
-    
+
     Use case ends.
 
 **Use case: UC12 - Create a position**

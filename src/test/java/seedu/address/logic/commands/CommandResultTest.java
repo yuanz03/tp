@@ -60,4 +60,18 @@ public class CommandResultTest {
                 + ", exit=" + commandResult.isExit() + "}";
         assertEquals(expected, commandResult.toString());
     }
+
+    @Test
+    public void isShowTeams_onlyTrue() {
+        CommandResult result = new CommandResult("feedback", false, false, true, false);
+        assertTrue(result.isShowTeams());
+        assertFalse(result.isShowPersons());
+    }
+
+    @Test
+    public void isShowPersons_onlyTrue() {
+        CommandResult result = new CommandResult("feedback", false, false, false, true);
+        assertFalse(result.isShowTeams());
+        assertTrue(result.isShowPersons());
+    }
 }
