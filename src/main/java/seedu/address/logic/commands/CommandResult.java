@@ -47,6 +47,14 @@ public class CommandResult {
 
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
+     * {@code showHelp} and {@code exit}, and other fields set to their default value.
+     */
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+        this(feedbackToUser, showHelp, exit, false, false);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
      * and display teams in the UI.
      */
     public static CommandResult showTeamCommandResult(String feedbackToUser) {
@@ -59,10 +67,6 @@ public class CommandResult {
      */
     public static CommandResult showPersonCommandResult(String feedbackToUser) {
         return new CommandResult(feedbackToUser, false, false, false, true);
-    }
-
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this(feedbackToUser, showHelp, exit, false, false);
     }
 
     public String getFeedbackToUser() {
