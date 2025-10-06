@@ -45,6 +45,22 @@ public class CommandResult {
         this(feedbackToUser, false, false, false, false);
     }
 
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
+     * and display teams in the UI.
+     */
+    public static CommandResult showTeamCommandResult(String feedbackToUser) {
+        return new CommandResult(feedbackToUser, false, false, true, false);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
+     * and display persons in the UI.
+     */
+    public static CommandResult showPersonCommandResult(String feedbackToUser) {
+        return new CommandResult(feedbackToUser, false, false, false, true);
+    }
+
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this(feedbackToUser, showHelp, exit, false, false);
     }
