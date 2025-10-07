@@ -26,7 +26,6 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Team team;
-    private boolean isCaptain;
 
     /**
      * Creates a Person object with a team assigned.
@@ -40,7 +39,6 @@ public class Person {
         this.address = address;
         this.team = team;
         this.tags.addAll(tags);
-        this.isCaptain = false;
     }
 
     public Name getName() {
@@ -61,18 +59,6 @@ public class Person {
 
     public Team getTeam() {
         return team;
-    }
-
-    public Boolean getIsCaptain() {
-        return isCaptain;
-    }
-
-    public void makeCaptain() {
-        isCaptain = true;
-    }
-
-    public void removeCaptain() {
-        isCaptain = false;
     }
 
     /**
@@ -117,21 +103,19 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
-                && tags.equals(otherPerson.tags)
-                && isCaptain == otherPerson.isCaptain;
+                && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, team, isCaptain);
+        return Objects.hash(name, phone, email, address, tags, team);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
-                .add("is Captain", isCaptain)
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
