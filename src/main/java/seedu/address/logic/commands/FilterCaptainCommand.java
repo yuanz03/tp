@@ -5,7 +5,14 @@ import static seedu.address.model.Model.PREDICATE_SHOW_CAPTAINS;
 
 import seedu.address.model.Model;
 
-public class FilterIsCaptainCommand extends Command {
+/**
+ * Filters the list of persons in the address book to show only captains.
+ * <p>
+ * This command updates the filtered person list in the model using
+ * {@code PREDICATE_SHOW_CAPTAINS} and returns a message indicating
+ * the successful operation.
+ */
+public class FilterCaptainCommand extends Command {
     public static final String COMMAND_WORD = "filterCaptains";
     public static final String MESSAGE_SUCCESS = "Listed all captains";
 

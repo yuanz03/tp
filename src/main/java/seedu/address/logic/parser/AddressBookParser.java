@@ -15,7 +15,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterIsCaptainCommand;
+import seedu.address.logic.commands.FilterCaptainCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -88,8 +88,8 @@ public class AddressBookParser {
         case ListTeamsCommand.COMMAND_WORD:
             return new ListTeamsCommand();
 
-        case FilterIsCaptainCommand.COMMAND_WORD:
-            return new FilterIsCaptainCommand();
+        case FilterCaptainCommand.COMMAND_WORD:
+            return new FilterCaptainCommand();
 
         case StripCaptainCommand.COMMAND_WORD:
             return new StripCaptainCommandParser().parse(arguments);

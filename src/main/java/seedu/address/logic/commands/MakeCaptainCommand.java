@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -12,6 +11,17 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.AlreadyCaptainException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Marks a person in the address book as the team captain.
+ * <p>
+ * The person is identified by their {@link Name}. If the person does not exist
+ * or is already a captain, a {@link CommandException} is thrown.
+ * <p>
+ * Example usage:
+ * <pre>
+ * {@code makeCaptain p/Sergio Ramos}
+ * </pre>
+ */
 public class MakeCaptainCommand extends Command {
     public static final String COMMAND_WORD = "makeCaptain";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the person "

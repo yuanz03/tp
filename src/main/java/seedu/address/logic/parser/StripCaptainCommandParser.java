@@ -10,7 +10,7 @@ import seedu.address.model.person.Name;
 /**
  * Parses input arguments and creates a new MakeCaptainCommand object
  */
-public class StripCaptainCommandParser implements Parser<StripCaptainCommand>{
+public class StripCaptainCommandParser implements Parser<StripCaptainCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the MakeCaptainCommand
