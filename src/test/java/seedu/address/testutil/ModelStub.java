@@ -8,6 +8,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.team.Team;
@@ -75,6 +76,11 @@ public class ModelStub implements Model {
 
     @Override
     public void deletePerson(Person target) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updatePersonInjuryStatus(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 

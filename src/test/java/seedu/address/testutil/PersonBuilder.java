@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -21,12 +22,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_INJURY = "FIT";
     public static final String DEFAULT_TEAM = "U12";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Injury injury;
     private Team team;
     private Set<Tag> tags;
 
@@ -38,6 +41,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        injury = new Injury(DEFAULT_INJURY);
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
     }
@@ -50,6 +54,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        injury = personToCopy.getInjury();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
     }
@@ -92,6 +97,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Injury} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInjury(String injuryName) {
+        this.injury = new Injury(injuryName);
         return this;
     }
 
