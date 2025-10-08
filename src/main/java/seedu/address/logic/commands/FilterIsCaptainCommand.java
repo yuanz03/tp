@@ -7,7 +7,6 @@ import seedu.address.model.Model;
 
 public class FilterIsCaptainCommand extends Command {
     public static final String COMMAND_WORD = "filterCaptains";
-    // need to add the pl thing in front of the formatting
     public static final String MESSAGE_SUCCESS = "Listed all captains";
 
     @Override

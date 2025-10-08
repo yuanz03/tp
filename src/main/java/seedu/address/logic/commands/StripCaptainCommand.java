@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.AlreadyNotCaptainException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class StripCaptainCommand extends Command{
@@ -37,6 +38,8 @@ public class StripCaptainCommand extends Command{
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND));
+        } catch (AlreadyNotCaptainException e) {
+            throw new CommandException(String.format(MESSAGE_NOT_CAPTAIN));
         }
 
         // catch person already exists as not-captain
