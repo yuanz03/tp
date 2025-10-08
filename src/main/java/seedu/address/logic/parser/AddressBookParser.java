@@ -15,10 +15,13 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterIsCaptainCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamsCommand;
+import seedu.address.logic.commands.MakeCaptainCommand;
+import seedu.address.logic.commands.StripCaptainCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -84,6 +87,15 @@ public class AddressBookParser {
 
         case ListTeamsCommand.COMMAND_WORD:
             return new ListTeamsCommand();
+
+        case FilterIsCaptainCommand.COMMAND_WORD:
+            return new FilterIsCaptainCommand();
+
+        case StripCaptainCommand.COMMAND_WORD:
+            return new StripCaptainCommandParser().parse(arguments);
+
+        case MakeCaptainCommand.COMMAND_WORD:
+            return new MakeCaptainCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

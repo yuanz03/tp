@@ -26,9 +26,10 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Team team;
+    private boolean isCaptain;
 
     /**
-     * Creates a Person object with a team assigned.
+     * Creates a Person object, where isCaptain is false and with a team assigned.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
@@ -39,6 +40,22 @@ public class Person {
         this.address = address;
         this.team = team;
         this.tags.addAll(tags);
+        this.isCaptain = false;
+    }
+
+    /**
+     * Creates a Person object, where isCaptain is true and with a team assigned.
+     * Every field must be present, and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags, boolean isCaptain) {
+        requireAllNonNull(name, phone, email, address, team, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.tags.addAll(tags);
+        this.isCaptain = true;
     }
 
     public Name getName() {
@@ -59,6 +76,18 @@ public class Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void makeCaptain() {
+        this.isCaptain = true;
+    }
+
+    public void stripCaptain() {
+        this.isCaptain = false;
     }
 
     /**
@@ -103,7 +132,8 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && isCaptain == otherPerson.isCaptain();
     }
 
     @Override
@@ -121,6 +151,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("team", team)
+                .add("isCaptain", isCaptain)
                 .toString();
     }
 
