@@ -8,6 +8,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,19 +24,23 @@ public class SampleDataUtil {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"),
                     getSampleTeams()[0],
-                    getTagSet("friends")),
+                    getTagSet("friends"),
+                    getSampleInjuries()[0]),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                     getSampleTeams()[1],
-                    getTagSet("colleagues", "friends")),
+                    getTagSet("colleagues", "friends"),
+                    getSampleInjuries()[1]),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                     getSampleTeams()[2],
-                    getTagSet("neighbours")),
+                    getTagSet("neighbours"),
+                    getSampleInjuries()[2]),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                     getSampleTeams()[0],
-                    getTagSet("family")),
+                    getTagSet("family"),
+                    getSampleInjuries()[1]),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new Address("Blk 47 Tampines Street 20, #17-35"),
                     getSampleTeams()[1],
@@ -52,6 +57,14 @@ public class SampleDataUtil {
             new Team("U12"),
             new Team("U16"),
             new Team("U21")
+        };
+    }
+
+    public static Injury[] getSampleInjuries() {
+        return new Injury[] {
+            new Injury("ACL"),
+            new Injury("MCL"),
+            new Injury("Concussion")
         };
     }
 
