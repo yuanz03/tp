@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -29,6 +30,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String injuryName;
     private final JsonAdaptedTeam team;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -38,12 +40,13 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("team") JsonAdaptedTeam team,
+                             @JsonProperty("injury status") String injuryName, @JsonProperty("team") JsonAdaptedTeam team,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.injuryName = injuryName;
         this.team = team;
         if (tags != null) {
             this.tags.addAll(tags);
@@ -58,6 +61,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        injuryName = source.getInjury().injuryName;
         team = new JsonAdaptedTeam(source.getTeam());
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -107,6 +111,16 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        final Injury modelInjury;
+        if (injuryName == null) {
+            modelInjury = new Injury(Person.DEFAULT_INJURY_STATUS); // use default injury status if not provided
+        } else {
+            if (!Injury.isValidInjuryName(injuryName)) {
+                throw new IllegalValueException(Injury.MESSAGE_CONSTRAINTS);
+            }
+            modelInjury = new Injury(injuryName);
+        }
+
         if (team == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Team.class.getSimpleName()));
         }
@@ -114,7 +128,7 @@ class JsonAdaptedPerson {
         // TODO: check if team exists in the address book before assigning to person
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags, modelInjury);
     }
 
 }
