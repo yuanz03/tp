@@ -16,6 +16,7 @@ import seedu.address.model.team.Team;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
+    private static final String defaultInjuryStatus = "FIT";
 
     // Identity fields
     private final Name name;
@@ -25,10 +26,12 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Injury injury;
     private final Team team;
 
     /**
-     * Creates a Person object with a team assigned.
+     * Creates a Person object assigned to a team with the default injury status.
+     * Overloaded constructor sets the person's injury status to the default value {@code "FIT"}.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
@@ -39,6 +42,23 @@ public class Person {
         this.address = address;
         this.team = team;
         this.tags.addAll(tags);
+        this.injury = new Injury(defaultInjuryStatus);
+    }
+
+    /**
+     * Creates a Person object assigned to a team with an explicit injury status.
+     * Overloaded constructor sets the person's injury status to the specified {@code injury}.
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags, Injury injury) {
+        requireAllNonNull(name, phone, email, address, team, tags, injury);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.tags.addAll(tags);
+        this.injury = injury;
     }
 
     public Name getName() {
@@ -59,6 +79,10 @@ public class Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Injury getInjury() {
+        return injury;
     }
 
     /**
@@ -103,13 +127,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && injury.equals(otherPerson.injury);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, team);
+        return Objects.hash(name, phone, email, address, tags, team, injury);
     }
 
     @Override
@@ -121,7 +146,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("team", team)
+                .add("injury status", injury)
                 .toString();
     }
-
 }
