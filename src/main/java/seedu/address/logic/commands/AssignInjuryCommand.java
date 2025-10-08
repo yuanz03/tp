@@ -26,7 +26,7 @@ public class AssignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER " + PREFIX_INJURY + "INJURY "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL ";
 
-    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "Assigned injury status (%1$s) to person: %2$s";
+    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
 
     private final Name personNameToAssign;
     private final Injury injuryToAssign;
@@ -53,7 +53,7 @@ public class AssignInjuryCommand extends Command {
 
         model.updatePersonInjuryStatus(personToAssign, injuryToAssign);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
-                injuryToAssign, Messages.format(personToAssign)));
+                personNameToAssign, injuryToAssign));
     }
 
     @Override
