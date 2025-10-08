@@ -47,6 +47,8 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Team: ")
                 .append(person.getTeam())
+                .append("; Injury Status: ")
+                .append(person.getInjury())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();
@@ -60,5 +62,4 @@ public class Messages {
         builder.append(team.getName());
         return builder.toString();
     }
-
 }
