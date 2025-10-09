@@ -19,7 +19,10 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
 import seedu.address.testutil.AddressBookBuilder;
 
@@ -113,6 +116,60 @@ public class ModelManagerTest {
     public void hasTeam_teamInAddressBook_returnsTrue() {
         modelManager.addTeam(U12);
         assertTrue(modelManager.hasTeam(U12));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class,
+                () -> modelManager.updatePersonInjuryStatus(null, new Injury("FIT")));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_personNotInAddressBook_throwsCommandException() {
+        Injury injury = new Injury("Knee fracture");
+        assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_validPersonAndInjury_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+        Injury injury = new Injury("Knee fracture");
+        modelManager.updatePersonInjuryStatus(ALICE, injury);
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertEquals(injury, updatedPerson.getInjury());
+
+        assertEquals(ALICE.getName(), updatedPerson.getName());
+        assertEquals(ALICE.getPhone(), updatedPerson.getPhone());
+        assertEquals(ALICE.getEmail(), updatedPerson.getEmail());
+        assertEquals(ALICE.getAddress(), updatedPerson.getAddress());
+        assertEquals(ALICE.getTeam(), updatedPerson.getTeam());
+        assertEquals(ALICE.getTags(), updatedPerson.getTags());
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_sameInjury_noInjuryStatusChange() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjury = ALICE.getInjury();
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertEquals(sameInjury, updatedPerson.getInjury());
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_multipleInjuryUpdates_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+
+        Injury firstInjury = new Injury("Knee fracture");
+        modelManager.updatePersonInjuryStatus(ALICE, firstInjury);
+        assertEquals(firstInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+
+        Injury secondInjury = new Injury("Sprained finger");
+        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), secondInjury);
+        assertEquals(secondInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+
+        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), ALICE.getInjury());
+        assertEquals(ALICE.getInjury(), modelManager.getPersonByName(ALICE.getName()).getInjury());
     }
 
     @Test
