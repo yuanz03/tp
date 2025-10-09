@@ -132,7 +132,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void updatePersonInjuryStatus_personNotInAddressBook_throwsCommandException() {
+    public void updatePersonInjuryStatus_personNotInAddressBook_throwsPersonNotFoundException() {
         Injury injury = new Injury("Knee fracture");
         assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
     }
@@ -157,10 +157,10 @@ public class ModelManagerTest {
     @Test
     public void updatePersonInjuryStatus_sameInjury_noInjuryStatusChange() {
         modelManager.addPerson(ALICE);
-        Injury sameInjury = ALICE.getInjury();
+        Injury sameInjury = new Injury("ACL");
 
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
-        assertEquals(ALICE, updatedPerson);
+        assertEquals(sameInjury, updatedPerson.getInjury());
     }
 
     @Test
@@ -190,6 +190,78 @@ public class ModelManagerTest {
 
         modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), upperInjury);
         assertEquals(upperInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                modelManager.isDuplicateInjuryAssigned(null, new Injury("ACL")));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_nullInjury_throwsNullPointerException() {
+        modelManager.addPerson(ALICE);
+        assertThrows(NullPointerException.class, () ->
+                modelManager.isDuplicateInjuryAssigned(ALICE, null));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_personNotInAddressBook_throwsPersonNotFoundException() {
+        Injury injury = new Injury("Knee fracture");
+        assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_sameInjury_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjury = new Injury("ACL");
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, sameInjury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_differentInjury_returnsFalse() {
+        modelManager.addPerson(ALICE);
+        Injury differentInjury = new Injury("Hamstring strain");
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, differentInjury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_caseInsensitiveSameInjury_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjuryDifferentCase = new Injury("acl");
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, sameInjuryDifferentCase));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_multiplePersonsDifferentInjuries_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+        modelManager.addPerson(BENSON);
+
+        // ALICE initially has "ACL" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("ACL")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("Broken foot")));
+
+        // BENSON initially has "Broken foot" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(BENSON, new Injury("Broken foot")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(BENSON, new Injury("ACL")));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_afterInjuryUpdate_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+
+        // ALICE initially has "ACL" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("ACL")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("Concussion")));
+
+        // Update ALICE injury status to Concussion
+        modelManager.updatePersonInjuryStatus(ALICE, new Injury("Concussion"));
+
+        // ALICE now has "Concussion" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(modelManager.getPersonByName(ALICE.getName()),
+                new Injury("Concussion")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(modelManager.getPersonByName(ALICE.getName()),
+                new Injury("ACL")));
     }
 
     @Test

@@ -48,21 +48,35 @@ public class AssignInjuryCommandTest {
     }
 
     @Test
-    public void execute_personFound_assignSuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").build();
+    public void execute_duplicateInjuryAssignment_throwsCommandException() {
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
         Name name = validPerson.getName();
-        Injury injury = new Injury("Broken Foot");
+        Injury duplicateInjury = new Injury("ACL");
 
         AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned modelStub =
                 new AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned(validPerson);
 
-        CommandResult commandResult = new AssignInjuryCommand(name, injury).execute(modelStub);
+        assertThrows(CommandException.class,
+                String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY, name, duplicateInjury), () ->
+                new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+    }
 
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, injury),
+    @Test
+    public void execute_personFound_assignSuccessful() throws Exception {
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Name name = validPerson.getName();
+        Injury newInjury = new Injury("Broken Foot");
+
+        AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned modelStub =
+                new AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned(validPerson);
+
+        CommandResult commandResult = new AssignInjuryCommand(name, newInjury).execute(modelStub);
+
+        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, newInjury),
                 commandResult.getFeedbackToUser());
 
         assertEquals(validPerson, modelStub.personUpdated);
-        assertEquals(injury, modelStub.injuryAssigned);
+        assertEquals(newInjury, modelStub.injuryAssigned);
     }
 
     @Test
@@ -125,6 +139,11 @@ public class AssignInjuryCommandTest {
         public void updatePersonInjuryStatus(Person target, Injury injury) {
             this.personUpdated = target;
             this.injuryAssigned = injury;
+        }
+
+        @Override
+        public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
+            return target.getInjury().equals(injury);
         }
 
         @Override
