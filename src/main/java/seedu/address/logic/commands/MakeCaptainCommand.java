@@ -18,7 +18,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
- * 
  * <pre>
  * {@code makeCaptain p/Sergio Ramos}
  * </pre>
