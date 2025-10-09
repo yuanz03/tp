@@ -103,7 +103,7 @@ public class ModelStub implements Model {
         if (person.isCaptain()) {
             throw new seedu.address.model.person.exceptions.AlreadyCaptainException();
         }
-        person.makeCaptain();  // You need a setter for captain status in Person
+        person.makeCaptain();
     }
 
     @Override
