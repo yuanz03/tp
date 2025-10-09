@@ -75,4 +75,18 @@ public class ArgumentMultimap {
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
     }
+
+    /**
+     * Returns true if the map contains no key-value mappings.
+     * A map is considered empty if it contains no prefixes or only the preamble.
+     * size() == 1 indicates that only the preamble is present.
+     */
+    public boolean isEmpty() {
+        return argMultimap.size() == 1 && getPreamble().isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return argMultimap.toString();
+    }
 }
