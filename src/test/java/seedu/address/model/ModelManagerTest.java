@@ -22,6 +22,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
 import seedu.address.testutil.AddressBookBuilder;
@@ -153,7 +154,7 @@ public class ModelManagerTest {
         Injury sameInjury = ALICE.getInjury();
 
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
-        assertEquals(sameInjury, updatedPerson.getInjury());
+        assertEquals(ALICE, updatedPerson);
     }
 
     @Test
