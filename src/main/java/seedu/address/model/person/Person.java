@@ -29,6 +29,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Team team;
     private final Position position;
+    private final boolean isCaptain;
 
     /**
      * Creates a Person object, where isCaptain is false and with a team assigned.
