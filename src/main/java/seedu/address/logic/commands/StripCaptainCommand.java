@@ -57,7 +57,7 @@ public class StripCaptainCommand extends Command {
         }
 
         if (!targetPerson.isCaptain()) {
-            throw new CommandException(MESSAGE_NOT_CAPTAIN);
+            throw new CommandException(String.format(MESSAGE_NOT_CAPTAIN, targetPerson.getName()));
         }
 
         model.stripCaptain(targetPerson);
