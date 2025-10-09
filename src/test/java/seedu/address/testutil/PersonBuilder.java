@@ -107,6 +107,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code isCaptain} of the {@code Person} that we are building.
+     */
     public PersonBuilder withCaptain(boolean isCaptain) {
         this.isCaptain = isCaptain;
         return this;
