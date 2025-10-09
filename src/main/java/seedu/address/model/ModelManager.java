@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.team.Team;
+import seedu.address.model.position.Position;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +26,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Team> filteredTeams;
+    private final FilteredList<Position> filteredPositions;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -38,6 +40,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTeams = new FilteredList<>(this.addressBook.getTeamList());
+        filteredPositions = new FilteredList<>(this.addressBook.getPositionList());
     }
 
     public ModelManager() {
@@ -153,6 +156,41 @@ public class ModelManager implements Model {
     public void updateFilteredTeamList(Predicate<Team> predicate) {
         requireNonNull(predicate);
         filteredTeams.setPredicate(predicate);
+    }
+
+    //=========== Positions ==============================================================================
+    @Override
+    public boolean hasPosition(Position position) {
+        requireNonNull(position);
+        return addressBook.hasPosition(position);
+    }
+
+    @Override
+    public void addPosition(Position position) {
+        addressBook.addPosition(position);
+        updateFilteredPositionList(p -> true);
+    }
+
+    @Override
+    public void deletePosition(Position position) {
+        addressBook.removePosition(position);
+        updateFilteredPositionList(p -> true);
+    }
+
+    @Override
+    public ObservableList<Position> getFilteredPositionList() {
+        return filteredPositions;
+    }
+
+    @Override
+    public void updateFilteredPositionList(Predicate<Position> predicate) {
+        requireNonNull(predicate);
+        filteredPositions.setPredicate(predicate);
+    }
+
+    @Override
+    public Position getPositionByName(String name) {
+        return addressBook.getPositionByName(name);
     }
 
     @Override

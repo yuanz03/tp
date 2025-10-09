@@ -13,6 +13,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.team.Team;
+import seedu.address.model.position.Position;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -22,19 +23,29 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_TEAM = "Teams list contains duplicate team(s).";
+    public static final String MESSAGE_DUPLICATE_POSITION = "Positions list contains duplicate position(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
 
     private final List<JsonAdaptedTeam> teams = new ArrayList<>();
+    private final List<JsonAdaptedPosition> positions = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-                                       @JsonProperty("teams") List<JsonAdaptedTeam> teams) {
-        this.persons.addAll(persons);
-        this.teams.addAll(teams);
+                                       @JsonProperty("teams") List<JsonAdaptedTeam> teams,
+                                       @JsonProperty("positions") List<JsonAdaptedPosition> positions) {
+        if (persons != null) {
+            this.persons.addAll(persons);
+        }
+        if (teams != null) {
+            this.teams.addAll(teams);
+        }
+        if (positions != null) {
+            this.positions.addAll(positions);
+        }
     }
 
     /**
@@ -45,6 +56,7 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         teams.addAll(source.getTeamList().stream().map(JsonAdaptedTeam::new).collect(Collectors.toList()));
+        positions.addAll(source.getPositionList().stream().map(JsonAdaptedPosition::new).collect(Collectors.toList()));
     }
 
     /**
@@ -68,6 +80,13 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_TEAM);
             }
             addressBook.addTeam(team);
+        }
+        for (JsonAdaptedPosition jsonAdaptedPosition : positions) {
+            Position position = jsonAdaptedPosition.toModelType();
+            if (addressBook.hasPosition(position)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_POSITION);
+            }
+            addressBook.addPosition(position);
         }
         return addressBook;
     }

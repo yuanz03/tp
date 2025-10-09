@@ -12,6 +12,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.team.Team;
 import seedu.address.model.team.UniqueTeamList;
+import seedu.address.model.position.Position;
+import seedu.address.model.position.UniquePositionList;
 
 /**
  * Wraps all data at the address-book level
@@ -21,6 +23,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTeamList teams;
+    private final UniquePositionList positions;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -32,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         teams = new UniqueTeamList();
+        positions = new UniquePositionList();
     }
 
     public AddressBook() {
@@ -63,6 +67,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setTeams(newData.getTeamList());
+        setPositions(newData.getPositionList());
     }
 
     //// person-level operations
@@ -133,6 +138,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.teams.setTeams(teams);
     }
 
+    /**
+     * Replaces the contents of the positions list with {@code positions}.
+     * {@code positions} must not contain duplicate positions.
+     */
+    public void setPositions(List<Position> positions) {
+        this.positions.setPositions(positions);
+    }
+
+    //// position-level operations
+    public boolean hasPosition(Position position) {
+        requireNonNull(position);
+        return positions.contains(position);
+    }
+
+    public void addPosition(Position position) {
+        positions.add(position);
+    }
+
+    public void removePosition(Position position) {
+        positions.remove(position);
+    }
+
+    public Position getPositionByName(String name) {
+        return positions.getByName(name);
+    }
+
     /// / util methods
 
     @Override
@@ -151,6 +182,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Team> getTeamList() {
         return teams.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Position> getPositionList() {
+        return positions.asUnmodifiableObservableList();
     }
 
     @Override

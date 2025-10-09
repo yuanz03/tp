@@ -8,6 +8,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.team.Team;
+import seedu.address.model.position.Position;
 
 /**
  * The API of the Model component.
@@ -116,4 +117,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredTeamList(Predicate<Team> predicate);
+
+    // Positions API
+    boolean hasPosition(Position position);
+    void addPosition(Position position);
+    void deletePosition(Position position);
+    ObservableList<Position> getFilteredPositionList();
+    void updateFilteredPositionList(Predicate<Position> predicate);
+    Position getPositionByName(String name);
 }
