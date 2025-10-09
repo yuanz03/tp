@@ -63,4 +63,11 @@ public class DeleteCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PLAYER));
     }
 
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        // Empty input
+        assertParseFailure(parser, "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
 }
