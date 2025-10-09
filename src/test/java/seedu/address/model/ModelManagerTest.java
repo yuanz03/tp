@@ -22,7 +22,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
 import seedu.address.testutil.AddressBookBuilder;
@@ -121,8 +120,8 @@ public class ModelManagerTest {
 
     @Test
     public void updatePersonInjuryStatus_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class,
-                () -> modelManager.updatePersonInjuryStatus(null, new Injury("FIT")));
+        assertThrows(NullPointerException.class, () ->
+                modelManager.updatePersonInjuryStatus(null, new Injury("FIT")));
     }
 
     @Test
