@@ -16,7 +16,6 @@ public class FilterCaptainCommand extends Command {
     public static final String COMMAND_WORD = "filterCaptains";
     public static final String MESSAGE_SUCCESS = "Listed all captains";
 
-    @Override
     /**
      * Executes the filter captains command by updating the model's filtered person
      * list
@@ -25,6 +24,7 @@ public class FilterCaptainCommand extends Command {
      * @param model the model to operate on; must not be null
      * @return a {@link CommandResult} containing the success message
      */
+    @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_CAPTAINS);
