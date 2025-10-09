@@ -159,6 +159,16 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void makeCaptain(Person person) {
+        person.makeCaptain();
+    }
+
+    @Override
+    public void stripCaptain(Person person) {
+        person.stripCaptain();
+    }
+
+    @Override
     public boolean hasTeam(Team team) {
         requireNonNull(team);
         return addressBook.hasTeam(team);

@@ -27,6 +27,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamsCommand;
+import seedu.address.logic.commands.MakeCaptainCommand;
+import seedu.address.logic.commands.StripCaptainCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -109,15 +111,32 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_listTeams_withExtraArgs() throws Exception {
-        assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD + " 3")
-                instanceof ListTeamsCommand);
+        assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD + " 3") instanceof ListTeamsCommand);
+    }
+
+    @Test
+    public void parseCommand_makeCaptain() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        assertEquals(new MakeCaptainCommand(name),
+                parser.parseCommand(MakeCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
+    }
+
+    @Test
+    public void parseCommand_stripCaptain() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        assertEquals(new StripCaptainCommand(name),
+                parser.parseCommand(StripCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
+    }
+
+    @Test
+    public void parseCommand_filterCaptains() throws Exception {
+        assertTrue(parser.parseCommand("filterCaptains") instanceof seedu.address.logic.commands.FilterCaptainCommand);
     }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
-        assertThrows(ParseException.class,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        HelpCommand.MESSAGE_USAGE), () -> parser.parseCommand(""));
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                HelpCommand.MESSAGE_USAGE), () -> parser.parseCommand(""));
     }
 
     @Test

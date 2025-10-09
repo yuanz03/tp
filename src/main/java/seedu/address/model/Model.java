@@ -20,6 +20,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Team> PREDICATE_SHOW_ALL_TEAMS = unused -> true;
 
+    Predicate<Person> PREDICATE_SHOW_CAPTAINS = Person::isCaptain;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -125,4 +127,7 @@ public interface Model {
     ObservableList<Position> getFilteredPositionList();
     void updateFilteredPositionList(Predicate<Position> predicate);
     Position getPositionByName(String name);
+
+    void makeCaptain(Person person);
+    void stripCaptain(Person person);
 }
