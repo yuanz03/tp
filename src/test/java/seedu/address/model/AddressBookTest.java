@@ -34,6 +34,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTeamList());
+        assertEquals(Collections.emptyList(), addressBook.getPositionList());
     }
 
     @Test
@@ -131,6 +132,7 @@ public class AddressBookTest {
      */
     private static class AddressBookPersonStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<seedu.address.model.position.Position> positions = FXCollections.observableArrayList();
 
         AddressBookPersonStub(Collection<Person> persons) {
             this.persons.setAll(persons);
@@ -145,6 +147,11 @@ public class AddressBookTest {
         public ObservableList<Team> getTeamList() {
             return FXCollections.observableArrayList();
         }
+
+        @Override
+        public ObservableList<seedu.address.model.position.Position> getPositionList() {
+            return positions;
+        }
     }
 
     /**
@@ -152,6 +159,7 @@ public class AddressBookTest {
      */
     private static class AddressBookTeamStub implements ReadOnlyAddressBook {
         private final ObservableList<Team> teams = FXCollections.observableArrayList();
+        private final ObservableList<seedu.address.model.position.Position> positions = FXCollections.observableArrayList();
 
         AddressBookTeamStub(Collection<Team> teams) {
             this.teams.setAll(teams);
@@ -165,6 +173,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Team> getTeamList() {
             return teams;
+        }
+
+        @Override
+        public ObservableList<seedu.address.model.position.Position> getPositionList() {
+            return positions;
         }
     }
 

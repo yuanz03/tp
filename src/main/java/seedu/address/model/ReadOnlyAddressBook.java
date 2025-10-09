@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -20,5 +21,11 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate teams.
      */
     ObservableList<Team> getTeamList();
+
+    /**
+     * Returns an unmodifiable view of the positions list.
+     * This list will not contain any duplicate positions.
+     */
+    ObservableList<Position> getPositionList();
 
 }
