@@ -91,7 +91,6 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
-
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
     }

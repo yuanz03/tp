@@ -132,8 +132,7 @@ public class AddressBookTest {
      */
     private static class AddressBookPersonStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
-        private final ObservableList<seedu.address.model.position.Position> positions 
-            = FXCollections.observableArrayList();
+        private final ObservableList<seedu.address.model.position.Position> positions = FXCollections.observableArrayList();
 
         AddressBookPersonStub(Collection<Person> persons) {
             this.persons.setAll(persons);
