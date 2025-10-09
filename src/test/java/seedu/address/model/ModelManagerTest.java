@@ -125,6 +125,13 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void updatePersonInjuryStatus_nullInjury_throwsNullPointerException() {
+        modelManager.addPerson(ALICE);
+        assertThrows(NullPointerException.class, () ->
+                modelManager.updatePersonInjuryStatus(ALICE, null));
+    }
+
+    @Test
     public void updatePersonInjuryStatus_personNotInAddressBook_throwsCommandException() {
         Injury injury = new Injury("Knee fracture");
         assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
@@ -170,6 +177,19 @@ public class ModelManagerTest {
 
         modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), ALICE.getInjury());
         assertEquals(ALICE.getInjury(), modelManager.getPersonByName(ALICE.getName()).getInjury());
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_caseInsensitiveInjury_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+        Injury lowerInjury = new Injury("acl");
+        Injury upperInjury = new Injury("ACL");
+
+        modelManager.updatePersonInjuryStatus(ALICE, lowerInjury);
+        assertEquals(lowerInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+
+        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), upperInjury);
+        assertEquals(upperInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
     }
 
     @Test
