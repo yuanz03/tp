@@ -41,6 +41,24 @@ public class AssignInjuryCommandParserTest {
     }
 
     @Test
+    public void parse_missingPlayerPrefix_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, " " + INJURY_DESC_BOB, expectedMessage);
+    }
+
+    @Test
+    public void parse_missingInjuryPrefix_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, " " + PLAYER_DESC_BOB, expectedMessage);
+    }
+
+    @Test
+    public void parse_extraPreamble_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, "extra " + PLAYER_DESC_BOB + INJURY_DESC_BOB, expectedMessage);
+    }
+
+    @Test
     public void parse_invalidPlayer_failure() {
         assertParseFailure(parser, PREAMBLE_WHITESPACE + INVALID_PLAYER_DESC + INJURY_DESC_BOB,
                 Name.MESSAGE_CONSTRAINTS);
@@ -61,5 +79,23 @@ public class AssignInjuryCommandParserTest {
         // duplicate injury prefix
         assertParseFailure(parser, PLAYER_DESC_BOB + INJURY_DESC_BOB + INJURY_DESC_BOB,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
+    }
+
+    @Test
+    public void parse_validInjuryWithSpaces_success() {
+        String injuryWithSpaces = " " + PREFIX_INJURY + "Broken Fibula";
+        Person expectedPerson = new PersonBuilder(BOB).withInjury("Broken Fibula").build();
+
+        assertParseSuccess(parser, PLAYER_DESC_BOB + injuryWithSpaces,
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
+    }
+
+    @Test
+    public void parse_validInjuryWithNumbers_success() {
+        String injuryWithNumbers = " " + PREFIX_INJURY + "Grade 2 Ankle Sprain";
+        Person expectedPerson = new PersonBuilder(BOB).withInjury("Grade 2 Ankle Sprain").build();
+
+        assertParseSuccess(parser, PLAYER_DESC_BOB + injuryWithNumbers,
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
     }
 }

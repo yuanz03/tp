@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Injury;
@@ -23,6 +24,27 @@ public class AssignInjuryCommandTest {
     public void constructor_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
                 new AssignInjuryCommand(null, new Injury("ACL")));
+    }
+
+    @Test
+    public void execute_personNotFound_throwsCommandException() {
+        Name nonExistentName = new Name("Missing");
+        Injury injury = new Injury("ACL");
+
+        AssignInjuryCommandTest.ModelStubThrowingPersonNotFound modelStub =
+                new AssignInjuryCommandTest.ModelStubThrowingPersonNotFound();
+
+        assertThrows(CommandException.class, () ->
+                new AssignInjuryCommand(nonExistentName, injury).execute(modelStub));
+    }
+
+    @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        Name name = new Name("Gerrard");
+        Injury injury = new Injury("Broken Foot");
+
+        assertThrows(NullPointerException.class, () ->
+                new AssignInjuryCommand(name, injury).execute(null));
     }
 
     @Test
