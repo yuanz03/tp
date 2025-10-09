@@ -13,8 +13,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
 import seedu.address.model.position.Position;
+import seedu.address.model.team.Team;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -82,7 +82,7 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    //=========== AddressBook =============================================================================
 
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
@@ -158,6 +158,18 @@ public class ModelManager implements Model {
         filteredTeams.setPredicate(predicate);
     }
 
+    @Override
+    public boolean hasTeam(Team team) {
+        requireNonNull(team);
+        return addressBook.hasTeam(team);
+    }
+
+    @Override
+    public void addTeam(Team team) {
+        addressBook.addTeam(team);
+        updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
+    }
+
     //=========== Positions ==============================================================================
     @Override
     public boolean hasPosition(Position position) {
@@ -194,18 +206,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasTeam(Team team) {
-        requireNonNull(team);
-        return addressBook.hasTeam(team);
-    }
-
-    @Override
-    public void addTeam(Team team) {
-        addressBook.addTeam(team);
-        updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
-    }
-
-    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -222,5 +222,4 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons)
                 && filteredTeams.equals(otherModelManager.filteredTeams);
     }
-
 }

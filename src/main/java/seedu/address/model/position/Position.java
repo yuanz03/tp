@@ -8,7 +8,9 @@ import java.util.Objects;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Represents a Position in the address book.
+ * Represents a player position in the address book (e.g. LW, RW, ST).
+ *<p>
+ * Names are case-insensitive for equality and must be alphanumeric.
  */
 public class Position {
 
@@ -17,6 +19,11 @@ public class Position {
 
     private final String name;
 
+    /**
+     * Constructs a {@code Position} with a validated name.
+     *
+     * @param name position name; must be non-null and alphanumeric.
+     */
     public Position(String name) {
         requireAllNonNull(name);
         String trimmed = name.trim();
@@ -24,14 +31,23 @@ public class Position {
         this.name = trimmed;
     }
 
+    /**
+     * Returns true if the given string is a valid position name.
+     */
     public static boolean isValidPositionName(String test) {
         return test != null && test.trim().matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the normalized name of this position.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns true if both positions have the same name (case-insensitive).
+     */
     public boolean isSamePosition(Position other) {
         if (other == this) {
             return true;

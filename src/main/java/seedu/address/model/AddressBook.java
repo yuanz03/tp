@@ -10,10 +10,10 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.team.Team;
-import seedu.address.model.team.UniqueTeamList;
 import seedu.address.model.position.Position;
 import seedu.address.model.position.UniquePositionList;
+import seedu.address.model.team.Team;
+import seedu.address.model.team.UniqueTeamList;
 
 /**
  * Wraps all data at the address-book level

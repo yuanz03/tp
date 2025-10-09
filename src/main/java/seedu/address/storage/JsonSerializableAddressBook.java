@@ -12,8 +12,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
 import seedu.address.model.position.Position;
+import seedu.address.model.team.Team;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -37,12 +37,9 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
                                        @JsonProperty("teams") List<JsonAdaptedTeam> teams,
                                        @JsonProperty("positions") List<JsonAdaptedPosition> positions) {
-        if (persons != null) {
-            this.persons.addAll(persons);
-        }
-        if (teams != null) {
-            this.teams.addAll(teams);
-        }
+        // Persons and teams must be present (legacy behavior relied upon by tests)
+        this.persons.addAll(persons);
+        this.teams.addAll(teams);
         if (positions != null) {
             this.positions.addAll(positions);
         }

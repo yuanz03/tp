@@ -6,12 +6,16 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AssignPositionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new {@code AssignPositionCommand} object.
+ */
 public class AssignPositionCommandParser implements Parser<AssignPositionCommand> {
     private static final Pattern ARG_PATTERN =
             Pattern.compile("(?i).*\\bp/(?<player>[^\\s].*?)\\s+ps/(?<position>\\S+)\\s*");
 
     @Override
     public AssignPositionCommand parse(String args) throws ParseException {
+        // Validates presence of both p/ and ps/ flags and extracts values
         if (args == null || args.trim().isEmpty()) {
             throw new ParseException(AssignPositionCommand.MESSAGE_INVALID_FORMAT);
         }

@@ -8,6 +8,11 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.position.Position;
 
+/**
+ * Assigns an existing {@code Position} to an existing {@code Person}.
+ * <p>
+ * Usage: {@code assignposition p/<player> ps/<position>}
+ */
 public class AssignPositionCommand extends Command {
     public static final String COMMAND_WORD = "assignposition";
     public static final String MESSAGE_SUCCESS = "%s has been successfully assigned position %s!";
@@ -22,6 +27,12 @@ public class AssignPositionCommand extends Command {
     private final String rawPlayerName;
     private final String rawPositionName;
 
+    /**
+     * Creates an {@code AssignPositionCommand}.
+     *
+     * @param rawPlayerName raw player name string (may require trimming and case-insensitive matching).
+     * @param rawPositionName raw position name string (may require trimming and case-insensitive matching).
+     */
     public AssignPositionCommand(String rawPlayerName, String rawPositionName) {
         this.rawPlayerName = rawPlayerName;
         this.rawPositionName = rawPositionName;
@@ -29,6 +40,7 @@ public class AssignPositionCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        // Assign position to player with validations for existence and duplicates
         requireNonNull(model);
         final String playerNameStr = rawPlayerName.trim();
         final String positionNameStr = rawPositionName.trim();
@@ -52,7 +64,7 @@ public class AssignPositionCommand extends Command {
         }
 
         if (person.getPosition().getName().equalsIgnoreCase(position.getName())) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_ASSIGN, playerNameStr, positionNameStr));
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_ASSIGN, playerNameStr, position.getName()));
         }
 
         Person edited = new Person(
@@ -65,7 +77,7 @@ public class AssignPositionCommand extends Command {
                 person.getTags()
         );
         model.setPerson(person, edited);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, playerNameStr, positionNameStr));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, playerNameStr, position.getName()));
     }
 }
 

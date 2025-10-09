@@ -6,11 +6,15 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.DeletePositionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new {@code DeletePositionCommand} object.
+ */
 public class DeletePositionCommandParser implements Parser<DeletePositionCommand> {
     private static final Pattern ARG_PATTERN = Pattern.compile("(?i)\\s*ps/(?<name>\\S+)\\s*");
 
     @Override
     public DeletePositionCommand parse(String args) throws ParseException {
+        // Validates presence of ps/ flag and extracts value
         if (args == null || args.trim().isEmpty()) {
             throw new ParseException(DeletePositionCommand.MESSAGE_INVALID_FORMAT);
         }
