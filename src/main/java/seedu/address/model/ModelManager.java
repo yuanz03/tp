@@ -126,6 +126,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
+        return target.getInjury().equals(injury);
+    }
+
+    @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
 

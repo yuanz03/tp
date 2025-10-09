@@ -27,6 +27,7 @@ public class AssignInjuryCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL ";
 
     public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
+    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
 
     private final Name personNameToAssign;
     private final Injury injuryToAssign;
@@ -49,6 +50,11 @@ public class AssignInjuryCommand extends Command {
             personToAssign = model.getPersonByName(personNameToAssign);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToAssign.toString()));
+        }
+
+        if (model.isDuplicateInjuryAssigned(personToAssign, injuryToAssign)) {
+            throw new CommandException(String.format(MESSAGE_ASSIGNED_SAME_INJURY,
+                    personNameToAssign, injuryToAssign));
         }
 
         model.updatePersonInjuryStatus(personToAssign, injuryToAssign);

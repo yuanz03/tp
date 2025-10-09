@@ -87,6 +87,11 @@ public interface Model {
     void updatePersonInjuryStatus(Person target, Injury injury);
 
     /**
+     * Returns true if the given person has already been assigned the injury status represented by {@code injury}.
+     */
+    boolean isDuplicateInjuryAssigned(Person target, Injury injury);
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
