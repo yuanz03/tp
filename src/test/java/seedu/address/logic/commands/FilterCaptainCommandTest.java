@@ -28,11 +28,13 @@ public class FilterCaptainCommandTest {
 
     @Test
     public void execute_filtersToCaptains() {
+        // Apply expected filter first
+        expectedModel.updateFilteredPersonList(seedu.address.model.Model.PREDICATE_SHOW_CAPTAINS);
         assertCommandSuccess(new FilterCaptainCommand(), model,
                 FilterCaptainCommand.MESSAGE_SUCCESS, expectedModel);
 
-        long captainsCount = expectedModel.getFilteredPersonList().stream().filter(Person::isCaptain).count();
-        long modelCount = model.getFilteredPersonList().stream().filter(Person::isCaptain).count();
-        assertEquals(captainsCount, modelCount);
+        long expectedCaptainsCount = expectedModel.getFilteredPersonList().stream().filter(Person::isCaptain).count();
+        long actualCaptainsCount = model.getFilteredPersonList().stream().filter(Person::isCaptain).count();
+        assertEquals(expectedCaptainsCount, actualCaptainsCount);
     }
 }

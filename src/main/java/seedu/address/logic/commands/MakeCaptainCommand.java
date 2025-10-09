@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
+ * 
  * <pre>
  * {@code makeCaptain p/Sergio Ramos}
  * </pre>
@@ -57,11 +58,11 @@ public class MakeCaptainCommand extends Command {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
         }
 
-        try {
-            model.makeCaptain(targetPerson);
-        } catch (AlreadyCaptainException e) {
-            throw new CommandException(String.format(MESSAGE_ALREADY_CAPTAIN));
+        if (targetPerson.isCaptain()) {
+            throw new CommandException(MESSAGE_ALREADY_CAPTAIN);
         }
+
+        model.makeCaptain(targetPerson);
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
                 Messages.format(targetPerson)));

@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already not a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
+ * 
  * <pre>
  * {@code stripCaptain p/Sergio Ramos}
  * </pre>
@@ -57,11 +58,11 @@ public class StripCaptainCommand extends Command {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
         }
 
-        try {
-            model.stripCaptain(targetPerson);
-        } catch (AlreadyNotCaptainException e) {
-            throw new CommandException(String.format(MESSAGE_NOT_CAPTAIN));
+        if (!targetPerson.isCaptain()) {
+            throw new CommandException(MESSAGE_NOT_CAPTAIN);
         }
+
+        model.stripCaptain(targetPerson);
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
                 Messages.format(targetPerson)));
