@@ -45,8 +45,8 @@ public class Person {
     }
 
     /**
-     * Creates a Person object, where isCaptain is true and with a team assigned.
-     * Every field must be present, and not null.
+     * Creates a Person object with specified captain status and with a team assigned.
+     * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags, boolean isCaptain) {
         requireAllNonNull(name, phone, email, address, team, tags);
