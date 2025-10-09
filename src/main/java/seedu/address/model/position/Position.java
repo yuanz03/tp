@@ -9,7 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Represents a player position in the address book (e.g. LW, RW, ST).
- *<p>
+ * <p>
  * Names are case-insensitive for equality and must be alphanumeric.
  */
 public class Position {

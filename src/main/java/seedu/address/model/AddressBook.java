@@ -146,7 +146,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.positions.setPositions(positions);
     }
 
-    //// position-level operations
+    /**
+     * Returns true if a position with the same identity as {@code position} exists in the address book.
+     * <p>
+     * Identity is determined by {@link seedu.address.model.position.Position#isSamePosition(Position)}
+     * which compares position names case-insensitively.
+     *
+     * @param position the position to check; must not be {@code null}.
+     * @return {@code true} if an equivalent position already exists; {@code false} otherwise.
+     */
     public boolean hasPosition(Position position) {
         requireNonNull(position);
         return positions.contains(position);
