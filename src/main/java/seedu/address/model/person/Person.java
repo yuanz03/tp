@@ -14,7 +14,8 @@ import seedu.address.model.team.Team;
 
 /**
  * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: details are present and not null, field values are validated,
+ * immutable.
  */
 public class Person {
 
@@ -30,7 +31,7 @@ public class Person {
     private final Position position;
 
     /**
-     * Creates a Person object with team and position assigned.
+     * Creates a Person object, where isCaptain is false and with a team assigned.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Position position, Set<Tag> tags) {
@@ -42,6 +43,22 @@ public class Person {
         this.team = team;
         this.position = position;
         this.tags.addAll(tags);
+        this.isCaptain = false;
+    }
+
+    /**
+     * Creates a Person object, where isCaptain is true and with a team assigned.
+     * Every field must be present, and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags, boolean isCaptain) {
+        requireAllNonNull(name, phone, email, address, team, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.tags.addAll(tags);
+        this.isCaptain = isCaptain;
     }
 
     /**
@@ -74,9 +91,22 @@ public class Person {
     public Position getPosition() {
         return position;
     }
+  
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void makeCaptain() {
+        this.isCaptain = true;
+    }
+
+    public void stripCaptain() {
+        this.isCaptain = false;
+    }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set, which throws
+     * {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
@@ -117,7 +147,8 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && isCaptain == otherPerson.isCaptain();
     }
 
     @Override
@@ -135,6 +166,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("team", team)
+                .add("isCaptain", isCaptain)
                 .toString();
     }
 
