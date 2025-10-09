@@ -18,7 +18,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
- *
  * <pre>
  * {@code makeCaptain p/Sergio Ramos}
  * </pre>
@@ -69,13 +68,13 @@ public class MakeCaptainCommand extends Command {
 
     }
 
-    @Override
     /**
      * Returns true if both commands target the same {@link Name}.
      *
      * @param other the other object to compare with
      * @return whether both commands are equal
      */
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
