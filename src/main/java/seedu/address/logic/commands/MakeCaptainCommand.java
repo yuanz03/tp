@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
+ * 
  * <pre>
  * {@code makeCaptain p/Sergio Ramos}
  * </pre>
@@ -34,6 +35,13 @@ public class MakeCaptainCommand extends Command {
 
     private final Name targetName;
 
+    /**
+     * Creates a {@code MakeCaptainCommand} targeting the person with
+     * {@code targetName}.
+     *
+     * @param targetName the name of the person to mark as captain; must not be
+     *                   null.
+     */
     public MakeCaptainCommand(Name targetName) {
         this.targetName = targetName;
     }
@@ -47,17 +55,37 @@ public class MakeCaptainCommand extends Command {
         try {
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
-            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND));
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
+        }
+
+        try {
+            model.makeCaptain(targetPerson);
         } catch (AlreadyCaptainException e) {
             throw new CommandException(String.format(MESSAGE_ALREADY_CAPTAIN));
         }
 
-        // catch person already exists as captain
-
-        model.makeCaptain(targetPerson);
-
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
                 Messages.format(targetPerson)));
 
+    }
+
+    @Override
+    /**
+     * Returns true if both commands target the same {@link Name}.
+     *
+     * @param other the other object to compare with
+     * @return whether both commands are equal
+     */
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof MakeCaptainCommand)) {
+            return false;
+        }
+
+        MakeCaptainCommand otherCommand = (MakeCaptainCommand) other;
+        return targetName.equals(otherCommand.targetName);
     }
 }

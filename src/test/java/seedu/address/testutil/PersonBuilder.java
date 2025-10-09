@@ -22,6 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TEAM = "U12";
+    public static final boolean DEFAULT_CAPTAINCY = false;
 
     private Name name;
     private Phone phone;
@@ -29,6 +30,7 @@ public class PersonBuilder {
     private Address address;
     private Team team;
     private Set<Tag> tags;
+    private boolean isCaptain;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +42,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
+        isCaptain = DEFAULT_CAPTAINCY;
     }
 
     /**
@@ -52,6 +55,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
+        isCaptain = personToCopy.isCaptain();
     }
 
     /**
@@ -103,8 +107,13 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withCaptain(boolean isCaptain) {
+        this.isCaptain = isCaptain;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, team, tags);
+        return new Person(name, phone, email, address, team, tags, isCaptain);
     }
 
 }
