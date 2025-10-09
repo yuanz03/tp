@@ -91,7 +91,7 @@ public class Person {
     public Position getPosition() {
         return position;
     }
-  
+
     public boolean isCaptain() {
         return isCaptain;
     }
