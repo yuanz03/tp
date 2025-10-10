@@ -58,6 +58,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
+        position = personToCopy.getPosition();
         isCaptain = personToCopy.isCaptain();
     }
 
@@ -111,6 +112,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Position} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPosition(String positionName) {
+        this.position = new Position(positionName);
+        return this;
+    }
+
+    /**
      * Sets the {@code isCaptain} of the {@code Person} that we are building.
      */
     public PersonBuilder withCaptain(boolean isCaptain) {
@@ -119,7 +128,13 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, team, position, tags);
+        Person built = (position == null)
+                ? new Person(name, phone, email, address, team, tags)
+                : new Person(name, phone, email, address, team, position, tags);
+        if (isCaptain) {
+            built.makeCaptain();
+        }
+        return built;
     }
 
 }
