@@ -41,6 +41,7 @@ public class CommandTestUtil {
     public static final String VALID_INJURY_BOB = "Meniscus tear";
     public static final String VALID_TEAM_AMY = "U12";
     public static final String VALID_TEAM_BOB = "U16";
+    public static final String VALID_POSITION_BOB = "RW";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
