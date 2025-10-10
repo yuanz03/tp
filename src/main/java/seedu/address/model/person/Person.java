@@ -61,7 +61,7 @@ public class Person {
         this.tags.addAll(tags);
         this.isCaptain = isCaptain;
     }
-    
+
     /**
      * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
      */
