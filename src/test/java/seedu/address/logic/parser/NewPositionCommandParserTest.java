@@ -19,13 +19,14 @@ public class NewPositionCommandParserTest {
 
     @Test
     public void parse_missingFlag_failure() {
-        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_MISSING_FLAG, () -> parser.parse(" LW"));
+        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_MISSING_FLAG, () ->
+                parser.parse(" LW"));
     }
 
     @Test
     public void parse_invalidFormat_failure() {
-        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_INVALID_FORMAT,
-                () -> parser.parse(" ps/LW ps/ST"));
+        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+                parser.parse(" ps/LW ps/ST"));
     }
 }
 

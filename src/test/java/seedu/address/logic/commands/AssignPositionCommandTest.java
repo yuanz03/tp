@@ -26,18 +26,18 @@ public class AssignPositionCommandTest {
                 res.getFeedbackToUser());
 
         // Duplicate assignment
-        assertThrows(CommandException.class,
-                String.format(AssignPositionCommand.MESSAGE_DUPLICATE_ASSIGN, "Alice", "LW"),
-                () -> new AssignPositionCommand("Alice", "lw").execute(model));
+        assertThrows(CommandException.class, String.format(
+                AssignPositionCommand.MESSAGE_DUPLICATE_ASSIGN, "Alice", "LW"), () ->
+                new AssignPositionCommand("Alice", "lw").execute(model));
     }
 
     @Test
     public void execute_missingEntities_fail() {
         Model model = new ModelManager();
         // No person, no position
-        assertThrows(CommandException.class,
-                String.format(AssignPositionCommand.MESSAGE_POSITION_NOT_FOUND, "LW"),
-                () -> new AssignPositionCommand("Alice", "LW").execute(model));
+        assertThrows(CommandException.class, String.format(
+                AssignPositionCommand.MESSAGE_POSITION_NOT_FOUND, "LW"), () ->
+                new AssignPositionCommand("Alice", "LW").execute(model));
     }
 }
 

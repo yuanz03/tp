@@ -16,8 +16,8 @@ public class DeletePositionCommandTest {
         new NewPositionCommand("LW").execute(model);
         CommandResult res = new DeletePositionCommand("lw").execute(model);
         assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "lw"), res.getFeedbackToUser());
-        assertThrows(CommandException.class, DeletePositionCommand.MESSAGE_NOT_FOUND,
-                () -> new DeletePositionCommand("lw").execute(model));
+        assertThrows(CommandException.class, DeletePositionCommand.MESSAGE_NOT_FOUND, () ->
+                new DeletePositionCommand("lw").execute(model));
     }
 }
 

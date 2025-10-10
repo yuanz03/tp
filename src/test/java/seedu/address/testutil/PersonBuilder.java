@@ -127,6 +127,10 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds a {@link Person} instance with the configured state.
+     * If no position was set explicitly, uses the legacy constructor that defaults position to NONE.
+     */
     public Person build() {
         Person built = (position == null)
                 ? new Person(name, phone, email, address, team, tags)

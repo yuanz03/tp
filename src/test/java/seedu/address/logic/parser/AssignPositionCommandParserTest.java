@@ -18,14 +18,14 @@ public class AssignPositionCommandParserTest {
 
     @Test
     public void parse_missingPlayerFlag_failure() {
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_MISSING_PLAYER_FLAG,
-                () -> parser.parse(" ps/LW"));
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_MISSING_PLAYER_FLAG, () ->
+                parser.parse(" ps/LW"));
     }
 
     @Test
     public void parse_missingPositionFlag_failure() {
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_MISSING_POSITION_FLAG,
-                () -> parser.parse(" p/Alice"));
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_MISSING_POSITION_FLAG, () ->
+                parser.parse(" p/Alice"));
     }
 }
 
