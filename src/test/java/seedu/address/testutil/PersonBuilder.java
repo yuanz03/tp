@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_INJURY = "ACL"; // TODO: change to "FIT" once edit is implemented
     public static final String DEFAULT_TEAM = "U12";
-    public static final String DEFAULT_POSITION = "LW";
+    public static final String DEFAULT_POSITION = "NONE";
     public static final boolean DEFAULT_CAPTAINCY = false;
 
     private Name name;
@@ -50,6 +50,7 @@ public class PersonBuilder {
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
         isCaptain = DEFAULT_CAPTAINCY;
+        position = new Position(DEFAULT_POSITION);
     }
 
     /**
@@ -145,9 +146,8 @@ public class PersonBuilder {
      * If no position was set explicitly, uses the legacy constructor that defaults position to NONE.
      */
     public Person build() {
-        Person built = (position == null)
-                ? new Person(name, phone, email, address, team, tags, injury)
-                : new Person(name, phone, email, address, team, position, tags, injury);
+        Person built = new Person(name, phone, email, address, team, tags, position, injury);
+
         if (isCaptain) {
             built.makeCaptain();
         }

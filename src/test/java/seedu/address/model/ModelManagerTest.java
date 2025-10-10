@@ -151,6 +151,7 @@ public class ModelManagerTest {
         assertEquals(ALICE.getEmail(), updatedPerson.getEmail());
         assertEquals(ALICE.getAddress(), updatedPerson.getAddress());
         assertEquals(ALICE.getTeam(), updatedPerson.getTeam());
+        assertEquals(ALICE.getPosition(), updatedPerson.getPosition());
         assertEquals(ALICE.getTags(), updatedPerson.getTags());
     }
 
