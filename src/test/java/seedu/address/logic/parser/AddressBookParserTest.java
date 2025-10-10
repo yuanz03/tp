@@ -131,8 +131,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_filterCaptains() throws Exception {
-        assertTrue(parser.parseCommand(FilterCaptainCommand.COMMAND_WORD) instanceof
-                seedu.address.logic.commands.FilterCaptainCommand);
+        assertTrue(parser.parseCommand(FilterCaptainCommand.COMMAND_WORD) instanceof FilterCaptainCommand);
     }
 
     @Test
