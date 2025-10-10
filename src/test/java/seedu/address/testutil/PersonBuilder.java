@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 import seedu.address.model.util.SampleDataUtil;
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TEAM = "U12";
+    public static final String DEFAULT_POSITION = "LW";
     public static final boolean DEFAULT_CAPTAINCY = false;
 
     private Name name;
@@ -30,6 +32,7 @@ public class PersonBuilder {
     private Address address;
     private Team team;
     private Set<Tag> tags;
+    private Position position;
     private boolean isCaptain;
 
     /**
@@ -55,6 +58,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
+        position = personToCopy.getPosition();
         isCaptain = personToCopy.isCaptain();
     }
 
@@ -108,6 +112,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Position} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPosition(String positionName) {
+        this.position = new Position(positionName);
+        return this;
+    }
+
+    /**
      * Sets the {@code isCaptain} of the {@code Person} that we are building.
      */
     public PersonBuilder withCaptain(boolean isCaptain) {
@@ -115,8 +127,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds a {@link Person} instance with the configured state.
+     * If no position was set explicitly, uses the legacy constructor that defaults position to NONE.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, team, tags, isCaptain);
+        Person built = (position == null)
+                ? new Person(name, phone, email, address, team, tags)
+                : new Person(name, phone, email, address, team, position, tags);
+        if (isCaptain) {
+            built.makeCaptain();
+        }
+        return built;
     }
 
 }

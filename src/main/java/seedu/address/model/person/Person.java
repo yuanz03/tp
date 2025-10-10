@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 
@@ -27,19 +28,21 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Team team;
+    private final Position position;
     private boolean isCaptain;
 
     /**
      * Creates a Person object, where isCaptain is false and with a team assigned.
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, team, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Position position, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, team, position, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
+        this.position = position;
         this.tags.addAll(tags);
         this.isCaptain = false;
     }
@@ -57,6 +60,13 @@ public class Person {
         this.team = team;
         this.tags.addAll(tags);
         this.isCaptain = isCaptain;
+    }
+  
+     /** 
+     * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+        this(name, phone, email, address, team, new Position("NONE"), tags);
     }
 
     public Name getName() {
@@ -77,6 +87,10 @@ public class Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public boolean isCaptain() {
@@ -108,7 +122,6 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
-
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
     }

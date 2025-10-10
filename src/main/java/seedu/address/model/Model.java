@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -119,7 +120,14 @@ public interface Model {
      */
     void updateFilteredTeamList(Predicate<Team> predicate);
 
-    void makeCaptain(Person person);
+    // Positions API
+    boolean hasPosition(Position position);
+    void addPosition(Position position);
+    void deletePosition(Position position);
+    ObservableList<Position> getFilteredPositionList();
+    void updateFilteredPositionList(Predicate<Position> predicate);
+    Position getPositionByName(String name);
 
+    void makeCaptain(Person person);
     void stripCaptain(Person person);
 }
