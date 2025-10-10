@@ -75,9 +75,9 @@ public class SampleDataUtil {
 
     public static Position[] getSamplePositions() {
         return new Position[] {
-                new Position("LW"),
-                new Position("RW"),
-                new Position("CAM")
+            new Position("LW"),
+            new Position("RW"),
+            new Position("CAM")
         };
     }
 

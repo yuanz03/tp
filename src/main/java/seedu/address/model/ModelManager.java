@@ -123,7 +123,7 @@ public class ModelManager implements Model {
         requireAllNonNull(target, injury);
 
         Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), injury);
+                target.getTeam(), target.getTags(), target.getPosition(), injury);
 
         setPerson(target, updatedPerson);
     }
