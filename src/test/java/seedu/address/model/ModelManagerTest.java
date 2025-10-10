@@ -160,6 +160,8 @@ public class ModelManagerTest {
         modelManager.addPerson(ALICE);
         Injury sameInjury = new Injury("ACL");
 
+        modelManager.updatePersonInjuryStatus(ALICE, sameInjury);
+
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
         assertEquals(sameInjury, updatedPerson.getInjury());
     }
@@ -209,7 +211,7 @@ public class ModelManagerTest {
     @Test
     public void isDuplicateInjuryAssigned_personNotInAddressBook_throwsPersonNotFoundException() {
         Injury injury = new Injury("Knee fracture");
-        assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
+        assertThrows(PersonNotFoundException.class, () -> modelManager.isDuplicateInjuryAssigned(ALICE, injury));
     }
 
     @Test
@@ -234,7 +236,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void isDuplicateInjuryAssigned_multiplePersonsDifferentInjuries_updatesInjuryStatusCorrectly() {
+    public void isDuplicateInjuryAssigned_multiplePersonsDifferentInjuries_reflectsUpdatedStatus() {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BENSON);
 
@@ -248,7 +250,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void isDuplicateInjuryAssigned_afterInjuryUpdate_updatesInjuryStatusCorrectly() {
+    public void isDuplicateInjuryAssigned_afterInjuryUpdate_reflectsUpdatedStatus() {
         modelManager.addPerson(ALICE);
 
         // ALICE initially has "ACL" injury status

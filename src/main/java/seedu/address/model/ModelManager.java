@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
@@ -131,6 +132,10 @@ public class ModelManager implements Model {
     @Override
     public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
         requireAllNonNull(target, injury);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
         return target.getInjury().equals(injury);
     }
 

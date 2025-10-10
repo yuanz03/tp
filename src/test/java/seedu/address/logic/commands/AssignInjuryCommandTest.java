@@ -27,12 +27,17 @@ public class AssignInjuryCommandTest {
     }
 
     @Test
+    public void constructor_nullInjury_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                new AssignInjuryCommand(new Name("Messi"), null));
+    }
+
+    @Test
     public void execute_personNotFound_throwsCommandException() {
         Name nonExistentName = new Name("Missing");
         Injury injury = new Injury("ACL");
 
-        AssignInjuryCommandTest.ModelStubThrowingPersonNotFound modelStub =
-                new AssignInjuryCommandTest.ModelStubThrowingPersonNotFound();
+        ModelStubThrowingPersonNotFound modelStub = new ModelStubThrowingPersonNotFound();
 
         assertThrows(CommandException.class, () ->
                 new AssignInjuryCommand(nonExistentName, injury).execute(modelStub));
@@ -53,8 +58,7 @@ public class AssignInjuryCommandTest {
         Name name = validPerson.getName();
         Injury duplicateInjury = new Injury("ACL");
 
-        AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned modelStub =
-                new AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned(validPerson);
+        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class,
                 String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY, name, duplicateInjury), () ->
@@ -67,8 +71,7 @@ public class AssignInjuryCommandTest {
         Name name = validPerson.getName();
         Injury newInjury = new Injury("Broken Foot");
 
-        AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned modelStub =
-                new AssignInjuryCommandTest.ModelStubAcceptingInjuryAssigned(validPerson);
+        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         CommandResult commandResult = new AssignInjuryCommand(name, newInjury).execute(modelStub);
 
