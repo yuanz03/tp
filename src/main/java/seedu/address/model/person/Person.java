@@ -35,41 +35,22 @@ public class Person {
     private boolean isCaptain;
 
     /**
-     * Creates a Person object assigned to a team with the default injury status and position.
-     * Overloaded constructor sets the person's injury status to the
-     * default value {@code "FIT"} and default position of NONE.
-     * Every field must be present and not null, and isCaptain is false.
+     * Creates a Person object assigned to a team with an optional position and injury status.
+     * If position is null, it defaults to {@code "NONE"}. If injury is null, it defaults to {@code "FIT"}.
+     * Every field must be present and not null, except position and injury which can be null.
+     * isCaptain is false by default.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
+                  Position position, Injury injury) {
         requireAllNonNull(name, phone, email, address, team, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
-        this.position = new Position(DEFAULT_POSITION);
         this.tags.addAll(tags);
-        this.injury = new Injury(DEFAULT_INJURY_STATUS);
-        this.isCaptain = false;
-    }
-
-    /**
-     * Creates a Person object assigned to a team with an explicit injury status.
-     * Overloaded constructor sets the person's injury status to the specified
-     * {@code injury}, and position to the specified {@code position}.
-     * Every field must be present and not null, and isCaptain is false.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
-                  Position position, Injury injury) {
-        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.team = team;
-        this.position = position;
-        this.tags.addAll(tags);
-        this.injury = injury;
+        this.position = position != null ? position : new Position(DEFAULT_POSITION);
+        this.injury = injury != null ? injury : new Injury(DEFAULT_INJURY_STATUS);
         this.isCaptain = false;
     }
 
