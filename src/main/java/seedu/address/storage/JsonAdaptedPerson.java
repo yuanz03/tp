@@ -66,9 +66,9 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        injuryName = source.getInjury().injuryName;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
+        injuryName = source.getInjury().injuryName;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -134,7 +134,7 @@ class JsonAdaptedPerson {
         final Position modelPosition = (position == null) ? new Position("NONE") : position.toModelType();
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelPosition,
-                modelTags, modelInjury);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
+                modelPosition, modelInjury);
     }
 }

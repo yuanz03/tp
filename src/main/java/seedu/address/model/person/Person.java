@@ -59,9 +59,9 @@ public class Person {
      * {@code injury}, and position to the specified {@code position}.
      * Every field must be present and not null, and isCaptain is false.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Position position,
-                  Set<Tag> tags, Injury injury) {
-        requireAllNonNull(name, phone, email, address, team, position, tags, injury);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
+                  Position position, Injury injury) {
+        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -155,8 +155,8 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
-                && position.equals(otherPerson.position)
                 && tags.equals(otherPerson.tags)
+                && position.equals(otherPerson.position)
                 && injury.equals(otherPerson.injury)
                 && isCaptain == otherPerson.isCaptain();
     }
@@ -164,7 +164,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, team, injury);
+        return Objects.hash(name, phone, email, address, team, tags, position, injury);
     }
 
     @Override
