@@ -117,15 +117,13 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final Injury modelInjury;
         if (injuryStatus == null) {
-            modelInjury = new Injury(Person.DEFAULT_INJURY_STATUS); // use default injury status if not provided
-        } else {
-            if (!Injury.isValidInjuryName(injuryStatus)) {
-                throw new IllegalValueException(Injury.MESSAGE_CONSTRAINTS);
-            }
-            modelInjury = new Injury(injuryStatus);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Injury.class.getSimpleName()));
         }
+        if (!Injury.isValidInjuryName(injuryStatus)) {
+            throw new IllegalValueException(Injury.MESSAGE_CONSTRAINTS);
+        }
+        final Injury modelInjury = new Injury(injuryStatus);
 
         if (team == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Team.class.getSimpleName()));
