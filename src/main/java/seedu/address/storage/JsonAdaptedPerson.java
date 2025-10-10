@@ -31,7 +31,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final String injuryName;
+    private final String injuryStatus;
     private final JsonAdaptedTeam team;
     private final JsonAdaptedPosition position;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -50,7 +50,7 @@ class JsonAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.injuryName = injuryName;
+        this.injuryStatus = injuryName;
         this.team = team;
         this.position = position;
         if (tags != null) {
@@ -68,7 +68,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
-        injuryName = source.getInjury().injuryName;
+        injuryStatus = source.getInjury().injuryName;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -118,13 +118,13 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Injury modelInjury;
-        if (injuryName == null) {
+        if (injuryStatus == null) {
             modelInjury = new Injury(Person.DEFAULT_INJURY_STATUS); // use default injury status if not provided
         } else {
-            if (!Injury.isValidInjuryName(injuryName)) {
+            if (!Injury.isValidInjuryName(injuryStatus)) {
                 throw new IllegalValueException(Injury.MESSAGE_CONSTRAINTS);
             }
-            modelInjury = new Injury(injuryName);
+            modelInjury = new Injury(injuryStatus);
         }
 
         if (team == null) {
