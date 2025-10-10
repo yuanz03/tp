@@ -11,7 +11,9 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
+
 
 //@@author
 
@@ -110,6 +112,22 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void makeCaptain(Person person) {
+        if (person.isCaptain()) {
+            throw new seedu.address.model.person.exceptions.AlreadyCaptainException();
+        }
+        person.makeCaptain();
+    }
+
+    @Override
+    public void stripCaptain(Person person) {
+        if (!person.isCaptain()) {
+            throw new seedu.address.model.person.exceptions.AlreadyNotCaptainException();
+        }
+        person.stripCaptain();
+    }
+
+    @Override
     public ObservableList<Team> getFilteredTeamList() {
         throw new AssertionError("This method should not be called.");
     }
@@ -121,6 +139,36 @@ public class ModelStub implements Model {
 
     @Override
     public void addTeam(Team team) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasPosition(Position position) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void addPosition(Position position) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void deletePosition(Position position) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Position> getFilteredPositionList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateFilteredPositionList(Predicate<Position> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public Position getPositionByName(String name) {
         throw new AssertionError("This method should not be called.");
     }
 

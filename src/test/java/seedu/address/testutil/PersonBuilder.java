@@ -9,6 +9,7 @@ import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 import seedu.address.model.util.SampleDataUtil;
@@ -24,6 +25,8 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_INJURY = "ACL"; // TODO: change to "FIT" once edit is implemented
     public static final String DEFAULT_TEAM = "U12";
+    public static final String DEFAULT_POSITION = "LW";
+    public static final boolean DEFAULT_CAPTAINCY = false;
 
     private Name name;
     private Phone phone;
@@ -32,6 +35,8 @@ public class PersonBuilder {
     private Injury injury;
     private Team team;
     private Set<Tag> tags;
+    private Position position;
+    private boolean isCaptain;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +49,7 @@ public class PersonBuilder {
         injury = new Injury(DEFAULT_INJURY);
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
+        isCaptain = DEFAULT_CAPTAINCY;
     }
 
     /**
@@ -57,6 +63,8 @@ public class PersonBuilder {
         injury = personToCopy.getInjury();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
+        position = personToCopy.getPosition();
+        isCaptain = personToCopy.isCaptain();
     }
 
     /**
@@ -116,8 +124,33 @@ public class PersonBuilder {
         return this;
     }
 
-    public Person build() {
-        return new Person(name, phone, email, address, team, tags, injury);
+    /**
+     * Sets the {@code Position} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPosition(String positionName) {
+        this.position = new Position(positionName);
+        return this;
     }
 
+    /**
+     * Sets the {@code isCaptain} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCaptain(boolean isCaptain) {
+        this.isCaptain = isCaptain;
+        return this;
+    }
+
+    /**
+     * Builds a {@link Person} instance with the configured state.
+     * If no position was set explicitly, uses the legacy constructor that defaults position to NONE.
+     */
+    public Person build() {
+        Person built = (position == null)
+                ? new Person(name, phone, email, address, team, tags, injury)
+                : new Person(name, phone, email, address, team, position, tags, injury);
+        if (isCaptain) {
+            built.makeCaptain();
+        }
+        return built;
+    }
 }

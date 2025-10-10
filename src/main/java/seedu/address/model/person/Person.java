@@ -8,15 +8,18 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 
 /**
  * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: details are present and not null, field values are validated,
+ * immutable.
  */
 public class Person {
     public static final String DEFAULT_INJURY_STATUS = "FIT";
+    public static final String DEFAULT_POSITION = "NONE";
 
     // Identity fields
     private final Name name;
@@ -28,11 +31,14 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Injury injury;
     private final Team team;
+    private final Position position;
+    private boolean isCaptain;
 
     /**
-     * Creates a Person object assigned to a team with the default injury status.
-     * Overloaded constructor sets the person's injury status to the default value {@code "FIT"}.
-     * Every field must be present and not null.
+     * Creates a Person object assigned to a team with the default injury status and position.
+     * Overloaded constructor sets the person's injury status to the
+     * default value {@code "FIT"} and default position of NONE.
+     * Every field must be present and not null, and isCaptain is false.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, team, tags);
@@ -41,24 +47,30 @@ public class Person {
         this.email = email;
         this.address = address;
         this.team = team;
+        this.position = new Position(DEFAULT_POSITION);
         this.tags.addAll(tags);
         this.injury = new Injury(DEFAULT_INJURY_STATUS);
+        this.isCaptain = false;
     }
 
     /**
      * Creates a Person object assigned to a team with an explicit injury status.
-     * Overloaded constructor sets the person's injury status to the specified {@code injury}.
-     * Every field must be present and not null.
+     * Overloaded constructor sets the person's injury status to the specified
+     * {@code injury}, and position to the specified {@code position}.
+     * Every field must be present and not null, and isCaptain is false.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags, Injury injury) {
-        requireAllNonNull(name, phone, email, address, team, tags, injury);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Position position,
+                  Set<Tag> tags, Injury injury) {
+        requireAllNonNull(name, phone, email, address, team, position, tags, injury);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
+        this.position = position;
         this.tags.addAll(tags);
         this.injury = injury;
+        this.isCaptain = false;
     }
 
     public Name getName() {
@@ -85,8 +97,25 @@ public class Person {
         return injury;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void makeCaptain() {
+        this.isCaptain = true;
+    }
+
+    public void stripCaptain() {
+        this.isCaptain = false;
+    }
+
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set, which throws
+     * {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
@@ -101,7 +130,6 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
-
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
     }
@@ -127,8 +155,10 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
+                && position.equals(otherPerson.position)
                 && tags.equals(otherPerson.tags)
-                && injury.equals(otherPerson.injury);
+                && injury.equals(otherPerson.injury)
+                && isCaptain == otherPerson.isCaptain();
     }
 
     @Override
@@ -146,7 +176,9 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("team", team)
+                .add("position", position)
                 .add("injury status", injury)
+                .add("isCaptain", isCaptain)
                 .toString();
     }
 }

@@ -486,7 +486,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3d1. AddressBook shows an error message.
 
       Use case ends.
-      
+
 =======
 **Use case: UC07 - List all players**
 
@@ -632,7 +632,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to create a position with specific details 
+1.  User requests to create a position with specific details
 
 2.  AddressBook adds a position with given details
 
@@ -649,8 +649,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. Position already exists
 
   * 2a1. AddressBook shows an error message
-    
-    Use case ends. 
+
+    Use case ends.
 
 **Use case: UC13 - Delete a position**
 
@@ -659,7 +659,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to delete a position with specific details
 
 2.  AddressBook deletes a position with given details
-      
+
 **Extensions**
 
 * 1a. Position detail is invalid
@@ -695,7 +695,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 2a1. AddressBook shows an error message
 
-      Use case ends.  
+      Use case ends.
 
 * 3a. Position does not exist
 
@@ -707,7 +707,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 4a1. AddressBook shows an error message
 
-      Use case ends. 
+      Use case ends.
 
 **Use case: UC15 - Save player's email**
 
