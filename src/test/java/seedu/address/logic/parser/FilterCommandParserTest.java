@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.FilterByInjuryPredicate;
+import seedu.address.model.person.Injury;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
 
@@ -53,5 +55,39 @@ public class FilterCommandParserTest {
         String input = "xyz " + PREFIX_TEAM + "U12";
         assertParseFailure(parser, input,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validInjuryOnly_returnsFilterCommand() {
+        String input = " " + PREFIX_INJURY + "ACL";
+        FilterByInjuryPredicate expectedInjPred = new FilterByInjuryPredicate("ACL");
+        FilterCommand expectedCommand = new FilterCommand(
+            FilterByTeamPredicate.ALWAYS_TRUE,
+            expectedInjPred,
+            Optional.empty(),
+            Optional.of("ACL"));
+        assertParseSuccess(parser, input, expectedCommand);
+    }
+
+    @Test
+    public void parse_validBothAnyOrder_returnsFilterCommand() {
+        String input1 = " " + PREFIX_TEAM + "U12 " + PREFIX_INJURY + "ACL";
+        String input2 = " " + PREFIX_INJURY + "ACL " + PREFIX_TEAM + "U12";
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
+        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
+        FilterCommand expectedCommand = new FilterCommand(
+            teamPred, injPred, Optional.of("U12"), Optional.of("ACL"));
+        assertParseSuccess(parser, input1, expectedCommand);
+        assertParseSuccess(parser, input2, expectedCommand);
+    }
+
+    @Test
+    public void parse_oneValidOneInvalid_throwsParseException() {
+        // invalid team with valid injury
+        String input = " " + PREFIX_TEAM + "U@12 " + PREFIX_INJURY + "ACL";
+        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        // valid team with invalid injury
+        input = " " + PREFIX_TEAM + "U12 " + PREFIX_INJURY;
+        assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
     }
 }
