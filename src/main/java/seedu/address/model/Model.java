@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.position.Position;
@@ -81,6 +82,17 @@ public interface Model {
      * {@code person} must not already exist in the address book.
      */
     void addPerson(Person person);
+
+    /**
+     * Assigns the specified {@code injury} to the given person.
+     * The person must exist in the address book.
+     */
+    void updatePersonInjuryStatus(Person target, Injury injury);
+
+    /**
+     * Returns true if the given person has already been assigned the injury status represented by {@code injury}.
+     */
+    boolean isDuplicateInjuryAssigned(Person target, Injury injury);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

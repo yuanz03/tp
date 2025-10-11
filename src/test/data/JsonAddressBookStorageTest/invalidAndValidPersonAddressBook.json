@@ -7,7 +7,8 @@
       "address": "4th street",
       "team": {
           "name": "U16"
-        }
+        },
+      "injury status": "ACL"
     },
     {
       "name": "Person With Invalid Phone Field",
@@ -16,7 +17,8 @@
       "address": "4th street",
       "team": {
         "name": "U16"
-      }
+      },
+      "injury status": "Ankle sprain"
     }
   ],
   "teams": [
