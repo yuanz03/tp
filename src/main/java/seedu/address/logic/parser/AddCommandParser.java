@@ -51,14 +51,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
-        Position position = new Position("NONE"); // TODO: implement support for position
-        Injury injury = argMultimap.getValue(PREFIX_INJURY).isPresent()
-                ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
-                : null;
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, team, tagList, position, injury);
+        Position position = new Position(Person.DEFAULT_POSITION); // TODO: implement support for position
+        Injury injury = argMultimap.getValue(PREFIX_INJURY).isPresent()
+                ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
+                : new Injury(Person.DEFAULT_INJURY_STATUS);
 
+        Person person = new Person(name, phone, email, address, team, tagList, position, injury);
         return new AddCommand(person);
     }
 

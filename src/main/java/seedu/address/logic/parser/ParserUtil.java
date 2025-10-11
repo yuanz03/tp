@@ -110,7 +110,7 @@ public class ParserUtil {
         if (!Injury.isValidInjuryName(trimmedInjuryName)) {
             throw new ParseException(Injury.MESSAGE_CONSTRAINTS);
         }
-        return new Injury(injuryName);
+        return new Injury(trimmedInjuryName);
     }
 
     /**
