@@ -32,8 +32,8 @@ public class AssignTeamCommandParser implements Parser<AssignTeamCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_TEAM);
-        Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
         Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
 
         return new AssignTeamCommand(playerName, team);
     }

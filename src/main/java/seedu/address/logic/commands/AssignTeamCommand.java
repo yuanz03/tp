@@ -21,10 +21,10 @@ import seedu.address.model.team.Team;
 public class AssignTeamCommand extends Command {
 
     public static final String COMMAND_WORD = "assignteam";
-    public static final String MESSAGE_SUCCESS = "%s has been successfully assigned team %s!";
-    public static final String MESSAGE_PLAYER_NOT_FOUND = "%s doesn't exist";
-    public static final String MESSAGE_TEAM_NOT_FOUND = "%s doesn't exist";
-    public static final String MESSAGE_ALREADY_ASSIGNED = "%s is already assigned to team %s";
+    public static final String MESSAGE_SUCCESS = "Player: %s has been successfully assigned to Team: %s!";
+    public static final String MESSAGE_PLAYER_NOT_FOUND = "Player: %s doesn't exist!";
+    public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
+    public static final String MESSAGE_ALREADY_ASSIGNED = "Player: %s is already assigned to Team: %s!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a team to a player in the address book. "
             + "Parameters: "
