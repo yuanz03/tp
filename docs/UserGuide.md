@@ -37,7 +37,7 @@ PlayBook (PB) is a **desktop app for managing contacts, optimized for use via a 
 
    * `delete pl/John Doe` : Deletes `John Doe` from the Address Book.
 
-   * `clear` : Deletes all players' contacts and teams from Address Book.
+   * `clear` : Deletes all players' contacts and teams from the Address Book.
 
    * `exit` : Exits the app.
 
@@ -140,7 +140,7 @@ Examples:
 
 Deletes the specified person from the address book.
 
-Format: `delete [pl/PLAYER_NAME]`
+Format: `delete pl/PLAYER_NAME`
 
 * Deletes the person with the specified `PLAYER_NAME` from the address book.
 * `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
