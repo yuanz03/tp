@@ -24,6 +24,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -325,5 +326,43 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void addTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.addTeam(null));
+    }
+
+    @Test
+    public void deleteTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deleteTeam(null));
+    }
+
+    @Test
+    public void deleteTeam_teamNotInAddressBook_throwsTeamNotFoundException() {
+        assertThrows(TeamNotFoundException.class, () -> modelManager.deleteTeam(U12));
+    }
+
+    @Test
+    public void deleteTeam_validTeam_teamDeleted() {
+        modelManager.addTeam(U12);
+        modelManager.deleteTeam(U12);
+        assertFalse(modelManager.hasTeam(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.isTeamEmpty(null));
+    }
+
+    @Test
+    public void isTeamEmpty_teamNotInAddressBook_returnsTrue() {
+        assertTrue(modelManager.isTeamEmpty(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_teamInAddressBookWithoutMembers_returnsTrue() {
+        modelManager.addTeam(U12);
+        assertTrue(modelManager.isTeamEmpty(U12));
     }
 }

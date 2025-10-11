@@ -122,6 +122,18 @@ public interface Model {
     void addTeam(Team team);
 
     /**
+     * Returns true if the team has no players, or if team does not exist in address book.
+     */
+    boolean isTeamEmpty(Team team);
+
+    /**
+     * Deletes team from the address book.
+     * The team must exist in the address book.
+     * The team must have no players assigned to it.
+     */
+    void deleteTeam(Team team);
+
+    /**
      * Returns an unmodifiable view of the filtered team list.
      */
     ObservableList<Team> getFilteredTeamList();

@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTeams.U12;
 import static seedu.address.testutil.TypicalTeams.U16;
@@ -24,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.team.Team;
 import seedu.address.model.team.exceptions.DuplicateTeamException;
+import seedu.address.model.team.exceptions.TeamNotEmptyException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
@@ -111,6 +113,59 @@ public class AddressBookTest {
     public void hasTeam_teamInAddressBook_returnsTrue() {
         addressBook.addTeam(U12);
         assertTrue(addressBook.hasTeam(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.isTeamEmpty(null));
+    }
+
+    @Test
+    public void isTeamEmpty_teamWithNoPersons_returnsTrue() {
+        addressBook.addTeam(U12);
+        assertTrue(addressBook.isTeamEmpty(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_teamWithOnePerson_returnsFalse() {
+        addressBook.addTeam(U12);
+        addressBook.addPerson(ALICE); // ALICE is in U12
+        assertFalse(addressBook.isTeamEmpty(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_teamWithMultiplePersons_returnsFalse() {
+        addressBook.addTeam(U12);
+        addressBook.addPerson(ALICE); // ALICE is in U12
+        addressBook.addPerson(BENSON); // BENSON is in U12
+        assertFalse(addressBook.isTeamEmpty(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_teamNotMatchingPersonTeam_returnsTrue() {
+        addressBook.addTeam(U16);
+        addressBook.addPerson(ALICE); // ALICE is in U12, not U16
+        assertTrue(addressBook.isTeamEmpty(U16));
+    }
+
+    @Test
+    public void deleteTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.deleteTeam(null));
+    }
+
+    @Test
+    public void deleteTeam_emptyTeam_success() {
+        addressBook.addTeam(U12);
+        assertTrue(addressBook.hasTeam(U12));
+        addressBook.deleteTeam(U12);
+        assertFalse(addressBook.hasTeam(U12));
+    }
+
+    @Test
+    public void deleteTeam_teamWithPersons_throwsTeamNotEmptyException() {
+        addressBook.addTeam(U12);
+        addressBook.addPerson(ALICE); // ALICE is in U12
+        assertThrows(TeamNotEmptyException.class, () -> addressBook.deleteTeam(U12));
     }
 
     @Test

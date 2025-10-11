@@ -14,6 +14,7 @@ import seedu.address.model.position.Position;
 import seedu.address.model.position.UniquePositionList;
 import seedu.address.model.team.Team;
 import seedu.address.model.team.UniqueTeamList;
+import seedu.address.model.team.exceptions.TeamNotEmptyException;
 
 /**
  * Wraps all data at the address-book level
@@ -145,6 +146,31 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void assignTeam(Person person, Team team) {
         this.persons.assignTeam(person, team);
+    }
+
+    /**
+     * Returns true if team has no players.
+     */
+    public boolean isTeamEmpty(Team team) {
+        requireNonNull(team);
+        for (Person person : persons) {
+            if (team.equals(person.getTeam())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Deletes team from the address book.
+     * {@code team} must exist in the address book.
+     */
+    public void deleteTeam(Team team) {
+        requireNonNull(team);
+        if (!isTeamEmpty(team)) {
+            throw new TeamNotEmptyException();
+        }
+        teams.remove(team);
     }
 
     /**

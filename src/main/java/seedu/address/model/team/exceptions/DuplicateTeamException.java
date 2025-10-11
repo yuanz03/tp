@@ -1,8 +1,8 @@
 package seedu.address.model.team.exceptions;
 
 /**
- * Signals that the operation will result in duplicate Teams (Teams are considered duplicates if they have the same
- * identity).
+ * Signals that the operation will result in duplicate Teams being added to the address book.
+ * Duplicates are defined as teams that have the same identity.
  */
 public class DuplicateTeamException extends RuntimeException {
     public DuplicateTeamException() {
