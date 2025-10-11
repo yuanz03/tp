@@ -23,9 +23,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 
@@ -81,8 +83,11 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Team updatedTeam = personToEdit.getTeam(); // TODO: add team edit functionality
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
+        Injury updatedInjury = personToEdit.getInjury(); // TODO: add injury edit functionality
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
+                updatedPosition, updatedInjury);
     }
 
     @Override

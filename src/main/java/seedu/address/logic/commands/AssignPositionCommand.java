@@ -73,8 +73,9 @@ public class AssignPositionCommand extends Command {
                 person.getEmail(),
                 person.getAddress(),
                 person.getTeam(),
+                person.getTags(),
                 position,
-                person.getTags()
+                person.getInjury()
         );
         model.setPerson(person, edited);
         return new CommandResult(String.format(MESSAGE_SUCCESS, playerNameStr, position.getName()));

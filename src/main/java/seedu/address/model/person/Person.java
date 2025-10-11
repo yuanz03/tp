@@ -18,6 +18,8 @@ import seedu.address.model.team.Team;
  * immutable.
  */
 public class Person {
+    public static final String DEFAULT_INJURY_STATUS = "FIT";
+    public static final String DEFAULT_POSITION = "NONE";
 
     // Identity fields
     private final Name name;
@@ -27,31 +29,48 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Injury injury;
     private final Team team;
     private final Position position;
     private boolean isCaptain;
 
     /**
-     * Creates a Person object, where isCaptain is false and with a team assigned.
-     * Every field must be present and not null.
+     * Creates a Person object assigned to a team with the default injury status and position.
+     * Overloaded constructor sets the person's injury status to the
+     * default value {@code "FIT"} and default position of NONE.
+     * Every field must be present and not null, and isCaptain is false.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Position position, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, team, position, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, team, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
-        this.position = position;
+        this.position = new Position(DEFAULT_POSITION);
         this.tags.addAll(tags);
+        this.injury = new Injury(DEFAULT_INJURY_STATUS);
         this.isCaptain = false;
     }
 
     /**
-     * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
+     * Creates a Person object assigned to a team with an explicit injury status.
+     * Overloaded constructor sets the person's injury status to the specified
+     * {@code injury}, and position to the specified {@code position}.
+     * Every field must be present and not null, and isCaptain is false.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
-        this(name, phone, email, address, team, new Position("NONE"), tags);
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
+                  Position position, Injury injury) {
+        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.tags.addAll(tags);
+        this.position = position;
+        this.injury = injury;
+        this.isCaptain = false;
     }
 
     public Name getName() {
@@ -72,6 +91,10 @@ public class Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Injury getInjury() {
+        return injury;
     }
 
     public Position getPosition() {
@@ -133,13 +156,15 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && team.equals(otherPerson.team)
                 && tags.equals(otherPerson.tags)
+                && position.equals(otherPerson.position)
+                && injury.equals(otherPerson.injury)
                 && isCaptain == otherPerson.isCaptain();
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, team);
+        return Objects.hash(name, phone, email, address, team, tags, position, injury);
     }
 
     @Override
@@ -151,8 +176,9 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("team", team)
+                .add("position", position)
+                .add("injury status", injury)
                 .add("isCaptain", isCaptain)
                 .toString();
     }
-
 }
