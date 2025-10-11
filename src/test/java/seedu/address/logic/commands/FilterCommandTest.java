@@ -217,4 +217,15 @@ public class FilterCommandTest {
         assertTrue(str.contains("teamPredicate=" + teamPred.toString()));
         assertTrue(str.contains("injuryPredicate=" + injPred.toString()));
     }
+
+    @Test
+    public void equals_sameInstance_returnsTrue() {
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
+        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
+        FilterCommand command = new FilterCommand(
+            teamPred, injPred,
+            Optional.of("U12"), Optional.of("ACL"));
+        // other == this branch
+        assertTrue(command.equals(command));
+    }
 }
