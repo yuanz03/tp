@@ -179,8 +179,9 @@ public class UniquePersonList implements Iterable<Person> {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 team,
+                personToEdit.getTags(),
                 personToEdit.getPosition(),
-                personToEdit.getTags()
+                personToEdit.getInjury()
         );
 
         setPerson(personToEdit, editedPerson);
