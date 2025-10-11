@@ -203,7 +203,21 @@ public class ModelManager implements Model {
 
     @Override
     public void addTeam(Team team) {
+        requireNonNull(team);
         addressBook.addTeam(team);
+        updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
+    }
+
+    @Override
+    public boolean isTeamEmpty(Team team) {
+        requireNonNull(team);
+        return addressBook.isTeamEmpty(team);
+    }
+
+    @Override
+    public void deleteTeam(Team team) {
+        requireNonNull(team);
+        addressBook.deleteTeam(team);
         updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
     }
 
