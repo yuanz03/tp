@@ -44,7 +44,8 @@ public class FilterCommand extends Command {
         }
 
         return new CommandResult(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                model.getFilteredPersonList().size()));
+                model.getFilteredPersonList().size()),
+                false, false, false, true);
     }
 
     @Override
