@@ -6,7 +6,7 @@
 
 # PlayBook User Guide
 
-PlayBook (PB) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PB can get your contact management tasks done faster than traditional GUI apps.
+PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -78,9 +78,9 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a player: `add`
 
-Adds a person to the address book.
+Adds a player to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL tm/TEAM a/ADDRESS [t/TAG]…​`
 
@@ -88,68 +88,68 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL tm/TEAM a/ADDRESS [t/TAG]…​`
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A player can have any number of tags (including 0)
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com tm/u16 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 t/criminal`
 
-### Listing all persons : `list`
+### Listing all players : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all players in the address book.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Editing a player : `edit`
 
-Edits an existing person in the address book.
+Edits an existing player in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the player at the specified `INDEX`. The index refers to the index number shown in the displayed player list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* When editing tags, the existing tags of the player will be removed i.e adding of tags is not cumulative.
+* You can remove all the player’s tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st player to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd player to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating players by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds players whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Players matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a player : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified player from the address book.
 
 Format: `delete pl/PLAYER_NAME`
 
-* Deletes the person with the specified `PLAYER_NAME` from the address book.
+* Deletes the player with the specified `PLAYER_NAME` from the address book.
 * `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
 * The player to be deleted must exist in the address book.
-* The command can only delete one person at a time.
+* The command can only delete one player at a time.
 
 Examples:
-* `delete pl/John Doe` deletes the person named `John Doe` from the address book.
-* `delete pl/Betsy Crowe` deletes the person named `Betsy Crowe` from the address book.
+* `delete pl/John Doe` deletes the player named `John Doe` from the address book.
+* `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the address book.
 
 ### Clearing all entries : `clear`
 
