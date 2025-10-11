@@ -17,6 +17,6 @@ public class ListTeamsCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
-        return new CommandResult(MESSAGE_SUCCESS, false, false, true, false);
+        return CommandResult.showTeamCommandResult(MESSAGE_SUCCESS);
     }
 }

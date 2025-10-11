@@ -28,6 +28,7 @@ import seedu.address.logic.commands.DeleteTeamCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -134,6 +135,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_listTeams_withExtraArgs() throws Exception {
         assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD + " 3") instanceof ListTeamsCommand);
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        // no args
+        assertTrue(parser.parseCommand("filter tm/" + U16.getName()) instanceof FilterCommand);
+        // with extra whitespace and args
+        assertTrue(parser.parseCommand("  filter tm/" + U16.getName() + "  ") instanceof FilterCommand);
     }
 
     @Test
