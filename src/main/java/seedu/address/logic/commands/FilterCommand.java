@@ -38,11 +38,11 @@ public class FilterCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
 
-        int resultSize = model.getFilteredPersonList().size();
-        if (resultSize == 0) {
+        if (model.getFilteredPersonList().isEmpty()) {
             throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, teamName));
+                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, predicate.getTeamName()));
         }
+
         return new CommandResult(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
                 model.getFilteredPersonList().size()));
     }
