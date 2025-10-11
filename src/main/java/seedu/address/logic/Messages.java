@@ -20,6 +20,8 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_PERSON_NOT_FOUND = "The person '%1$s' does not exist.";
+    public static final String MESSAGE_INVALID_TEAM = "No such team in the address book.";
+    public static final String MESSAGE_NO_PLAYERS_IN_TEAM = "No players assigned to team \"%1$s\".";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
