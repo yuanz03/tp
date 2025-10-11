@@ -27,3 +27,7 @@
   -fx-margin-bottom: 8px;
   -fx-font-size: 11px;
 }
+
+.view-status-label {
+  -fx-text-fill: white;
+}
