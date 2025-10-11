@@ -52,14 +52,14 @@ public class ModelManager implements Model {
     //=========== UserPrefs ==================================================================================
 
     @Override
-    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-        requireNonNull(userPrefs);
-        this.userPrefs.resetData(userPrefs);
+    public ReadOnlyUserPrefs getUserPrefs() {
+        return userPrefs;
     }
 
     @Override
-    public ReadOnlyUserPrefs getUserPrefs() {
-        return userPrefs;
+    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+        requireNonNull(userPrefs);
+        this.userPrefs.resetData(userPrefs);
     }
 
     @Override
@@ -87,13 +87,13 @@ public class ModelManager implements Model {
     //=========== AddressBook =============================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public ReadOnlyAddressBook getAddressBook() {
+        return addressBook;
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setAddressBook(ReadOnlyAddressBook addressBook) {
+        this.addressBook.resetData(addressBook);
     }
 
     @Override
@@ -180,6 +180,8 @@ public class ModelManager implements Model {
         filteredTeams.setPredicate(predicate);
     }
 
+    //=========== Captain Commands =============================================================
+
     @Override
     public void makeCaptain(Person person) {
         person.makeCaptain();
@@ -190,6 +192,9 @@ public class ModelManager implements Model {
         person.stripCaptain();
     }
 
+    //=========== Team Commands =============================================================
+
+    //@@author jovnc
     @Override
     public boolean hasTeam(Team team) {
         requireNonNull(team);
@@ -202,6 +207,13 @@ public class ModelManager implements Model {
         updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
     }
 
+    @Override
+    public void assignTeam(Person person, Team team) {
+        requireAllNonNull(person, team);
+        addressBook.assignTeam(person, team);
+    }
+
+    //@@author
     //=========== Positions ==============================================================================
     @Override
     public boolean hasPosition(Position position) {

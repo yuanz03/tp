@@ -24,14 +24,14 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_CAPTAINS = Person::isCaptain;
 
     /**
-     * Replaces user prefs data with the data in {@code userPrefs}.
-     */
-    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
-
-    /**
      * Returns the user prefs.
      */
     ReadOnlyUserPrefs getUserPrefs();
+
+    /**
+     * Replaces user prefs data with the data in {@code userPrefs}.
+     */
+    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
 
     /**
      * Returns the user prefs' GUI settings.
@@ -53,13 +53,13 @@ public interface Model {
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
+    /** Returns the AddressBook */
+    ReadOnlyAddressBook getAddressBook();
+
     /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
-
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -123,7 +123,7 @@ public interface Model {
 
     /**
      * Returns an unmodifiable view of the filtered team list.
-    */
+     */
     ObservableList<Team> getFilteredTeamList();
 
     /**
@@ -132,14 +132,26 @@ public interface Model {
      */
     void updateFilteredTeamList(Predicate<Team> predicate);
 
+    /**
+     * Assigns the given team to the given person.
+     * {@code person} and {@code team} must already exist in the address book.
+     */
+    void assignTeam(Person person, Team team);
+
     // Positions API
     boolean hasPosition(Position position);
+
     void addPosition(Position position);
+
     void deletePosition(Position position);
+
     ObservableList<Position> getFilteredPositionList();
+
     void updateFilteredPositionList(Predicate<Position> predicate);
+
     Position getPositionByName(String name);
 
     void makeCaptain(Person person);
+
     void stripCaptain(Person person);
 }

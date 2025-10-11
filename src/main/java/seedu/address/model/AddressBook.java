@@ -139,6 +139,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Assigns a person to a team.
+     * The person must exist in the address book.
+     * The team must exist in the address book.
+     */
+    public void assignTeam(Person person, Team team) {
+        this.persons.assignTeam(person, team);
+    }
+
+    /**
      * Replaces the contents of the positions list with {@code positions}.
      * {@code positions} must not contain duplicate positions.
      */

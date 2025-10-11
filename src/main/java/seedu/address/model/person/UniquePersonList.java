@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.team.Team;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -156,5 +157,33 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
         return true;
+    }
+
+    /**
+     * Assigns a {@code team} to a {@code person} in the list.
+     * The person must exist in the list.
+     * The team must not be null.
+     */
+    public void assignTeam(Person person, Team team) {
+        requireAllNonNull(person, team);
+
+        int index = internalList.indexOf(person);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        Person personToEdit = internalList.get(index);
+        Person editedPerson = new Person(
+                personToEdit.getName(),
+                personToEdit.getPhone(),
+                personToEdit.getEmail(),
+                personToEdit.getAddress(),
+                team,
+                personToEdit.getTags(),
+                personToEdit.getPosition(),
+                personToEdit.getInjury()
+        );
+
+        setPerson(personToEdit, editedPerson);
     }
 }

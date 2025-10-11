@@ -112,6 +112,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void assignTeam(Person person, Team team) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void makeCaptain(Person person) {
         if (person.isCaptain()) {
             throw new seedu.address.model.person.exceptions.AlreadyCaptainException();
