@@ -195,7 +195,7 @@ Format: `deleteteam tm/TEAM_NAME`
 * The command can only delete one team at a time.
 
 Examples:
-* `deleteteam tm/u16` deletes the team named `John u16` from the address book.
+* `deleteteam tm/u16` deletes the team named `u16` from the address book.
 
 ### Clearing all entries : `clear`
 
