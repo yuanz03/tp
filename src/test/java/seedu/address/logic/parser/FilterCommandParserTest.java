@@ -41,6 +41,12 @@ public class FilterCommandParserTest {
     public void parse_emptyTeamName_throwsParseException() {
         String input = " " + PREFIX_TEAM; // no team name
         assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+    }
 
+    @Test
+    public void parse_preambleNotEmpty_throwsParseException() {
+        String input = "xyz " + PREFIX_TEAM + "U12";
+        assertParseFailure(parser, input,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
     }
 }
