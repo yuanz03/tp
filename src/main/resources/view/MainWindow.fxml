@@ -52,7 +52,7 @@
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
           <Label fx:id="viewStatusLabel"
-                text="Viewing Persons"
+                text="Viewing Players"
                 styleClass="view-status-label" />
         </StackPane>
 

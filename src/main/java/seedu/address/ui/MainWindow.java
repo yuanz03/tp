@@ -58,7 +58,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private Label viewStatusLabel;
 
-
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
