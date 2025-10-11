@@ -7,7 +7,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Person}'s team name matches the given team name (case-insensitive).
  */
 public class FilterByTeamPredicate implements Predicate<Person> {
     private final String teamName;

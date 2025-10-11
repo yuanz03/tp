@@ -131,9 +131,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_filter() throws Exception {
         // no args
-        assertTrue(parser.parseCommand("filter tm/U12") instanceof FilterCommand);
+        assertTrue(parser.parseCommand("filter tm/" + U16.getName()) instanceof FilterCommand);
         // with extra whitespace and args
-        assertTrue(parser.parseCommand("  filter tm/U16  ") instanceof FilterCommand);
+        assertTrue(parser.parseCommand("  filter tm/" + U16.getName() + "  ") instanceof FilterCommand);
     }
 
     @Test
