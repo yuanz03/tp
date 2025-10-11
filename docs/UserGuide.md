@@ -182,6 +182,21 @@ Examples:
 * `delete pl/John Doe` deletes the player named `John Doe` from the address book.
 * `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the address book.
 
+### Deleting a team : `deleteteam`
+
+Deletes the specified team from the address book.
+
+Format: `deleteteam tm/TEAM_NAME`
+
+* Deletes the team with the specified `TEAM_NAME` from the address book.
+* Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
+* `TEAM_NAME` is case-insensitive, e.g `u16` will match `U16`.
+* The team to be deleted must exist in the address book.
+* The command can only delete one team at a time.
+
+Examples:
+* `deleteteam tm/u16` deletes the team named `John u16` from the address book.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -238,6 +253,7 @@ _Details coming soon ..._
 | **Assign Player to Team** | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                  |
 | **Clear**                 | `clear`                                                                                                                                                                              |
 | **Delete Player**         | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                    |
+| **Delete Team**           | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                   |
 | **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                          |
 | **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                           |
 | **List**                  | `list`                                                                                                                                                                               |
