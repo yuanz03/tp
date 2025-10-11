@@ -122,8 +122,7 @@ public interface Model {
     void addTeam(Team team);
 
     /**
-     * Returns true if team has no players.
-     * {@code team} must exist in the address book.
+     * Returns true if the team has no players, or if team does not exist in address book.
      */
     boolean isTeamEmpty(Team team);
 

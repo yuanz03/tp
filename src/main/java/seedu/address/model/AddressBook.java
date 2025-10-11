@@ -150,7 +150,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Returns true if team has no players.
-     * {@code team} must exist in the address book.
      */
     public boolean isTeamEmpty(Team team) {
         requireNonNull(team);
