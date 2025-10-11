@@ -37,7 +37,7 @@ PlayBook (PB) is a **desktop app for managing contacts, optimized for use via a 
 
    * `delete pl/John Doe` : Deletes `John Doe` from the Address Book.
 
-   * `clear` : Deletes all player contacts and team from Address Book.
+   * `clear` : Deletes all players' contacts and teams from Address Book.
 
    * `exit` : Exits the app.
 
