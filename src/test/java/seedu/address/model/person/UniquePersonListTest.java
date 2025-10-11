@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -163,9 +164,35 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void assignTeam_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePersonList.assignTeam(null, U16));
+    }
+
+    @Test
+    public void assignTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePersonList.assignTeam(ALICE, null));
+    }
+
+    @Test
+    public void assignTeam_personNotInList_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.assignTeam(ALICE, U16));
+    }
+
+    @Test
+    public void assignTeam_personInList_assignsTeamSuccessfully() {
+        uniquePersonList.add(ALICE);
+        uniquePersonList.assignTeam(ALICE, U16);
+        Person aliceWithU16 = new PersonBuilder(ALICE).withTeam("U16").build();
+        UniquePersonList expectedUniquePersonList = new UniquePersonList();
+        expectedUniquePersonList.add(aliceWithU16);
+
+        assertEquals(expectedUniquePersonList, uniquePersonList);
+    }
+
+    @Test
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, ()
-            -> uniquePersonList.asUnmodifiableObservableList().remove(0));
+                -> uniquePersonList.asUnmodifiableObservableList().remove(0));
     }
 
     @Test

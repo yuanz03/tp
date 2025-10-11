@@ -5,8 +5,10 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -19,15 +21,17 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Team> PREDICATE_SHOW_ALL_TEAMS = unused -> true;
 
-    /**
-     * Replaces user prefs data with the data in {@code userPrefs}.
-     */
-    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
+    Predicate<Person> PREDICATE_SHOW_CAPTAINS = Person::isCaptain;
 
     /**
      * Returns the user prefs.
      */
     ReadOnlyUserPrefs getUserPrefs();
+
+    /**
+     * Replaces user prefs data with the data in {@code userPrefs}.
+     */
+    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
 
     /**
      * Returns the user prefs' GUI settings.
@@ -49,13 +53,13 @@ public interface Model {
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
+    /** Returns the AddressBook */
+    ReadOnlyAddressBook getAddressBook();
+
     /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
-
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -78,6 +82,17 @@ public interface Model {
      * {@code person} must not already exist in the address book.
      */
     void addPerson(Person person);
+
+    /**
+     * Assigns the specified {@code injury} to the given person.
+     * The person must exist in the address book.
+     */
+    void updatePersonInjuryStatus(Person target, Injury injury);
+
+    /**
+     * Returns true if the given person has already been assigned the injury status represented by {@code injury}.
+     */
+    boolean isDuplicateInjuryAssigned(Person target, Injury injury);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -108,7 +123,7 @@ public interface Model {
 
     /**
      * Returns an unmodifiable view of the filtered team list.
-    */
+     */
     ObservableList<Team> getFilteredTeamList();
 
     /**
@@ -116,4 +131,27 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredTeamList(Predicate<Team> predicate);
+
+    /**
+     * Assigns the given team to the given person.
+     * {@code person} and {@code team} must already exist in the address book.
+     */
+    void assignTeam(Person person, Team team);
+
+    // Positions API
+    boolean hasPosition(Position position);
+
+    void addPosition(Position position);
+
+    void deletePosition(Position position);
+
+    ObservableList<Position> getFilteredPositionList();
+
+    void updateFilteredPositionList(Predicate<Position> predicate);
+
+    Position getPositionByName(String name);
+
+    void makeCaptain(Person person);
+
+    void stripCaptain(Person person);
 }

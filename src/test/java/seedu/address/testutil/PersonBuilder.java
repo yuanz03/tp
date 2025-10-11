@@ -5,9 +5,11 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 import seedu.address.model.util.SampleDataUtil;
@@ -21,14 +23,20 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_INJURY = "ACL"; // TODO: change to "FIT" once edit is implemented
     public static final String DEFAULT_TEAM = "U12";
+    public static final String DEFAULT_POSITION = "NONE";
+    public static final boolean DEFAULT_CAPTAINCY = false;
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Injury injury;
     private Team team;
     private Set<Tag> tags;
+    private Position position;
+    private boolean isCaptain;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -38,8 +46,11 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        injury = new Injury(DEFAULT_INJURY);
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
+        isCaptain = DEFAULT_CAPTAINCY;
+        position = new Position(DEFAULT_POSITION);
     }
 
     /**
@@ -50,8 +61,11 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        injury = personToCopy.getInjury();
         team = personToCopy.getTeam();
         tags = new HashSet<>(personToCopy.getTags());
+        position = personToCopy.getPosition();
+        isCaptain = personToCopy.isCaptain();
     }
 
     /**
@@ -96,6 +110,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Injury} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInjury(String injuryName) {
+        this.injury = new Injury(injuryName);
+        return this;
+    }
+
+    /**
      * Sets the {@code Team} of the {@code Person} that we are building.
      */
     public PersonBuilder withTeam(String team) {
@@ -103,8 +125,31 @@ public class PersonBuilder {
         return this;
     }
 
-    public Person build() {
-        return new Person(name, phone, email, address, team, tags);
+    /**
+     * Sets the {@code Position} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPosition(String positionName) {
+        this.position = new Position(positionName);
+        return this;
     }
 
+    /**
+     * Sets the {@code isCaptain} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCaptain(boolean isCaptain) {
+        this.isCaptain = isCaptain;
+        return this;
+    }
+
+    /**
+     * Builds a {@link Person} instance with the configured state.
+     */
+    public Person build() {
+        Person built = new Person(name, phone, email, address, team, tags, position, injury);
+
+        if (isCaptain) {
+            built.makeCaptain();
+        }
+        return built;
+    }
 }
