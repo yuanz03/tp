@@ -24,6 +24,7 @@ import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.logic.commands.AssignTeamCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTeamCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -38,6 +39,7 @@ import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -115,6 +117,13 @@ public class AddressBookParserTest {
         AssignTeamCommand command = (AssignTeamCommand)
                 parser.parseCommand(TeamUtil.getAssignTeamCommand(name, U16));
         assertEquals(new AssignTeamCommand(name, U16), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTeam() throws Exception {
+        Team team = U16;
+        DeleteTeamCommand command = (DeleteTeamCommand) parser.parseCommand(TeamUtil.getDeleteTeamCommand(team));
+        assertEquals(new DeleteTeamCommand(team), command);
     }
 
     @Test

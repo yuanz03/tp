@@ -6,12 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalTeams.U12;
+import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.team.exceptions.DuplicateTeamException;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 
 public class UniqueTeamListTest {
 
@@ -42,6 +44,43 @@ public class UniqueTeamListTest {
     @Test
     public void add_nullTeam_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueTeamList.add(null));
+    }
+
+    @Test
+    public void remove_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueTeamList.remove(null));
+    }
+
+    @Test
+    public void remove_teamNotInList_throwsTeamNotFoundException() {
+        assertThrows(TeamNotFoundException.class, () -> uniqueTeamList.remove(U12));
+    }
+
+    @Test
+    public void remove_teamInList_success() {
+        uniqueTeamList.add(U12);
+        assertTrue(uniqueTeamList.contains(U12));
+        uniqueTeamList.remove(U12);
+        assertFalse(uniqueTeamList.contains(U12));
+    }
+
+    @Test
+    public void remove_teamFromListWithMultipleTeams_success() {
+        uniqueTeamList.add(U12);
+        uniqueTeamList.add(U16);
+        assertTrue(uniqueTeamList.contains(U12));
+        assertTrue(uniqueTeamList.contains(U16));
+
+        uniqueTeamList.remove(U12);
+        assertFalse(uniqueTeamList.contains(U12));
+        assertTrue(uniqueTeamList.contains(U16));
+    }
+
+    @Test
+    public void remove_sameTeamTwice_throwsTeamNotFoundException() {
+        uniqueTeamList.add(U12);
+        uniqueTeamList.remove(U12);
+        assertThrows(TeamNotFoundException.class, () -> uniqueTeamList.remove(U12));
     }
 
     @Test

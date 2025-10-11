@@ -148,6 +148,16 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean isTeamEmpty(Team team) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void deleteTeam(Team team) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public boolean hasPosition(Position position) {
         throw new AssertionError("This method should not be called.");
     }
