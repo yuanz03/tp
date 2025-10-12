@@ -86,7 +86,7 @@ public class FilterCommandParserTest {
         // invalid team with valid injury
         String input = " " + PREFIX_TEAM + "U@12 " + PREFIX_INJURY + "ACL";
         assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
-        // valid team with invalid injury
+        // valid team with missing injury
         input = " " + PREFIX_TEAM + "U12 " + PREFIX_INJURY;
         assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
     }

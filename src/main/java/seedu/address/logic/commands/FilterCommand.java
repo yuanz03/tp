@@ -30,7 +30,7 @@ public class FilterCommand extends Command {
 
     /**
      * Creates a FilterCommand to filter the persons with the specified {@code teamPredicate}
-     * and {@code injuryPredicate}
+     * and {@code injuryPredicate}.
      */
     public FilterCommand(FilterByTeamPredicate teamPred, FilterByInjuryPredicate injuryPred,
             Optional<String> teamArg, Optional<String> injuryArg) {
