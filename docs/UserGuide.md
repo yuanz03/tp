@@ -140,7 +140,6 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 * `PLAYER_NAME` must be the same as an existing player in the address book.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
-* `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should not be blank.
 * `INJURY` should contain alphanumeric characters and spaces only.
