@@ -100,18 +100,19 @@ public class UnassignInjuryCommandTest {
 
         @Override
         public Person getPersonByName(Name name) {
-            requireNonNull(this.person);
+            requireNonNull(name);
             return this.person;
         }
 
         @Override
         public void updatePersonInjuryStatus(Person target, Injury injury) {
+            requireAllNonNull(target, injury);
             // Simulate update
         }
 
         @Override
         public boolean hasInjury(Person target) {
-            requireAllNonNull(this.person, target);
+            requireNonNull(target);
             return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
         }
 

@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PLAYER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
@@ -19,7 +20,6 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 public class UnassignInjuryCommandParserTest {
-
     private UnassignInjuryCommandParser parser = new UnassignInjuryCommandParser();
 
     @Test
@@ -44,9 +44,9 @@ public class UnassignInjuryCommandParserTest {
     }
 
     @Test
-    public void parse_extraPreamble_failure() {
+    public void parse_nonEmptyPreamble_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnassignInjuryCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, "extra " + PLAYER_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_BOB, expectedMessage);
     }
 
     @Test
