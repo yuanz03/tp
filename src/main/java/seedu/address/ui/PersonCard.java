@@ -73,7 +73,7 @@ public class PersonCard extends UiPart<Region> {
             injuryLabel = new Label("\uD83E\uDDBE  " + person.getInjury().getInjuryName());
             injuryLabel.getStyleClass().add("fit-tag");
         } else {
-            injuryLabel = new Label( "\uD83D\uDE91  " + person.getInjury().getInjuryName());
+            injuryLabel = new Label("\uD83D\uDE91  " + person.getInjury().getInjuryName());
             injuryLabel.getStyleClass().add("injured-tag");
         }
         injuryStatus.getChildren().add(injuryLabel);
