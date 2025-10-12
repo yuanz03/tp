@@ -130,6 +130,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasInjury(Person target) {
+        requireNonNull(target);
+        return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
+    }
+
+    @Override
     public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
