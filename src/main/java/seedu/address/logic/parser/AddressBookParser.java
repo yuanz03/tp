@@ -29,6 +29,7 @@ import seedu.address.logic.commands.ListTeamsCommand;
 import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.NewPositionCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
+import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -115,6 +116,9 @@ public class AddressBookParser {
 
         case AssignInjuryCommand.COMMAND_WORD:
             return new AssignInjuryCommandParser().parse(arguments);
+
+        case UnassignInjuryCommand.COMMAND_WORD:
+            return new UnassignInjuryCommandParser().parse(arguments);
 
         case FilterCaptainCommand.COMMAND_WORD:
             return new FilterCaptainCommand();
