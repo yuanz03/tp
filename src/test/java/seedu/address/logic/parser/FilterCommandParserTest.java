@@ -1,8 +1,9 @@
 package seedu.address.logic.parser;
 
-
+import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -94,5 +95,42 @@ public class FilterCommandParserTest {
         // valid team with missing injury
         input = " " + PREFIX_TEAM + "U12 " + PREFIX_INJURY;
         assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_validPositionOnly_returnsFilterCommand() {
+        String input = " " + PREFIX_POSITION + "FW";
+        FilterByPositionPredicate expectedPred = new FilterByPositionPredicate("FW");
+        FilterCommand expected = new FilterCommand(
+            FilterByTeamPredicate.ALWAYS_TRUE,
+            FilterByInjuryPredicate.ALWAYS_TRUE,
+            expectedPred,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of("FW"));
+        assertParseSuccess(parser, input, expected);
+    }
+
+    @Test
+    public void parse_allFlagsAnyOrder_positionFirstThenTeamInjury() {
+        String input = " " + PREFIX_POSITION + "FW "
+                    + PREFIX_TEAM + "U12 "
+                    + PREFIX_INJURY + "ACL";
+        FilterByTeamPredicate tp = new FilterByTeamPredicate("U12");
+        FilterByInjuryPredicate ip = new FilterByInjuryPredicate("ACL");
+        FilterByPositionPredicate pp = new FilterByPositionPredicate("FW");
+        FilterCommand expected = new FilterCommand(tp, ip, pp,
+            Optional.of("U12"), Optional.of("ACL"), Optional.of("FW"));
+        assertParseSuccess(parser, input, expected);
+    }
+
+    @Test
+    public void parse_duplicateFlags_throwsParseException() {
+        String dupTeam = " " + PREFIX_TEAM + "U12 " + PREFIX_TEAM + "U13";
+        assertParseFailure(parser, dupTeam, MESSAGE_DUPLICATE_FIELDS + String.join(" ", "tm/"));
+        String dupInjury = " " + PREFIX_INJURY + "ACL " + PREFIX_INJURY + "ACL";
+        assertParseFailure(parser, dupInjury, MESSAGE_DUPLICATE_FIELDS + String.join(" ", "i/"));
+        String dupPosition = " " + PREFIX_POSITION + "LW " + PREFIX_POSITION + "LW";
+        assertParseFailure(parser, dupPosition, MESSAGE_DUPLICATE_FIELDS + String.join(" ", "ps/"));
     }
 }
