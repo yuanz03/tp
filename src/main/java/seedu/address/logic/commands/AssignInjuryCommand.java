@@ -15,25 +15,26 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Assigns an injury status to a person in the address book.
+ * Assigns an injury status to an existing {@code Person} in the address book.
+ * <p>
+ * Usage: {@code assigninjury pl/<player> i/<injury>}.
  */
 public class AssignInjuryCommand extends Command {
 
     public static final String COMMAND_WORD = "assigninjury";
+    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
+    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Assigns an injury status to a person in the address book.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER " + PREFIX_INJURY + "INJURY "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
-    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
-    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
-
     private final Name personNameToAssign;
     private final Injury injuryToAssign;
 
     /**
-     * Creates an AssignInjuryCommand that assigns the specified {@code injury} to the given person.
+     * Creates an AssignInjuryCommand that assigns the specified {@code injury} to the specified {@code Person}.
      */
     public AssignInjuryCommand(Name personName, Injury injury) {
         requireAllNonNull(personName, injury);
@@ -46,12 +47,14 @@ public class AssignInjuryCommand extends Command {
         requireNonNull(model);
         Person personToAssign;
 
+        // Check if the player exists
         try {
             personToAssign = model.getPersonByName(personNameToAssign);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToAssign));
         }
 
+        // Check if the player has already been assigned the same injury
         if (model.isDuplicateInjuryAssigned(personToAssign, injuryToAssign)) {
             throw new CommandException(String.format(MESSAGE_ASSIGNED_SAME_INJURY,
                     personToAssign.getName(), injuryToAssign));
@@ -62,6 +65,11 @@ public class AssignInjuryCommand extends Command {
                 personToAssign.getName(), injuryToAssign));
     }
 
+    /**
+     * Returns true if this {@code AssignInjuryCommand} is equal to another object.
+     * Two {@code AssignInjuryCommand} are considered equal if they have the same
+     * {@code personNameToAssign} and {@code injuryToAssign}.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
