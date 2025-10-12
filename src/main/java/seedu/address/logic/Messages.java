@@ -23,7 +23,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_TEAM = "No such team in the address book.";
     public static final String MESSAGE_NO_PLAYERS_IN_TEAM = "No players assigned to team \"%1$s\".";
     public static final String MESSAGE_NO_PLAYERS_WITH_INJURY = "No players with injury \"%1$s\".";
-    public static final String MESSAGE_NO_MATCHING_TEAM_OR_INJURY =
+    public static final String MESSAGE_NO_MATCHING_TEAM_AND_INJURY =
             "No players matching team \"%1$s\" and injury \"%2$s\".";
 
     /**

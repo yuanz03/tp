@@ -62,7 +62,7 @@ public class FilterCommand extends Command {
         if (size == 0) {
             if (tArg.isPresent() && iArg.isPresent()) {
                 throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_OR_INJURY, tArg.get(), iArg.get()));
+                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY, tArg.get(), iArg.get()));
             } else if (tArg.isPresent()) {
                 throw new CommandException(
                     String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, tArg.get()));
@@ -72,8 +72,8 @@ public class FilterCommand extends Command {
             }
         }
 
-        return new CommandResult(
-            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, size));
+        return CommandResult.showPersonCommandResult(
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, size));
     }
 
     @Override

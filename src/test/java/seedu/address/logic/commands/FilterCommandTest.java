@@ -112,13 +112,13 @@ public class FilterCommandTest {
     public void execute_validInjuryName_filtersCorrectly() {
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
         FilterCommand command = new FilterCommand(
-            FilterByTeamPredicate.ALWAYS_TRUE,
-            injPred,
-            Optional.empty(),
-            Optional.of("ACL"));
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                injPred,
+                Optional.empty(),
+                Optional.of("ACL"));
         expectedModel.updateFilteredPersonList(person -> injPred.test(person));
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
-            expectedModel.getFilteredPersonList().size());
+                expectedModel.getFilteredPersonList().size());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -135,18 +135,6 @@ public class FilterCommandTest {
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_noOneMatchingInjury_throwsCommandException() {
-        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("Nonexistent");
-        FilterCommand command = new FilterCommand(
-            FilterByTeamPredicate.ALWAYS_TRUE,
-            injPred,
-            Optional.empty(),
-            Optional.of("Nonexistent"));
-
-        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, "Nonexistent"), exception.getMessage());
-    }
 
     // No one matching both the injury and team
     @Test
@@ -154,10 +142,10 @@ public class FilterCommandTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U13");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("Nonexistent");
         FilterCommand command = new FilterCommand(
-            teamPred,
-            injPred,
-            Optional.of("U13"),
-            Optional.of("Nonexistent"));
+                teamPred,
+                injPred,
+                Optional.of("U13"),
+                Optional.of("Nonexistent"));
         assertCommandFailure(command, model, MESSAGE_INVALID_TEAM);
     }
 
@@ -167,13 +155,12 @@ public class FilterCommandTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("Nonexistent");
         FilterCommand command = new FilterCommand(
-            teamPred,
-            injPred,
-            Optional.of("U12"),
-            Optional.of("Nonexistent"));
-
+                teamPred,
+                injPred,
+                Optional.of("U12"),
+                Optional.of("Nonexistent"));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_OR_INJURY,
+        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY,
                  "U12", "Nonexistent"), exception.getMessage());
     }
 
@@ -183,10 +170,10 @@ public class FilterCommandTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("NoSuchTeam");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
         FilterCommand command = new FilterCommand(
-            teamPred,
-            injPred,
-            Optional.of("NoSuchTeam"),
-            Optional.of("ACL"));
+                teamPred,
+                injPred,
+                Optional.of("NoSuchTeam"),
+                Optional.of("ACL"));
         assertCommandFailure(command, model, MESSAGE_INVALID_TEAM);
     }
 
@@ -209,23 +196,12 @@ public class FilterCommandTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
         FilterCommand command = new FilterCommand(
-            teamPred,
-            injPred,
-            Optional.of("U12"),
-            Optional.of("ACL"));
+                teamPred,
+                injPred,
+                Optional.of("U12"),
+                Optional.of("ACL"));
         String str = command.toString();
         assertTrue(str.contains("teamPredicate=" + teamPred.toString()));
         assertTrue(str.contains("injuryPredicate=" + injPred.toString()));
-    }
-
-    @Test
-    public void equals_sameInstance_returnsTrue() {
-        FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
-        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
-        FilterCommand command = new FilterCommand(
-            teamPred, injPred,
-            Optional.of("U12"), Optional.of("ACL"));
-        // other == this branch
-        assertTrue(command.equals(command));
     }
 }

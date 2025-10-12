@@ -62,10 +62,10 @@ public class FilterCommandParserTest {
         String input = " " + PREFIX_INJURY + "ACL";
         FilterByInjuryPredicate expectedInjPred = new FilterByInjuryPredicate("ACL");
         FilterCommand expectedCommand = new FilterCommand(
-            FilterByTeamPredicate.ALWAYS_TRUE,
-            expectedInjPred,
-            Optional.empty(),
-            Optional.of("ACL"));
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                expectedInjPred,
+                Optional.empty(),
+                Optional.of("ACL"));
         assertParseSuccess(parser, input, expectedCommand);
     }
 
@@ -76,7 +76,7 @@ public class FilterCommandParserTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
         FilterCommand expectedCommand = new FilterCommand(
-            teamPred, injPred, Optional.of("U12"), Optional.of("ACL"));
+                teamPred, injPred, Optional.of("U12"), Optional.of("ACL"));
         assertParseSuccess(parser, input1, expectedCommand);
         assertParseSuccess(parser, input2, expectedCommand);
     }
