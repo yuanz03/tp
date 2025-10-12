@@ -41,6 +41,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private FlowPane injuryStatus;
+    @FXML
     private FlowPane teamContainer;
     @FXML
     private FlowPane positionContainer;
@@ -65,5 +67,13 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        Label injuryLabel = new Label(person.getInjury().getInjuryName());
+        if (person.getInjury().getInjuryName().equals("FIT")) {
+            injuryLabel.getStyleClass().add("fit-tag");
+        } else {
+            injuryLabel.getStyleClass().add("injured-tag");
+        }
+        injuryStatus.getChildren().add(injuryLabel);
     }
 }
