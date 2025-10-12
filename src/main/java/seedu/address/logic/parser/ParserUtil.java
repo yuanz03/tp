@@ -133,7 +133,7 @@ public class ParserUtil {
      * Parses a {@code String position} into a {@code Position}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException
+     * @throws ParseException if the given {@code position} is invalid.
      */
     public static Position parsePosition(String position) throws ParseException {
         requireNonNull(position);
