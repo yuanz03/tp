@@ -33,7 +33,9 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
    
    * `addteam n/u16`: Adds a team named `u16` to the Address Book.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com tm/u16 a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book (make sure to add the team `u16` first).
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a contact named `John Doe` to the Address Book (make sure to add the team `u16` first).
+
+   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the Address Book. 
 
    * `delete pl/John Doe` : Deletes `John Doe` from the Address Book.
 
@@ -55,7 +57,8 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  - e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  - e.g `n/NAME [i/INJURY]` can be used as `n/John Doe i/ACL` or as `n/John Doe`. 
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -95,18 +98,20 @@ Examples:
 
 Adds a player to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL tm/TEAM a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​`
 
 * `TEAM` must be an existing team in the address book. Use the `addteam` command to add a team first.
 
 <box type="tip" seamless>
 
-**Tip:** A player can have any number of tags (including 0)
+**Tip:** A player can have any number of tags (including 0).
+
+**Tip:** A player may or may not have a specified injury.
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com tm/u16 a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 i/ACL t/criminal`
 
 ### Assign player to team: `assignteam`
 
@@ -125,6 +130,24 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 Examples:
 * `assignteam pl/John Doe tm/u16`
 * `assignteam pl/Betsy Crowe tm/u16`
+
+### Assign injury to player: `assigninjury`
+
+Assigns an injury status to an existing player.
+
+Format: `assigninjury pl/PLAYER_NAME i/INJURY`
+
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should not be blank.
+* `INJURY` should contain alphanumeric characters and spaces only.
+
+Examples:
+* `assigninjury pl/John Doe i/ACL`
+* `assigninjury pl/Musiala i/fibula fracture`
 
 ### Listing all players : `list`
 
@@ -246,15 +269,16 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                    | Format, Examples                                                                                                                                                                     |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Player**            | `add n/NAME p/PHONE_NUMBER e/EMAIL tm/TEAM a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com tm/u16 a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Add Team**              | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                          |
-| **Assign Player to Team** | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                  |
-| **Clear**                 | `clear`                                                                                                                                                                              |
-| **Delete Player**         | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                    |
-| **Delete Team**           | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                   |
-| **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                          |
-| **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                           |
-| **List**                  | `list`                                                                                                                                                                               |
-| **Help**                  | `help`                                                                                                                                                                               |
+| Action                      | Format, Examples                                                                                                                                                                                      |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Player**              | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
+| **Add Team**                | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
+| **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
+| **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
+| **Clear**                   | `clear`                                                                                                                                                                                               |
+| **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
+| **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
+| **Edit**                    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                           |
+| **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
+| **List**                    | `list`                                                                                                                                                                                                |
+| **Help**                    | `help`                                                                                                                                                                                                |
