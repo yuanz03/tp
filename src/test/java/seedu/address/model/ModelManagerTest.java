@@ -122,7 +122,7 @@ public class ModelManagerTest {
     @Test
     public void updatePersonInjuryStatus_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
-                modelManager.updatePersonInjuryStatus(null, new Injury("FIT")));
+                modelManager.updatePersonInjuryStatus(null, new Injury(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test

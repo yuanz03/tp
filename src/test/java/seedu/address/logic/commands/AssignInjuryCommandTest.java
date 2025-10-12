@@ -127,7 +127,7 @@ public class AssignInjuryCommandTest {
     private static class ModelStubAcceptingInjuryAssigned extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryAssigned = new Injury("FIT");
+        private Injury injuryAssigned = new Injury(Person.DEFAULT_INJURY_STATUS);
 
         ModelStubAcceptingInjuryAssigned(Person person) {
             this.person = person;
