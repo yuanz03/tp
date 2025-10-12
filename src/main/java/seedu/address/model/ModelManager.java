@@ -132,6 +132,10 @@ public class ModelManager implements Model {
     @Override
     public boolean hasInjury(Person target) {
         requireNonNull(target);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
         return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
     }
 

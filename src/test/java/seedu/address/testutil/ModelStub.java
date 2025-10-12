@@ -87,6 +87,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean hasInjury(Person target) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
