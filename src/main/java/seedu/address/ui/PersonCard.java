@@ -68,10 +68,12 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        Label injuryLabel = new Label(person.getInjury().getInjuryName());
+        Label injuryLabel;
         if (person.getInjury().getInjuryName().equals("FIT")) {
+            injuryLabel = new Label("\uD83E\uDDBE  " + person.getInjury().getInjuryName());
             injuryLabel.getStyleClass().add("fit-tag");
         } else {
+            injuryLabel = new Label( "\uD83D\uDE91  " + person.getInjury().getInjuryName());
             injuryLabel.getStyleClass().add("injured-tag");
         }
         injuryStatus.getChildren().add(injuryLabel);
