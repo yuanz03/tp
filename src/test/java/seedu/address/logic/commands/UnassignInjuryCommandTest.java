@@ -80,6 +80,13 @@ public class UnassignInjuryCommandTest {
         assertFalse(unassignAliceInjuryCommand.equals(null));
     }
 
+    @Test
+    public void toStringMethod() {
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName());
+        String expected = UnassignInjuryCommand.class.getCanonicalName() + "{personToUnassign=" + ALICE.getName() + "}";
+        assertEquals(expected, unassignInjuryCommand.toString());
+    }
+
     /**
      * A Model stub that contains a single person.
      */
