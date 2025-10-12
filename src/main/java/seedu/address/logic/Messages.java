@@ -23,8 +23,15 @@ public class Messages {
     public static final String MESSAGE_INVALID_TEAM = "No such team in the address book.";
     public static final String MESSAGE_NO_PLAYERS_IN_TEAM = "No players assigned to team \"%1$s\".";
     public static final String MESSAGE_NO_PLAYERS_WITH_INJURY = "No players with injury \"%1$s\".";
+    public static final String MESSAGE_NO_PLAYERS_WITH_POSITION = "No players with position \"%1$s\".";
+    public static final String MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION =
+            "No players matching team \"%1$s\", injury \"%2$s\" and position \"%3$s\".";
     public static final String MESSAGE_NO_MATCHING_TEAM_AND_INJURY =
             "No players matching team \"%1$s\" and injury \"%2$s\".";
+    public static final String MESSAGE_NO_MATCHING_TEAM_AND_POSITION =
+            "No players matching team \"%1$s\" and position \"%2$s\".";
+    public static final String MESSAGE_NO_MATCHING_INJURY_AND_POSITION =
+            "No players matching injury \"%1$s\" and position \"%2$s\".";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.FilterByInjuryPredicate;
 import seedu.address.model.person.Injury;
+import seedu.address.model.position.FilterByPositionPredicate;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
 
@@ -27,7 +28,8 @@ public class FilterCommandParserTest {
         FilterByTeamPredicate expectedPredicate = new FilterByTeamPredicate("U12");
         FilterCommand expectedCommand =
                 new FilterCommand(expectedPredicate, FilterByInjuryPredicate.ALWAYS_TRUE,
-                        Optional.of("U12"), Optional.empty());
+                        FilterByPositionPredicate.ALWAYS_TRUE,
+                        Optional.of("U12"), Optional.empty(), Optional.empty());
         assertParseSuccess(parser, input, expectedCommand);
     }
 
@@ -64,8 +66,10 @@ public class FilterCommandParserTest {
         FilterCommand expectedCommand = new FilterCommand(
                 FilterByTeamPredicate.ALWAYS_TRUE,
                 expectedInjPred,
+                FilterByPositionPredicate.ALWAYS_TRUE,
                 Optional.empty(),
-                Optional.of("ACL"));
+                Optional.of("ACL"),
+                Optional.empty());
         assertParseSuccess(parser, input, expectedCommand);
     }
 
@@ -76,7 +80,8 @@ public class FilterCommandParserTest {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U12");
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate("ACL");
         FilterCommand expectedCommand = new FilterCommand(
-                teamPred, injPred, Optional.of("U12"), Optional.of("ACL"));
+                teamPred, injPred, FilterByPositionPredicate.ALWAYS_TRUE, Optional.of("U12"),
+                Optional.of("ACL"), Optional.empty());
         assertParseSuccess(parser, input1, expectedCommand);
         assertParseSuccess(parser, input2, expectedCommand);
     }
