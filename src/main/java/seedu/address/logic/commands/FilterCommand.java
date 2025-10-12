@@ -10,34 +10,40 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.FilterByInjuryPredicate;
+import seedu.address.model.position.FilterByPositionPredicate;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
 
 /**
- * Filters and lists all persons in address book whose team matches the argument team name.
- * Team name matching is case insensitive.
+ * Filters and lists all persons in address book whose team, position or injury matches the argument.
  */
 public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " [tm/TEAM_NAME] [i/INJURY] : Filters players by team and/or injury.";
+            + " [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]: Filters players by team, injury and/or position.";
 
     private final FilterByTeamPredicate teamPredicate;
     private final FilterByInjuryPredicate injuryPredicate;
+    private final FilterByPositionPredicate positionPredicate;
 
     private final Optional<String> teamArg;
     private final Optional<String> injuryArg;
+    private final Optional<String> positionArg;
 
     /**
      * Creates a FilterCommand to filter the persons with the specified {@code teamPredicate}
      * and {@code injuryPredicate}.
      */
     public FilterCommand(FilterByTeamPredicate teamPred, FilterByInjuryPredicate injuryPred,
-            Optional<String> teamArg, Optional<String> injuryArg) {
+            FilterByPositionPredicate positionPred, Optional<String> teamArg,
+            Optional<String> injuryArg, Optional<String> positionArg) {
         this.teamPredicate = requireNonNull(teamPred);
         this.injuryPredicate = requireNonNull(injuryPred);
+        this.positionPredicate = requireNonNull(positionPred);
+
         this.teamArg = requireNonNull(teamArg);
         this.injuryArg = requireNonNull(injuryArg);
+        this.positionArg = requireNonNull(positionArg);
     }
 
 
@@ -47,6 +53,7 @@ public class FilterCommand extends Command {
 
         Optional<String> tArg = teamArg;
         Optional<String> iArg = injuryArg;
+        Optional<String> psArg = positionArg;
 
         if (tArg.isPresent()) {
             Team check = new Team(tArg.get());
@@ -56,16 +63,29 @@ public class FilterCommand extends Command {
         }
 
         model.updateFilteredPersonList(person ->
-            teamPredicate.test(person) && injuryPredicate.test(person));
+            teamPredicate.test(person) && injuryPredicate.test(person) && positionPredicate.test(person));
 
         int size = model.getFilteredPersonList().size();
         if (size == 0) {
-            if (tArg.isPresent() && iArg.isPresent()) {
+            if (tArg.isPresent() && iArg.isPresent() && psArg.isPresent()) {
+                throw new CommandException(
+                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
+                            tArg.get(), iArg.get(), psArg.get()));
+            } else if (tArg.isPresent() && iArg.isPresent()) {
                 throw new CommandException(
                     String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY, tArg.get(), iArg.get()));
+            } else if (tArg.isPresent() && psArg.isPresent()) {
+                throw new CommandException(
+                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION, tArg.get(), psArg.get()));
+            } else if (psArg.isPresent() && iArg.isPresent()) {
+                throw new CommandException(
+                    String.format(Messages.MESSAGE_NO_MATCHING_INJURY_AND_POSITION, iArg.get(), psArg.get()));
             } else if (tArg.isPresent()) {
                 throw new CommandException(
                     String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, tArg.get()));
+            } else if (psArg.isPresent()) {
+                throw new CommandException(
+                    String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, psArg.get()));
             } else {
                 throw new CommandException(
                     String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, iArg.get()));
@@ -86,7 +106,8 @@ public class FilterCommand extends Command {
         }
         FilterCommand o = (FilterCommand) other;
         return Objects.equals(teamPredicate, o.teamPredicate)
-            && Objects.equals(injuryPredicate, o.injuryPredicate);
+            && Objects.equals(injuryPredicate, o.injuryPredicate)
+            && Objects.equals(positionPredicate, o.positionPredicate);
     }
 
     @Override
@@ -94,6 +115,7 @@ public class FilterCommand extends Command {
         return new ToStringBuilder(this)
                 .add("teamPredicate", teamPredicate)
                 .add("injuryPredicate", injuryPredicate)
+                .add("positionPredicate", positionPredicate)
                 .toString();
     }
 }
