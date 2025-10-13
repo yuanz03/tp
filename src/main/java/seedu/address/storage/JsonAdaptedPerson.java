@@ -68,7 +68,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
-        injuryStatus = source.getInjury().injuryName;
+        injuryStatus = source.getInjury().getInjuryName();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
