@@ -3,19 +3,20 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -27,6 +28,7 @@ import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
@@ -39,34 +41,41 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+            + "by name in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
+            + PREFIX_PLAYER + "PLAYER "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_TEAM + "TEAM] "
+            + "[" + PREFIX_INJURY + "INJURY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + "  "
+            + PREFIX_PLAYER + "John Doe "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com"
+            + PREFIX_INJURY + "ACL";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
+    private final Name personNameToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * Creates an EditCommand to edit the details of the specified {@code Person}.
+     *
+     * @param name The name of the person to edit.
+     * @param editPersonDescriptor The details to edit the person with.
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditCommand(Name name, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(name);
         requireNonNull(editPersonDescriptor);
 
-        this.index = index;
+        this.personNameToEdit = name;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
@@ -81,10 +90,10 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Team updatedTeam = personToEdit.getTeam(); // TODO: add team edit functionality
+        Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
-        Injury updatedInjury = personToEdit.getInjury(); // TODO: add injury edit functionality
+        Injury updatedInjury = editPersonDescriptor.getInjury().orElse(personToEdit.getInjury());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
                 updatedPosition, updatedInjury);
@@ -93,13 +102,14 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        Person personToEdit;
+
+        try {
+            personToEdit = model.getPersonByName(personNameToEdit);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToEdit.toString()));
         }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -123,27 +133,29 @@ public class EditCommand extends Command {
         }
 
         EditCommand otherEditCommand = (EditCommand) other;
-        return index.equals(otherEditCommand.index)
+        return personNameToEdit.equals(otherEditCommand.personNameToEdit)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("index", index)
+                .add("personToEdit", personNameToEdit)
                 .add("editPersonDescriptor", editPersonDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the person with.
+     * Each non-empty field value will replace the corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
+        private Team team;
+        private Injury injury;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -157,6 +169,8 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setTeam(toCopy.team);
+            setInjury(toCopy.injury);
             setTags(toCopy.tags);
         }
 
@@ -164,7 +178,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, injury, tags);
         }
 
         public Optional<Name> getName() {
@@ -197,6 +211,22 @@ public class EditCommand extends Command {
 
         public void setAddress(Address address) {
             this.address = address;
+        }
+
+        public Optional<Team> getTeam() {
+            return Optional.ofNullable(team);
+        }
+
+        public void setTeam(Team team) {
+            this.team = team;
+        }
+
+        public Optional<Injury> getInjury() {
+            return Optional.ofNullable(injury);
+        }
+
+        public void setInjury(Injury injury) {
+            this.injury = injury;
         }
 
         /**
@@ -232,6 +262,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(team, otherEditPersonDescriptor.team)
+                    && Objects.equals(injury, otherEditPersonDescriptor.injury)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -242,6 +274,8 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("team", team)
+                    .add("injury", injury)
                     .add("tags", tags)
                     .toString();
         }
