@@ -16,7 +16,7 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
      * Parses the given {@code String} of arguments in the context of the {@code UnassignInjuryCommand}
      * and returns a {@code UnassignInjuryCommand} object for execution.
      *
-     * @throws ParseException if the user input does not conform to the expected format.
+     * @throws ParseException If the user input does not conform to the expected format.
      */
     public UnassignInjuryCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER);
