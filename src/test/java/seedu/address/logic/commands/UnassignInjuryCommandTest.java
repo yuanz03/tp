@@ -20,6 +20,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
@@ -101,7 +102,10 @@ public class UnassignInjuryCommandTest {
         @Override
         public Person getPersonByName(Name name) {
             requireNonNull(name);
-            return this.person;
+            if (person.getName().equals(name)) {
+                return this.person;
+            }
+            throw new PersonNotFoundException();
         }
 
         @Override
