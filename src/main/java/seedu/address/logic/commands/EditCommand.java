@@ -112,6 +112,7 @@ public class EditCommand extends Command {
         }
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        // Check if all identity and data fields were not edited (case-insensitive)
         if (personToEdit.equals(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
