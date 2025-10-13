@@ -93,7 +93,18 @@ public class EditCommand extends Command {
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
-        Injury updatedInjury = editPersonDescriptor.getInjury().orElse(personToEdit.getInjury());
+
+        Injury updatedInjury;
+        if (editPersonDescriptor.getInjury().isPresent()) {
+            Injury newInjury = editPersonDescriptor.getInjury().get();
+            if (newInjury.equals(new Injury(Person.DEFAULT_INJURY_STATUS))) {
+                updatedInjury = new Injury(Person.DEFAULT_INJURY_STATUS);
+            } else {
+                updatedInjury = newInjury;
+            }
+        } else {
+            updatedInjury = personToEdit.getInjury();
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
                 updatedPosition, updatedInjury);
@@ -114,6 +125,10 @@ public class EditCommand extends Command {
 
         // Check if all identity and data fields were not edited (case-insensitive)
         if (personToEdit.equals(editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
