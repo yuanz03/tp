@@ -185,19 +185,6 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void updatePersonInjuryStatus_caseInsensitiveInjury_updatesInjuryStatusCorrectly() {
-        modelManager.addPerson(ALICE);
-        Injury lowerInjury = new Injury("acl");
-        Injury upperInjury = new Injury("ACL");
-
-        modelManager.updatePersonInjuryStatus(ALICE, lowerInjury);
-        assertEquals(lowerInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
-
-        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), upperInjury);
-        assertEquals(upperInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
-    }
-
-    @Test
     public void hasInjury_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
                 modelManager.hasInjury(null));

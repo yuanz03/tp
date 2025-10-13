@@ -60,7 +60,12 @@ public class AssignInjuryCommand extends Command {
                     personToAssign.getName(), injuryToAssign));
         }
 
-        model.updatePersonInjuryStatus(personToAssign, injuryToAssign);
+        if (injuryToAssign.equals(new Injury(Person.DEFAULT_INJURY_STATUS))) {
+            model.updatePersonInjuryStatus(personToAssign, new Injury(Person.DEFAULT_INJURY_STATUS));
+        } else {
+            model.updatePersonInjuryStatus(personToAssign, injuryToAssign);
+        }
+
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
                 personToAssign.getName(), injuryToAssign));
     }
