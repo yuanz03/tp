@@ -18,7 +18,7 @@ public class AddTeamCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the address book. "
         + "Parameters: "
-        + PREFIX_TEAM + "NAME "
+        + PREFIX_TEAM + "TEAM_NAME "
         + "Example: " + COMMAND_WORD + " "
         + PREFIX_TEAM + "u16 ";
 
