@@ -113,11 +113,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/
 * `TEAM_NAME` should contain alphanumeric characters and spaces only.
 * `TEAM_NAME` should not be blank.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `INJURY` should not be blank.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
-* `TAG` should not be blank.
 
 <box type="tip" seamless>
 
@@ -206,17 +204,11 @@ Format: `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_N
 * `NAME` should contain alphanumeric characters and spaces only.
 * `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `NAME` must not be the same as an existing player in the address book.
-* `NAME` should not be blank.
 * `PHONE_NUMBER` should only contain numbers.
 * `PHONE_NUMBER` should be at least 3 digits long.
-* `PHONE_NUMBER` should not be blank.
-* `EMAIL` should not be blank.
-* `ADDRESS` should not be blank.
 * `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
 * `TEAM_NAME` should contain alphanumeric characters and spaces only.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TEAM_NAME` should not be blank.
-* `INJURY` should not be blank.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
