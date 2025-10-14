@@ -72,11 +72,11 @@ public class CommandTestUtil {
     public static final String INVALID_PLAYER_DESC = " " + PREFIX_PLAYER + "hubby*";
 
     public static final String VALID_TEAM_NAME_16 = "U16";
-    public static final String TEAM_NAME_DESC_16 = " " + PREFIX_NAME + VALID_TEAM_NAME_16;
+    public static final String TEAM_NAME_DESC_16 = " " + PREFIX_TEAM + VALID_TEAM_NAME_16;
     public static final String VALID_TEAM_NAME_12 = "U12";
-    public static final String TEAM_NAME_DESC_12 = " " + PREFIX_NAME + VALID_TEAM_NAME_12;
+    public static final String TEAM_NAME_DESC_12 = " " + PREFIX_TEAM + VALID_TEAM_NAME_12;
 
-    public static final String INVALID_TEAM_NAME_DESC = " " + PREFIX_NAME + "U@16"; // '@' not allowed in team names
+    public static final String INVALID_TEAM_NAME_DESC = " " + PREFIX_TEAM + "U@16"; // '@' not allowed in team names
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
