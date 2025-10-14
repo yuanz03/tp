@@ -4,13 +4,17 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
@@ -34,22 +38,12 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void execute_personNotFound_throwsCommandException() {
+        Model model = new ModelManager();
         Name nonExistentName = new Name("Missing");
         Injury injury = new Injury("ACL");
 
-        ModelStubThrowingPersonNotFound modelStub = new ModelStubThrowingPersonNotFound();
-
-        assertThrows(CommandException.class, () ->
-                new AssignInjuryCommand(nonExistentName, injury).execute(modelStub));
-    }
-
-    @Test
-    public void execute_nullModel_throwsNullPointerException() {
-        Name name = new Name("Gerrard");
-        Injury injury = new Injury("Broken Foot");
-
-        assertThrows(NullPointerException.class, () ->
-                new AssignInjuryCommand(name, injury).execute(null));
+        assertThrows(CommandException.class, String.format(Messages.MESSAGE_PERSON_NOT_FOUND, nonExistentName), () ->
+                new AssignInjuryCommand(nonExistentName, injury).execute(model));
     }
 
     @Test
@@ -62,7 +56,7 @@ public class AssignInjuryCommandTest {
 
         assertThrows(CommandException.class,
                 String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY, name, duplicateInjury), () ->
-                new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+                        new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
     }
 
     @Test
@@ -73,13 +67,28 @@ public class AssignInjuryCommandTest {
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        CommandResult commandResult = new AssignInjuryCommand(name, newInjury).execute(modelStub);
-
         assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, newInjury),
-                commandResult.getFeedbackToUser());
+                new AssignInjuryCommand(name, newInjury).execute(modelStub).getFeedbackToUser());
 
         assertEquals(validPerson, modelStub.personUpdated);
         assertEquals(newInjury, modelStub.injuryAssigned);
+    }
+
+    @Test
+    public void execute_lowercaseDefaultInjury_assignsDefaultInjurySuccessful() throws Exception {
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Name name = validPerson.getName();
+        Injury lowercaseFitInjuryStatus = new Injury("fit");
+
+        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
+
+        // Execute command with lowercase "fit", which should assign the default injury status
+        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, lowercaseFitInjuryStatus),
+                new AssignInjuryCommand(name, lowercaseFitInjuryStatus).execute(modelStub).getFeedbackToUser());
+
+        // Verify that the default injury status was assigned and not the lowercase "fit"
+        assertEquals(validPerson, modelStub.personUpdated);
+        assertEquals(new Injury(Person.DEFAULT_INJURY_STATUS), modelStub.injuryAssigned);
     }
 
     @Test
@@ -127,42 +136,33 @@ public class AssignInjuryCommandTest {
     private static class ModelStubAcceptingInjuryAssigned extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryAssigned = new Injury("FIT");
+        private Injury injuryAssigned = new Injury(Person.DEFAULT_INJURY_STATUS);
 
         ModelStubAcceptingInjuryAssigned(Person person) {
+            requireNonNull(person);
             this.person = person;
         }
 
         @Override
         public Person getPersonByName(Name name) {
-            return this.person;
+            requireNonNull(name);
+            if (person.getName().equals(name)) {
+                return this.person;
+            }
+            throw new PersonNotFoundException();
         }
 
         @Override
         public void updatePersonInjuryStatus(Person target, Injury injury) {
+            requireAllNonNull(target, injury);
             this.personUpdated = target;
             this.injuryAssigned = injury;
         }
 
         @Override
         public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
+            requireAllNonNull(target, injury);
             return target.getInjury().equals(injury);
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always throws PersonNotFoundException.
-     */
-    private static class ModelStubThrowingPersonNotFound extends ModelStub {
-        @Override
-        public Person getPersonByName(Name name) throws PersonNotFoundException {
-            requireNonNull(name);
-            throw new PersonNotFoundException();
         }
 
         @Override

@@ -28,7 +28,7 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_TEAM + "TEAM "
+            + PREFIX_TEAM + "TEAM " // TODO: implement support for position
             + "[" + PREFIX_INJURY + "INJURY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
@@ -36,7 +36,7 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TEAM + "U16 "
+            + PREFIX_TEAM + "U16 " // TODO: implement support for position
             + PREFIX_INJURY + "ACL "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";

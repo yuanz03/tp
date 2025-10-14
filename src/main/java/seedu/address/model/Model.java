@@ -84,13 +84,22 @@ public interface Model {
     void addPerson(Person person);
 
     /**
-     * Assigns the specified {@code injury} to the given person.
-     * The person must exist in the address book.
+     * Assigns the specified {@code injury} to the given person {@code target}.
+     * {@code target} must exist in the address book.
      */
     void updatePersonInjuryStatus(Person target, Injury injury);
 
     /**
-     * Returns true if the given person has already been assigned the injury status represented by {@code injury}.
+     * Returns true if the given person {@code target} has an injury status
+     * that is not the default {@code "FIT"} status.
+     * {@code target} must exist in the address book.
+     */
+    boolean hasInjury(Person target);
+
+    /**
+     * Returns true if the given person {@code target} has already been
+     * assigned the injury status represented by {@code injury}.
+     * {@code target} must exist in the address book.
      */
     boolean isDuplicateInjuryAssigned(Person target, Injury injury);
 

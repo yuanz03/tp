@@ -33,6 +33,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
@@ -100,12 +101,16 @@ public class AddCommandParserTest {
         assertParseFailure(parser, TEAM_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
 
+        // multiple injuries
+        assertParseFailure(parser, INJURY_DESC_BOB + validExpectedPersonString,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
+
         // multiple fields repeated
         assertParseFailure(parser,
                 validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
-                + ADDRESS_DESC_AMY + TEAM_DESC_AMY + validExpectedPersonString,
+                + ADDRESS_DESC_AMY + TEAM_DESC_AMY + INJURY_DESC_BOB + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL,
-                        PREFIX_PHONE, PREFIX_TEAM));
+                        PREFIX_PHONE, PREFIX_TEAM, PREFIX_INJURY));
 
         // invalid value followed by valid value
 
@@ -129,6 +134,10 @@ public class AddCommandParserTest {
         assertParseFailure(parser, INVALID_TEAM_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
 
+        // invalid injury
+        assertParseFailure(parser, INVALID_INJURY_DESC + validExpectedPersonString,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
+
         // valid value followed by invalid value
 
         // invalid name
@@ -150,6 +159,10 @@ public class AddCommandParserTest {
         // invalid team
         assertParseFailure(parser, validExpectedPersonString + INVALID_TEAM_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
+
+        // invalid injury
+        assertParseFailure(parser, validExpectedPersonString + INVALID_INJURY_DESC,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
     }
 
     @Test
@@ -162,14 +175,15 @@ public class AddCommandParserTest {
                 new AddCommand(firstPerson));
 
         // missing injury field
-        Person secondPerson = new PersonBuilder(AMY).withTags(VALID_TAG_FRIEND).withInjury("FIT").build();
+        Person secondPerson = new PersonBuilder(AMY).withTags(VALID_TAG_FRIEND)
+                .withInjury(Person.DEFAULT_INJURY_STATUS).build();
         assertParseSuccess(parser,
                 NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY + TEAM_DESC_AMY + TAG_DESC_FRIEND,
                 new AddCommand(secondPerson));
 
         // all optional fields missing
-        Person thirdPerson = new PersonBuilder(AMY).withTags().withInjury("FIT").build();
+        Person thirdPerson = new PersonBuilder(AMY).withTags().withInjury(Person.DEFAULT_INJURY_STATUS).build();
         assertParseSuccess(parser,
                 NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TEAM_DESC_AMY,
                 new AddCommand(thirdPerson));

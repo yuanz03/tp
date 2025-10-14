@@ -9,7 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.util.Arrays;
@@ -35,6 +34,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamsCommand;
 import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
+import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
@@ -76,8 +76,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + PLAYER_DESC_AMY + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(new Name(VALID_NAME_AMY), descriptor), command);
     }
 
     @Test
@@ -153,6 +153,15 @@ public class AddressBookParserTest {
                 AssignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY + INJURY_DESC_AMY);
 
         assertEquals(new AssignInjuryCommand(name, injury), command);
+    }
+
+    @Test
+    public void parseCommand_unassignInjury() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        UnassignInjuryCommand command = (UnassignInjuryCommand) parser.parseCommand(
+                UnassignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY);
+
+        assertEquals(new UnassignInjuryCommand(name), command);
     }
 
     @Test

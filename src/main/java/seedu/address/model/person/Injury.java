@@ -18,7 +18,7 @@ public class Injury {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String injuryName;
+    private final String injuryName;
 
     /**
      * Constructs a {@code Injury}.

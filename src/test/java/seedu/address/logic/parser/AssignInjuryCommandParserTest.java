@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_INJURY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PLAYER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -24,7 +25,6 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 public class AssignInjuryCommandParserTest {
-
     private AssignInjuryCommandParser parser = new AssignInjuryCommandParser();
 
     @Test
@@ -45,13 +45,13 @@ public class AssignInjuryCommandParserTest {
     @Test
     public void parse_missingPlayerField_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, " " + INJURY_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, INJURY_DESC_BOB, expectedMessage);
     }
 
     @Test
     public void parse_missingInjuryField_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, " " + PLAYER_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, PLAYER_DESC_BOB, expectedMessage);
     }
 
     @Test
@@ -67,9 +67,9 @@ public class AssignInjuryCommandParserTest {
     }
 
     @Test
-    public void parse_extraPreamble_failure() {
+    public void parse_nonEmptyPreamble_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, "extra " + PLAYER_DESC_BOB + INJURY_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_BOB + INJURY_DESC_BOB, expectedMessage);
     }
 
     @Test
@@ -82,6 +82,14 @@ public class AssignInjuryCommandParserTest {
     public void parse_invalidInjury_failure() {
         assertParseFailure(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + INVALID_INJURY_DESC,
                 Injury.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_differentPrefixOrder_success() {
+        Person expectedPerson = new PersonBuilder(BOB).build();
+
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + INJURY_DESC_BOB + PLAYER_DESC_BOB,
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
     }
 
     @Test
