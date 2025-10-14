@@ -13,6 +13,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Person;
 
 /**
@@ -69,6 +70,12 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
+
+        Injury injury = toAdd.getInjury();
+
+        if (injury != null && injury.equals(new Injury(Person.DEFAULT_INJURY_STATUS))) {
+            model.updatePersonInjuryStatus(toAdd, new Injury(Person.DEFAULT_INJURY_STATUS));
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

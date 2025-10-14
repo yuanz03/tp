@@ -27,6 +27,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -121,6 +122,18 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, String.format(Messages.MESSAGE_PERSON_NOT_FOUND, nonExistentName));
     }
+
+    @Test
+    public void execute_teamNotFound_failure() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Team nonExistentTeam = new Team("NonExistentTeam");
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTeam("NonExistentTeam").build();
+        EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
+
+        assertCommandFailure(editCommand, model,
+                String.format(EditCommand.MESSAGE_TEAM_NOT_FOUND, nonExistentTeam.getName()));
+    }
+
 
     @Test
     public void execute_setInjuryToDefault_success() {
