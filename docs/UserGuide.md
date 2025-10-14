@@ -187,7 +187,7 @@ Format: `list`
 
 ### Listing all teams: `listteams`
 
-Shows a list of all plauers in the PlayBook.
+Shows a list of all teams in the PlayBook.
 
 Format: `listteams`
 
@@ -248,9 +248,8 @@ Filter players by team, injury and/or position.
 Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 
 * Shows all the players that matches the specified `TEAM_NAME`, `POSITION` and/or `INJURY` if they are provided.
-* Atleast one of the optional fields must be provided.
+* At least one of the optional fields must be provided.
 * Duplicate flags are not allowed.
-* The order of the flags does not matter. e.g. `filter tm/U16 ps/ACL` will match `filter ps/ACL tm/U16`.
 * The fields are all case-insensitive. e.g `acl` will match `ACL`.
 * The order of the keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
 * Only full words will be matched by the injury field. `ACL` will not match `ACLs`.
@@ -258,7 +257,7 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 Examples:
 * `filter tm/U16 ps/FW` shows players that are from the team `U16` and play the position `FW`.
 * `filter ps/FW tm/U17 i/FIT` shows players that are from the team `U17`, play the position `FW` and are `FIT`.
-* `filter i/Leg Broken ps/MF` shows players that play the position `MF` and have a their `Leg Broken`.
+* `filter i/Leg Broken ps/MF` shows players that play the position `MF` and have their `Leg Broken`.
 * `filter tm/Chelsea` shows players that are from the team `Chelsea`.
 
 ### Deleting a player: `delete`
