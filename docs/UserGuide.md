@@ -20,7 +20,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your PlayBook.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -31,15 +31,15 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
    * `list` : Lists all contacts.
    
-   * `addteam n/u16`: Adds a team named `u16` to the Address Book.
+   * `addteam n/u16`: Adds a team named `u16` to the PlayBook.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a contact named `John Doe` to the Address Book (make sure to add the team `u16` first).
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
 
-   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the Address Book. 
+   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook. 
 
-   * `delete pl/John Doe` : Deletes `John Doe` from the Address Book.
+   * `delete pl/John Doe` : Deletes `John Doe` from the PlayBook.
 
-   * `clear` : Deletes all players' contacts and teams from the Address Book.
+   * `clear` : Deletes all players' contacts and teams from the PlayBook.
 
    * `exit` : Exits the app.
 
@@ -72,7 +72,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -179,13 +179,19 @@ Examples:
 * `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
 * `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
 
-### Listing all players : `list`
+### Listing all players: `list`
 
-Shows a list of all players in the address book.
+Shows a list of all players in the PlayBook.
 
 Format: `list`
 
-### Editing a player : `edit`
+### Listing all teams: `listteams`
+
+Shows a list of all teams in the PlayBook.
+
+Format: `listteams`
+
+### Editing a player: `edit`
 
 Edits an existing player in the address book.
 
@@ -235,39 +241,58 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a player : `delete`
+### Filtering players by team, injury and/or position: `filter`
 
-Deletes the specified player from the address book.
+Filter players by team, injury and/or position.
+
+Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
+
+* Shows all the players that matches the specified `TEAM_NAME`, `POSITION` and/or `INJURY` if they are provided.
+* At least one of the optional fields must be provided.
+* Duplicate flags are not allowed.
+* The fields are all case-insensitive. e.g `acl` will match `ACL`.
+* The order of the keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
+* Only full words will be matched by the injury field. `ACL` will not match `ACLs`.
+
+Examples:
+* `filter tm/U16 ps/FW` shows players that are from the team `U16` and play the position `FW`.
+* `filter ps/FW tm/U17 i/FIT` shows players that are from the team `U17`, play the position `FW` and are `FIT`.
+* `filter i/Leg Broken ps/MF` shows players that play the position `MF` and have their `Leg Broken`.
+* `filter tm/Chelsea` shows players that are from the team `Chelsea`.
+
+### Deleting a player: `delete`
+
+Deletes the specified player from the PlayBook.
 
 Format: `delete pl/PLAYER_NAME`
 
-* Deletes the player with the specified `PLAYER_NAME` from the address book.
+* Deletes the player with the specified `PLAYER_NAME` from the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
-* The player to be deleted must exist in the address book.
+* The player to be deleted must exist in the PlayBook.
 * The command can only delete one player at a time.
 
 Examples:
-* `delete pl/John Doe` deletes the player named `John Doe` from the address book.
-* `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the address book.
+* `delete pl/John Doe` deletes the player named `John Doe` from the PlayBook.
+* `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the PlayBook.
 
-### Deleting a team : `deleteteam`
+### Deleting a team: `deleteteam`
 
-Deletes the specified team from the address book.
+Deletes the specified team from the PlayBook.
 
 Format: `deleteteam tm/TEAM_NAME`
 
-* Deletes the team with the specified `TEAM_NAME` from the address book.
+* Deletes the team with the specified `TEAM_NAME` from the PlayBook.
 * Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
 * `TEAM_NAME` is case-insensitive, e.g `u16` will match `U16`.
-* The team to be deleted must exist in the address book.
+* The team to be deleted must exist in the PlayBook.
 * The command can only delete one team at a time.
 
 Examples:
-* `deleteteam tm/u16` deletes the team named `u16` from the address book.
+* `deleteteam tm/u16` deletes the team named `u16` from the PlayBook.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the PlayBook.
 
 Format: `clear`
 
@@ -279,17 +304,17 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+PlayBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+PlayBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, PlayBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the PlayBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -301,7 +326,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PlayBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -314,17 +339,19 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                          | Format, Examples                                                                                                                                                                                      |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Player**                  | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
-| **Add Team**                    | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
-| **Assign Player to Team**       | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
-| **Assign Injury to Player**     | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
+| Action                      | Format, Examples                                                                                                                                                                                      |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Player**              | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
+| **Add Team**                | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
+| **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
+| **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
 | **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
-| **Clear**                       | `clear`                                                                                                                                                                                               |
-| **Delete Player**               | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
-| **Delete Team**                 | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
+| **Clear**                   | `clear`                                                                                                                                                                                               |
+| **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
+| **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
 | **Edit**                        | `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                     |
-| **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
-| **List**                        | `list`                                                                                                                                                                                                |
-| **Help**                        | `help`                                                                                                                                                                                                |
+| **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
+| **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
+| **List**                    | `list`                                                                                                                                                                                                |
+| **List Teams**              | `listteams`                                                                                                                                                                                           |
+| **Help**                    | `help`                                                                                                                                                                                                |
