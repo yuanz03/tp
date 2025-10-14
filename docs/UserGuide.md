@@ -98,9 +98,24 @@ Examples:
 
 Adds a player to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​`
 
-* `TEAM` must be an existing team in the address book. Use the `addteam` command to add a team first.
+* `NAME` should contain alphanumeric characters and spaces only.
+* `NAME` should not be blank.
+* `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `NAME` must not be the same as an existing player in the address book.
+* `PHONE_NUMBER` should only contain numbers.
+* `PHONE_NUMBER` should be at least 3 digits long.
+* `PHONE_NUMBER` should not be blank.
+* `EMAIL` should not be blank.
+* `ADDRESS` should not be blank.
+* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` should not be blank.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `TAG` should contain alphanumeric characters only.
 
 <box type="tip" seamless>
 
@@ -145,8 +160,24 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 * `INJURY` should contain alphanumeric characters and spaces only.
 
 Examples:
-* `assigninjury pl/John Doe i/ACL`
-* `assigninjury pl/Musiala i/fibula fracture`
+* `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the address book.
+* `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the address book.
+
+### Unassign injury from player: `unassigninjury`
+
+Removes the injury status currently assigned to an existing player. 
+
+Format: `unassigninjury pl/PLAYER_NAME`
+
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* Resets the injury status of the player to the default `FIT` status.
+* The player must not already have the default `FIT` status.
+
+Examples:
+* `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
+* `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
 
 ### Listing all players: `list`
 
@@ -164,18 +195,33 @@ Format: `listteams`
 
 Edits an existing player in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`
 
-* Edits the player at the specified `INDEX`. The index refers to the index number shown in the displayed player list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the player with the specified `PLAYER_NAME` from the address book.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the player will be removed i.e adding of tags is not cumulative.
+* When editing the `NAME`, `TEAM_NAME`, or `INJURY` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
+* When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
 * You can remove all the player’s tags by typing `t/` without
     specifying any tags after it.
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `NAME` should contain alphanumeric characters and spaces only.
+* `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `NAME` must not be the same as an existing player in the address book.
+* `PHONE_NUMBER` should only contain numbers.
+* `PHONE_NUMBER` should be at least 3 digits long.
+* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `TAG` should contain alphanumeric characters only.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st player to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd player to be `Betsy Crower` and clears all existing tags.
+*  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
+*  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
 
 ### Locating players by name: `find`
 
@@ -300,10 +346,11 @@ _Details coming soon ..._
 | **Add Team**                | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
 | **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
 | **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
+| **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
 | **Clear**                   | `clear`                                                                                                                                                                                               |
 | **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
 | **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
-| **Edit**                    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                           |
+| **Edit**                        | `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                     |
 | **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
 | **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
 | **List**                    | `list`                                                                                                                                                                                                |
