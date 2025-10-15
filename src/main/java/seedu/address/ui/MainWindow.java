@@ -36,6 +36,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private TeamListPanel teamListPanel;
+    private PositionListPanel positionListPanel;
 
     @FXML
     private StackPane teamListPanelPlaceholder;
@@ -57,6 +58,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private Label viewStatusLabel;
+
+    @FXML
+    private StackPane positionListPanelPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -123,6 +127,9 @@ public class MainWindow extends UiPart<Stage> {
 
         teamListPanel = new TeamListPanel(logic.getFilteredTeamList());
         teamListPanelPlaceholder.getChildren().add(teamListPanel.getRoot());
+
+        positionListPanel = new PositionListPanel(logic.getFilteredPositionList());
+        positionListPanelPlaceholder.getChildren().add(positionListPanel.getRoot());
 
         // Initially show persons, hide teams
         showPersonsView();
@@ -204,6 +211,8 @@ public class MainWindow extends UiPart<Stage> {
                 showTeamsView();
             } else if (commandResult.isShowPersons()) {
                 showPersonsView();
+            } else if (commandResult.isShowPositions()) {
+                showPositionsView();
             }
 
             return commandResult;
@@ -219,14 +228,28 @@ public class MainWindow extends UiPart<Stage> {
         teamListPanelPlaceholder.setManaged(true);
         personListPanelPlaceholder.setVisible(false);
         personListPanelPlaceholder.setManaged(false);
+        positionListPanelPlaceholder.setVisible(false); // hide positions
+        positionListPanelPlaceholder.setManaged(false);
         viewStatusLabel.setText("Viewing Teams");
     }
 
     private void showPersonsView() {
-        teamListPanelPlaceholder.setVisible(false);
-        teamListPanelPlaceholder.setManaged(false);
         personListPanelPlaceholder.setVisible(true);
         personListPanelPlaceholder.setManaged(true);
+        teamListPanelPlaceholder.setVisible(false);
+        teamListPanelPlaceholder.setManaged(false);
+        positionListPanelPlaceholder.setVisible(false); // hide positions
+        positionListPanelPlaceholder.setManaged(false);
         viewStatusLabel.setText("Viewing Players");
+    }
+
+    private void showPositionsView() {
+        positionListPanelPlaceholder.setVisible(true);
+        positionListPanelPlaceholder.setManaged(true);
+        teamListPanelPlaceholder.setVisible(false);
+        teamListPanelPlaceholder.setManaged(false);
+        personListPanelPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setManaged(false);
+        viewStatusLabel.setText("Viewing Positions");
     }
 }

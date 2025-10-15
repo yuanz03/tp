@@ -33,6 +33,7 @@ public class Messages {
     public static final String MESSAGE_NO_MATCHING_INJURY_AND_POSITION =
             "No players matching injury \"%1$s\" and position \"%2$s\".";
     public static final String MESSAGE_NO_TEAMS = "There are currently no teams in the address book.";
+    public static final String MESSAGE_NO_POSITIONS = "No positions found";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

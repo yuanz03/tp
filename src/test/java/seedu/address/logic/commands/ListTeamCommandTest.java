@@ -14,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-public class ListTeamsCommandTest {
+public class ListTeamCommandTest {
 
     private Model model;
     private Model expectedModel;
@@ -27,16 +27,16 @@ public class ListTeamsCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameTeamList() {
-        assertCommandSuccess(new ListTeamsCommand(), model,
-                ListTeamsCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListTeamCommand(), model,
+                ListTeamCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         // filter to only U12
         model.updateFilteredTeamList(team -> team.getName().equals(U12.getName()));
-        assertCommandSuccess(new ListTeamsCommand(), model,
-                ListTeamsCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListTeamCommand(), model,
+                ListTeamCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -45,6 +45,6 @@ public class ListTeamsCommandTest {
         Model emptyModel = new ModelManager(new AddressBook(), new UserPrefs());
         Model expectedEmptyModel = new ModelManager(new AddressBook(), new UserPrefs());
 
-        assertCommandFailure(new ListTeamsCommand(), emptyModel, MESSAGE_NO_TEAMS);
+        assertCommandFailure(new ListTeamCommand(), emptyModel, MESSAGE_NO_TEAMS);
     }
 }

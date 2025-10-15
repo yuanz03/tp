@@ -10,8 +10,8 @@ import seedu.address.model.Model;
 /**
  * Lists all teams in the Play Book to the user.
  */
-public class ListTeamsCommand extends Command {
-    public static final String COMMAND_WORD = "listteams";
+public class ListTeamCommand extends Command {
+    public static final String COMMAND_WORD = "listteam";
 
     public static final String MESSAGE_SUCCESS = "Listed all teams";
 
