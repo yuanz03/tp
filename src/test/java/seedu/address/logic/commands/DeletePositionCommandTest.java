@@ -23,9 +23,9 @@ public class DeletePositionCommandTest {
     public void execute_deleteExisting_success() throws Exception {
         Model model = new ModelManager();
         new NewPositionCommand("FW").execute(model);
-        
+
         CommandResult result = new DeletePositionCommand("FW").execute(model);
-        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "FW"), 
+        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "FW"),
                 result.getFeedbackToUser());
         assertFalse(model.hasPosition(new Position("FW")));
     }
@@ -43,7 +43,7 @@ public class DeletePositionCommandTest {
     @Test
     public void execute_positionNotFound_throwsCommandException() {
         Model model = new ModelManager();
-        
+
         assertThrows(CommandException.class, DeletePositionCommand.MESSAGE_NOT_FOUND, () ->
                 new DeletePositionCommand("FW").execute(model));
     }
@@ -52,10 +52,10 @@ public class DeletePositionCommandTest {
     public void execute_caseInsensitiveDelete_success() throws Exception {
         Model model = new ModelManager();
         new NewPositionCommand("FW").execute(model);
-        
+
         // Should work with different case
         CommandResult result = new DeletePositionCommand("fw").execute(model);
-        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "fw"), 
+        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "fw"),
                 result.getFeedbackToUser());
         assertFalse(model.hasPosition(new Position("FW")));
     }
@@ -64,20 +64,20 @@ public class DeletePositionCommandTest {
     public void execute_whitespaceInName_trimsCorrectly() throws Exception {
         Model model = new ModelManager();
         new NewPositionCommand("FW").execute(model);
-        
+
         CommandResult result = new DeletePositionCommand(" FW ").execute(model);
-        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "FW"), 
+        assertEquals(String.format(DeletePositionCommand.MESSAGE_SUCCESS, "FW"),
                 result.getFeedbackToUser());
     }
 
     @Test
     public void execute_invalidPositionName_throwsCommandException() {
         Model model = new ModelManager();
-        
+
         // Contains space
         assertThrows(CommandException.class, Position.MESSAGE_CONSTRAINTS, () ->
                 new DeletePositionCommand("F W").execute(model));
-        
+
         // Empty string
         assertThrows(CommandException.class, Position.MESSAGE_CONSTRAINTS, () ->
                 new DeletePositionCommand("").execute(model));
@@ -88,12 +88,12 @@ public class DeletePositionCommandTest {
         Model model = new ModelManager();
         new NewPositionCommand("FW").execute(model);
         new NewPositionCommand("MF").execute(model);
-        
+
         assertTrue(model.hasPosition(new Position("FW")));
         assertTrue(model.hasPosition(new Position("MF")));
-        
+
         new DeletePositionCommand("FW").execute(model);
-        
+
         assertFalse(model.hasPosition(new Position("FW")));
         assertTrue(model.hasPosition(new Position("MF")));
     }
@@ -107,8 +107,8 @@ public class DeletePositionCommandTest {
         assertTrue(deleteFW.equals(deleteFW));
 
         // same values -> returns true
-        DeletePositionCommand deleteFWCopy = new DeletePositionCommand("FW");
-        assertTrue(deleteFW.equals(deleteFWCopy));
+        DeletePositionCommand deleteFwCopy = new DeletePositionCommand("FW");
+        assertTrue(deleteFW.equals(deleteFwCopy));
 
         // different types -> returns false
         assertFalse(deleteFW.equals(1));

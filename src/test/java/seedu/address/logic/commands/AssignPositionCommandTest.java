@@ -137,8 +137,8 @@ public class AssignPositionCommandTest {
         assertTrue(assignAliceFW.equals(assignAliceFW));
 
         // same values -> returns true
-        AssignPositionCommand assignAliceFWCopy = new AssignPositionCommand("Alice", "FW");
-        assertTrue(assignAliceFW.equals(assignAliceFWCopy));
+        AssignPositionCommand assignAliceFwCopy = new AssignPositionCommand("Alice", "FW");
+        assertTrue(assignAliceFW.equals(assignAliceFwCopy));
 
         // different types -> returns false
         assertFalse(assignAliceFW.equals(1));

@@ -147,7 +147,7 @@ public class UniquePositionListTest {
     public void iterator_iteratesThroughPositions() {
         uniquePositionList.add(new Position("FW"));
         uniquePositionList.add(new Position("GK"));
-        
+
         int count = 0;
         for (Position position : uniquePositionList) {
             count++;
