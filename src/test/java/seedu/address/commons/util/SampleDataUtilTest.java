@@ -33,6 +33,7 @@ public class SampleDataUtilTest {
             assertNotNull(person.getEmail());
             assertNotNull(person.getAddress());
             assertNotNull(person.getTeam());
+            assertNotNull(person.getInjury());
             assertNotNull(person.getTags());
         }
     }

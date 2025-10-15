@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# AB-3 User Guide
+# PlayBook User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -18,11 +18,11 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your PlayBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -30,12 +30,16 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
    Some example commands you can try:
 
    * `list` : Lists all contacts.
+   
+   * `addteam n/u16`: Adds a team named `u16` to the PlayBook.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook. 
 
-   * `clear` : Deletes all contacts.
+   * `delete pl/John Doe` : Deletes `John Doe` from the PlayBook.
+
+   * `clear` : Deletes all players' contacts and teams from the PlayBook.
 
    * `exit` : Exits the app.
 
@@ -53,7 +57,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  - e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  - e.g `n/NAME [i/INJURY]` can be used as `n/John Doe i/ACL` or as `n/John Doe`. 
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -67,7 +72,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -75,80 +80,219 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+### Adding a team: `addteam`
 
-### Adding a person: `add`
+Adds a team to the address book.
 
-Adds a person to the address book.
+Format: `addteam n/TEAM_NAME`
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+* `TEAM_NAME` must not be the same as an existing team in the address book.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` should not be blank.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+
+Examples:
+* `addteam n/u16`
+
+### Adding a player: `add`
+
+Adds a player to the address book.
+
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​`
+
+* `NAME` should contain alphanumeric characters and spaces only.
+* `NAME` should not be blank.
+* `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `NAME` must not be the same as an existing player in the address book.
+* `PHONE_NUMBER` should only contain numbers.
+* `PHONE_NUMBER` should be at least 3 digits long.
+* `PHONE_NUMBER` should not be blank.
+* `EMAIL` should not be blank.
+* `ADDRESS` should not be blank.
+* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` should not be blank.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `TAG` should contain alphanumeric characters only.
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A player can have any number of tags (including 0).
+
+**Tip:** A player may or may not have a specified injury.
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 i/ACL t/criminal`
 
-### Listing all persons : `list`
+### Assign player to team: `assignteam`
 
-Shows a list of all persons in the address book.
+Assigns an existing player to another existing team.
+
+Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
+
+* `TEAM_NAME` must be the same as an existing team in the address book.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
+
+Examples:
+* `assignteam pl/John Doe tm/u16`
+* `assignteam pl/Betsy Crowe tm/u16`
+
+### Assign injury to player: `assigninjury`
+
+Assigns an injury status to an existing player.
+
+Format: `assigninjury pl/PLAYER_NAME i/INJURY`
+
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should not be blank.
+* `INJURY` should contain alphanumeric characters and spaces only.
+
+Examples:
+* `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the address book.
+* `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the address book.
+
+### Unassign injury from player: `unassigninjury`
+
+Removes the injury status currently assigned to an existing player. 
+
+Format: `unassigninjury pl/PLAYER_NAME`
+
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* Resets the injury status of the player to the default `FIT` status.
+* The player must not already have the default `FIT` status.
+
+Examples:
+* `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
+* `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
+
+### Listing all players: `list`
+
+Shows a list of all players in the PlayBook.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Listing all teams: `listteams`
 
-Edits an existing person in the address book.
+Shows a list of all teams in the PlayBook.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `listteams`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+### Editing a player: `edit`
+
+Edits an existing player in the address book.
+
+Format: `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`
+
+* Edits the player with the specified `PLAYER_NAME` from the address book.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* When editing the `NAME`, `TEAM_NAME`, or `INJURY` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
+* When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
+* You can remove all the player’s tags by typing `t/` without
     specifying any tags after it.
+* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `NAME` should contain alphanumeric characters and spaces only.
+* `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `NAME` must not be the same as an existing player in the address book.
+* `PHONE_NUMBER` should only contain numbers.
+* `PHONE_NUMBER` should be at least 3 digits long.
+* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `TAG` should contain alphanumeric characters only.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
+*  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating players by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds players whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Players matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Filtering players by team, injury and/or position: `filter`
 
-Deletes the specified person from the address book.
+Filter players by team, injury and/or position.
 
-Format: `delete INDEX`
+Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Shows all the players that matches the specified `TEAM_NAME`, `POSITION` and/or `INJURY` if they are provided.
+* At least one of the optional fields must be provided.
+* Duplicate flags are not allowed.
+* The fields are all case-insensitive. e.g `acl` will match `ACL`.
+* The order of the keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
+* Only full words will be matched by the injury field. `ACL` will not match `ACLs`.
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `filter tm/U16 ps/FW` shows players that are from the team `U16` and play the position `FW`.
+* `filter ps/FW tm/U17 i/FIT` shows players that are from the team `U17`, play the position `FW` and are `FIT`.
+* `filter i/Leg Broken ps/MF` shows players that play the position `MF` and have their `Leg Broken`.
+* `filter tm/Chelsea` shows players that are from the team `Chelsea`.
+
+### Deleting a player: `delete`
+
+Deletes the specified player from the PlayBook.
+
+Format: `delete pl/PLAYER_NAME`
+
+* Deletes the player with the specified `PLAYER_NAME` from the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
+* The player to be deleted must exist in the PlayBook.
+* The command can only delete one player at a time.
+
+Examples:
+* `delete pl/John Doe` deletes the player named `John Doe` from the PlayBook.
+* `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the PlayBook.
+
+### Deleting a team: `deleteteam`
+
+Deletes the specified team from the PlayBook.
+
+Format: `deleteteam tm/TEAM_NAME`
+
+* Deletes the team with the specified `TEAM_NAME` from the PlayBook.
+* Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
+* `TEAM_NAME` is case-insensitive, e.g `u16` will match `U16`.
+* The team to be deleted must exist in the PlayBook.
+* The command can only delete one team at a time.
+
+Examples:
+* `deleteteam tm/u16` deletes the team named `u16` from the PlayBook.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the PlayBook.
 
 Format: `clear`
 
@@ -160,17 +304,17 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+PlayBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+PlayBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, PlayBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the PlayBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -182,7 +326,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PlayBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -195,12 +339,19 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+| Action                      | Format, Examples                                                                                                                                                                                      |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Player**              | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
+| **Add Team**                | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
+| **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
+| **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
+| **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
+| **Clear**                   | `clear`                                                                                                                                                                                               |
+| **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
+| **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
+| **Edit**                        | `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                     |
+| **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
+| **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
+| **List**                    | `list`                                                                                                                                                                                                |
+| **List Teams**              | `listteams`                                                                                                                                                                                           |
+| **Help**                    | `help`                                                                                                                                                                                                |

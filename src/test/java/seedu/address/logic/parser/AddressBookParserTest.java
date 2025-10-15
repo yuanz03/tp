@@ -4,10 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalTeams.U16;
 
 import java.util.Arrays;
@@ -18,11 +19,15 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTeamCommand;
+import seedu.address.logic.commands.AssignInjuryCommand;
+import seedu.address.logic.commands.AssignTeamCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTeamCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FilterCaptainCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -30,10 +35,13 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamsCommand;
 import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
+import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.team.Team;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -69,8 +77,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + PLAYER_DESC_AMY + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(new Name(VALID_NAME_AMY), descriptor), command);
     }
 
     @Test
@@ -106,6 +114,21 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_assignTeam() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        AssignTeamCommand command = (AssignTeamCommand)
+                parser.parseCommand(TeamUtil.getAssignTeamCommand(name, U16));
+        assertEquals(new AssignTeamCommand(name, U16), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTeam() throws Exception {
+        Team team = U16;
+        DeleteTeamCommand command = (DeleteTeamCommand) parser.parseCommand(TeamUtil.getDeleteTeamCommand(team));
+        assertEquals(new DeleteTeamCommand(team), command);
+    }
+
+    @Test
     public void parseCommand_listTeams() throws Exception {
         assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD) instanceof ListTeamsCommand);
     }
@@ -113,6 +136,33 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_listTeams_withExtraArgs() throws Exception {
         assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD + " 3") instanceof ListTeamsCommand);
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        // no args
+        assertTrue(parser.parseCommand("filter tm/" + U16.getName()) instanceof FilterCommand);
+        // with extra whitespace and args
+        assertTrue(parser.parseCommand("  filter tm/" + U16.getName() + "  ") instanceof FilterCommand);
+    }
+
+    @Test
+    public void parseCommand_assignInjury() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        Injury injury = new Injury(VALID_INJURY_AMY);
+        AssignInjuryCommand command = (AssignInjuryCommand) parser.parseCommand(
+                AssignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY + INJURY_DESC_AMY);
+
+        assertEquals(new AssignInjuryCommand(name, injury), command);
+    }
+
+    @Test
+    public void parseCommand_unassignInjury() throws Exception {
+        Name name = new Name(VALID_NAME_AMY);
+        UnassignInjuryCommand command = (UnassignInjuryCommand) parser.parseCommand(
+                UnassignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY);
+
+        assertEquals(new UnassignInjuryCommand(name), command);
     }
 
     @Test

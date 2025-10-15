@@ -11,6 +11,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.team.exceptions.DuplicateTeamException;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 
 /**
  * A list of teams that enforces uniqueness between its elements and does not allow nulls.
@@ -27,7 +28,7 @@ public class UniqueTeamList implements Iterable<Team> {
 
     private final ObservableList<Team> internalList = FXCollections.observableArrayList();
     private final ObservableList<Team> internalUnmodifiableList =
-        FXCollections.unmodifiableObservableList(internalList);
+            FXCollections.unmodifiableObservableList(internalList);
 
     /**
      * Returns true if the list contains an equivalent team as the given argument.
@@ -67,6 +68,17 @@ public class UniqueTeamList implements Iterable<Team> {
         }
 
         internalList.setAll(teams);
+    }
+
+    /**
+     * Removes the equivalent team from the list.
+     * The team must exist in the list.
+     */
+    public void remove(Team toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new TeamNotFoundException();
+        }
     }
 
 

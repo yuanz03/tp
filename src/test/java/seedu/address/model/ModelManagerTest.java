@@ -19,9 +19,14 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
 
@@ -116,6 +121,192 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void updatePersonInjuryStatus_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                modelManager.updatePersonInjuryStatus(null, new Injury(Person.DEFAULT_INJURY_STATUS)));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_nullInjury_throwsNullPointerException() {
+        modelManager.addPerson(ALICE);
+        assertThrows(NullPointerException.class, () ->
+                modelManager.updatePersonInjuryStatus(ALICE, null));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_personNotInAddressBook_throwsPersonNotFoundException() {
+        Injury injury = new Injury("Knee fracture");
+        assertThrows(PersonNotFoundException.class, () -> modelManager.updatePersonInjuryStatus(ALICE, injury));
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_validPersonAndInjury_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+        Injury injury = new Injury("Knee fracture");
+        modelManager.updatePersonInjuryStatus(ALICE, injury);
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertEquals(injury, updatedPerson.getInjury());
+
+        assertEquals(ALICE.getName(), updatedPerson.getName());
+        assertEquals(ALICE.getPhone(), updatedPerson.getPhone());
+        assertEquals(ALICE.getEmail(), updatedPerson.getEmail());
+        assertEquals(ALICE.getAddress(), updatedPerson.getAddress());
+        assertEquals(ALICE.getTeam(), updatedPerson.getTeam());
+        assertEquals(ALICE.getPosition(), updatedPerson.getPosition());
+        assertEquals(ALICE.getTags(), updatedPerson.getTags());
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_sameInjury_noInjuryStatusChange() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjury = new Injury("ACL");
+
+        modelManager.updatePersonInjuryStatus(ALICE, sameInjury);
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertEquals(sameInjury, updatedPerson.getInjury());
+    }
+
+    @Test
+    public void updatePersonInjuryStatus_multipleInjuryUpdates_updatesInjuryStatusCorrectly() {
+        modelManager.addPerson(ALICE);
+
+        Injury firstInjury = new Injury("Knee fracture");
+        modelManager.updatePersonInjuryStatus(ALICE, firstInjury);
+        assertEquals(firstInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+
+        Injury secondInjury = new Injury("Sprained finger");
+        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), secondInjury);
+        assertEquals(secondInjury, modelManager.getPersonByName(ALICE.getName()).getInjury());
+
+        modelManager.updatePersonInjuryStatus(modelManager.getPersonByName(ALICE.getName()), ALICE.getInjury());
+        assertEquals(ALICE.getInjury(), modelManager.getPersonByName(ALICE.getName()).getInjury());
+    }
+
+    @Test
+    public void hasInjury_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                modelManager.hasInjury(null));
+    }
+
+    @Test
+    public void hasInjury_personWithDefaultInjury_returnsFalse() {
+        Person personWithDefaultInjury = new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS).build();
+        modelManager.addPerson(personWithDefaultInjury);
+        assertFalse(modelManager.hasInjury(personWithDefaultInjury));
+    }
+
+    @Test
+    public void hasInjury_personWithActualInjury_returnsTrue() {
+        Person personWithInjury = new PersonBuilder().withInjury("ACL").build();
+        modelManager.addPerson(personWithInjury);
+        assertTrue(modelManager.hasInjury(personWithInjury));
+    }
+
+    @Test
+    public void hasInjury_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.hasInjury(ALICE));
+    }
+
+    @Test
+    public void hasInjury_caseInsensitiveDefaultInjury_returnsFalse() {
+        Person personWithLowercaseDefaultInjury = new PersonBuilder().withInjury("fit").build();
+        modelManager.addPerson(personWithLowercaseDefaultInjury);
+        assertFalse(modelManager.hasInjury(personWithLowercaseDefaultInjury));
+    }
+
+    @Test
+    public void hasInjury_caseInsensitiveActualInjury_returnsTrue() {
+        Person personWithLowercaseInjury = new PersonBuilder().withInjury("acl").build();
+        modelManager.addPerson(personWithLowercaseInjury);
+        assertTrue(modelManager.hasInjury(personWithLowercaseInjury));
+    }
+
+    @Test
+    public void hasInjury_afterInjuryUpdate_reflectsUpdatedStatus() {
+        Person person = new PersonBuilder().withInjury("ACL").build();
+        modelManager.addPerson(person);
+        assertTrue(modelManager.hasInjury(person));
+
+        // Update to the default injury status
+        modelManager.updatePersonInjuryStatus(person, new Injury(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(modelManager.hasInjury(modelManager.getPersonByName(person.getName())));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                modelManager.isDuplicateInjuryAssigned(null, new Injury("ACL")));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_nullInjury_throwsNullPointerException() {
+        modelManager.addPerson(ALICE);
+        assertThrows(NullPointerException.class, () ->
+                modelManager.isDuplicateInjuryAssigned(ALICE, null));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_personNotInAddressBook_throwsPersonNotFoundException() {
+        Injury injury = new Injury("Knee fracture");
+        assertThrows(PersonNotFoundException.class, () -> modelManager.isDuplicateInjuryAssigned(ALICE, injury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_sameInjury_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjury = new Injury("ACL");
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, sameInjury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_differentInjury_returnsFalse() {
+        modelManager.addPerson(ALICE);
+        Injury differentInjury = new Injury("Hamstring strain");
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, differentInjury));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_caseInsensitiveSameInjury_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        Injury sameInjuryDifferentCase = new Injury("acl");
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, sameInjuryDifferentCase));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_multiplePersonsDifferentInjuries_reflectsUpdatedStatus() {
+        modelManager.addPerson(ALICE);
+        modelManager.addPerson(BENSON);
+
+        // ALICE initially has "ACL" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("ACL")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("Broken foot")));
+
+        // BENSON initially has "Broken foot" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(BENSON, new Injury("Broken foot")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(BENSON, new Injury("ACL")));
+    }
+
+    @Test
+    public void isDuplicateInjuryAssigned_afterInjuryUpdate_reflectsUpdatedStatus() {
+        modelManager.addPerson(ALICE);
+
+        // ALICE initially has "ACL" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("ACL")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(ALICE, new Injury("Concussion")));
+
+        // Update ALICE injury status to Concussion
+        modelManager.updatePersonInjuryStatus(ALICE, new Injury("Concussion"));
+
+        // ALICE now has "Concussion" injury status
+        assertTrue(modelManager.isDuplicateInjuryAssigned(modelManager.getPersonByName(ALICE.getName()),
+                new Injury("Concussion")));
+        assertFalse(modelManager.isDuplicateInjuryAssigned(modelManager.getPersonByName(ALICE.getName()),
+                new Injury("ACL")));
+    }
+
+    @Test
     public void getFilteredTeamList_returnsUnfilteredTeamList() {
         ModelManager modelManager = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         // The default filteredTeams should contain all teams in the typical address book
@@ -173,5 +364,43 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void addTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.addTeam(null));
+    }
+
+    @Test
+    public void deleteTeam_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deleteTeam(null));
+    }
+
+    @Test
+    public void deleteTeam_teamNotInAddressBook_throwsTeamNotFoundException() {
+        assertThrows(TeamNotFoundException.class, () -> modelManager.deleteTeam(U12));
+    }
+
+    @Test
+    public void deleteTeam_validTeam_teamDeleted() {
+        modelManager.addTeam(U12);
+        modelManager.deleteTeam(U12);
+        assertFalse(modelManager.hasTeam(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.isTeamEmpty(null));
+    }
+
+    @Test
+    public void isTeamEmpty_teamNotInAddressBook_returnsTrue() {
+        assertTrue(modelManager.isTeamEmpty(U12));
+    }
+
+    @Test
+    public void isTeamEmpty_teamInAddressBookWithoutMembers_returnsTrue() {
+        modelManager.addTeam(U12);
+        assertTrue(modelManager.isTeamEmpty(U12));
     }
 }

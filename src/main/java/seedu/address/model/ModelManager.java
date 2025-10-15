@@ -11,8 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
@@ -50,14 +52,14 @@ public class ModelManager implements Model {
     //=========== UserPrefs ==================================================================================
 
     @Override
-    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-        requireNonNull(userPrefs);
-        this.userPrefs.resetData(userPrefs);
+    public ReadOnlyUserPrefs getUserPrefs() {
+        return userPrefs;
     }
 
     @Override
-    public ReadOnlyUserPrefs getUserPrefs() {
-        return userPrefs;
+    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+        requireNonNull(userPrefs);
+        this.userPrefs.resetData(userPrefs);
     }
 
     @Override
@@ -85,13 +87,13 @@ public class ModelManager implements Model {
     //=========== AddressBook =============================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public ReadOnlyAddressBook getAddressBook() {
+        return addressBook;
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setAddressBook(ReadOnlyAddressBook addressBook) {
+        this.addressBook.resetData(addressBook);
     }
 
     @Override
@@ -115,6 +117,36 @@ public class ModelManager implements Model {
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void updatePersonInjuryStatus(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
+
+        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
+                target.getTeam(), target.getTags(), target.getPosition(), injury);
+
+        setPerson(target, updatedPerson);
+    }
+
+    @Override
+    public boolean hasInjury(Person target) {
+        requireNonNull(target);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
+        return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
+    }
+
+    @Override
+    public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
+        return target.getInjury().equals(injury);
     }
 
     @Override
@@ -158,6 +190,8 @@ public class ModelManager implements Model {
         filteredTeams.setPredicate(predicate);
     }
 
+    //=========== Captain Commands =============================================================
+
     @Override
     public void makeCaptain(Person person) {
         person.makeCaptain();
@@ -168,6 +202,9 @@ public class ModelManager implements Model {
         person.stripCaptain();
     }
 
+    //=========== Team Commands =============================================================
+
+    //@@author jovnc
     @Override
     public boolean hasTeam(Team team) {
         requireNonNull(team);
@@ -176,10 +213,31 @@ public class ModelManager implements Model {
 
     @Override
     public void addTeam(Team team) {
+        requireNonNull(team);
         addressBook.addTeam(team);
         updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
     }
 
+    @Override
+    public boolean isTeamEmpty(Team team) {
+        requireNonNull(team);
+        return addressBook.isTeamEmpty(team);
+    }
+
+    @Override
+    public void deleteTeam(Team team) {
+        requireNonNull(team);
+        addressBook.deleteTeam(team);
+        updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
+    }
+
+    @Override
+    public void assignTeam(Person person, Team team) {
+        requireAllNonNull(person, team);
+        addressBook.assignTeam(person, team);
+    }
+
+    //@@author
     //=========== Positions ==============================================================================
     @Override
     public boolean hasPosition(Position position) {

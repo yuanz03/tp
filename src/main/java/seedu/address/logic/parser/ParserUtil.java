@@ -12,8 +12,10 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.team.Team;
 
@@ -98,6 +100,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String injuryName} into an {@code Injury}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code injuryName} is invalid.
+     */
+    public static Injury parseInjury(String injuryName) throws ParseException {
+        requireNonNull(injuryName);
+        String trimmedInjuryName = injuryName.trim();
+        if (!Injury.isValidInjuryName(trimmedInjuryName)) {
+            throw new ParseException(Injury.MESSAGE_CONSTRAINTS);
+        }
+        return new Injury(trimmedInjuryName);
+    }
+
+    /**
      * Parses a {@code String team} into a {@code Team}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -110,6 +127,21 @@ public class ParserUtil {
             throw new ParseException(Team.MESSAGE_CONSTRAINTS);
         }
         return new Team(trimmedTeam);
+    }
+
+    /**
+     * Parses a {@code String position} into a {@code Position}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code position} is invalid.
+     */
+    public static Position parsePosition(String position) throws ParseException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Position.isValidPositionName(trimmedPosition)) {
+            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
+        }
+        return new Position(trimmedPosition);
     }
 
     /**
