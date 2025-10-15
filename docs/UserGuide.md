@@ -9,6 +9,32 @@
 PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
+
+- [PlayBook User Guide](#playbook-user-guide)
+  - [Quick start](#quick-start)
+  - [Features](#features)
+    - [Viewing help: `help`](#viewing-help-help)
+    - [Adding a team: `addteam`](#adding-a-team-addteam)
+    - [Adding a player: `add`](#adding-a-player-add)
+    - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
+    - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
+    - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
+    - [Listing all players: `list`](#listing-all-players-list)
+    - [Listing all teams: `listteams`](#listing-all-teams-listteams)
+    - [Editing a player: `edit`](#editing-a-player-edit)
+    - [Locating players by name: `find`](#locating-players-by-name-find)
+    - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
+    - [Deleting a player: `delete`](#deleting-a-player-delete)
+    - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
+    - [Clearing all entries : `clear`](#clearing-all-entries--clear)
+    - [Exiting the program : `exit`](#exiting-the-program--exit)
+    - [Saving the data](#saving-the-data)
+    - [Editing the data file](#editing-the-data-file)
+    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+  - [FAQ](#faq)
+  - [Known issues](#known-issues)
+  - [Command summary](#command-summary)
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -29,9 +55,9 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all players.
    
-   * `addteam n/u16`: Adds a team named `u16` to the PlayBook.
+   * `addteam tm/u16`: Adds a team named `u16` to the PlayBook.
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
 
@@ -82,37 +108,37 @@ Format: `help`
 
 ### Adding a team: `addteam`
 
-Adds a team to the address book.
+Adds a team to the PlayBook.
 
-Format: `addteam n/TEAM_NAME`
+Format: `addteam tm/TEAM_NAME`
 
-* `TEAM_NAME` must not be the same as an existing team in the address book.
-* `TEAM_NAME` should contain alphanumeric characters and spaces only.
-* `TEAM_NAME` should not be blank.
+* `TEAM_NAME` must not be the same as an existing team in the PlayBook.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
 
 Examples:
-* `addteam n/u16`
+* `addteam tm/u16`
 
 ### Adding a player: `add`
 
-Adds a player to the address book.
+Adds a player to the PlayBook.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​`
 
 * `NAME` should contain alphanumeric characters and spaces only.
 * `NAME` should not be blank.
 * `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `NAME` must not be the same as an existing player in the address book.
+* `NAME` must not be the same as an existing player in the PlayBook.
 * `PHONE_NUMBER` should only contain numbers.
 * `PHONE_NUMBER` should be at least 3 digits long.
 * `PHONE_NUMBER` should not be blank.
 * `EMAIL` should not be blank.
 * `ADDRESS` should not be blank.
-* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain alphanumeric characters and spaces only.
-* `TEAM_NAME` should not be blank.
+* `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
@@ -134,10 +160,11 @@ Assigns an existing player to another existing team.
 
 Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
-* `TEAM_NAME` must be the same as an existing team in the address book.
+* `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
@@ -152,7 +179,7 @@ Assigns an injury status to an existing player.
 
 Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
-* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
@@ -160,8 +187,8 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 * `INJURY` should contain alphanumeric characters and spaces only.
 
 Examples:
-* `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the address book.
-* `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the address book.
+* `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the PlayBook.
+* `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the PlayBook.
 
 ### Unassign injury from player: `unassigninjury`
 
@@ -169,7 +196,7 @@ Removes the injury status currently assigned to an existing player.
 
 Format: `unassigninjury pl/PLAYER_NAME`
 
-* `PLAYER_NAME` must be the same as an existing player in the address book.
+* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * Resets the injury status of the player to the default `FIT` status.
@@ -193,28 +220,28 @@ Format: `listteams`
 
 ### Editing a player: `edit`
 
-Edits an existing player in the address book.
+Edits an existing player in the PlayBook.
 
 Format: `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`
 
-* Edits the player with the specified `PLAYER_NAME` from the address book.
+* Edits the player with the specified `PLAYER_NAME` from the PlayBook.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing the `NAME`, `TEAM_NAME`, or `INJURY` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
 * When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
-* You can remove all the player’s tags by typing `t/` without
-    specifying any tags after it.
-* `PLAYER_NAME` must be the same as an existing player in the address book.
+* You can remove all the player's tags by typing `t/` without specifying any tags after it.
+* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * `NAME` should contain alphanumeric characters and spaces only.
 * `NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `NAME` must not be the same as an existing player in the address book.
+* `NAME` must not be the same as an existing player in the PlayBook.
 * `PHONE_NUMBER` should only contain numbers.
 * `PHONE_NUMBER` should be at least 3 digits long.
-* `TEAM_NAME` must be an existing team in the address book. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain alphanumeric characters and spaces only.
+* `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
 * `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
@@ -283,12 +310,15 @@ Format: `deleteteam tm/TEAM_NAME`
 
 * Deletes the team with the specified `TEAM_NAME` from the PlayBook.
 * Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
-* `TEAM_NAME` is case-insensitive, e.g `u16` will match `U16`.
+* `TEAM_NAME` must be an existing team in the PlayBook.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
 * The team to be deleted must exist in the PlayBook.
 * The command can only delete one team at a time.
 
 Examples:
-* `deleteteam tm/u16` deletes the team named `u16` from the PlayBook.
+* `deleteteam tm/u16` deletes the team named `u16` from the PlayBook, assuming it exists.
 
 ### Clearing all entries : `clear`
 
@@ -342,7 +372,7 @@ _Details coming soon ..._
 | Action                      | Format, Examples                                                                                                                                                                                      |
 |-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Player**              | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM [i/INJURY] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
-| **Add Team**                | `addteam n/NAME` <br> e.g., `addteam n/u16`                                                                                                                                                           |
+| **Add Team**                | `addteam tm/NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                         |
 | **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
 | **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
 | **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
