@@ -32,7 +32,7 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListTeamsCommand;
+import seedu.address.logic.commands.ListTeamCommand;
 import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
 import seedu.address.logic.commands.UnassignInjuryCommand;
@@ -130,12 +130,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_listTeams() throws Exception {
-        assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD) instanceof ListTeamsCommand);
+        assertTrue(parser.parseCommand(ListTeamCommand.COMMAND_WORD) instanceof ListTeamCommand);
     }
 
     @Test
     public void parseCommand_listTeams_withExtraArgs() throws Exception {
-        assertTrue(parser.parseCommand(ListTeamsCommand.COMMAND_WORD + " 3") instanceof ListTeamsCommand);
+        assertTrue(parser.parseCommand(ListTeamCommand.COMMAND_WORD + " 3") instanceof ListTeamCommand);
     }
 
     @Test

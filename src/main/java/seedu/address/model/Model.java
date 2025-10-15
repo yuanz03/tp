@@ -21,6 +21,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Team> PREDICATE_SHOW_ALL_TEAMS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Position> PREDICATE_SHOW_ALL_POSITIONS = unused -> true;
+
     Predicate<Person> PREDICATE_SHOW_CAPTAINS = Person::isCaptain;
 
     /**
