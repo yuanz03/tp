@@ -5,6 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FilterByInjuryPredicate;
@@ -24,6 +29,22 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     public FilterCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION);
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION);
+
+        List<Prefix> presentPrefixes = Stream.of(PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION)
+                .filter(p -> argMultimap.getValue(p).isPresent())
+                .sorted(Comparator.comparingInt(p -> args.indexOf(p.getPrefix())))
+                .collect(Collectors.toList());
+
+        for (Prefix p : presentPrefixes) {
+            String value = argMultimap.getValue(p).get();
+            if (p == PREFIX_TEAM) {
+                ParserUtil.parseTeam(value);
+            } else if (p == PREFIX_INJURY) {
+                ParserUtil.parseInjury(value);
+            } else if (p == PREFIX_POSITION) {
+                ParserUtil.parsePosition(value);
+            }
+        }
 
         boolean hasTeam = argMultimap.getValue(PREFIX_TEAM).isPresent();
         boolean hasInjury = argMultimap.getValue(PREFIX_INJURY).isPresent();
@@ -52,7 +73,6 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         FilterByInjuryPredicate injuryPred = argMultimap.getValue(PREFIX_INJURY)
                 .map(inj -> new FilterByInjuryPredicate(inj))
                 .orElse(FilterByInjuryPredicate.ALWAYS_TRUE);
-
         FilterByPositionPredicate positionPred = argMultimap.getValue(PREFIX_POSITION)
                 .map(pos -> new FilterByPositionPredicate(pos))
                 .orElse(FilterByPositionPredicate.ALWAYS_TRUE);

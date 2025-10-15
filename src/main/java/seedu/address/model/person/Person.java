@@ -40,7 +40,7 @@ public class Person {
      * default value {@code "FIT"} and default position of NONE.
      * Every field must be present and not null, and isCaptain is false.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Position none, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, team, tags);
         this.name = name;
         this.phone = phone;
@@ -71,6 +71,31 @@ public class Person {
         this.position = position;
         this.injury = injury;
         this.isCaptain = false;
+    }
+
+    /**
+     * Creates a Person object with specified captain status and with a team assigned.
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team,
+                  Position position, Set<Tag> tags, boolean isCaptain) {
+        requireAllNonNull(name, phone, email, address, team, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.position = position;
+        this.injury = new Injury(DEFAULT_INJURY_STATUS);
+        this.tags.addAll(tags);
+        this.isCaptain = isCaptain;
+    }
+
+    /**
+     * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
+        this(name, phone, email, address, team, new Position("NONE"), tags);
     }
 
     public Name getName() {
@@ -181,4 +206,5 @@ public class Person {
                 .add("isCaptain", isCaptain)
                 .toString();
     }
+
 }
