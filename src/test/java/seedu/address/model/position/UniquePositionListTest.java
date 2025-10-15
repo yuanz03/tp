@@ -143,6 +143,7 @@ public class UniquePositionListTest {
     }
 
     @Test
+    @SuppressWarnings("unused")
     public void iterator_iteratesThroughPositions() {
         uniquePositionList.add(new Position("FW"));
         uniquePositionList.add(new Position("GK"));
@@ -150,7 +151,6 @@ public class UniquePositionListTest {
         int count = 0;
         for (Position position : uniquePositionList) {
             count++;
-            // Just iterating to count, position value not used in test
         }
         assertEquals(2, count);
     }

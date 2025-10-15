@@ -108,9 +108,9 @@ public class AssignPositionCommandTest {
         Person alice = new PersonBuilder().withName("Alice").withTeam("A").build();
         model.addPerson(alice);
 
-        // Should work with different case
+        // Should work with different case - message returns actual position name from model
         CommandResult res = new AssignPositionCommand("Alice", "fw").execute(model);
-        assertEquals(String.format(AssignPositionCommand.MESSAGE_SUCCESS, "Alice", "fw"),
+        assertEquals(String.format(AssignPositionCommand.MESSAGE_SUCCESS, "Alice", "FW"),
                 res.getFeedbackToUser());
     }
 

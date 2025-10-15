@@ -34,6 +34,8 @@ public class AssignPositionCommand extends Command {
      * @param rawPositionName raw position name string (may require trimming and case-insensitive matching).
      */
     public AssignPositionCommand(String rawPlayerName, String rawPositionName) {
+        requireNonNull(rawPlayerName);
+        requireNonNull(rawPositionName);
         this.rawPlayerName = rawPlayerName;
         this.rawPositionName = rawPositionName;
     }
@@ -79,6 +81,22 @@ public class AssignPositionCommand extends Command {
         );
         model.setPerson(person, edited);
         return new CommandResult(String.format(MESSAGE_SUCCESS, playerNameStr, position.getName()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AssignPositionCommand)) {
+            return false;
+        }
+
+        AssignPositionCommand otherCommand = (AssignPositionCommand) other;
+        return rawPlayerName.equals(otherCommand.rawPlayerName)
+                && rawPositionName.equals(otherCommand.rawPositionName);
     }
 }
 

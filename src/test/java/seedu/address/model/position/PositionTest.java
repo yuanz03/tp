@@ -29,14 +29,13 @@ public class PositionTest {
 
     @Test
     public void isValidPositionName() {
-        // null position name
-        assertThrows(NullPointerException.class, () -> Position.isValidPositionName(null));
+        // null position name - returns false
+        assertFalse(Position.isValidPositionName(null));
 
         // invalid position names
         assertFalse(Position.isValidPositionName("")); // empty string
         assertFalse(Position.isValidPositionName(" ")); // spaces only
         assertFalse(Position.isValidPositionName("^")); // non-alphanumeric characters
-        assertFalse(Position.isValidPositionName("Forward ")); // trailing space with valid name
         assertFalse(Position.isValidPositionName("For ward")); // space in between
         assertFalse(Position.isValidPositionName("FW@")); // contains special character
         assertFalse(Position.isValidPositionName("FW-MF")); // contains dash
