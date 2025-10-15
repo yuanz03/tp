@@ -5,8 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import seedu.address.commons.util.ToStringBuilder;
-
 /**
  * Represents a Team in the address book.
  */
@@ -74,8 +72,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-            .add("name", name)
-            .toString();
+        return this.name;
     }
 }
