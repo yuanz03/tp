@@ -185,11 +185,17 @@ Shows a list of all players in the PlayBook.
 
 Format: `list`
 
-### Listing all teams: `listteams`
+### Listing all teams: `listteam`
 
 Shows a list of all teams in the PlayBook.
 
-Format: `listteams`
+Format: `listteam`
+
+### Listing all positions: `listposition`
+
+Shows a list of all positions in the PlayBook.
+
+Format: `listposition`
 
 ### Editing a player: `edit`
 
@@ -353,5 +359,6 @@ _Details coming soon ..._
 | **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
 | **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
 | **List**                    | `list`                                                                                                                                                                                                |
-| **List Teams**              | `listteams`                                                                                                                                                                                           |
+| **List Teams**              | `listteam`                                                                                                                                                                                           |
+| **List Positions**              | `listposition`                                                                                                                                                                                           |
 | **Help**                    | `help`                                                                                                                                                                                                |
