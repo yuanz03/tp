@@ -92,6 +92,25 @@ public class Person {
     }
 
     /**
+     * Creates a Person object with all fields including injury and captain status.
+     * This is the most complete constructor.
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
+                  Position position, Injury injury, boolean isCaptain) {
+        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.tags.addAll(tags);
+        this.position = position;
+        this.injury = injury;
+        this.isCaptain = isCaptain;
+    }
+
+    /**
      * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {

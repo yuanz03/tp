@@ -76,7 +76,7 @@ public class AddCommand extends Command {
         if (injury != null && injury.equals(new Injury(Person.DEFAULT_INJURY_STATUS))) {
             model.updatePersonInjuryStatus(toAdd, new Injury(Person.DEFAULT_INJURY_STATUS));
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
     @Override
