@@ -143,7 +143,6 @@ public class UniquePositionListTest {
     }
 
     @Test
-    @SuppressWarnings("unused")
     public void iterator_iteratesThroughPositions() {
         uniquePositionList.add(new Position("FW"));
         uniquePositionList.add(new Position("GK"));
