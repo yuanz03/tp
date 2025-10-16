@@ -1,13 +1,13 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import javax.annotation.processing.Generated;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javax.annotation.processing.Generated;
 import seedu.address.model.person.Person;
 
 /**
