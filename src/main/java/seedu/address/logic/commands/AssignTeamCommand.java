@@ -69,7 +69,8 @@ public class AssignTeamCommand extends Command {
         }
 
         model.assignTeam(player, team);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, player.getName(), team.getName()));
+        return CommandResult.showPersonCommandResult(
+                String.format(MESSAGE_SUCCESS, player.getName(), team.getName()));
     }
 
     /**

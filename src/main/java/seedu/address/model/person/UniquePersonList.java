@@ -181,7 +181,8 @@ public class UniquePersonList implements Iterable<Person> {
                 team,
                 personToEdit.getTags(),
                 personToEdit.getPosition(),
-                personToEdit.getInjury()
+                personToEdit.getInjury(),
+                personToEdit.isCaptain()
         );
 
         setPerson(personToEdit, editedPerson);

@@ -28,6 +28,6 @@ public class FilterCaptainCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_CAPTAINS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return CommandResult.showPersonCommandResult(MESSAGE_SUCCESS);
     }
 }

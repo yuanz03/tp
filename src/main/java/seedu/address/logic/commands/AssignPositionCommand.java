@@ -77,10 +77,12 @@ public class AssignPositionCommand extends Command {
                 person.getTeam(),
                 person.getTags(),
                 position,
-                person.getInjury()
+                person.getInjury(),
+                person.isCaptain()
         );
         model.setPerson(person, edited);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, playerNameStr, position.getName()));
+        return CommandResult.showPersonCommandResult(
+                String.format(MESSAGE_SUCCESS, playerNameStr, position.getName()));
     }
 
     @Override
