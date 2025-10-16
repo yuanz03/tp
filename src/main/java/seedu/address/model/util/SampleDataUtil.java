@@ -87,11 +87,17 @@ public class SampleDataUtil {
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
+
         for (Team sampleTeam : getSampleTeams()) {
             sampleAb.addTeam(sampleTeam);
         }
+
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
+        }
+
+        for (Position samplePosition : getSamplePositions()) {
+            sampleAb.addPosition(samplePosition);
         }
         return sampleAb;
     }
