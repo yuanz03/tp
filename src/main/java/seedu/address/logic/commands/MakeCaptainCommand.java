@@ -57,7 +57,7 @@ public class MakeCaptainCommand extends Command {
         }
 
         if (targetPerson.isCaptain()) {
-            throw new CommandException(MESSAGE_ALREADY_CAPTAIN);
+            throw new CommandException(String.format(MESSAGE_ALREADY_CAPTAIN, targetPerson.getName()));
         }
 
         model.makeCaptain(targetPerson);

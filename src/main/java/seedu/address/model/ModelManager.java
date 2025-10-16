@@ -194,12 +194,34 @@ public class ModelManager implements Model {
 
     @Override
     public void makeCaptain(Person person) {
-        person.makeCaptain();
+        Person updatedPerson = new Person(
+                person.getName(),
+                person.getPhone(),
+                person.getEmail(),
+                person.getAddress(),
+                person.getTeam(),
+                person.getTags(),
+                person.getPosition(),
+                person.getInjury(),
+                true
+        );
+        setPerson(person, updatedPerson);
     }
 
     @Override
     public void stripCaptain(Person person) {
-        person.stripCaptain();
+        Person updatedPerson = new Person(
+                person.getName(),
+                person.getPhone(),
+                person.getEmail(),
+                person.getAddress(),
+                person.getTeam(),
+                person.getTags(),
+                person.getPosition(),
+                person.getInjury(),
+                false
+        );
+        setPerson(person, updatedPerson);
     }
 
     //=========== Team Commands =============================================================

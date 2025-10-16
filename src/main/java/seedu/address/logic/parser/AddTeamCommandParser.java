@@ -25,7 +25,7 @@ public class AddTeamCommandParser implements Parser<AddTeamCommand> {
             ArgumentTokenizer.tokenize(args, PREFIX_TEAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TEAM)
-            || !argMultimap.getPreamble().isEmpty()) {
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTeamCommand.MESSAGE_USAGE));
         }
 

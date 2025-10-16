@@ -403,4 +403,91 @@ public class ModelManagerTest {
         modelManager.addTeam(U12);
         assertTrue(modelManager.isTeamEmpty(U12));
     }
+
+    @Test
+    public void makeCaptain_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.makeCaptain(null));
+    }
+
+    @Test
+    public void makeCaptain_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.makeCaptain(ALICE));
+    }
+
+    @Test
+    public void makeCaptain_validPerson_makesCaptainCorrectly() {
+        modelManager.addPerson(ALICE);
+        assertFalse(ALICE.isCaptain());
+
+        modelManager.makeCaptain(ALICE);
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertTrue(updatedPerson.isCaptain());
+
+        // Verify other fields remain unchanged
+        assertEquals(ALICE.getName(), updatedPerson.getName());
+        assertEquals(ALICE.getPhone(), updatedPerson.getPhone());
+        assertEquals(ALICE.getEmail(), updatedPerson.getEmail());
+        assertEquals(ALICE.getAddress(), updatedPerson.getAddress());
+        assertEquals(ALICE.getTeam(), updatedPerson.getTeam());
+        assertEquals(ALICE.getPosition(), updatedPerson.getPosition());
+        assertEquals(ALICE.getInjury(), updatedPerson.getInjury());
+        assertEquals(ALICE.getTags(), updatedPerson.getTags());
+    }
+
+    @Test
+    public void makeCaptain_alreadyCaptain_remainsCaptain() {
+        Person captain = new PersonBuilder(ALICE).withCaptain(true).build();
+        modelManager.addPerson(captain);
+        assertTrue(captain.isCaptain());
+
+        modelManager.makeCaptain(modelManager.getPersonByName(captain.getName()));
+
+        Person updatedPerson = modelManager.getPersonByName(captain.getName());
+        assertTrue(updatedPerson.isCaptain());
+    }
+
+    @Test
+    public void stripCaptain_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.stripCaptain(null));
+    }
+
+    @Test
+    public void stripCaptain_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.stripCaptain(ALICE));
+    }
+
+    @Test
+    public void stripCaptain_validCaptain_stripsCaptainCorrectly() {
+        Person captain = new PersonBuilder(ALICE).withCaptain(true).build();
+        modelManager.addPerson(captain);
+        assertTrue(captain.isCaptain());
+
+        modelManager.stripCaptain(modelManager.getPersonByName(captain.getName()));
+
+        Person updatedPerson = modelManager.getPersonByName(captain.getName());
+        assertFalse(updatedPerson.isCaptain());
+
+        // Verify other fields remain unchanged
+        assertEquals(captain.getName(), updatedPerson.getName());
+        assertEquals(captain.getPhone(), updatedPerson.getPhone());
+        assertEquals(captain.getEmail(), updatedPerson.getEmail());
+        assertEquals(captain.getAddress(), updatedPerson.getAddress());
+        assertEquals(captain.getTeam(), updatedPerson.getTeam());
+        assertEquals(captain.getPosition(), updatedPerson.getPosition());
+        assertEquals(captain.getInjury(), updatedPerson.getInjury());
+        assertEquals(captain.getTags(), updatedPerson.getTags());
+    }
+
+    @Test
+    public void stripCaptain_alreadyNotCaptain_remainsNotCaptain() {
+        modelManager.addPerson(ALICE);
+        assertFalse(ALICE.isCaptain());
+
+        modelManager.stripCaptain(ALICE);
+
+        Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
+        assertFalse(updatedPerson.isCaptain());
+    }
+
 }
