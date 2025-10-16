@@ -19,17 +19,13 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
     - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
     - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
     - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
-    - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
-    - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
     - [Listing all players: `list`](#listing-all-players-list)
     - [Listing all teams: `listteams`](#listing-all-teams-listteams)
-    - [Listing all positions: `listposition`](#listing-all-positions-listposition)
     - [Editing a player: `edit`](#editing-a-player-edit)
     - [Locating players by name: `find`](#locating-players-by-name-find)
     - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
     - [Deleting a player: `delete`](#deleting-a-player-delete)
     - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
-    - [Deleting a position: `deleteposition`](#deleting-a-position-deleteposition)
     - [Clearing all entries : `clear`](#clearing-all-entries--clear)
     - [Exiting the program : `exit`](#exiting-the-program--exit)
     - [Saving the data](#saving-the-data)
@@ -64,10 +60,6 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
    * `addteam tm/u16`: Adds a team named `u16` to the PlayBook.
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
-
-   * `newposition ps/LW` : Creates a new position named `LW` (Left Wing) in the PlayBook.
-
-   * `assignposition p/John Doe ps/LW` : Assigns the position `LW` to `John Doe` in the PlayBook.
 
    * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook. 
 
@@ -214,41 +206,6 @@ Examples:
 * `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
 * `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
 
-### Creating a new position: `newposition`
-
-Creates a new position in the PlayBook.
-
-Format: `newposition ps/POSITION_NAME`
-
-* `POSITION_NAME` must not be the same as an existing position in the PlayBook.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-
-Examples:
-* `newposition ps/LW` creates a position named `LW` (Left Wing).
-* `newposition ps/ST` creates a position named `ST` (Striker).
-
-### Assigning a position to player: `assignposition`
-
-Assigns an existing position to an existing player in the PlayBook.
-
-Format: `assignposition p/PLAYER_NAME ps/POSITION_NAME`
-
-* Assigns the position with the specified `POSITION_NAME` to the player with the specified `PLAYER_NAME`.
-* `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `POSITION_NAME` must be an existing position in the PlayBook. Use the `newposition` command to add a position first.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-* The player must not already be assigned to the same position.
-
-Examples:
-* `assignposition p/John Doe ps/LW` assigns the position `LW` to the player `John Doe`.
-* `assignposition p/Musiala ps/ST` assigns the position `ST` to the player `Musiala`.
-
 ### Listing all players: `list`
 
 Shows a list of all players in the PlayBook.
@@ -369,24 +326,6 @@ Format: `deleteteam tm/TEAM_NAME`
 Examples:
 * `deleteteam tm/u16` deletes the team named `u16` from the PlayBook, assuming it exists.
 
-### Deleting a position: `deleteposition`
-
-Deletes the specified position from the PlayBook.
-
-Format: `deleteposition ps/POSITION_NAME`
-
-* Deletes the position with the specified `POSITION_NAME` from the PlayBook.
-* `POSITION_NAME` must be an existing position in the PlayBook.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-* The position to be deleted must exist in the PlayBook.
-* The command can only delete one position at a time.
-
-Examples:
-* `deleteposition ps/LW` deletes the position named `LW` from the PlayBook.
-* `deleteposition ps/ST` deletes the position named `ST` from the PlayBook, assuming it exists.
-
 ### Clearing all entries : `clear`
 
 Clears all entries from the PlayBook.
@@ -443,12 +382,9 @@ _Details coming soon ..._
 | **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
 | **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
 | **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
-| **Create New Position**     | `newposition ps/POSITION_NAME` <br> e.g., `newposition ps/LW`                                                                                                                                         |
-| **Assign Position to Player** | `assignposition p/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition p/John Doe ps/LW`                                                                                                          |
 | **Clear**                   | `clear`                                                                                                                                                                                               |
 | **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
 | **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
-| **Delete Position**         | `deleteposition ps/POSITION_NAME`<br> e.g., `deleteposition ps/LW`                                                                                                                                    |
 | **Edit**                        | `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                     |
 | **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
 | **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
