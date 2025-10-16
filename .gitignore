@@ -3,6 +3,9 @@
 /build/
 src/main/resources/docs/
 
+# IDE build files
+/bin/
+
 # IDEA files
 /.idea/
 /out/
