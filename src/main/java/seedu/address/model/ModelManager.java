@@ -274,6 +274,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isPositionAssigned(Position position) {
+        requireNonNull(position);
+        return addressBook.getPersonList().stream()
+                .anyMatch(person -> person.getPosition().getName().equalsIgnoreCase(position.getName()));
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

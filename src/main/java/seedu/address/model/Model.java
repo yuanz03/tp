@@ -175,6 +175,13 @@ public interface Model {
 
     Position getPositionByName(String name);
 
+    /**
+     * Returns true if the given position is assigned to at least one person in the address book.
+     * @param position the position to check
+     * @return true if the position is assigned to any person, false otherwise
+     */
+    boolean isPositionAssigned(Position position);
+
     void makeCaptain(Person person);
 
     void stripCaptain(Person person);
