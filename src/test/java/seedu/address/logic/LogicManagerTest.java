@@ -99,7 +99,7 @@ public class LogicManagerTest {
     public void getFilteredTeamList_afterListTeams_returnsUnfiltered() throws Exception {
         Logic logic = new LogicManager(new ModelManager(getTypicalAddressBook(), new UserPrefs()),
                 new StorageManagerStub());
-        logic.execute("listteams");
+        logic.execute("listteam");
         List<Team> expected = getTypicalAddressBook().getTeamList();
         assertEquals(expected, logic.getFilteredTeamList());
     }

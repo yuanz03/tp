@@ -22,19 +22,23 @@ public class CommandResult {
     /** Persons should be shown to the user. */
     private final boolean showPersons;
 
+    /** Positions should be shown to the user. */
+    private final boolean showPositions;
+
     /** The application should exit. */
     private final boolean exit;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean isHelpVisible, boolean exit,
-            boolean isTeamsVisible, boolean isPersonsVisible) {
+    public CommandResult(String feedbackToUser, boolean isHelpVisible, boolean exit, boolean isTeamsVisible,
+            boolean isPersonsVisible, boolean isPositionsVisible) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = isHelpVisible;
+        this.exit = exit;
         this.showTeams = isTeamsVisible;
         this.showPersons = isPersonsVisible;
-        this.exit = exit;
+        this.showPositions = isPositionsVisible;
     }
 
     /**
@@ -42,7 +46,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false, false);
+        this(feedbackToUser, false, false, false, false, false);
     }
 
     /**
@@ -50,7 +54,7 @@ public class CommandResult {
      * {@code showHelp} and {@code exit}, and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this(feedbackToUser, showHelp, exit, false, false);
+        this(feedbackToUser, showHelp, exit, false, false, false);
     }
 
     /**
@@ -58,15 +62,23 @@ public class CommandResult {
      * and display teams in the UI.
      */
     public static CommandResult showTeamCommandResult(String feedbackToUser) {
-        return new CommandResult(feedbackToUser, false, false, true, false);
+        return new CommandResult(feedbackToUser, false, false, true, false, false);
     }
 
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
-     * and display persons in the UI.
+     * and displays persons in the UI.
      */
     public static CommandResult showPersonCommandResult(String feedbackToUser) {
-        return new CommandResult(feedbackToUser, false, false, false, true);
+        return new CommandResult(feedbackToUser, false, false, false, true, false);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
+     * and displays positions in the UI.
+     */
+    public static CommandResult showPositionCommandResult(String feedbackToUser) {
+        return new CommandResult(feedbackToUser, false, false, false, false, true);
     }
 
     public String getFeedbackToUser() {
@@ -83,6 +95,10 @@ public class CommandResult {
 
     public boolean isShowPersons() {
         return showPersons;
+    }
+
+    public boolean isShowPositions() {
+        return showPositions;
     }
 
     public boolean isExit() {

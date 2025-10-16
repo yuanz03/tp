@@ -49,7 +49,7 @@ public class TeamTest {
 
     @Test
     public void toStringMethod() {
-        String expectedString = Team.class.getCanonicalName() + "{name=" + U12.getName() + "}";
+        String expectedString = U12.getName();
         assertEquals(expectedString, U12.toString());
     }
 }

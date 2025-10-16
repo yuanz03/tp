@@ -63,15 +63,25 @@ public class CommandResultTest {
 
     @Test
     public void isShowTeams_onlyTrue() {
-        CommandResult result = new CommandResult("feedback", false, false, true, false);
+        CommandResult result = new CommandResult("feedback", false, false, true, false, false);
         assertTrue(result.isShowTeams());
         assertFalse(result.isShowPersons());
+        assertFalse(result.isShowPositions());
     }
 
     @Test
     public void isShowPersons_onlyTrue() {
-        CommandResult result = new CommandResult("feedback", false, false, false, true);
+        CommandResult result = new CommandResult("feedback", false, false, false, true, false);
         assertFalse(result.isShowTeams());
         assertTrue(result.isShowPersons());
+        assertFalse(result.isShowPositions());
+    }
+
+    @Test
+    public void isShowPositions_onlyTrue() {
+        CommandResult result = new CommandResult("feedback", false, false, false, false, true);
+        assertTrue(result.isShowPositions());
+        assertFalse(result.isShowPersons());
+        assertFalse(result.isShowTeams());
     }
 }
