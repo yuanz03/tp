@@ -18,7 +18,7 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
+      <HBox spacing="0.5" alignment="BASELINE_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
@@ -26,6 +26,11 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="captainBadge" text="[C]" styleClass="team-tag captain-badge">
+          <HBox.margin>
+            <Insets top="0" right="0" bottom="0" left="6"/>
+          </HBox.margin>
+        </Label>
         <FlowPane fx:id="teamContainer" hgap="4" vgap="4" prefWrapLength="200"
           GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"
           HBox.hgrow="SOMETIMES">
