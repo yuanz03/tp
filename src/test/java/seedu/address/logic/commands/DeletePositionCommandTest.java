@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_FW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_GK;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.Test;
 
@@ -125,6 +126,21 @@ public class DeletePositionCommandTest {
 
         // different position -> returns false
         assertFalse(deleteFW.equals(deleteGK));
+    }
+
+    @Test
+    public void execute_deleteAssignedPosition_throwsCommandException() throws Exception {
+        Model model = new ModelManager();
+        // Add a position
+        new NewPositionCommand("Forward").execute(model);
+        // Add a player
+        model.addPerson(ALICE);
+        // Assign the position to the player
+        new AssignPositionCommand(ALICE.getName().fullName, "Forward").execute(model);
+        // Attempt to delete the position should fail
+        assertThrows(CommandException.class,
+                String.format(DeletePositionCommand.MESSAGE_POSITION_ASSIGNED, "Forward"), () ->
+                new DeletePositionCommand("Forward").execute(model));
     }
 }
 
