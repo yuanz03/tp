@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import javax.annotation.processing.Generated;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import seedu.address.model.person.Person;
 /**
  * An UI component that displays information of a {@code Person}.
  */
+@Generated(value = "javafx", comments = "GUI component excluded from test coverage")
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
@@ -45,9 +47,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane injuryStatus;
     @FXML
-    private FlowPane teamContainer;
-    @FXML
-    private FlowPane positionContainer;
+    private FlowPane teamPositionContainer;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -63,10 +63,10 @@ public class PersonCard extends UiPart<Region> {
         captainBadge.setManaged(isCaptain);
         Label teamTag = new Label(person.getTeam().getName());
         teamTag.getStyleClass().add("team-tag");
-        teamContainer.getChildren().add(teamTag);
+        teamPositionContainer.getChildren().add(teamTag);
         Label positionTag = new Label(person.getPosition().getName());
         positionTag.getStyleClass().add("team-tag");
-        positionContainer.getChildren().add(positionTag);
+        teamPositionContainer.getChildren().add(positionTag);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
