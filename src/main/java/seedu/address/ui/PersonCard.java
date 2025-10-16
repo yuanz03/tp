@@ -43,9 +43,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane injuryStatus;
     @FXML
-    private FlowPane teamContainer;
-    @FXML
-    private FlowPane positionContainer;
+    private FlowPane teamPositionContainer;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -57,10 +55,10 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         Label teamTag = new Label(person.getTeam().getName());
         teamTag.getStyleClass().add("team-tag");
-        teamContainer.getChildren().add(teamTag);
+        teamPositionContainer.getChildren().add(teamTag);
         Label positionTag = new Label(person.getPosition().getName());
         positionTag.getStyleClass().add("team-tag");
-        positionContainer.getChildren().add(positionTag);
+        teamPositionContainer.getChildren().add(positionTag);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
