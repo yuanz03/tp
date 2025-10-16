@@ -33,6 +33,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private Label captainBadge;
+    @FXML
     private Label id;
     @FXML
     private Label phone;
@@ -55,6 +57,10 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
+        // Show captain badge directly to the right of the name
+        boolean isCaptain = person.isCaptain();
+        captainBadge.setVisible(isCaptain);
+        captainBadge.setManaged(isCaptain);
         Label teamTag = new Label(person.getTeam().getName());
         teamTag.getStyleClass().add("team-tag");
         teamPositionContainer.getChildren().add(teamTag);
