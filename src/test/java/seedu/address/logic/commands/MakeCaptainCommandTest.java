@@ -10,6 +10,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
@@ -75,7 +76,7 @@ public class MakeCaptainCommandTest {
             @Override
             public Person getPersonByName(Name queryName) {
                 if (!queryName.equals(name)) {
-                    throw new seedu.address.model.person.exceptions.PersonNotFoundException();
+                    throw new PersonNotFoundException();
                 }
                 // ModelStub.makeCaptain will throw AlreadyCaptainException when execute() calls
                 // model.makeCaptain
@@ -88,7 +89,9 @@ public class MakeCaptainCommandTest {
         try {
             command.execute(modelStub);
         } catch (CommandException e) {
-            assertEquals(MakeCaptainCommand.MESSAGE_ALREADY_CAPTAIN, e.getMessage());
+            assertEquals(
+                    String.format(MakeCaptainCommand.MESSAGE_ALREADY_CAPTAIN, person.getName()),
+                    e.getMessage());
             return;
         } catch (Exception e) {
             throw new AssertionError("Expected CommandException for already captain.");

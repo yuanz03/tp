@@ -32,9 +32,11 @@
   -fx-background-color: #2E7D32; /* green */
   -fx-border-color: #1B5E20;
   -fx-border-width: 1;
-  -fx-background-radius: 4;
   -fx-border-radius: 4;
-  -fx-padding: 2 6 2 6;
+  -fx-padding: 2 3 2 3;
+  -fx-background-radius: 8;
+  -fx-margin-bottom: 8px;
+  -fx-font-size: 11px;
 }
 
 .view-status-label {
