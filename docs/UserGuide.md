@@ -214,6 +214,7 @@ Examples:
 * `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
 * `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
 
+
 ### Creating a new position: `newposition`
 
 Creates a new position in the PlayBook.
@@ -304,6 +305,41 @@ Format: `edit pl/PLAYER_NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_N
 Examples:
 *  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
 *  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
+
+
+
+### Make a player captain: `makecaptain`
+
+Marks a player as their team's captain.
+
+Format: `makecaptain pl/PLAYER_NAME`
+
+* `PLAYER_NAME` must match an existing player.
+* Player must not already be captain.
+
+Example:
+* `makecaptain pl/John Doe`
+
+### Remove captaincy from a player: `stripcaptain`
+
+Removes the captaincy from a player.
+
+Format: `stripcaptain pl/PLAYER_NAME`
+
+* `PLAYER_NAME` must match an existing player.
+* Player must currently be a captain.
+
+Example:
+* `stripcaptain pl/John Doe`
+
+### Filter to only captains: `filtercaptain`
+
+Shows only players who are captains.
+
+Format: `filtercaptain`
+
+* No parameters.
+* Use `list` to clear the filter and show all players.
 
 ### Locating players by name: `find`
 
@@ -459,6 +495,10 @@ _Details coming soon ..._
 | **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                            |
 | **Filter Players**          | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                 |
 | **List**                    | `list`                                                                                                                                                                                                |
+| **List Teams**              | `listteams`                                                                                                                                                                                           |
+| **Make Captain**            | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                     |
+| **Strip Captain**           | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                   |
+| **Filter Captains**         | `filtercaptain`                                                                                                                                                                                        |
 | **List Teams**              | `listteam`                                                                                                                                                                                           |
 | **List Positions**              | `listposition`                                                                                                                                                                                           |
 | **List Injured Players**              | `listinjured`                                                                                                                                                                                           |
