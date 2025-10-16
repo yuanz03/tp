@@ -39,8 +39,9 @@ public class MakeCaptainCommandTest {
         CommandResult result = command.execute(modelStub);
 
         assertTrue(person.isCaptain());
-        assertEquals(CommandResult.showPersonCommandResult(String.format(MakeCaptainCommand.MESSAGE_SUCCESS,
-                Messages.format(person))), result);
+        String expectedSuccess = String.format(MakeCaptainCommand.MESSAGE_SUCCESS,
+                person.getName(), person.getTeam().getName());
+        assertEquals(CommandResult.showPersonCommandResult(expectedSuccess), result);
     }
 
     @Test
