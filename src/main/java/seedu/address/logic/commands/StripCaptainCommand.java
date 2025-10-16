@@ -28,7 +28,7 @@ public class StripCaptainCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
 
-    public static final String MESSAGE_SUCCESS = "; %1$s is no longer team captain.";
+    public static final String MESSAGE_SUCCESS = "%1$s is no longer team captain.";
     public static final String MESSAGE_NOT_CAPTAIN = "%1$s is not a captain!";
 
     private final Name targetName;
@@ -63,7 +63,7 @@ public class StripCaptainCommand extends Command {
         model.stripCaptain(targetPerson);
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
-                Messages.format(targetPerson)));
+                targetPerson.getName()));
 
     }
 
