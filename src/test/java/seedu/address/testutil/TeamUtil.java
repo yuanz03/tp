@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
@@ -40,7 +39,7 @@ public class TeamUtil {
      */
     public static String getTeamDetails(Team team) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + team.getName() + " ");
+        sb.append(PREFIX_TEAM + team.getName() + " ");
         return sb.toString();
     }
 }

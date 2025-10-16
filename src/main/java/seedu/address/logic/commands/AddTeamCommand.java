@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -18,9 +18,9 @@ public class AddTeamCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the address book. "
         + "Parameters: "
-        + PREFIX_NAME + "NAME "
+        + PREFIX_TEAM + "TEAM_NAME "
         + "Example: " + COMMAND_WORD + " "
-        + PREFIX_NAME + "u16 ";
+        + PREFIX_TEAM + "u16 ";
 
     public static final String MESSAGE_SUCCESS = "New team added: %1$s";
     public static final String MESSAGE_DUPLICATE_TEAM = "This team already exists in the address book";
