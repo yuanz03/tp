@@ -38,7 +38,7 @@ public class StripCaptainCommandTest {
 
         assertFalse(person.isCaptain());
         assertEquals(CommandResult.showPersonCommandResult(String.format(StripCaptainCommand.MESSAGE_SUCCESS,
-                Messages.format(person))), result);
+                person.getName())), result);
     }
 
     @Test

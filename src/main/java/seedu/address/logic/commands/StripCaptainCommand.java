@@ -63,7 +63,7 @@ public class StripCaptainCommand extends Command {
         model.stripCaptain(targetPerson);
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
-                Messages.format(targetPerson)));
+                targetPerson.getName()));
 
     }
 
