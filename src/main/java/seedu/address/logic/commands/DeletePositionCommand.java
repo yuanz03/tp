@@ -29,6 +29,7 @@ public class DeletePositionCommand extends Command {
      * @param rawPositionName raw position name string to delete.
      */
     public DeletePositionCommand(String rawPositionName) {
+        requireNonNull(rawPositionName);
         this.rawPositionName = rawPositionName;
     }
 
@@ -55,6 +56,21 @@ public class DeletePositionCommand extends Command {
 
         model.deletePosition(toDelete);
         return new CommandResult(String.format(MESSAGE_SUCCESS, name));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DeletePositionCommand)) {
+            return false;
+        }
+
+        DeletePositionCommand otherCommand = (DeletePositionCommand) other;
+        return rawPositionName.equals(otherCommand.rawPositionName);
     }
 }
 

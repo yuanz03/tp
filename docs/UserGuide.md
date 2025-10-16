@@ -224,6 +224,12 @@ Shows a list of all positions in the PlayBook.
 
 Format: `listposition`
 
+### Listing all injured players: `listinjured`
+
+Shows a list of the injured players in the PlayBook.
+
+Format: `listinjured`
+
 ### Editing a player: `edit`
 
 Edits an existing player in the PlayBook.
@@ -391,4 +397,5 @@ _Details coming soon ..._
 | **List**                    | `list`                                                                                                                                                                                                |
 | **List Teams**              | `listteam`                                                                                                                                                                                           |
 | **List Positions**              | `listposition`                                                                                                                                                                                           |
+| **List Injured Players**              | `listinjured`                                                                                                                                                                                           |
 | **Help**                    | `help`                                                                                                                                                                                                |
