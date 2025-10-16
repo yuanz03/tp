@@ -28,7 +28,7 @@ public class MakeCaptainCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
 
-    public static final String MESSAGE_SUCCESS = "; %1$s is now the team captain.";
+    public static final String MESSAGE_SUCCESS = "%1$s is now captain of %2$s";
     public static final String MESSAGE_ALREADY_CAPTAIN = "%1$s is already a captain!";
 
     private final Name targetName;
@@ -62,8 +62,9 @@ public class MakeCaptainCommand extends Command {
 
         model.makeCaptain(targetPerson);
 
-        return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
-                Messages.format(targetPerson)));
+        String success = String.format(MESSAGE_SUCCESS,
+                targetPerson.getName(), targetPerson.getTeam().getName());
+        return CommandResult.showPersonCommandResult(success);
 
     }
 
