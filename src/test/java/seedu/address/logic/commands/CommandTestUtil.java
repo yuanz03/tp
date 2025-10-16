@@ -44,10 +44,13 @@ public class CommandTestUtil {
     public static final String VALID_TEAM_BOB = "U16";
     public static final String VALID_POSITION_BOB = "RW";
     public static final String VALID_POSITION_AMY = "LW";
+    public static final String VALID_POSITION_FW = "FW";
+    public static final String VALID_POSITION_GK = "GK";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
     public static final String INVALID_TEAM = "U@16"; // '@' not allowed in team names
+    public static final String INVALID_POSITION_WITH_SPACE = "F W"; // spaces not allowed in positions
     public static final String NON_EXISTENT_TEAM = "XXX"; // team does not exist in typical teams
     public static final String NON_EXISTENT_INJURY = "XXX"; // injury does not exist in typical injuries
     public static final String NON_EXISTENT_POSITION = "XXX"; // position does not exist in typical positions
@@ -68,7 +71,10 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String PLAYER_DESC_AMY = " " + PREFIX_PLAYER + VALID_NAME_AMY;
     public static final String PLAYER_DESC_BOB = " " + PREFIX_PLAYER + VALID_NAME_BOB;
+    public static final String POSITION_DESC_AMY = " " + PREFIX_POSITION + VALID_POSITION_AMY;
     public static final String POSITION_DESC_BOB = " " + PREFIX_POSITION + VALID_POSITION_BOB;
+    public static final String POSITION_DESC_FW = " " + PREFIX_POSITION + VALID_POSITION_FW;
+    public static final String POSITION_DESC_GK = " " + PREFIX_POSITION + VALID_POSITION_GK;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -76,7 +82,6 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_INJURY_DESC = " " + PREFIX_INJURY + "@CL"; // '@' not allowed in injuries
     public static final String INVALID_TEAM_DESC = " " + PREFIX_TEAM + "U@16"; // '@' not allowed in team names
-    public static final String INVALID_TEAMNAME_DESC = " " + PREFIX_NAME + "U16*"; // '*' not allowed in team names
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_PLAYER_DESC = " " + PREFIX_PLAYER + "hubby*"; // '*' not allowed in player names
     public static final String INVALID_POSITION_DESC = " " + PREFIX_POSITION + "MF*"; // '*' not allowed in positions
@@ -86,9 +91,11 @@ public class CommandTestUtil {
     public static final String TEAM_PREFIX_WITH_NO_FIELD = " " + PREFIX_TEAM;
 
     public static final String VALID_TEAM_NAME_16 = "U16";
-    public static final String TEAM_NAME_DESC_16 = " " + PREFIX_NAME + VALID_TEAM_NAME_16;
+    public static final String TEAM_NAME_DESC_16 = " " + PREFIX_TEAM + VALID_TEAM_NAME_16;
     public static final String VALID_TEAM_NAME_12 = "U12";
-    public static final String TEAM_NAME_DESC_12 = " " + PREFIX_NAME + VALID_TEAM_NAME_12;
+    public static final String TEAM_NAME_DESC_12 = " " + PREFIX_TEAM + VALID_TEAM_NAME_12;
+
+    public static final String INVALID_TEAM_NAME_DESC = " " + PREFIX_TEAM + "U@16"; // '@' not allowed in team names
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
