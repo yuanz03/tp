@@ -179,18 +179,7 @@ Examples:
 * `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
 * `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
 
-### Update a player's email: `editemail`
 
-Updates the email address of an existing player.
-
-Format: `editemail pl/PLAYER_NAME e/EMAIL`
-
-* `PLAYER_NAME` must match an existing player in the address book.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `EMAIL` must follow the standard local-part@domain format. Invalid emails will be rejected.
-
-Examples:
-* `editemail pl/John Doe e/john.new@example.com` updates `John Doe`'s email to `john.new@example.com`.
 
 ### Listing all players: `list`
 
@@ -236,43 +225,7 @@ Examples:
 *  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
 *  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
 
-### Create a position: `newposition`
 
-Creates a new position that can be assigned to players.
-
-Format: `newposition ps/POSITION`
-
-* `POSITION` should contain alphanumeric characters only and must not be blank.
-* Duplicate positions are not allowed (case-insensitive).
-
-Examples:
-* `newposition ps/FW`
-* `newposition ps/CB`
-
-### Delete a position: `deleteposition`
-
-Deletes an existing position.
-
-Format: `deleteposition ps/POSITION`
-
-* `POSITION` must already exist.
-
-Examples:
-* `deleteposition ps/CB`
-
-### Assign position to player: `assignposition`
-
-Assigns an existing position to an existing player.
-
-Format: `assignposition p/PLAYER_NAME ps/POSITION`
-
-* `PLAYER_NAME` must match an existing player.
-* `POSITION` must be an existing position (use `newposition` first if needed).
-* Duplicate assignment is not allowed (assigning the same position again will be rejected).
-
-Examples:
-* `assignposition p/John Doe ps/FW`
-* `assignposition p/Betsy Crowe ps/MF`
 
 ### Make a player captain: `makecaptain`
 
@@ -297,6 +250,15 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 Example:
 * `stripcaptain pl/John Doe`
+
+### Filter to only captains: `filtercaptain`
+
+Shows only players who are captains.
+
+Format: `filtercaptain`
+
+* No parameters.
+* Use `list` to clear the filter and show all players.
 
 ### Locating players by name: `find`
 
@@ -421,10 +383,6 @@ _Details coming soon ..._
 | **Assign Player to Team**   | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                   |
 | **Assign Injury to Player** | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                    |
 | **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                               |
-| **Update Email**            | `editemail pl/PLAYER_NAME e/EMAIL` <br> e.g., `editemail pl/John Doe e/john.new@example.com`                                                                                                          |
-| **New Position**            | `newposition ps/POSITION` <br> e.g., `newposition ps/FW`                                                                                                                                               |
-| **Delete Position**         | `deleteposition ps/POSITION` <br> e.g., `deleteposition ps/CB`                                                                                                                                         |
-| **Assign Position**         | `assignposition p/PLAYER_NAME ps/POSITION` <br> e.g., `assignposition p/John Doe ps/FW`                                                                                                                |
 | **Clear**                   | `clear`                                                                                                                                                                                               |
 | **Delete Player**           | `delete pl/PLAYER`<br> e.g., `delete pl/James Ho`                                                                                                                                                     |
 | **Delete Team**             | `deleteteam tm/TEAM`<br> e.g., `deleteteam tm/u16`                                                                                                                                                    |
@@ -435,4 +393,5 @@ _Details coming soon ..._
 | **List Teams**              | `listteams`                                                                                                                                                                                           |
 | **Make Captain**            | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                     |
 | **Strip Captain**           | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                   |
+| **Filter Captains**         | `filtercaptain`                                                                                                                                                                                        |
 | **Help**                    | `help`                                                                                                                                                                                                |
