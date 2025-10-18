@@ -11,7 +11,7 @@ class FilterInjuredPredicateTest {
     @Test
     void test_defaultInjury_returnsFalse() {
         FilterInjuredPredicate pred = new FilterInjuredPredicate();
-        assertFalse(pred.test(new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS).build()));
+        assertFalse(pred.test(new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build()));
     }
     @Test
     void test_nonDefaultInjury_returnsTrue() {
