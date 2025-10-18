@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * Lists all teams in the Play Book to the user.
+ * Lists all teams in the PlayBook to the user.
  */
 public class ListTeamCommand extends Command {
     public static final String COMMAND_WORD = "listteam";

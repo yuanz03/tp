@@ -15,7 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Assigns an injury status to an existing {@code Person} in the address book.
+ * Assigns an injury status to an existing {@code Person} in the PlayBook.
  * <p>
  * Usage: {@code assigninjury pl/<player> i/<injury>}.
  */
@@ -26,8 +26,8 @@ public class AssignInjuryCommand extends Command {
     public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Assigns an injury status to a person in the address book.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER " + PREFIX_INJURY + "INJURY "
+            + ": Assigns an injury status to a player in the PlayBook.\n"
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
     private final Name personNameToAssign;
