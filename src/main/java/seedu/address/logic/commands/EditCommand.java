@@ -40,8 +40,8 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by name in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the player identified "
+            + "by name in the displayed player list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER "
@@ -58,9 +58,9 @@ public class EditCommand extends Command {
             + PREFIX_EMAIL + "johndoe@example.com "
             + PREFIX_INJURY + "ACL";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
     public static final String MESSAGE_TEAM_NOT_FOUND = "The team '%1$s' does not exist. "
             + "Please create the team first using the 'addteam' command.";
 

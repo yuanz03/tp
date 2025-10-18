@@ -19,13 +19,13 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person specified by name.\n"
+            + ": Deletes the player specified by name.\n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe ";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Player: %1$s";
 
     private final Name personNameToDelete;
 

@@ -27,7 +27,7 @@ public class UnassignInjuryCommand extends Command {
             "%1$s's injury status has already been set to the default 'FIT' status!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes an injury status from a person in the address book.\n"
+            + ": Removes an injury status from a player in the address book.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe";
 
