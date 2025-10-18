@@ -39,7 +39,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTeam(person.getTeam());
-        descriptor.setInjury(person.getInjury());
+        descriptor.setInjuries(person.getInjuries());
         descriptor.setTags(person.getTags());
     }
 
@@ -84,10 +84,12 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Injury} of the {@code EditPersonDescriptor} that we are building.
+     * Parses the {@code injuries} into a {@code Set<Injury>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
      */
-    public EditPersonDescriptorBuilder withInjury(String injury) {
-        descriptor.setInjury(new Injury(injury));
+    public EditPersonDescriptorBuilder withInjuries(String... injuries) {
+        Set<Injury> injurySet = Stream.of(injuries).map(Injury::new).collect(Collectors.toSet());
+        descriptor.setInjuries(injurySet);
         return this;
     }
 
