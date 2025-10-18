@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
@@ -50,13 +49,11 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TEAM + "TEAM] "
-            + "[" + PREFIX_INJURY + "INJURY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + "  "
             + PREFIX_PLAYER + "John Doe "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com "
-            + PREFIX_INJURY + "ACL";
+            + PREFIX_EMAIL + "johndoe@example.com ";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -95,21 +92,10 @@ public class EditCommand extends Command {
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
-
-        Injury updatedInjury;
-        if (editPersonDescriptor.getInjury().isPresent()) {
-            Injury newInjury = editPersonDescriptor.getInjury().get();
-            if (newInjury.equals(Person.DEFAULT_INJURY_STATUS)) {
-                updatedInjury = Person.DEFAULT_INJURY_STATUS;
-            } else {
-                updatedInjury = newInjury;
-            }
-        } else {
-            updatedInjury = personToEdit.getInjury();
-        }
+        Set<Injury> updatedInjuries = editPersonDescriptor.getInjuries().orElse(personToEdit.getInjuries());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
-                updatedPosition, updatedInjury, personToEdit.isCaptain());
+                updatedPosition, updatedInjuries, personToEdit.isCaptain());
     }
 
     @Override
@@ -178,7 +164,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Team team;
-        private Injury injury;
+        private Set<Injury> injuries;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -193,7 +179,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTeam(toCopy.team);
-            setInjury(toCopy.injury);
+            setInjuries(toCopy.injuries);
             setTags(toCopy.tags);
         }
 
@@ -201,7 +187,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, injury, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, injuries, tags);
         }
 
         public Optional<Name> getName() {
@@ -244,12 +230,21 @@ public class EditCommand extends Command {
             this.team = team;
         }
 
-        public Optional<Injury> getInjury() {
-            return Optional.ofNullable(injury);
+        /**
+         * Returns an unmodifiable injury set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code injuries} is null.
+         */
+        public Optional<Set<Injury>> getInjuries() {
+            return (injuries != null) ? Optional.of(Collections.unmodifiableSet(injuries)) : Optional.empty();
         }
 
-        public void setInjury(Injury injury) {
-            this.injury = injury;
+        /**
+         * Sets {@code injuries} to this object's {@code injuries}.
+         * A defensive copy of {@code injuries} is used internally.
+         */
+        public void setInjuries(Set<Injury> injuries) {
+            this.injuries = (injuries != null) ? new HashSet<>(injuries) : null;
         }
 
         /**
@@ -286,7 +281,7 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(team, otherEditPersonDescriptor.team)
-                    && Objects.equals(injury, otherEditPersonDescriptor.injury)
+                    && Objects.equals(injuries, otherEditPersonDescriptor.injuries)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -298,7 +293,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("team", team)
-                    .add("injury", injury)
+                    .add("injuries", injuries)
                     .add("tags", tags)
                     .toString();
         }
