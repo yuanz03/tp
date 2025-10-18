@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -120,11 +122,32 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updatePersonInjuryStatus(Person target, Injury injury) {
+    public void addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
+        Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+        updatedInjuries.add(injury);
+
         Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), target.getPosition(), injury, target.isCaptain());
+                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
+
+        setPerson(target, updatedPerson);
+    }
+
+    @Override
+    public void deleteInjury(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
+
+        Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+        updatedInjuries.remove(injury);
+
+        // Ensure that the person has at least the default injury status
+        if (updatedInjuries.isEmpty()) {
+            updatedInjuries.add(Person.DEFAULT_INJURY_STATUS);
+        }
+
+        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
+                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
 
         setPerson(target, updatedPerson);
     }
@@ -136,17 +159,8 @@ public class ModelManager implements Model {
         if (!hasPerson(target)) {
             throw new PersonNotFoundException();
         }
-        return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS.getInjuryName());
-    }
-
-    @Override
-    public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
-        requireAllNonNull(target, injury);
-
-        if (!hasPerson(target)) {
-            throw new PersonNotFoundException();
-        }
-        return target.getInjury().equals(injury);
+        // Check if the person has any injury in their injury list that is not the default "FIT"
+        return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Override
@@ -202,7 +216,7 @@ public class ModelManager implements Model {
                 person.getTeam(),
                 person.getTags(),
                 person.getPosition(),
-                person.getInjury(),
+                person.getInjuries(),
                 true
         );
         setPerson(person, updatedPerson);
@@ -218,7 +232,7 @@ public class ModelManager implements Model {
                 person.getTeam(),
                 person.getTags(),
                 person.getPosition(),
-                person.getInjury(),
+                person.getInjuries(),
                 Person.DEFAULT_CAPTAIN_STATUS
         );
         setPerson(person, updatedPerson);

@@ -14,8 +14,7 @@ import seedu.address.model.team.Team;
 
 /**
  * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated,
- * immutable.
+ * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
     public static final Injury DEFAULT_INJURY_STATUS = new Injury("FIT");
@@ -30,7 +29,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Injury injury;
+    private final Set<Injury> injuries = new HashSet<>();
     private final Team team;
     private final Position position;
     private boolean isCaptain;
@@ -50,19 +49,19 @@ public class Person {
         this.team = team;
         this.tags.addAll(tags);
         this.position = DEFAULT_POSITION;
-        this.injury = DEFAULT_INJURY_STATUS;
+        this.injuries.add(DEFAULT_INJURY_STATUS);
         this.isCaptain = DEFAULT_CAPTAIN_STATUS;
     }
 
     /**
      * Creates a Person object assigned to a team with an explicit injury status, position, and captain status.
-     * Overloaded constructor sets the person's injury status to the specified {@code injury},
+     * Overloaded constructor sets the person's injury status to the specified {@code injuries},
      * position to the specified {@code position}, and captain status to the specified {@code isCaptain}.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
-                  Position position, Injury injury, boolean isCaptain) {
-        requireAllNonNull(name, phone, email, address, team, tags, position, injury, isCaptain);
+                  Position position, Set<Injury> injuries, boolean isCaptain) {
+        requireAllNonNull(name, phone, email, address, team, tags, position, injuries, isCaptain);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -70,7 +69,7 @@ public class Person {
         this.team = team;
         this.tags.addAll(tags);
         this.position = position;
-        this.injury = injury;
+        this.injuries.addAll(injuries);
         this.isCaptain = isCaptain;
     }
 
@@ -92,10 +91,6 @@ public class Person {
 
     public Team getTeam() {
         return team;
-    }
-
-    public Injury getInjury() {
-        return injury;
     }
 
     public Position getPosition() {
@@ -121,6 +116,15 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable injury set, which throws
+     * {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Injury> getInjuries() {
+        return Collections.unmodifiableSet(injuries);
     }
 
     /**
@@ -158,14 +162,14 @@ public class Person {
                 && team.equals(otherPerson.team)
                 && tags.equals(otherPerson.tags)
                 && position.equals(otherPerson.position)
-                && injury.equals(otherPerson.injury)
+                && injuries.equals(otherPerson.injuries)
                 && isCaptain == otherPerson.isCaptain();
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, team, tags, position, injury, isCaptain);
+        return Objects.hash(name, phone, email, address, team, tags, position, injuries, isCaptain);
     }
 
     @Override
@@ -178,7 +182,7 @@ public class Person {
                 .add("tags", tags)
                 .add("team", team)
                 .add("position", position)
-                .add("injury status", injury)
+                .add("injuries", injuries)
                 .add("isCaptain", isCaptain)
                 .toString();
     }
