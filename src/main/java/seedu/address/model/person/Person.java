@@ -19,7 +19,7 @@ import seedu.address.model.team.Team;
  */
 public class Person {
     public static final Injury DEFAULT_INJURY_STATUS = new Injury("FIT");
-    public static final String DEFAULT_POSITION = "NONE";
+    public static final Position DEFAULT_POSITION = new Position("NONE");
     public static final boolean DEFAULT_CAPTAIN_STATUS = false;
 
     // Identity fields
@@ -49,7 +49,7 @@ public class Person {
         this.address = address;
         this.team = team;
         this.tags.addAll(tags);
-        this.position = new Position(DEFAULT_POSITION);
+        this.position = DEFAULT_POSITION;
         this.injury = DEFAULT_INJURY_STATUS;
         this.isCaptain = DEFAULT_CAPTAIN_STATUS;
     }

@@ -54,7 +54,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Position position = new Position(Person.DEFAULT_POSITION); // TODO: implement support for position
+        Position position = Person.DEFAULT_POSITION; // TODO: implement support for position
         Injury injury = argMultimap.getValue(PREFIX_INJURY).isPresent()
                 ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
                 : Person.DEFAULT_INJURY_STATUS;
