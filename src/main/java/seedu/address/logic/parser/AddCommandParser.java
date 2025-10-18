@@ -57,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Position position = new Position(Person.DEFAULT_POSITION); // TODO: implement support for position
         Injury injury = argMultimap.getValue(PREFIX_INJURY).isPresent()
                 ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
-                : new Injury(Person.DEFAULT_INJURY_STATUS);
+                : Person.DEFAULT_INJURY_STATUS;
 
         Person person = new Person(name, phone, email, address, team, tagList, position,
                 injury, Person.DEFAULT_CAPTAIN_STATUS);

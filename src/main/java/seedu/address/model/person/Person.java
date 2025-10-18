@@ -18,7 +18,7 @@ import seedu.address.model.team.Team;
  * immutable.
  */
 public class Person {
-    public static final String DEFAULT_INJURY_STATUS = "FIT";
+    public static final Injury DEFAULT_INJURY_STATUS = new Injury("FIT");
     public static final String DEFAULT_POSITION = "NONE";
     public static final boolean DEFAULT_CAPTAIN_STATUS = false;
 
@@ -50,7 +50,7 @@ public class Person {
         this.team = team;
         this.tags.addAll(tags);
         this.position = new Position(DEFAULT_POSITION);
-        this.injury = new Injury(DEFAULT_INJURY_STATUS);
+        this.injury = DEFAULT_INJURY_STATUS;
         this.isCaptain = DEFAULT_CAPTAIN_STATUS;
     }
 

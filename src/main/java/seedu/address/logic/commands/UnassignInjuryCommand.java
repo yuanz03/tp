@@ -8,7 +8,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -58,7 +57,7 @@ public class UnassignInjuryCommand extends Command {
             throw new CommandException(String.format(MESSAGE_INJURY_ALREADY_UNASSIGNED, personToUnassign.getName()));
         }
 
-        model.updatePersonInjuryStatus(personToUnassign, new Injury(Person.DEFAULT_INJURY_STATUS));
+        model.updatePersonInjuryStatus(personToUnassign, Person.DEFAULT_INJURY_STATUS);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 personToUnassign.getName()));
     }

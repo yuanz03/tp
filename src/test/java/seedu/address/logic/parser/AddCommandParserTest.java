@@ -176,14 +176,15 @@ public class AddCommandParserTest {
 
         // missing injury field
         Person secondPerson = new PersonBuilder(AMY).withTags(VALID_TAG_FRIEND)
-                .withInjury(Person.DEFAULT_INJURY_STATUS).build();
+                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         assertParseSuccess(parser,
                 PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY + TEAM_DESC_AMY + TAG_DESC_FRIEND,
                 new AddCommand(secondPerson));
 
         // all optional fields missing
-        Person thirdPerson = new PersonBuilder(AMY).withTags().withInjury(Person.DEFAULT_INJURY_STATUS).build();
+        Person thirdPerson = new PersonBuilder(AMY).withTags()
+                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         assertParseSuccess(parser,
                 PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TEAM_DESC_AMY,
                 new AddCommand(thirdPerson));

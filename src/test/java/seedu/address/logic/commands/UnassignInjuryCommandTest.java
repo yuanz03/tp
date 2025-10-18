@@ -50,7 +50,7 @@ public class UnassignInjuryCommandTest {
 
     @Test
     public void execute_personWithDefaultInjury_throwsCommandException() {
-        Person person = new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS).build();
+        Person person = new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         ModelStubWithPerson modelStub = new ModelStubWithPerson(person);
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(person.getName());
 
@@ -117,7 +117,7 @@ public class UnassignInjuryCommandTest {
         @Override
         public boolean hasInjury(Person target) {
             requireNonNull(target);
-            return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
+            return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS.getInjuryName());
         }
 
         @Override

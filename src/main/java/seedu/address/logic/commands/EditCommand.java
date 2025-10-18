@@ -99,8 +99,8 @@ public class EditCommand extends Command {
         Injury updatedInjury;
         if (editPersonDescriptor.getInjury().isPresent()) {
             Injury newInjury = editPersonDescriptor.getInjury().get();
-            if (newInjury.equals(new Injury(Person.DEFAULT_INJURY_STATUS))) {
-                updatedInjury = new Injury(Person.DEFAULT_INJURY_STATUS);
+            if (newInjury.equals(Person.DEFAULT_INJURY_STATUS)) {
+                updatedInjury = Person.DEFAULT_INJURY_STATUS;
             } else {
                 updatedInjury = newInjury;
             }
