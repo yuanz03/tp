@@ -77,7 +77,7 @@ public class AssignPositionCommand extends Command {
                 person.getTeam(),
                 person.getTags(),
                 position,
-                person.getInjury(),
+                person.getInjuries(),
                 person.isCaptain()
         );
         model.setPerson(person, edited);

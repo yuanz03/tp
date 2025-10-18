@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static seedu.address.model.person.Person.DEFAULT_INJURY_STATUS;
-
 import java.util.function.Predicate;
 
 /**
