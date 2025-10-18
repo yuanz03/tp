@@ -45,7 +45,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private FlowPane injuryStatus;
+    private FlowPane injuries;
     @FXML
     private FlowPane teamPositionContainer;
 
@@ -74,14 +74,18 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        Label injuryLabel;
-        if (person.getInjury().getInjuryName().equals(Person.DEFAULT_INJURY_STATUS.getInjuryName())) {
-            injuryLabel = new Label("\uD83E\uDDBE  " + person.getInjury().getInjuryName());
-            injuryLabel.getStyleClass().add("fit-tag");
-        } else {
-            injuryLabel = new Label("\uD83D\uDE91  " + person.getInjury().getInjuryName());
-            injuryLabel.getStyleClass().add("injured-tag");
-        }
-        injuryStatus.getChildren().add(injuryLabel);
+        person.getInjuries().stream()
+                .sorted(Comparator.comparing(injury -> injury.getInjuryName()))
+                .forEach(injury -> {
+                    Label injuryLabel;
+                    if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
+                        injuryLabel = new Label("\uD83E\uDDBE  " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("fit-tag");
+                    } else {
+                        injuryLabel = new Label("\uD83D\uDE91  " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("injured-tag");
+                    }
+                    injuries.getChildren().add(injuryLabel);
+                });
     }
 }
