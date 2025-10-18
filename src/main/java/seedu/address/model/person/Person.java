@@ -35,70 +35,33 @@ public class Person {
     private boolean isCaptain;
 
     /**
-     * Creates a Person object assigned to a team with the default injury status and position.
-     * Overloaded constructor sets the person's injury status to the
-     * default value {@code "FIT"} and default position of NONE.
-     * Every field must be present and not null, and isCaptain is false.
+     * Creates a Person object assigned to a team with the default injury status, position, and captain status.
+     * Overloaded constructor sets the person's injury status to the default value {@code "FIT"} and position
+     * to the default value {@code "NONE"}. The {@code isCaptain} field defaults to {@code false}.
+     * All other fields must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Position none, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, team, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
+        this.tags.addAll(tags);
         this.position = new Position(DEFAULT_POSITION);
-        this.tags.addAll(tags);
         this.injury = new Injury(DEFAULT_INJURY_STATUS);
         this.isCaptain = false;
     }
 
     /**
-     * Creates a Person object assigned to a team with an explicit injury status.
-     * Overloaded constructor sets the person's injury status to the specified
-     * {@code injury}, and position to the specified {@code position}.
-     * Every field must be present and not null, and isCaptain is false.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
-                  Position position, Injury injury) {
-        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.team = team;
-        this.tags.addAll(tags);
-        this.position = position;
-        this.injury = injury;
-        this.isCaptain = false;
-    }
-
-    /**
-     * Creates a Person object with specified captain status and with a team assigned.
-     * Every field must be present and not null.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Team team,
-                  Position position, Set<Tag> tags, boolean isCaptain) {
-        requireAllNonNull(name, phone, email, address, team, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.team = team;
-        this.position = position;
-        this.injury = new Injury(DEFAULT_INJURY_STATUS);
-        this.tags.addAll(tags);
-        this.isCaptain = isCaptain;
-    }
-
-    /**
-     * Creates a Person object with all fields including injury and captain status.
-     * This is the most complete constructor.
+     * Creates a Person object assigned to a team with an explicit injury status, position, and captain status.
+     * Overloaded constructor sets the person's injury status to the specified {@code injury},
+     * position to the specified {@code position}, and captain status to the specified {@code isCaptain}.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags,
                   Position position, Injury injury, boolean isCaptain) {
-        requireAllNonNull(name, phone, email, address, team, tags, position, injury);
+        requireAllNonNull(name, phone, email, address, team, tags, position, injury, isCaptain);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -108,13 +71,6 @@ public class Person {
         this.position = position;
         this.injury = injury;
         this.isCaptain = isCaptain;
-    }
-
-    /**
-     * Backwards-compatible constructor defaulting position to NONE for legacy call sites.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Team team, Set<Tag> tags) {
-        this(name, phone, email, address, team, new Position("NONE"), tags);
     }
 
     public Name getName() {
@@ -208,7 +164,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, team, tags, position, injury);
+        return Objects.hash(name, phone, email, address, team, tags, position, injury, isCaptain);
     }
 
     @Override
@@ -225,5 +181,4 @@ public class Person {
                 .add("isCaptain", isCaptain)
                 .toString();
     }
-
 }
