@@ -25,11 +25,11 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a player to the address book. "
             + "Parameters: "
-            + PREFIX_PLAYER + "NAME "
+            + PREFIX_PLAYER + "PLAYER_NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_TEAM + "TEAM "
+            + PREFIX_TEAM + "TEAM_NAME "
             // TODO: implement support for position
             + "[" + PREFIX_INJURY + "INJURY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
