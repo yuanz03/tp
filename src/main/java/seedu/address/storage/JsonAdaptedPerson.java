@@ -133,6 +133,6 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
-                modelPosition, modelInjury);
+                modelPosition, modelInjury, Person.DEFAULT_CAPTAIN_STATUS);
     }
 }

@@ -219,7 +219,7 @@ public class ModelManager implements Model {
                 person.getTags(),
                 person.getPosition(),
                 person.getInjury(),
-                false
+                Person.DEFAULT_CAPTAIN_STATUS
         );
         setPerson(person, updatedPerson);
     }

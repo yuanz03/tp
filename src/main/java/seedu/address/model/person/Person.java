@@ -20,6 +20,7 @@ import seedu.address.model.team.Team;
 public class Person {
     public static final String DEFAULT_INJURY_STATUS = "FIT";
     public static final String DEFAULT_POSITION = "NONE";
+    public static final boolean DEFAULT_CAPTAIN_STATUS = false;
 
     // Identity fields
     private final Name name;
@@ -50,7 +51,7 @@ public class Person {
         this.tags.addAll(tags);
         this.position = new Position(DEFAULT_POSITION);
         this.injury = new Injury(DEFAULT_INJURY_STATUS);
-        this.isCaptain = false;
+        this.isCaptain = DEFAULT_CAPTAIN_STATUS;
     }
 
     /**

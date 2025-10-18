@@ -59,7 +59,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
                 : new Injury(Person.DEFAULT_INJURY_STATUS);
 
-        Person person = new Person(name, phone, email, address, team, tagList, position, injury);
+        Person person = new Person(name, phone, email, address, team, tagList, position,
+                injury, Person.DEFAULT_CAPTAIN_STATUS);
         return new AddCommand(person);
     }
 
