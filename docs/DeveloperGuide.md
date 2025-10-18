@@ -444,9 +444,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-* 4a. The given player or team doesn't exist.
+* 4b. The given player or team doesn't exist.
 
-    * 4a1. AddressBook shows an error message.
+    * 4b1. AddressBook shows an error message.
 
       Use case resumes at step 2.
 
