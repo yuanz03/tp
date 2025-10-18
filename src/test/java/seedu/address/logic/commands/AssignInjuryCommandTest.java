@@ -88,7 +88,7 @@ public class AssignInjuryCommandTest {
 
         // Verify that the default injury status was assigned and not the lowercase "fit"
         assertEquals(validPerson, modelStub.personUpdated);
-        assertEquals(new Injury(Person.DEFAULT_INJURY_STATUS), modelStub.injuryAssigned);
+        assertEquals(Person.DEFAULT_INJURY_STATUS, modelStub.injuryAssigned);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class AssignInjuryCommandTest {
     private static class ModelStubAcceptingInjuryAssigned extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryAssigned = new Injury(Person.DEFAULT_INJURY_STATUS);
+        private Injury injuryAssigned = Person.DEFAULT_INJURY_STATUS;
 
         ModelStubAcceptingInjuryAssigned(Person person) {
             requireNonNull(person);

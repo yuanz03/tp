@@ -8,13 +8,12 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Removes an injury status from an existing {@code Person} in the address book.
+ * Removes an injury status from an existing {@code Person} in the PlayBook.
  * Resets the {@code Person}'s injury status to the default {@code "FIT"} status.
  * <p>
  * Usage: {@code unassigninjury pl/<player>}.
@@ -27,8 +26,8 @@ public class UnassignInjuryCommand extends Command {
             "%1$s's injury status has already been set to the default 'FIT' status!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes an injury status from a person in the address book.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER "
+            + ": Removes an injury status from a player in the PlayBook.\n"
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe";
 
     private final Name personNameToUnassign;
@@ -58,7 +57,7 @@ public class UnassignInjuryCommand extends Command {
             throw new CommandException(String.format(MESSAGE_INJURY_ALREADY_UNASSIGNED, personToUnassign.getName()));
         }
 
-        model.updatePersonInjuryStatus(personToUnassign, new Injury(Person.DEFAULT_INJURY_STATUS));
+        model.updatePersonInjuryStatus(personToUnassign, Person.DEFAULT_INJURY_STATUS);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 personToUnassign.getName()));
     }

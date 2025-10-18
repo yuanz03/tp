@@ -123,7 +123,7 @@ public class ModelManagerTest {
     @Test
     public void updatePersonInjuryStatus_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
-                modelManager.updatePersonInjuryStatus(null, new Injury(Person.DEFAULT_INJURY_STATUS)));
+                modelManager.updatePersonInjuryStatus(null, Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -192,7 +192,8 @@ public class ModelManagerTest {
 
     @Test
     public void hasInjury_personWithDefaultInjury_returnsFalse() {
-        Person personWithDefaultInjury = new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS).build();
+        Person personWithDefaultInjury = new PersonBuilder()
+                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         modelManager.addPerson(personWithDefaultInjury);
         assertFalse(modelManager.hasInjury(personWithDefaultInjury));
     }
@@ -230,7 +231,7 @@ public class ModelManagerTest {
         assertTrue(modelManager.hasInjury(person));
 
         // Update to the default injury status
-        modelManager.updatePersonInjuryStatus(person, new Injury(Person.DEFAULT_INJURY_STATUS));
+        modelManager.updatePersonInjuryStatus(person, Person.DEFAULT_INJURY_STATUS);
         assertFalse(modelManager.hasInjury(modelManager.getPersonByName(person.getName())));
     }
 

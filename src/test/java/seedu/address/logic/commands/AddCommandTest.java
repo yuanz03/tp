@@ -52,7 +52,7 @@ public class AddCommandTest {
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
-        assertEquals(new Injury(Person.DEFAULT_INJURY_STATUS), validPerson.getInjury());
+        assertEquals(Person.DEFAULT_INJURY_STATUS, validPerson.getInjury());
     }
 
     @Test

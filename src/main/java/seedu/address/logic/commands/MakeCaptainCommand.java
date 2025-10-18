@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Marks a person in the address book as the team captain.
+ * Marks a person in the PlayBook as the team captain.
  * <p>
  * The person is identified by their {@link Name}. If the person does not exist
  * or is already a captain, a {@link CommandException} is thrown.
@@ -23,7 +23,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class MakeCaptainCommand extends Command {
     public static final String COMMAND_WORD = "makecaptain";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the person "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
             + "as captain.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";

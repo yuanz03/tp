@@ -145,11 +145,6 @@ public class PersonBuilder {
      * Builds a {@link Person} instance with the configured state.
      */
     public Person build() {
-        Person built = new Person(name, phone, email, address, team, tags, position, injury);
-
-        if (isCaptain) {
-            built.makeCaptain();
-        }
-        return built;
+        return new Person(name, phone, email, address, team, tags, position, injury, isCaptain);
     }
 }

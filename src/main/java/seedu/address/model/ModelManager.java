@@ -136,7 +136,7 @@ public class ModelManager implements Model {
         if (!hasPerson(target)) {
             throw new PersonNotFoundException();
         }
-        return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS);
+        return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS.getInjuryName());
     }
 
     @Override
@@ -219,7 +219,7 @@ public class ModelManager implements Model {
                 person.getTags(),
                 person.getPosition(),
                 person.getInjury(),
-                false
+                Person.DEFAULT_CAPTAIN_STATUS
         );
         setPerson(person, updatedPerson);
     }

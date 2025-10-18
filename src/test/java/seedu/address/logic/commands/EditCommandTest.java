@@ -141,7 +141,8 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withInjury("fit").build();
         EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
 
-        Person editedPerson = new PersonBuilder(firstPerson).withInjury(Person.DEFAULT_INJURY_STATUS).build();
+        Person editedPerson = new PersonBuilder(firstPerson)
+                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
