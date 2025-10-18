@@ -23,7 +23,7 @@ public class DeleteTeamCommand extends Command {
             + "Please either delete player if no longer managing player\n"
             + "or reassign player to another team before deleting this team.";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes team from the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes team from the PlayBook. "
             + "Parameters: "
             + PREFIX_TEAM + "TEAM_NAME "
             + "Example: " + COMMAND_WORD + " "

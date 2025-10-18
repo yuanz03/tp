@@ -7,7 +7,7 @@ import seedu.address.model.Model;
 import seedu.address.model.position.Position;
 
 /**
- * Deletes an existing {@code Position} from the address book.
+ * Deletes an existing {@code Position} from the PlayBook.
  * <p>
  * Usage: {@code deleteposition ps/<position_name>}
  */

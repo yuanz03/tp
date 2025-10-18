@@ -7,7 +7,7 @@ import seedu.address.model.Model;
 import seedu.address.model.position.Position;
 
 /**
- * Creates a new {@code Position} and adds it to the address book.
+ * Creates a new {@code Position} and adds it to the PlayBook.
  * <p>
  * Usage: {@code newposition ps/<position_name>}
  */
