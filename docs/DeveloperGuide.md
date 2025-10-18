@@ -15,6 +15,11 @@
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
+PlayBook is adapted from AddressBook-Level3 by SE-EDU. We would like to acknowledge the following sources:
+- [AB3 Tutorials & Guides](https://github.com/se-edu/guides)
+
+- [AB3 Sample Code](https://github.com/nus-cs2103-AY2526S1/tp)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -50,7 +55,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete pl/John Doe`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -90,9 +95,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete pl/John Doe")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete pl/John Doe` Command" />
 
 <box type="info" seamless>
 
@@ -346,28 +351,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+* 1c. The team specified for the player does not exist.
+
+    * 1c1. AddressBook shows an error message.
+
+      Use case ends.
+
 **Use case: UC02 - Delete a player**
 
 **MSS**
 
 1.  User requests to list players
-2.  AddressBook shows a list of players
-3.  User requests to delete a specific player in the list
-4.  AddressBook deletes the player
+2.  User requests to delete a specific player in the list
+3.  AddressBook deletes the player
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. The given player name does not exist.
 
-  Use case ends.
+    * 2a1. AddressBook shows an error message.
 
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
+      Use case ends.
 
 
 **Use case: UC03 - Add a team**
@@ -386,43 +392,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 1b. The team to be added already exists.
+
     *  1b1. AddressBook shows an error message.
 
-      Use case ends.
+       Use case ends.
 
 **Use case: UC04 - Delete a team**
 
 **MSS**
 
 1. User requests to list teams
-2. AddressBook shows a list of teams
-3. User requests to delete a specific team in the list
-4. AddressBook deletes the team
+2. User requests to delete a specific team
+3. AddressBook deletes the team
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. The given team name does not exist.
 
-  Use case ends.
+    * 2a1. AddressBook shows an error message.
 
-* 3a. The given team name does not exist.
+      Use case ends.
 
-    * 3a1. AddressBook shows an error message.
+* 2b. The given team has players assigned to it.
 
-      Use case resumes at step 2.
+    * 2b1. AddressBook shows an error message.
 
-**Use case: UC05 - Add a player to a team**
+      Use case ends.
+
+**Use case: UC05 - Assign a player to a team**
 
 **MSS**
 
-1.  User requests to list players
-2.  AddressBook shows a list of players
-3.  User requests to list teams
-4.  AddressBook shows a list of teams
-5.  User requests to add a specific player to a specific team
-6.  AddressBook adds the player to the team
+1. User requests to list players
+2. AddressBook shows a list of players
+3. User requests to add a specific player to a specific team
+4. AddressBook adds the player to the team
 
     Use case ends.
 
@@ -432,13 +438,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 4a. The team list is empty.
+* 4a. The given player or team selection is invalid.
 
-  Use case ends.
+    * 4a1. AddressBook shows an error message.
 
-* 5a. The given player or team selection is invalid.
+      Use case resumes at step 2.
 
-    * 5a1. AddressBook shows an error message.
+* 4a. The given player or team doesn't exist.
+
+    * 4a1. AddressBook shows an error message.
 
       Use case resumes at step 2.
 
@@ -841,19 +849,19 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a player
 
-1. Deleting a person while all persons are being shown
+1. Deleting a player while all players are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all players using the `list` command. Multiple players in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete pl/Bernice Yu`<br>
+      Expected: Bernice Yu is deleted from the list. Details of the deleted contact shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   1. Test case: `delete pl/Invalid_Name`<br>
+      Expected: No player is deleted. Error details shown in the status message.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` <br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
