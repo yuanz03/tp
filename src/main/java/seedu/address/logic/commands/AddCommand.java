@@ -17,13 +17,13 @@ import seedu.address.model.person.Injury;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a player to the address book.
+ * Adds a player to the PlayBook.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a player to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a player to the PlayBook. "
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER_NAME "
             + PREFIX_PHONE + "PHONE "
@@ -45,7 +45,7 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New player added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the PlayBook";
     public static final String MESSAGE_TEAM_NOT_FOUND = "The team '%1$s' does not exist. "
             + "Please create the team first using the 'addteam' command.";
 

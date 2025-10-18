@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Marks a person in the address book as no longer a team captain.
+ * Marks a person in the PlayBook as no longer a team captain.
  * <p>
  * The person is identified by their {@link Name}. If the person does not exist
  * or is already not a captain, a {@link CommandException} is thrown.

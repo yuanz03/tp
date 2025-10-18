@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified by name from the address book.
+ * Deletes a person identified by name from the PlayBook.
  */
 public class DeleteCommand extends Command {
 
@@ -21,7 +21,7 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the player specified by name.\n"
             + "Parameters: "
-            + PREFIX_PLAYER + "PLAYER "
+            + PREFIX_PLAYER + "PLAYER_NAME "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe ";
 

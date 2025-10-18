@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * Lists all positions in the Play Book to the user.
+ * Lists all positions in the PlayBook to the user.
  */
 public class ListPositionCommand extends Command {
     public static final String COMMAND_WORD = "listposition";

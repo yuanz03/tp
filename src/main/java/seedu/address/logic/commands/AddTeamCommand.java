@@ -10,20 +10,20 @@ import seedu.address.model.Model;
 import seedu.address.model.team.Team;
 
 /**
- * Adds a team to the address book.
+ * Adds a team to the PlayBook.
  */
 public class AddTeamCommand extends Command {
 
     public static final String COMMAND_WORD = "addteam";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the PlayBook. "
         + "Parameters: "
         + PREFIX_TEAM + "TEAM_NAME "
         + "Example: " + COMMAND_WORD + " "
         + PREFIX_TEAM + "u16 ";
 
     public static final String MESSAGE_SUCCESS = "New team added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TEAM = "This team already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_TEAM = "This team already exists in the PlayBook";
 
     private final Team toAdd;
 

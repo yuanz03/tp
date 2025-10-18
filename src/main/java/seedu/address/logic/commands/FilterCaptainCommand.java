@@ -6,7 +6,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_CAPTAINS;
 import seedu.address.model.Model;
 
 /**
- * Filters the list of persons in the address book to show only captains.
+ * Filters the list of persons in the PlayBook to show only captains.
  * <p>
  * This command updates the filtered person list in the model using
  * {@code PREDICATE_SHOW_CAPTAINS} and returns a message indicating
