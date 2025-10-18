@@ -55,15 +55,15 @@ public class AssignInjuryCommand extends Command {
         }
 
         // Check if the player has already been assigned the same injury
-        if (model.isDuplicateInjuryAssigned(personToAssign, injuryToAssign)) {
+        if (personToAssign.getInjuries().contains(injuryToAssign)) {
             throw new CommandException(String.format(MESSAGE_ASSIGNED_SAME_INJURY,
                     personToAssign.getName(), injuryToAssign));
         }
 
         if (injuryToAssign.equals(Person.DEFAULT_INJURY_STATUS)) {
-            model.updatePersonInjuryStatus(personToAssign, Person.DEFAULT_INJURY_STATUS);
+            model.addInjury(personToAssign, Person.DEFAULT_INJURY_STATUS);
         } else {
-            model.updatePersonInjuryStatus(personToAssign, injuryToAssign);
+            model.addInjury(personToAssign, injuryToAssign);
         }
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
