@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UnassignInjuryCommand extends Command {
 
     public static final String COMMAND_WORD = "unassigninjury";
-    public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's injury status has been removed!";
+    public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's %2$s injury status has been removed!";
     public static final String MESSAGE_INJURY_NOT_FOUND = "%1$s has no record of this %2$s injury status!";
     public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
             "%1$s's injury status has already been set to the default 'FIT' status!";
@@ -72,7 +72,7 @@ public class UnassignInjuryCommand extends Command {
 
         model.deleteInjury(personToUnassign, injuryToUnassign);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_UNASSIGN_INJURY_SUCCESS,
-                personToUnassign.getName()));
+                personToUnassign.getName(), injuryToUnassign.getInjuryName()));
     }
 
     /**

@@ -59,7 +59,7 @@ public class AssignInjuryCommand extends Command {
         // Check if the player has already been assigned the same injury
         if (personToAssign.getInjuries().contains(injuryToAssign)) {
             throw new CommandException(String.format(MESSAGE_ASSIGNED_SAME_INJURY,
-                    personToAssign.getName(), injuryToAssign));
+                    personToAssign.getName(), personToAssign.getInjuries()));
         }
 
         // Disallow assigning "FIT" as an injury status
@@ -69,7 +69,7 @@ public class AssignInjuryCommand extends Command {
 
         model.addInjury(personToAssign, injuryToAssign);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
-                personToAssign.getName(), injuryToAssign));
+                personToAssign.getName(), model.getPersonByName(personNameToAssign).getInjuries()));
     }
 
     /**

@@ -170,7 +170,7 @@ public class ModelManager implements Model {
         if (!hasPerson(target)) {
             throw new PersonNotFoundException();
         }
-        // Check if the person has any injury in their injury list that is not the default "FIT"
+        // Check whether the person has at least one injury that is not the default "FIT" status
         return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
     }
 

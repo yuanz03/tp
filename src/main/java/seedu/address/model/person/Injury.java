@@ -63,6 +63,6 @@ public class Injury {
 
     @Override
     public String toString() {
-        return "[" + this.injuryName + "]";
+        return this.injuryName;
     }
 }
