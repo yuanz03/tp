@@ -48,7 +48,7 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void execute_duplicateInjuryAssignment_throwsCommandException() {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
         Name name = validPerson.getName();
         Injury duplicateInjury = new Injury("ACL");
 
@@ -61,7 +61,7 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void execute_personFound_assignSuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
         Name name = validPerson.getName();
         Injury newInjury = new Injury("Broken Foot");
 
@@ -76,7 +76,7 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void execute_lowercaseDefaultInjury_assignsDefaultInjurySuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
         Name name = validPerson.getName();
         Injury lowercaseFitInjuryStatus = new Injury("fit");
 
@@ -124,9 +124,10 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void toStringMethod() {
-        AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(), ALICE.getInjury());
+        AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(),
+                ALICE.getInjuries().iterator().next());
         String expected = AssignInjuryCommand.class.getCanonicalName() + "{personToAssign=" + ALICE.getName() + ", "
-                + "injuryToAssign=" + ALICE.getInjury() + "}";
+                + "injuryToAssign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, assignInjuryCommand.toString());
     }
 
@@ -153,16 +154,10 @@ public class AssignInjuryCommandTest {
         }
 
         @Override
-        public void updatePersonInjuryStatus(Person target, Injury injury) {
+        public void addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
             this.personUpdated = target;
             this.injuryAssigned = injury;
-        }
-
-        @Override
-        public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
-            requireAllNonNull(target, injury);
-            return target.getInjury().equals(injury);
         }
 
         @Override

@@ -134,23 +134,6 @@ public class EditCommandTest {
                 String.format(EditCommand.MESSAGE_TEAM_NOT_FOUND, nonExistentTeam.getName()));
     }
 
-
-    @Test
-    public void execute_setInjuryToDefault_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withInjury("fit").build();
-        EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
-
-        Person editedPerson = new PersonBuilder(firstPerson)
-                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(firstPerson, editedPerson);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
     @Test
     public void equals() {
         final Name name = new Name(VALID_NAME_AMY);

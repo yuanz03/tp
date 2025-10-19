@@ -32,7 +32,7 @@ public class AssignInjuryCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).build();
 
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + INJURY_DESC_BOB,
-                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjuries().iterator().next()));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class AssignInjuryCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).build();
 
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + INJURY_DESC_BOB + PLAYER_DESC_BOB,
-                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjuries().iterator().next()));
     }
 
     @Test
@@ -106,18 +106,18 @@ public class AssignInjuryCommandParserTest {
     @Test
     public void parse_validInjuryWithSpaces_success() {
         String injuryWithSpaces = " " + PREFIX_INJURY + "Broken Fibula";
-        Person expectedPerson = new PersonBuilder(BOB).withInjury("Broken Fibula").build();
+        Person expectedPerson = new PersonBuilder(BOB).withInjuries("Broken Fibula").build();
 
         assertParseSuccess(parser, PLAYER_DESC_BOB + injuryWithSpaces,
-                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjuries().iterator().next()));
     }
 
     @Test
     public void parse_validInjuryWithNumbers_success() {
         String injuryWithNumbers = " " + PREFIX_INJURY + "Grade 2 Ankle Sprain";
-        Person expectedPerson = new PersonBuilder(BOB).withInjury("Grade 2 Ankle Sprain").build();
+        Person expectedPerson = new PersonBuilder(BOB).withInjuries("Grade 2 Ankle Sprain").build();
 
         assertParseSuccess(parser, PLAYER_DESC_BOB + injuryWithNumbers,
-                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjury()));
+                new AssignInjuryCommand(expectedPerson.getName(), expectedPerson.getInjuries().iterator().next()));
     }
 }
