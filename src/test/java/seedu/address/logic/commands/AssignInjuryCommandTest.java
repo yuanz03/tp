@@ -75,23 +75,6 @@ public class AssignInjuryCommandTest {
     }
 
     @Test
-    public void execute_lowercaseDefaultInjury_assignsDefaultInjurySuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
-        Name name = validPerson.getName();
-        Injury lowercaseFitInjuryStatus = new Injury("fit");
-
-        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
-
-        // Execute command with lowercase "fit", which should assign the default injury status
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, lowercaseFitInjuryStatus),
-                new AssignInjuryCommand(name, lowercaseFitInjuryStatus).execute(modelStub).getFeedbackToUser());
-
-        // Verify that the default injury status was assigned and not the lowercase "fit"
-        assertEquals(validPerson, modelStub.personUpdated);
-        assertEquals(Person.DEFAULT_INJURY_STATUS, modelStub.injuryAssigned);
-    }
-
-    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();

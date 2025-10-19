@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -125,7 +126,17 @@ public class ModelManager implements Model {
     public void addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
+        // Disallow assigning "FIT" as an injury
+        if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
+            throw new IllegalArgumentException(AssignInjuryCommand.MESSAGE_INVALID_INJURY_ASSIGNMENT);
+        }
+
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+
+        // Remove FIT status when assigning any other injury
+        if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
+            updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+        }
         updatedInjuries.add(injury);
 
         Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),

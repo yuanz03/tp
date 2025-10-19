@@ -24,6 +24,8 @@ public class AssignInjuryCommand extends Command {
     public static final String COMMAND_WORD = "assigninjury";
     public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
     public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
+    public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"
+            + "Please use the unassigninjury pl/<player> i/<injury> command instead to restore 'FIT' status.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Assigns an injury status to a player in the PlayBook.\n"
@@ -60,12 +62,12 @@ public class AssignInjuryCommand extends Command {
                     personToAssign.getName(), injuryToAssign));
         }
 
+        // Disallow assigning "FIT" as an injury status
         if (injuryToAssign.equals(Person.DEFAULT_INJURY_STATUS)) {
-            model.addInjury(personToAssign, Person.DEFAULT_INJURY_STATUS);
-        } else {
-            model.addInjury(personToAssign, injuryToAssign);
+            throw new CommandException(MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 
+        model.addInjury(personToAssign, injuryToAssign);
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
                 personToAssign.getName(), injuryToAssign));
     }
