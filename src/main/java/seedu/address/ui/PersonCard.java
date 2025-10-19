@@ -47,7 +47,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane injuries;
     @FXML
-    private FlowPane teamPositionContainer;
+    private Label teamLabel;
+    @FXML
+    private Label positionLabel;
+    @FXML
+    private Label injuryLabel;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -55,37 +59,47 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+
+        // Header: Index and Name
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        // Show captain badge directly to the right of the name
+
+        // Captain Badge (only show if captain)
         boolean isCaptain = person.isCaptain();
         captainBadge.setVisible(isCaptain);
         captainBadge.setManaged(isCaptain);
-        Label teamTag = new Label(person.getTeam().getName());
-        teamTag.getStyleClass().add("team-tag");
-        teamPositionContainer.getChildren().add(teamTag);
-        Label positionTag = new Label(person.getPosition().getName());
-        positionTag.getStyleClass().add("team-tag");
-        teamPositionContainer.getChildren().add(positionTag);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
+        // Team and Position Labels
+        teamLabel.setText("📋 " + person.getTeam().getName());
+
+        positionLabel.setText("⚽ " + person.getPosition().getName());
+
+        // Injury Status
         person.getInjuries().stream()
                 .sorted(Comparator.comparing(injury -> injury.getInjuryName()))
                 .forEach(injury -> {
-                    Label injuryLabel;
                     if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
-                        injuryLabel = new Label("\uD83E\uDDBE  " + injury.getInjuryName());
-                        injuryLabel.getStyleClass().add("fit-tag");
+                        injuryLabel.setText("🏥 " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("fit-status");
                     } else {
-                        injuryLabel = new Label("\uD83D\uDE91  " + injury.getInjuryName());
-                        injuryLabel.getStyleClass().add("injured-tag");
+                        injuryLabel.setText("🚑 " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("injured-status");
                     }
                     injuries.getChildren().add(injuryLabel);
+                });
+
+        // Contact Information (icons are in FXML)
+        phone.setText(person.getPhone().value);
+        email.setText(person.getEmail().value);
+        address.setText(person.getAddress().value);
+
+        // Tags
+        person.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    tagLabel.getStyleClass().add("tag-label");
+                    tags.getChildren().add(tagLabel);
                 });
     }
 }
