@@ -89,6 +89,11 @@ class JsonAdaptedPerson {
             personInjuries.add(injury.toModelType());
         }
 
+        // Ensure at least the default injury is present if the list is empty
+        if (personInjuries.isEmpty()) {
+            personInjuries.add(Person.DEFAULT_INJURY_STATUS);
+        }
+
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());

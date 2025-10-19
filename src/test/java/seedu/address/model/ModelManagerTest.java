@@ -287,7 +287,7 @@ public class ModelManagerTest {
         modelManager.deleteInjury(ALICE, nonExistentInjury);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
-        assertEquals(injuryCountBeforeDelete, personBeforeDelete.getInjuries().size());
+        assertEquals(injuryCountBeforeDelete, personAfterDelete.getInjuries().size());
         assertTrue(personAfterDelete.getInjuries().contains(existingInjury));
     }
 

@@ -20,7 +20,7 @@ import seedu.address.model.team.Team;
 //@@author
 
 /**
- * A default model stub that have all the methods failing.
+ * A default model stub that has all methods throwing AssertionError.
  */
 public class ModelStub implements Model {
     @Override

@@ -61,7 +61,7 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Team: ")
                 .append(person.getTeam())
-                .append("; Injury Status: ")
+                .append("; Injuries: ")
                 .append(person.getInjuries())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
