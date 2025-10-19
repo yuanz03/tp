@@ -41,7 +41,7 @@ public class EditCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).build();
+        Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withInjuries("ACL").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
 

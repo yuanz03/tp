@@ -23,7 +23,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -92,10 +91,9 @@ public class EditCommand extends Command {
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
-        Set<Injury> updatedInjuries = editPersonDescriptor.getInjuries().orElse(personToEdit.getInjuries());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
-                updatedPosition, updatedInjuries, personToEdit.isCaptain());
+                updatedPosition, personToEdit.getInjuries(), personToEdit.isCaptain());
     }
 
     @Override
@@ -164,7 +162,6 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Team team;
-        private Set<Injury> injuries;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -179,7 +176,6 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTeam(toCopy.team);
-            setInjuries(toCopy.injuries);
             setTags(toCopy.tags);
         }
 
@@ -187,7 +183,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, injuries, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, tags);
         }
 
         public Optional<Name> getName() {
@@ -231,23 +227,6 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Returns an unmodifiable injury set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code injuries} is null.
-         */
-        public Optional<Set<Injury>> getInjuries() {
-            return (injuries != null) ? Optional.of(Collections.unmodifiableSet(injuries)) : Optional.empty();
-        }
-
-        /**
-         * Sets {@code injuries} to this object's {@code injuries}.
-         * A defensive copy of {@code injuries} is used internally.
-         */
-        public void setInjuries(Set<Injury> injuries) {
-            this.injuries = (injuries != null) ? new HashSet<>(injuries) : null;
-        }
-
-        /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
@@ -281,7 +260,6 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(team, otherEditPersonDescriptor.team)
-                    && Objects.equals(injuries, otherEditPersonDescriptor.injuries)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -293,7 +271,6 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("team", team)
-                    .add("injuries", injuries)
                     .add("tags", tags)
                     .toString();
         }

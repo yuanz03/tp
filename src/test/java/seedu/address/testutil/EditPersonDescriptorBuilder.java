@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -39,7 +38,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTeam(person.getTeam());
-        descriptor.setInjuries(person.getInjuries());
         descriptor.setTags(person.getTags());
     }
 
@@ -80,16 +78,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTeam(String team) {
         descriptor.setTeam(new Team(team));
-        return this;
-    }
-
-    /**
-     * Parses the {@code injuries} into a {@code Set<Injury>} and set it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withInjuries(String... injuries) {
-        Set<Injury> injurySet = Stream.of(injuries).map(Injury::new).collect(Collectors.toSet());
-        descriptor.setInjuries(injurySet);
         return this;
     }
 
