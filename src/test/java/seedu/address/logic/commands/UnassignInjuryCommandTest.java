@@ -27,52 +27,92 @@ import seedu.address.testutil.PersonBuilder;
 public class UnassignInjuryCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new UnassignInjuryCommand(null));
+        assertThrows(NullPointerException.class, () -> new UnassignInjuryCommand(null, new Injury("ACL")));
+    }
+
+    @Test
+    public void constructor_nullInjury_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new UnassignInjuryCommand(new Name("Messi"), null));
     }
 
     @Test
     public void execute_validPersonWithInjury_unassignSuccessful() throws Exception {
-        ModelStubWithPerson modelStub = new ModelStubWithPerson(ALICE);
-        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName());
+        Person personWithInjury = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
+        ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithInjury);
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithInjury.getName(),
+                new Injury("ACL"));
 
-        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS, ALICE.getName()),
+        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS, personWithInjury.getName()),
                 unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
 
     @Test
     public void execute_personNotFound_throwsCommandException() {
         Model model = new ModelManager();
-        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName());
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName(), new Injury("ACL"));
 
         assertThrows(CommandException.class, String.format(Messages.MESSAGE_PERSON_NOT_FOUND, ALICE.getName()), () ->
                 unassignInjuryCommand.execute(model));
     }
 
     @Test
-    public void execute_personWithDefaultInjury_throwsCommandException() {
-        Person person = new PersonBuilder().withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
-        ModelStubWithPerson modelStub = new ModelStubWithPerson(person);
-        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(person.getName());
+    public void execute_personWithNoInjuries_throwsCommandException() {
+        Person personWithDefaultInjury = new PersonBuilder()
+                .withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
+        ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithDefaultInjury);
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithDefaultInjury.getName(),
+                new Injury("ACL"));
 
         assertThrows(CommandException.class,
-                String.format(UnassignInjuryCommand.MESSAGE_INJURY_ALREADY_UNASSIGNED, person.getName()), () ->
-                        unassignInjuryCommand.execute(modelStub));
+                String.format(UnassignInjuryCommand.MESSAGE_INJURY_ALREADY_UNASSIGNED,
+                        personWithDefaultInjury.getName()), () -> unassignInjuryCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_injuryNotFound_throwsCommandException() {
+        Person personWithInjury = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
+        ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithInjury);
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithInjury.getName(),
+                new Injury("Concussion"));
+
+        assertThrows(CommandException.class,
+                String.format(UnassignInjuryCommand.MESSAGE_INJURY_NOT_FOUND, personWithInjury.getName(),
+                        "Concussion"), () -> unassignInjuryCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_personWithMultipleInjuries_removesSpecificInjury() throws Exception {
+        Person personWithMultipleInjuries = new PersonBuilder().withName("Musiala").withInjuries("ACL", "MCL").build();
+        ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithMultipleInjuries);
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithMultipleInjuries.getName(),
+                new Injury("MCL"));
+
+        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS,
+                personWithMultipleInjuries.getName()), unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
 
     @Test
     public void equals() {
-        UnassignInjuryCommand unassignAliceInjuryCommand = new UnassignInjuryCommand(ALICE.getName());
-        UnassignInjuryCommand unassignBensonInjuryCommand = new UnassignInjuryCommand(BENSON.getName());
+        UnassignInjuryCommand unassignAliceInjuryCommand = new UnassignInjuryCommand(ALICE.getName(),
+                new Injury("ACL"));
 
         // same object -> returns true
         assertTrue(unassignAliceInjuryCommand.equals(unassignAliceInjuryCommand));
 
         // same values -> returns true
-        UnassignInjuryCommand unassignAliceInjuryCommandCopy = new UnassignInjuryCommand(ALICE.getName());
+        UnassignInjuryCommand unassignAliceInjuryCommandCopy = new UnassignInjuryCommand(ALICE.getName(),
+                new Injury("ACL"));
         assertTrue(unassignAliceInjuryCommand.equals(unassignAliceInjuryCommandCopy));
 
         // different person -> returns false
+        UnassignInjuryCommand unassignBensonInjuryCommand = new UnassignInjuryCommand(BENSON.getName(),
+                new Injury("ACL"));
         assertFalse(unassignAliceInjuryCommand.equals(unassignBensonInjuryCommand));
+
+        // different injuries -> returns false
+        UnassignInjuryCommand unassignAliceInjuryCommandDifferent = new UnassignInjuryCommand(ALICE.getName(),
+                new Injury("MCL"));
+        assertFalse(unassignAliceInjuryCommand.equals(unassignAliceInjuryCommandDifferent));
 
         // different types -> returns false
         assertFalse(unassignAliceInjuryCommand.equals(1));
@@ -83,8 +123,10 @@ public class UnassignInjuryCommandTest {
 
     @Test
     public void toStringMethod() {
-        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName());
-        String expected = UnassignInjuryCommand.class.getCanonicalName() + "{personToUnassign=" + ALICE.getName() + "}";
+        UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName(),
+                ALICE.getInjuries().iterator().next());
+        String expected = UnassignInjuryCommand.class.getCanonicalName() + "{personToUnassign=" + ALICE.getName()
+                + ", injuryToUnassign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, unassignInjuryCommand.toString());
     }
 
@@ -109,7 +151,7 @@ public class UnassignInjuryCommandTest {
         }
 
         @Override
-        public void updatePersonInjuryStatus(Person target, Injury injury) {
+        public void deleteInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
             // Simulate update
         }
@@ -117,7 +159,7 @@ public class UnassignInjuryCommandTest {
         @Override
         public boolean hasInjury(Person target) {
             requireNonNull(target);
-            return !target.getInjury().getInjuryName().equalsIgnoreCase(Person.DEFAULT_INJURY_STATUS.getInjuryName());
+            return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
         }
 
         @Override
