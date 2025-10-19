@@ -8,6 +8,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
@@ -54,24 +57,27 @@ public class AssignInjuryCommandTest {
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertThrows(CommandException.class,
-                String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY, name, duplicateInjury), () ->
-                        new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+        assertThrows(CommandException.class, String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY,
+                validPerson.getName(), validPerson.getInjuries()), () ->
+                new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
     }
 
     @Test
     public void execute_personFound_assignSuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").build();
         Name name = validPerson.getName();
         Injury newInjury = new Injury("Broken Foot");
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, newInjury),
+        String expectedInjury = "[" + newInjury + "]";
+        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS,
+                validPerson.getName(), expectedInjury),
                 new AssignInjuryCommand(name, newInjury).execute(modelStub).getFeedbackToUser());
 
-        assertEquals(validPerson, modelStub.personUpdated);
         assertEquals(newInjury, modelStub.injuryAssigned);
+        assertTrue(modelStub.personUpdated.getInjuries().contains(newInjury));
+        assertFalse(modelStub.personUpdated.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -130,6 +136,10 @@ public class AssignInjuryCommandTest {
         @Override
         public Person getPersonByName(Name name) {
             requireNonNull(name);
+            if (personUpdated != null && personUpdated.getName().equals(name)) {
+                return this.personUpdated;
+            }
+
             if (person.getName().equals(name)) {
                 return this.person;
             }
@@ -139,7 +149,20 @@ public class AssignInjuryCommandTest {
         @Override
         public void addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
-            this.personUpdated = target;
+
+            Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+
+            // Remove FIT status when assigning any other injury
+            if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
+                updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+            }
+            updatedInjuries.add(injury);
+
+            Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                    target.getAddress(), target.getTeam(), target.getTags(), target.getPosition(),
+                    updatedInjuries, target.isCaptain());
+
+            this.personUpdated = updatedPerson;
             this.injuryAssigned = injury;
         }
 

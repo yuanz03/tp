@@ -9,6 +9,9 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
@@ -42,7 +45,8 @@ public class UnassignInjuryCommandTest {
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithInjury.getName(),
                 new Injury("ACL"));
 
-        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS, personWithInjury.getName()),
+        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS, personWithInjury.getName(),
+                personWithInjury.getInjuries().iterator().next()),
                 unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
 
@@ -57,8 +61,7 @@ public class UnassignInjuryCommandTest {
 
     @Test
     public void execute_personWithNoInjuries_throwsCommandException() {
-        Person personWithDefaultInjury = new PersonBuilder()
-                .withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
+        Person personWithDefaultInjury = new PersonBuilder().build();
         ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithDefaultInjury);
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithDefaultInjury.getName(),
                 new Injury("ACL"));
@@ -88,7 +91,8 @@ public class UnassignInjuryCommandTest {
                 new Injury("MCL"));
 
         assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS,
-                personWithMultipleInjuries.getName()), unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
+                personWithMultipleInjuries.getName(), personWithMultipleInjuries.getInjuries().iterator().next()),
+                unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
 
     @Test
@@ -135,6 +139,8 @@ public class UnassignInjuryCommandTest {
      */
     private static class ModelStubWithPerson extends ModelStub {
         private final Person person;
+        private Person personUpdated = null;
+        private Injury injuryUnassigned = Person.DEFAULT_INJURY_STATUS;
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
@@ -144,6 +150,10 @@ public class UnassignInjuryCommandTest {
         @Override
         public Person getPersonByName(Name name) {
             requireNonNull(name);
+            if (personUpdated != null && personUpdated.getName().equals(name)) {
+                return this.personUpdated;
+            }
+
             if (person.getName().equals(name)) {
                 return this.person;
             }
@@ -153,7 +163,21 @@ public class UnassignInjuryCommandTest {
         @Override
         public void deleteInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
-            // Simulate update
+
+            Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+            updatedInjuries.remove(injury);
+
+            // Ensure that the person has at least the default injury status
+            if (updatedInjuries.isEmpty()) {
+                updatedInjuries.add(Person.DEFAULT_INJURY_STATUS);
+            }
+
+            Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                    target.getAddress(), target.getTeam(), target.getTags(), target.getPosition(),
+                    updatedInjuries, target.isCaptain());
+
+            this.personUpdated = updatedPerson;
+            this.injuryUnassigned = injury;
         }
 
         @Override
