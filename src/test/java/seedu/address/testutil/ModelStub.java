@@ -20,7 +20,7 @@ import seedu.address.model.team.Team;
 //@@author
 
 /**
- * A default model stub that have all of the methods failing.
+ * A default model stub that have all the methods failing.
  */
 public class ModelStub implements Model {
     @Override
@@ -84,17 +84,17 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void updatePersonInjuryStatus(Person target, Injury injury) {
+    public void addInjury(Person target, Injury injury) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void deleteInjury(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
     public boolean hasInjury(Person target) {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 
