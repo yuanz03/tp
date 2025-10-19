@@ -927,7 +927,7 @@ testers are expected to do more *exploratory* testing.
       Expected: No injury is assigned. Error details shown in the status message indicating `FIT` cannot be assigned as an injury status.
 
    1. Test case: `assigninjury pl/Alex Yeoh i/ACL` (after already assigning ACL)<br>
-      Expected: No injury is assigned. Error details shown in the status message indicating the injury has already been assigned to the player.
+      Expected: No injury is assigned. Error details shown in the status message indicating injury status `ACL` has already been assigned to the player.
 
     1. Other incorrect delete commands to try: `assigninjury`, `assigninjury pl/Alex Yeoh`, `assigninjury i/ACL`, `...`<br>
        Expected: Similar to previous.
