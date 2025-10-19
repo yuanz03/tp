@@ -191,6 +191,32 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void addInjury_defaultInjury_throwsIllegalArgumentException() {
+        modelManager.addPerson(ALICE);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                modelManager.addInjury(ALICE, Person.DEFAULT_INJURY_STATUS));
+    }
+
+    @Test
+    public void addInjury_personWithDefaultInjury_addsInjuryStatusCorrectly() {
+        Person personWithDefaultInjury = new PersonBuilder().build();
+        modelManager.addPerson(personWithDefaultInjury);
+
+        // Verify the initial injury status is the default "FIT" status
+        assertTrue(personWithDefaultInjury.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+
+        // Add a different injury
+        Injury newInjury = new Injury("ACL");
+        modelManager.addInjury(personWithDefaultInjury, newInjury);
+
+        // Verify that the default "FIT" status is removed and the new injury is added
+        Person updatedPerson = modelManager.getPersonByName(personWithDefaultInjury.getName());
+        assertFalse(updatedPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(updatedPerson.getInjuries().contains(newInjury));
+    }
+
+    @Test
     public void hasInjury_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
                 modelManager.hasInjury(null));
@@ -198,8 +224,7 @@ public class ModelManagerTest {
 
     @Test
     public void hasInjury_personWithOnlyDefaultInjury_returnsFalse() {
-        Person personWithDefaultInjury = new PersonBuilder()
-                .withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
+        Person personWithDefaultInjury = new PersonBuilder().build();
         modelManager.addPerson(personWithDefaultInjury);
         assertFalse(modelManager.hasInjury(modelManager.getPersonByName(personWithDefaultInjury.getName())));
     }

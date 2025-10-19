@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -16,6 +18,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 
 public class JsonAdaptedPersonTest {
@@ -117,6 +120,34 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 invalidInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         assertThrows(IllegalValueException.class, Injury.MESSAGE_CONSTRAINTS, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_emptyInjuryList_addsDefaultInjury() throws Exception {
+        List<JsonAdaptedInjury> emptyInjuries = new ArrayList<>();
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                emptyInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person modelPerson = person.toModelType();
+
+        assertTrue(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertEquals(1, modelPerson.getInjuries().size());
+    }
+
+    @Test
+    public void toModelType_nonEmptyInjuryList_preservesAllInjuries() throws Exception {
+        List<JsonAdaptedInjury> validInjuries = new ArrayList<>(VALID_INJURIES);
+        validInjuries.add(new JsonAdaptedInjury(new Injury("ACL")));
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                validInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person modelPerson = person.toModelType();
+
+        // Should contain all provided injuries
+        assertTrue(modelPerson.getInjuries().contains(new Injury("Broken foot")));
+        assertTrue(modelPerson.getInjuries().contains(new Injury("ACL")));
+        assertEquals(2, modelPerson.getInjuries().size());
+
+        // Should not contain the default "FIT" injury status when other injuries are present
+        assertFalse(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test

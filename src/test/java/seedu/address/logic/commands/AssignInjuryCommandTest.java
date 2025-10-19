@@ -63,6 +63,17 @@ public class AssignInjuryCommandTest {
     }
 
     @Test
+    public void execute_defaultInjuryAssignment_throwsCommandException() {
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
+        Name name = validPerson.getName();
+
+        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
+
+        assertThrows(CommandException.class, AssignInjuryCommand.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
+                new AssignInjuryCommand(name, Person.DEFAULT_INJURY_STATUS).execute(modelStub));
+    }
+
+    @Test
     public void execute_personFound_assignSuccessful() throws Exception {
         Person validPerson = new PersonBuilder().withName("Musiala").build();
         Name name = validPerson.getName();
