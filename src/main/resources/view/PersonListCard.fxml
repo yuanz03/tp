@@ -14,30 +14,52 @@
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+    <VBox alignment="TOP_LEFT" minHeight="140" spacing="8" GridPane.columnIndex="0">
       <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
+        <Insets top="12" right="12" bottom="12" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="BASELINE_LEFT">
+
+      <!-- Header: Index + Name + Captain Badge -->
+      <HBox spacing="8" alignment="CENTER_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
-            <!-- Ensures that the label text is never truncated -->
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
         <Label fx:id="captainBadge" text="⭐ CAPTAIN" styleClass="captain-badge" />
-        <FlowPane fx:id="teamPositionContainer" hgap="4">
-            <HBox.margin>
-                <Insets top="0" right="0" bottom="0" left="4"/>
-            </HBox.margin>
-        </FlowPane>
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <FlowPane fx:id="injuryStatus" hgap="4" vgap="4" prefWrapLength="200" />
+
+      <!-- Team & Position Row -->
+      <HBox fx:id="teamPositionRow" spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="teamLabel" styleClass="info-label" />
+        <Label fx:id="positionLabel" styleClass="info-label" />
+      </HBox>
+
+      <!-- Injury Status Row -->
+      <HBox fx:id="injuryStatusRow" spacing="6" alignment="CENTER_LEFT">
+        <Label fx:id="injuryLabel" styleClass="injury-label" />
+      </HBox>
+
+      <!-- Contact Information Block -->
+      <GridPane styleClass="contact-block" hgap="8" vgap="4">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" minWidth="25" prefWidth="25" maxWidth="25" />
+          <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        <Label fx:id="phoneIcon" text="📞" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label fx:id="emailIcon" text="📧" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label fx:id="addressIcon" text="📍" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      </GridPane>
+
+      <!-- Tags at bottom -->
+      <FlowPane fx:id="tags" hgap="6" vgap="4" />
+
     </VBox>
   </GridPane>
 </HBox>
