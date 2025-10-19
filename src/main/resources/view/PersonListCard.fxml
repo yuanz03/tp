@@ -38,7 +38,7 @@
 
       <!-- Injury Status Row -->
       <HBox fx:id="injuryStatusRow" spacing="6" alignment="CENTER_LEFT">
-        <Label fx:id="injuries" />
+        <FlowPane fx:id="injuries" hgap="6" vgap="4"/>
       </HBox>
 
       <!-- Contact Information Block -->

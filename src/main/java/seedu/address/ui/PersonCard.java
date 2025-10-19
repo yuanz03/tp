@@ -50,8 +50,6 @@ public class PersonCard extends UiPart<Region> {
     private Label teamLabel;
     @FXML
     private Label positionLabel;
-    @FXML
-    private Label injuryLabel;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -78,6 +76,7 @@ public class PersonCard extends UiPart<Region> {
         person.getInjuries().stream()
                 .sorted(Comparator.comparing(injury -> injury.getInjuryName()))
                 .forEach(injury -> {
+                    Label injuryLabel = new Label();
                     if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
                         injuryLabel.setText("🏥 " + injury.getInjuryName());
                         injuryLabel.getStyleClass().add("fit-status");
