@@ -69,10 +69,8 @@ public class PersonCard extends UiPart<Region> {
 
         // Team and Position Labels
         teamLabel.setText("📋 " + person.getTeam().getName());
-        teamLabel.getStyleClass().add("team-info-label");
 
         positionLabel.setText("⚽ " + person.getPosition().getName());
-        positionLabel.getStyleClass().add("position-info-label");
 
         // Injury Status
         if (person.getInjury().equals(Person.DEFAULT_INJURY_STATUS)) {
