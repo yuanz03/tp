@@ -14,13 +14,13 @@
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
-    <VBox alignment="TOP_LEFT" minHeight="140" spacing="8" GridPane.columnIndex="0">
+    <VBox alignment="TOP_LEFT" minHeight="135" spacing="6" GridPane.columnIndex="0">
       <padding>
-        <Insets top="12" right="12" bottom="12" left="15" />
+        <Insets top="10" right="12" bottom="10" left="15" />
       </padding>
 
       <!-- Header: Index + Name + Captain Badge -->
-      <HBox spacing="8" alignment="CENTER_LEFT">
+      <HBox spacing="6" alignment="CENTER_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <Region fx:constant="USE_PREF_SIZE" />
@@ -31,14 +31,14 @@
       </HBox>
 
       <!-- Team & Position Row -->
-      <HBox fx:id="teamPositionRow" spacing="8" alignment="CENTER_LEFT">
-        <Label fx:id="teamLabel" styleClass="info-label" />
-        <Label fx:id="positionLabel" styleClass="info-label" />
+      <HBox fx:id="teamPositionRow" spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="teamLabel" styleClass="team-info-label" />
+        <Label fx:id="positionLabel" styleClass="position-info-label" />
       </HBox>
 
       <!-- Injury Status Row -->
       <HBox fx:id="injuryStatusRow" spacing="6" alignment="CENTER_LEFT">
-        <Label fx:id="injuryLabel" styleClass="injury-label" />
+        <Label fx:id="injuryLabel" />
       </HBox>
 
       <!-- Contact Information Block -->

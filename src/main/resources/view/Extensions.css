@@ -24,10 +24,10 @@
   -fx-background-color: #FFC107;
   -fx-text-fill: #1d1d1d;
   -fx-border-color: #FFA000;
-  -fx-border-width: 1;
-  -fx-border-radius: 10;
-  -fx-padding: 3 6 3 6;
-  -fx-background-radius: 10;
+  -fx-border-width: 1px;
+  -fx-border-radius: 8;
+  -fx-padding: 2 6 2 6;
+  -fx-background-radius: 8;
   -fx-font-size: 10px;
   -fx-font-weight: bold;
 }
@@ -35,41 +35,41 @@
 /* Team and Position Info Labels */
 .team-info-label {
   -fx-text-fill: #64B5F6;
-  -fx-font-size: 13px;
+  -fx-font-size: 12px;
   -fx-font-weight: bold;
-  -fx-padding: 2 0 2 0;
+  -fx-padding: 0;
 }
 
 .position-info-label {
   -fx-text-fill: #81C784;
-  -fx-font-size: 13px;
+  -fx-font-size: 12px;
   -fx-font-weight: bold;
-  -fx-padding: 2 0 2 0;
+  -fx-padding: 0;
 }
 
 /* Injury Status Labels */
 .fit-status {
   -fx-background-color: #4CAF50;
   -fx-text-fill: white;
-  -fx-padding: 4 10 4 10;
-  -fx-background-radius: 12;
-  -fx-font-size: 12px;
+  -fx-padding: 3 8 3 8;
+  -fx-background-radius: 10;
+  -fx-font-size: 11px;
   -fx-font-weight: bold;
   -fx-border-color: #388E3C;
   -fx-border-width: 1px;
-  -fx-border-radius: 12;
+  -fx-border-radius: 10;
 }
 
 .injured-status {
   -fx-background-color: #F44336;
   -fx-text-fill: white;
-  -fx-padding: 4 10 4 10;
-  -fx-background-radius: 12;
-  -fx-font-size: 12px;
+  -fx-padding: 3 8 3 8;
+  -fx-background-radius: 10;
+  -fx-font-size: 11px;
   -fx-font-weight: bold;
   -fx-border-color: #C62828;
   -fx-border-width: 1px;
-  -fx-border-radius: 12;
+  -fx-border-radius: 10;
 }
 
 /* Contact Block */
@@ -87,9 +87,9 @@
 .tag-label {
   -fx-background-color: #7E57C2;
   -fx-text-fill: white;
-  -fx-padding: 3 8 3 8;
-  -fx-background-radius: 10;
-  -fx-font-size: 11px;
+  -fx-padding: 2 6 2 6;
+  -fx-background-radius: 8;
+  -fx-font-size: 10px;
   -fx-font-weight: bold;
 }
 
