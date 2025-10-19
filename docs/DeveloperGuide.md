@@ -452,14 +452,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC06 - Assign an injury status to a player**
 
-**Guarantees**: Player's injury status and rehab timeline are updated and persisted
+**Guarantees**: Player's injury status is updated and persisted
 
 **MSS**
 
 1.  User requests to list players
 2.  AddressBook shows a list of players
-3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
-4.  AddressBook updates the player's availability and rehab timeline
+3.  User requests to assign an injury status to an existing player by specifying the player name and injury name
+4.  AddressBook adds the specified injury to the player's injury list
 
     Use case ends.
 
@@ -469,34 +469,75 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The given player selection is invalid.
+* 3a. The specified player does not exist in the AddressBook.
 
     * 3a1. AddressBook shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
-* 3b. The specified injury status does not exist.
+* 3b. The specified injury name is invalid (contains non-alphanumeric characters or is blank).
 
-    * 3b1. AddressBook shows an error message and prompts User to create a new injury status.
+    * 3b1. AddressBook shows an error message.
 
-    * 3b2. User creates the new injury status.
+      Use case ends.
 
-      Use case resumes at step 3.
+* 3c. The specified injury is the default injury status, `FIT`.
 
-* 3c. The specified timeframe is invalid.
+    * 3c1. AddressBook shows an error message and prompts users to use the `unassigninjury` command instead.
+
+      Use case ends.
+
+* 3d. The specified injury status has already been assigned to the specified player.
+
+    * 3d1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC07 - Remove an injury status from a player**
+
+**Guarantees**: Player's injury status is removed and default `FIT` status is restored if player has no remaining injuries 
+
+**MSS**
+
+1.  User requests to list players
+2.  AddressBook shows a list of players
+3.  User requests to remove an injury status from an existing player by specifying the player name and injury name
+4.  AddressBook removes the specified injury from the player's injury list
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The specified player does not exist in the AddressBook.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 3b. The specified injury name is invalid (contains non-alphanumeric characters or is blank).
+
+    * 3b1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 3c. The specified player has no injuries (already has the default `FIT` status).
 
     * 3c1. AddressBook shows an error message.
 
-      Use case resumes at step 3.
+      Use case ends.
 
-* 3d. The specified injury status has already been assigned to the selected player.
+* 3d. The specified injury status has not been assigned to the specified player before.
 
     * 3d1. AddressBook shows an error message.
 
       Use case ends.
 
 =======
-**Use case: UC07 - List all players**
+**Use case: UC08 - List all players**
 
 **MSS**
 
@@ -513,7 +554,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC08 - Search for a player**
+**Use case: UC09 - Search for a player**
 
 **MSS**
 
@@ -542,7 +583,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC09 - Filter players by team**
+**Use case: UC10 - Filter players by team**
 
 **MSS**
 
@@ -578,7 +619,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC10 - Filter players by injury**
+**Use case: UC11 - Filter players by injury**
 
 **MSS**
 
@@ -606,7 +647,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC11 - Filter players by position**
+**Use case: UC12 - Filter players by position**
 
 **MSS**
 
@@ -636,7 +677,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC12 - Create a position**
+**Use case: UC13 - Create a position**
 
 **MSS**
 
@@ -660,7 +701,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC13 - Delete a position**
+**Use case: UC14 - Delete a position**
 
 **MSS**
 
@@ -682,7 +723,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC14 - Assign position to a player**
+**Use case: UC15 - Assign position to a player**
 
 **MSS**
 
@@ -717,7 +758,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC15 - Save player's email**
+**Use case: UC16 - Save player's email**
 
 **MSS**
 
@@ -734,7 +775,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC16 - Save player's dietary restriction**
+**Use case: UC17 - Save player's dietary restriction**
 
 **MSS**
 
@@ -751,7 +792,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Save player's jersey number**
+**Use case: UC18 - Save player's jersey number**
 
 **MSS**
 
@@ -777,7 +818,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC18 - Save a player as captain**
+**Use case: UC19 - Save a player as captain**
 
 **MSS**
 
