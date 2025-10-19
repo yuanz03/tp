@@ -19,26 +19,83 @@
     -fx-text-fill: white;
 }
 
-.team-tag {
-  -fx-background-color: #1976D2;
-  -fx-text-fill: white;
-  -fx-padding: 2 3 2 3;
-  -fx-background-radius: 8;
-  -fx-margin-bottom: 8px;
-  -fx-font-size: 11px;
-}
-
+/* Captain Badge */
 .captain-badge {
-  -fx-background-color: #2E7D32; /* green */
-  -fx-border-color: #1B5E20;
-  -fx-border-width: 1;
-  -fx-border-radius: 4;
-  -fx-padding: 2 3 2 3;
+  -fx-background-color: #FFC107;
+  -fx-text-fill: #1d1d1d;
+  -fx-border-color: #FFA000;
+  -fx-border-width: 1px;
+  -fx-border-radius: 8;
+  -fx-padding: 2 6 2 6;
   -fx-background-radius: 8;
-  -fx-margin-bottom: 8px;
-  -fx-font-size: 11px;
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
 }
 
+/* Team and Position Info Labels */
+.team-info-label {
+  -fx-text-fill: #64B5F6;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+  -fx-padding: 0;
+}
+
+.position-info-label {
+  -fx-text-fill: #81C784;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+  -fx-padding: 0;
+}
+
+/* Injury Status Labels */
+.fit-status {
+  -fx-background-color: #4CAF50;
+  -fx-text-fill: white;
+  -fx-padding: 3 8 3 8;
+  -fx-background-radius: 10;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-border-color: #388E3C;
+  -fx-border-width: 1px;
+  -fx-border-radius: 10;
+}
+
+.injured-status {
+  -fx-background-color: #F44336;
+  -fx-text-fill: white;
+  -fx-padding: 3 8 3 8;
+  -fx-background-radius: 10;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-border-color: #C62828;
+  -fx-border-width: 1px;
+  -fx-border-radius: 10;
+}
+
+/* Contact Block */
+.contact-block {
+  -fx-padding: 4 0 4 0;
+}
+
+.contact-icon {
+  -fx-text-fill: #B0B0B0;
+  -fx-font-size: 14px;
+  -fx-alignment: center;
+}
+
+/* Tag Labels */
+.tag-label {
+  -fx-background-color: #7E57C2;
+  -fx-text-fill: white;
+  -fx-padding: 2 6 2 6;
+  -fx-background-radius: 8;
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+}
+
+/* View Status Label */
 .view-status-label {
   -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
 }
