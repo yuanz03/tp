@@ -40,7 +40,6 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_TEAM + person.getTeam().getName() + " ");
         person.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
-        person.getInjuries().stream().forEach(injury -> sb.append(PREFIX_INJURY + injury.getInjuryName() + " "));
         return sb.toString();
     }
 
@@ -64,15 +63,6 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        if (descriptor.getInjuries().isPresent()) {
-            Set<Injury> injuries = descriptor.getInjuries().get();
-            if (injuries.isEmpty()) {
-                sb.append(PREFIX_INJURY);
-            } else {
-                injuries.forEach(injury -> sb.append(PREFIX_INJURY).append(injury.getInjuryName()).append(" "));
-            }
-        }
-
         return sb.toString();
     }
 }

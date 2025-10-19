@@ -267,7 +267,7 @@ public class ModelManagerTest {
         assertTrue(personAfterAdd.getInjuries().contains(injury));
 
         // Remove the injury from the person
-        modelManager.deleteInjury(ALICE, injury);
+        modelManager.deleteInjury(modelManager.getPersonByName(ALICE.getName()), injury);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
         assertFalse(personAfterDelete.getInjuries().contains(injury));

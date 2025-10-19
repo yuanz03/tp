@@ -8,7 +8,7 @@
       "team": {
           "name": "U16"
         },
-      "injury status": "ACL"
+      "injuries": ["ACL"]
     },
     {
       "name": "Person With Invalid Phone Field",
@@ -18,7 +18,7 @@
       "team": {
         "name": "U16"
       },
-      "injury status": "Ankle sprain"
+      "injuries": ["Ankle sprain"]
     }
   ],
   "teams": [

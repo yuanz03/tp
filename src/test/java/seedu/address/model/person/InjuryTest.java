@@ -64,8 +64,8 @@ public class InjuryTest {
 
     @Test
     public void toString_returnsInjuryName() {
-        String expectedInjuryName = "Concussion";
-        Injury injury = new Injury(expectedInjuryName);
+        String expectedInjuryName = "[Concussion]";
+        Injury injury = new Injury("Concussion");
         assertEquals(expectedInjuryName, injury.toString());
     }
 }

@@ -28,7 +28,7 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
                     UnassignInjuryCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
         Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
         Injury injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
 
