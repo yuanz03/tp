@@ -152,6 +152,7 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* `JsonAdaptedPerson` has four JSON-adapted components — `JsonAdaptedInjury`, `JsonAdaptedTag`, `JsonAdaptedPosition`, and `JsonAdaptedTeam` — each representing a corresponding part of the `Person` model for saving to and reading from the JSON.
 
 ### Common classes
 
@@ -904,6 +905,32 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` <br>
       Expected: Similar to previous.
+
+1. _{ more test cases …​ }
+
+### Assigning an injury status to a player
+
+1. Assigning an injury status while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. Multiple players in the list.
+
+    1. Test case: `assigninjury pl/Alex Yeoh i/ACL`<br>
+       Expected: Alex Yeoh's injury status is updated to include `ACL`.
+
+    1. Test case: `assigninjury pl/Invalid_Name i/ACL`<br>
+       Expected: No injury is assigned. Error details shown in the status message indicating invalid player name.
+
+   1. Test case: `assigninjury pl/Alex Yeoh i/Invalid_Injury`<br>
+      Expected: No injury is assigned. Error details shown in the status message indicating invalid injury name.
+
+   1. Test case: `assigninjury pl/Alex Yeoh i/FIT`<br>
+      Expected: No injury is assigned. Error details shown in the status message indicating `FIT` cannot be assigned as an injury status.
+
+   1. Test case: `assigninjury pl/Alex Yeoh i/ACL` (after already assigning ACL)<br>
+      Expected: No injury is assigned. Error details shown in the status message indicating the injury has already been assigned to the player.
+
+    1. Other incorrect delete commands to try: `assigninjury`, `assigninjury pl/Alex Yeoh`, `assigninjury i/ACL`, `...`<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
