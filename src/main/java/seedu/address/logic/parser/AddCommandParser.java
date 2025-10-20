@@ -3,13 +3,13 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -38,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TEAM, PREFIX_INJURY, PREFIX_TAG); // TODO: implement support for position
+                        PREFIX_TEAM, PREFIX_TAG); // TODO: implement support for position
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TEAM)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -46,21 +46,18 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_TEAM, PREFIX_INJURY); // TODO: implement support for position
+                PREFIX_TEAM); // TODO: implement support for position
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
         Position position = Person.DEFAULT_POSITION; // TODO: implement support for position
-        Injury injury = argMultimap.getValue(PREFIX_INJURY).isPresent()
-                ? ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get())
-                : Person.DEFAULT_INJURY_STATUS;
+        Set<Injury> injuryList = new HashSet<>(Set.of(Person.DEFAULT_INJURY_STATUS));
 
         Person person = new Person(name, phone, email, address, team, tagList, position,
-                injury, Person.DEFAULT_CAPTAIN_STATUS);
+                injuryList, Person.DEFAULT_CAPTAIN_STATUS);
         return new AddCommand(person);
     }
 

@@ -45,11 +45,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private FlowPane injuries;
+    @FXML
     private Label teamLabel;
     @FXML
     private Label positionLabel;
-    @FXML
-    private Label injuryLabel;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -73,13 +73,19 @@ public class PersonCard extends UiPart<Region> {
         positionLabel.setText("⚽ " + person.getPosition().getName());
 
         // Injury Status
-        if (person.getInjury().equals(Person.DEFAULT_INJURY_STATUS)) {
-            injuryLabel.setText("🏥 " + person.getInjury().getInjuryName());
-            injuryLabel.getStyleClass().add("fit-status");
-        } else {
-            injuryLabel.setText("🚑 " + person.getInjury().getInjuryName());
-            injuryLabel.getStyleClass().add("injured-status");
-        }
+        person.getInjuries().stream()
+                .sorted(Comparator.comparing(injury -> injury.getInjuryName()))
+                .forEach(injury -> {
+                    Label injuryLabel = new Label();
+                    if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
+                        injuryLabel.setText("🏥 " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("fit-status");
+                    } else {
+                        injuryLabel.setText("🚑 " + injury.getInjuryName());
+                        injuryLabel.getStyleClass().add("injured-status");
+                    }
+                    injuries.getChildren().add(injuryLabel);
+                });
 
         // Contact Information (icons are in FXML)
         phone.setText(person.getPhone().value);

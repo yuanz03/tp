@@ -97,7 +97,7 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different injury -> returns false
-        editedAlice = new PersonBuilder(ALICE).withInjury(VALID_INJURY_BOB).build();
+        editedAlice = new PersonBuilder(ALICE).withInjuries(VALID_INJURY_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
@@ -114,7 +114,7 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
                 + ", team=" + ALICE.getTeam() + ", position=" + ALICE.getPosition()
-                + ", injury status=" + ALICE.getInjury() + ", isCaptain=" + ALICE.isCaptain() + "}";
+                + ", injuries=" + ALICE.getInjuries() + ", isCaptain=" + ALICE.isCaptain() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

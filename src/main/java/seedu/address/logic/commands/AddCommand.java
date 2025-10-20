@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -13,7 +12,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Person;
 
 /**
@@ -31,7 +29,6 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_TEAM + "TEAM_NAME "
             // TODO: implement support for position
-            + "[" + PREFIX_INJURY + "INJURY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe "
@@ -40,7 +37,6 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TEAM + "U16 "
             // TODO: implement support for position
-            + PREFIX_INJURY + "ACL "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -72,12 +68,6 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-
-        Injury injury = toAdd.getInjury();
-
-        if (injury != null && injury.equals(Person.DEFAULT_INJURY_STATUS)) {
-            model.updatePersonInjuryStatus(toAdd, Person.DEFAULT_INJURY_STATUS);
-        }
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

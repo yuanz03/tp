@@ -33,44 +33,44 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withTeam(U12.getName())
             .withTags("friends")
-            .withInjury("ACL").build();
+            .withInjuries("ACL").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTeam(U12.getName())
             .withTags("owesMoney", "friends")
-            .withInjury("Broken foot").build();
+            .withInjuries("Broken foot").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withTeam(U12.getName())
-            .withInjury("MCL").build();
+            .withInjuries("MCL").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withTeam(U12.getName())
             .withTags("friends")
-            .withInjury("Concussion").build();
+            .withInjuries("Concussion").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224")
             .withEmail("werner@example.com")
             .withTeam(U16.getName())
             .withAddress("michegan ave")
-            .withInjury("Ankle sprain").build();
+            .withInjuries("Ankle sprain").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("9482427")
             .withEmail("lydia@example.com")
             .withTeam(U16.getName())
             .withAddress("little tokyo")
-            .withInjury("Hamstring tear").build();
+            .withInjuries("Hamstring tear").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("9482442")
             .withEmail("anna@example.com")
             .withTeam(U16.getName())
             .withAddress("4th street")
-            .withInjury("Shoulder dislocation").build();
+            .withInjuries("Shoulder dislocation").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -78,21 +78,21 @@ public class TypicalPersons {
             .withEmail("stefan@example.com")
             .withTeam(U16.getName())
             .withAddress("little india")
-            .withInjury("Groin strain").build();
+            .withInjuries("Groin strain").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("8482131")
             .withEmail("hans@example.com")
             .withTeam(U16.getName())
             .withAddress("chicago ave")
-            .withInjury("Achilles rupture").build();
+            .withInjuries("Achilles rupture").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTeam(U12.getName())
-            .withTags(VALID_TAG_FRIEND).withInjury(VALID_INJURY_AMY).build();
+            .withTags(VALID_TAG_FRIEND).withInjuries(VALID_INJURY_AMY).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTeam(U16.getName())
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withInjury(VALID_INJURY_BOB).build();
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withInjuries(VALID_INJURY_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

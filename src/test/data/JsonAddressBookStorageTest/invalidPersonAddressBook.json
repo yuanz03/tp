@@ -8,7 +8,7 @@
       "team": {
           "name": "U16"
         },
-      "injury status": "ACL"
+      "injuries": ["ACL"]
     }
   ],
   "teams": [

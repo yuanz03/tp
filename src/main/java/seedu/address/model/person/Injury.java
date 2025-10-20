@@ -39,11 +39,6 @@ public class Injury {
     }
 
     @Override
-    public String toString() {
-        return this.injuryName;
-    }
-
-    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -64,5 +59,10 @@ public class Injury {
 
     public String getInjuryName() {
         return injuryName;
+    }
+
+    @Override
+    public String toString() {
+        return this.injuryName;
     }
 }

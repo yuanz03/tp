@@ -41,7 +41,7 @@ public class EditCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).build();
+        Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withInjuries("ACL").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
 
@@ -132,23 +132,6 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model,
                 String.format(EditCommand.MESSAGE_TEAM_NOT_FOUND, nonExistentTeam.getName()));
-    }
-
-
-    @Test
-    public void execute_setInjuryToDefault_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withInjury("fit").build();
-        EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
-
-        Person editedPerson = new PersonBuilder(firstPerson)
-                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(firstPerson, editedPerson);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

@@ -159,10 +159,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unassignInjury() throws Exception {
         Name name = new Name(VALID_NAME_AMY);
+        Injury injury = new Injury(VALID_INJURY_AMY);
         UnassignInjuryCommand command = (UnassignInjuryCommand) parser.parseCommand(
-                UnassignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY);
+                UnassignInjuryCommand.COMMAND_WORD + PLAYER_DESC_AMY + INJURY_DESC_AMY);
 
-        assertEquals(new UnassignInjuryCommand(name), command);
+        assertEquals(new UnassignInjuryCommand(name, injury), command);
     }
 
     @Test

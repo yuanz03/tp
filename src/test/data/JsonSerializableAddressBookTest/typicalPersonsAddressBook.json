@@ -12,7 +12,7 @@
       "tags": [
         "friends"
       ],
-      "injury status": "ACL"
+      "injuries": ["ACL"]
     },
     {
       "name": "Benson Meier",
@@ -26,7 +26,7 @@
         "owesMoney",
         "friends"
       ],
-      "injury status": "Broken foot"
+      "injuries": ["Broken foot"]
     },
     {
       "name": "Carl Kurz",
@@ -37,7 +37,7 @@
         "name": "U12"
       },
       "tags": [],
-      "injury status": "MCL"
+      "injuries": ["MCL"]
     },
     {
       "name": "Daniel Meier",
@@ -50,7 +50,7 @@
       "tags": [
         "friends"
       ],
-      "injury status": "Concussion"
+      "injuries": ["Concussion"]
     },
     {
       "name": "Elle Meyer",
@@ -61,7 +61,7 @@
         "name": "U16"
       },
       "tags": [],
-      "injury status": "Ankle sprain"
+      "injuries": ["Ankle sprain"]
     },
     {
       "name": "Fiona Kunz",
@@ -72,7 +72,7 @@
         "name": "U16"
       },
       "tags": [],
-      "injury status": "Hamstring tear"
+      "injuries": ["Hamstring tear"]
     },
     {
       "name": "George Best",
@@ -83,7 +83,7 @@
         "name": "U16"
       },
       "tags": [],
-      "injury status": "Shoulder dislocation"
+      "injuries": ["Shoulder dislocation"]
     }
   ],
   "teams": [

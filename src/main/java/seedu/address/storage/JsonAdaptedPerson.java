@@ -31,9 +31,9 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final String injuryStatus;
     private final JsonAdaptedTeam team;
     private final JsonAdaptedPosition position;
+    private final List<JsonAdaptedInjury> injuries = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -42,7 +42,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("injury status") String injuryName,
+                             @JsonProperty("injuries") List<JsonAdaptedInjury> injuries,
                              @JsonProperty("team") JsonAdaptedTeam team,
                              @JsonProperty("position") JsonAdaptedPosition position,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
@@ -50,9 +50,11 @@ class JsonAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.injuryStatus = injuryName;
         this.team = team;
         this.position = position;
+        if (injuries != null) {
+            this.injuries.addAll(injuries);
+        }
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -68,7 +70,9 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
-        injuryStatus = source.getInjury().getInjuryName();
+        injuries.addAll(source.getInjuries().stream()
+                .map(JsonAdaptedInjury::new)
+                .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -80,6 +84,16 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        final List<Injury> personInjuries = new ArrayList<>();
+        for (JsonAdaptedInjury injury : injuries) {
+            personInjuries.add(injury.toModelType());
+        }
+
+        // Ensure at least the default injury is present if the list is empty
+        if (personInjuries.isEmpty()) {
+            personInjuries.add(Person.DEFAULT_INJURY_STATUS);
+        }
+
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
@@ -117,22 +131,17 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        if (injuryStatus == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Injury.class.getSimpleName()));
-        }
-        if (!Injury.isValidInjuryName(injuryStatus)) {
-            throw new IllegalValueException(Injury.MESSAGE_CONSTRAINTS);
-        }
-        final Injury modelInjury = new Injury(injuryStatus);
-
         if (team == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Team.class.getSimpleName()));
         }
         final Team modelTeam = team.toModelType();
+
         final Position modelPosition = (position == null) ? new Position("NONE") : position.toModelType();
 
+        final Set<Injury> modelInjuries = new HashSet<>(personInjuries);
         final Set<Tag> modelTags = new HashSet<>(personTags);
+
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
-                modelPosition, modelInjury, Person.DEFAULT_CAPTAIN_STATUS);
+                modelPosition, modelInjuries, Person.DEFAULT_CAPTAIN_STATUS);
     }
 }
