@@ -319,6 +319,12 @@ Format: `makecaptain pl/PLAYER_NAME`
 * `PLAYER_NAME` must match an existing player.
 * Player must not already be captain.
 
+<box type="info" seamless>
+
+Captain status is persisted to disk and will remain after restarting PlayBook.
+
+</box>
+
 Example:
 * `makecaptain pl/John Doe`
 
@@ -330,6 +336,12 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 * `PLAYER_NAME` must match an existing player.
 * Player must currently be a captain.
+
+<box type="info" seamless>
+
+Captain status changes are persisted to disk.
+
+</box>
 
 Example:
 * `stripcaptain pl/John Doe`

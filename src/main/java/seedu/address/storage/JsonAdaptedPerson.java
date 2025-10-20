@@ -35,6 +35,7 @@ class JsonAdaptedPerson {
     private final JsonAdaptedTeam team;
     private final JsonAdaptedPosition position;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final Boolean isCaptain;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -45,7 +46,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("injury status") String injuryName,
                              @JsonProperty("team") JsonAdaptedTeam team,
                              @JsonProperty("position") JsonAdaptedPosition position,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("isCaptain") Boolean isCaptain) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -53,6 +55,7 @@ class JsonAdaptedPerson {
         this.injuryStatus = injuryName;
         this.team = team;
         this.position = position;
+        this.isCaptain = isCaptain;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -69,6 +72,7 @@ class JsonAdaptedPerson {
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
         injuryStatus = source.getInjury().getInjuryName();
+        isCaptain = source.isCaptain();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -132,7 +136,8 @@ class JsonAdaptedPerson {
         final Position modelPosition = (position == null) ? new Position("NONE") : position.toModelType();
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
+        final boolean modelIsCaptain = (isCaptain == null) ? Person.DEFAULT_CAPTAIN_STATUS : isCaptain;
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
-                modelPosition, modelInjury, Person.DEFAULT_CAPTAIN_STATUS);
+                modelPosition, modelInjury, modelIsCaptain);
     }
 }

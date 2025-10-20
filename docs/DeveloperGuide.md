@@ -152,7 +152,7 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
-* `JsonAdaptedPerson` has four JSON-adapted components — `JsonAdaptedInjury`, `JsonAdaptedTag`, `JsonAdaptedPosition`, and `JsonAdaptedTeam` — each representing a corresponding part of the `Person` model for saving to and reading from the JSON.
+* `JsonAdaptedPerson` persists player details including primitive fields (`name`, `phone`, `email`, `address`, `isCaptain`) and JSON-adapted components — `JsonAdaptedInjury`, `JsonAdaptedTag`, `JsonAdaptedPosition`, and `JsonAdaptedTeam`.
 
 ### Common classes
 
@@ -313,9 +313,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
-| `* * *`  | coach    | save a player's dietary restriction            | save players dietary restrictions                                    |
-| `* * *`  | coach    | save a player's jersey number                  | easily know what jersey number each player is wearing                |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
+| `* * *`  | coach    | remove captain from a player                   | update leadership assignments when needed                            |
+| `* *`    | coach    | filter players by captain status               | quickly view all captains                                            |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
 | `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
 | `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
@@ -776,12 +776,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Save player's dietary restriction**
+**Use case: UC17 - Remove captain from a player**
 
 **MSS**
 
-1.  User requests to save a player's dietary restriction under player's details
-2.  AddressBook updates dietary restriction under player's detail
+1.  User requests to remove the captain role from a player
+2.  AddressBook updates the player's details to reflect they are no longer captain
 
     Use case ends.
 
@@ -793,29 +793,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC18 - Save player's jersey number**
+* 1b. The player is not currently a captain.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC18 - Filter players by captain status**
 
 **MSS**
 
-1.  User requests to save a player's jersey number under player's details
-2.  AddressBook updates jersey number under player's detail
+1.  User requests to filter players who are captains
+2.  PlayBook shows the list of players marked as captains
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given player is invalid.
+* 1a. No players are marked as captains.
 
-    * 1a1. AddressBook shows an error message.
-
-      Use case ends.
-
-* 1b. The jersey number had already been taken
-
-    * 1b1. AddressBook ask for confirmation to give number to this player despite another player having this number.
-    * 1b2. User confirms decision
-    * 1b3. AddressBook removes old player's number
-    * 1b4. AddressBook updates jersey number of player
+    * 1a1. PlayBook shows an empty list message.
 
       Use case ends.
 
