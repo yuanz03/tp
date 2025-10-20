@@ -21,9 +21,13 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
     - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
     - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
     - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
+    - [Assigning player as captain: 'makecaptain'](#assigning-player-as-captain-makecaptain)
+    - [Unassigning player as captain: 'stripcaptain'](#unassigning-player-as-captain-stripcaptain)
     - [Listing all players: `list`](#listing-all-players-list)
     - [Listing all teams: `listteams`](#listing-all-teams-listteams)
     - [Listing all positions: `listposition`](#listing-all-positions-listposition)
+    - [Listing all injured: `listinjured`](#listing-all-injured-players-listinjured)
+    - [Listing all captains: `listcaptains`](#listing-all-captains-listcaptains)
     - [Editing a player: `edit`](#editing-a-player-edit)
     - [Locating players by name: `find`](#locating-players-by-name-find)
     - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
@@ -250,6 +254,38 @@ Examples:
 * `assignposition pl/John Doe ps/LW` assigns the position `LW` to the player `John Doe`.
 * `assignposition pl/Musiala ps/ST` assigns the position `ST` to the player `Musiala`.
 
+### Assigning player as captain: `makecaptain`
+
+Assigns an existing player in the PlayBook to be captain.
+
+Format: `makecaptain pl/PLAYER_NAME`
+
+* Assigns specified `PLAYER_NAME` to be captain.
+* `PLAYER_NAME` must be an existing player in the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* The player must not already be an assigned captain.
+
+Examples:
+* `makecaptain pl/John Doe` assigns the player `John Doe` as a captain.
+* `makecaptain pl/Sergio Ramos` assigns the player `Sergio Ramos` as a captain.
+
+### Unassigning player as captain: `stripcaptain`
+
+Unassigns captain from existing player in the PlayBook.
+
+Format: `stripcaptain pl/PLAYER_NAME`
+
+* Unassigns specified `PLAYER_NAME` to be no longer captain.
+* `PLAYER_NAME` must be an existing player in the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* The player must already be an assigned captain.
+
+Examples:
+* `stripcaptain pl/John Doe` unassigns the player `John Doe` as a captain.
+* `stripcaptain pl/Sergio Ramos` unassigns the player `Sergio Ramos` as a captain.
+
 ### Listing all players: `list`
 
 Shows a list of all players in the PlayBook.
@@ -273,6 +309,12 @@ Format: `listposition`
 Shows a list of the injured players in the PlayBook.
 
 Format: `listinjured`
+
+### Listing all captains: `listcaptains`
+
+Shows a list of the captains in the PlayBook.
+
+Format: `listcaptains`
 
 ### Editing a player: `edit`
 
@@ -305,41 +347,6 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 Examples:
 *  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
 *  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
-
-
-
-### Make a player captain: `makecaptain`
-
-Marks a player as their team's captain.
-
-Format: `makecaptain pl/PLAYER_NAME`
-
-* `PLAYER_NAME` must match an existing player.
-* Player must not already be captain.
-
-Example:
-* `makecaptain pl/John Doe`
-
-### Remove captaincy from a player: `stripcaptain`
-
-Removes the captaincy from a player.
-
-Format: `stripcaptain pl/PLAYER_NAME`
-
-* `PLAYER_NAME` must match an existing player.
-* Player must currently be a captain.
-
-Example:
-* `stripcaptain pl/John Doe`
-
-### Filter to only captains: `filtercaptain`
-
-Shows only players who are captains.
-
-Format: `filtercaptain`
-
-* No parameters.
-* Use `list` to clear the filter and show all players.
 
 ### Locating players by name: `find`
 
@@ -498,7 +505,7 @@ _Details coming soon ..._
 | **List Teams**                  | `listteams`                                                                                                                                                                                                         |
 | **Make Captain**                | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                                   |
 | **Strip Captain**               | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                                 |
-| **Filter Captains**             | `filtercaptain`                                                                                                                                                                                                     |
+| **Filter Captains**             | `filtercaptains`                                                                                                                                                                                                    |
 | **List Teams**                  | `listteam`                                                                                                                                                                                                          |
 | **List Positions**              | `listposition`                                                                                                                                                                                                      |
 | **List Injured Players**        | `listinjured`                                                                                                                                                                                                       |
