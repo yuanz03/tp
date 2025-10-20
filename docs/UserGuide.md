@@ -92,7 +92,6 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 * Items in square brackets are optional.<br>
   - e.g `pl/PLAYER_NAME [t/TAG]` can be used as `pl/John Doe t/friend` or as `pl/John Doe`.
-  - e.g `pl/PLAYER_NAME [i/INJURY]` can be used as `pl/John Doe i/ACL` or as `pl/John Doe`. 
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -132,7 +131,7 @@ Examples:
 
 Adds a player to the PlayBook.
 
-Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​`
+Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…​`
 
 * `PLAYER_NAME` should contain alphanumeric characters and spaces only.
 * `PLAYER_NAME` should not be blank.
@@ -147,20 +146,17 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJ
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
-* `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
 
 <box type="tip" seamless>
 
 **Tip:** A player can have any number of tags (including 0).
 
-**Tip:** A player may or may not have a specified injury.
 </box>
 
 Examples:
 * `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16`
-* `add pl/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 i/ACL t/criminal`
+* `add pl/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 t/criminal`
 
 ### Assign player to team: `assignteam`
 
@@ -194,25 +190,35 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 * `INJURY` should not be blank.
 * `INJURY` should contain alphanumeric characters and spaces only.
 
+<box type="tip" seamless>
+
+**Tip:** Keyword `FIT` (in any letter case) is not allowed as a valid injury. Use `unassigninjury` instead to restore the player's injury status to `FIT`.
+
+</box>
+
 Examples:
 * `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the PlayBook.
 * `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the PlayBook.
 
 ### Unassign injury from player: `unassigninjury`
 
-Removes the injury status currently assigned to an existing player. 
+Removes an injury status currently assigned to an existing player. 
 
-Format: `unassigninjury pl/PLAYER_NAME`
+Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
-* Resets the injury status of the player to the default `FIT` status.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should not be blank.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `INJURY` must match an injury that is already assigned to the specified player.
+* If the player has no remaining injuries, the injury status of the player is reset to the default `FIT` status.
 * The player must not already have the default `FIT` status.
 
 Examples:
-* `unassigninjury pl/John Doe` removes the injury status currently assigned to `John Doe` and resets it to the default `FIT` status.
-* `unassigninjury pl/Musiala` removes the injury status currently assigned to `Musiala` and resets it to the default `FIT` status.
+* `unassigninjury pl/John Doe i/ACL` removes the injury status `ACL` from `John Doe` in the Playbook.
+* `unassigninjury pl/Musiala i/fibula fracture` removes the injury status `fibula fracture` from `Musiala` in the Playbook.
 
 
 ### Creating a new position: `newposition`
@@ -278,12 +284,12 @@ Format: `listinjured`
 
 Edits an existing player in the PlayBook.
 
-Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`
+Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…​`
 
 * Edits the player with the specified `PLAYER_NAME` from the PlayBook.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing the `NEW_PLAYER_NAME`, `TEAM_NAME`, or `INJURY` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
+* When editing the `NEW_PLAYER_NAME` or `TEAM_NAME` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
 * When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
 * You can remove all the player's tags by typing `t/` without specifying any tags after it.
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
@@ -298,15 +304,11 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
-* `INJURY` should contain alphanumeric characters and spaces only.
 * `TAG` should contain alphanumeric characters only.
 
 Examples:
 *  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
 *  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
-
-
 
 ### Make a player captain: `makecaptain`
 
@@ -478,28 +480,28 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                          | Format, Examples                                                                                                                                                                                                    |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Player**                  | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
-| **Add Team**                    | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                                  |
-| **Assign Player to Team**       | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                                 |
-| **Assign Injury to Player**     | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                                  |
-| **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                                             |
-| **Create New Position**         | `newposition ps/POSITION_NAME` <br> e.g., `newposition ps/LW`                                                                                                                                                       |
-| **Assign Position to Player**   | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                      |
-| **Clear**                       | `clear`                                                                                                                                                                                                             |
-| **Delete Player**               | `delete pl/PLAYER_NAME`<br> e.g., `delete pl/James Ho`                                                                                                                                                              |
-| **Delete Team**                 | `deleteteam tm/TEAM_NAME`<br> e.g., `deleteteam tm/u16`                                                                                                                                                             |
-| **Delete Position**             | `deleteposition ps/POSITION_NAME`<br> e.g., `deleteposition ps/LW`                                                                                                                                                  |
-| **Edit**                        | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                        |
-| **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                          |
-| **Filter Players**              | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                               |
-| **List**                        | `list`                                                                                                                                                                                                              |
-| **List Teams**                  | `listteams`                                                                                                                                                                                                         |
-| **Make Captain**                | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                                   |
-| **Strip Captain**               | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                                 |
-| **Filter Captains**             | `filtercaptain`                                                                                                                                                                                                     |
-| **List Teams**                  | `listteam`                                                                                                                                                                                                          |
-| **List Positions**              | `listposition`                                                                                                                                                                                                      |
-| **List Injured Players**        | `listinjured`                                                                                                                                                                                                       |
-| **Help**                        | `help`                                                                                                                                                                                                              |
+| Action                          | Format, Examples                                                                                                                                                                                   |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Player**                  | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…​` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 t/friend t/colleague` |
+| **Add Team**                    | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                 |
+| **Assign Player to Team**       | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                |
+| **Assign Injury to Player**     | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                 |
+| **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `unassigninjury pl/John Doe i/ACL`                                                                                                             |
+| **Create New Position**         | `newposition ps/POSITION_NAME` <br> e.g., `newposition ps/LW`                                                                                                                                      |
+| **Assign Position to Player**   | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                     |
+| **Clear**                       | `clear`                                                                                                                                                                                            |
+| **Delete Player**               | `delete pl/PLAYER_NAME`<br> e.g., `delete pl/James Ho`                                                                                                                                             |
+| **Delete Team**                 | `deleteteam tm/TEAM_NAME`<br> e.g., `deleteteam tm/u16`                                                                                                                                            |
+| **Delete Position**             | `deleteposition ps/POSITION_NAME`<br> e.g., `deleteposition ps/LW`                                                                                                                                 |
+| **Edit**                        | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
+| **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                         |
+| **Filter Players**              | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                              |
+| **List**                        | `list`                                                                                                                                                                                             |
+| **List Teams**                  | `listteams`                                                                                                                                                                                        |
+| **Make Captain**                | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                  |
+| **Strip Captain**               | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                |
+| **Filter Captains**             | `filtercaptain`                                                                                                                                                                                    |
+| **List Teams**                  | `listteam`                                                                                                                                                                                         |
+| **List Positions**              | `listposition`                                                                                                                                                                                     |
+| **List Injured Players**        | `listinjured`                                                                                                                                                                                      |
+| **Help**                        | `help`                                                                                                                                                                                             |
