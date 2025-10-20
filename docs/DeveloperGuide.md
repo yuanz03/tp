@@ -459,8 +459,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list players
 2.  AddressBook shows a list of players
-3.  User requests to assign an injury status to an existing player by specifying the player name and injury name
-4.  AddressBook adds the specified injury to the player's injury list
+3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
+4.  AddressBook updates the player's availability and rehab timeline
 
     Use case ends.
 

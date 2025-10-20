@@ -5,11 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_INJURY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PLAYER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -33,7 +30,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
@@ -48,7 +44,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -61,25 +56,26 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
+        Person expectedPerson = new PersonBuilder(BOB).withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName())
+                .withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + ADDRESS_DESC_BOB + TEAM_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .build();
+                .withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         assertParseSuccess(parser,
                 PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TEAM_DESC_BOB
-                + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
     @Test
     public void parse_repeatedNonTagValue_failure() {
         String validExpectedPersonString = PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_BOB + TEAM_DESC_BOB + TAG_DESC_FRIEND;
 
         // multiple player names
         assertParseFailure(parser, PLAYER_DESC_AMY + validExpectedPersonString,
@@ -101,16 +97,12 @@ public class AddCommandParserTest {
         assertParseFailure(parser, TEAM_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
 
-        // multiple injuries
-        assertParseFailure(parser, INJURY_DESC_BOB + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
-
         // multiple fields repeated
         assertParseFailure(parser,
                 validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + PLAYER_DESC_AMY
-                + ADDRESS_DESC_AMY + TEAM_DESC_AMY + INJURY_DESC_BOB + validExpectedPersonString,
+                + ADDRESS_DESC_AMY + TEAM_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PLAYER, PREFIX_ADDRESS, PREFIX_EMAIL,
-                        PREFIX_PHONE, PREFIX_TEAM, PREFIX_INJURY));
+                        PREFIX_PHONE, PREFIX_TEAM));
 
         // invalid value followed by valid value
 
@@ -134,10 +126,6 @@ public class AddCommandParserTest {
         assertParseFailure(parser, INVALID_TEAM_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
 
-        // invalid injury
-        assertParseFailure(parser, INVALID_INJURY_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
-
         // valid value followed by invalid value
 
         // invalid player name
@@ -159,35 +147,17 @@ public class AddCommandParserTest {
         // invalid team
         assertParseFailure(parser, validExpectedPersonString + INVALID_TEAM_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TEAM));
-
-        // invalid injury
-        assertParseFailure(parser, validExpectedPersonString + INVALID_INJURY_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person firstPerson = new PersonBuilder(AMY).withTags().build();
+        Person firstPerson = new PersonBuilder(AMY).withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName())
+                .withTags().build();
         assertParseSuccess(parser,
                 PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TEAM_DESC_AMY + INJURY_DESC_AMY,
+                + ADDRESS_DESC_AMY + TEAM_DESC_AMY,
                 new AddCommand(firstPerson));
-
-        // missing injury field
-        Person secondPerson = new PersonBuilder(AMY).withTags(VALID_TAG_FRIEND)
-                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
-        assertParseSuccess(parser,
-                PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY + TEAM_DESC_AMY + TAG_DESC_FRIEND,
-                new AddCommand(secondPerson));
-
-        // all optional fields missing
-        Person thirdPerson = new PersonBuilder(AMY).withTags()
-                .withInjury(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
-        assertParseSuccess(parser,
-                PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TEAM_DESC_AMY,
-                new AddCommand(thirdPerson));
     }
 
     @Test
@@ -235,39 +205,35 @@ public class AddCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid player name
         assertParseFailure(parser, INVALID_PLAYER_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, PLAYER_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
 
         // invalid address
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
 
         // invalid team
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + INVALID_TEAM_DESC + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Team.MESSAGE_CONSTRAINTS);
-
-        // invalid injury
-        assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INVALID_INJURY_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Injury.MESSAGE_CONSTRAINTS);
+                + INVALID_TEAM_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Team.MESSAGE_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INJURY_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_PLAYER_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + TEAM_DESC_BOB + INJURY_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + TEAM_DESC_BOB + INJURY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

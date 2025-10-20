@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -16,6 +18,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 
 public class JsonAdaptedPersonTest {
@@ -30,11 +33,14 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
-    private static final String VALID_INJURY_STATUS = BENSON.getInjury().toString();
     private static final JsonAdaptedTeam VALID_TEAM = new JsonAdaptedTeam(BENSON.getTeam().toString());
     private static final JsonAdaptedPosition VALID_POSITION = new JsonAdaptedPosition(BENSON.getPosition());
+
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
+            .collect(Collectors.toList());
+    private static final List<JsonAdaptedInjury> VALID_INJURIES = BENSON.getInjuries().stream()
+            .map(JsonAdaptedInjury::new)
             .collect(Collectors.toList());
 
     @Test
@@ -46,7 +52,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -54,7 +60,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -62,7 +68,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -70,7 +76,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -78,7 +84,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -86,7 +92,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullEmail_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -94,7 +100,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, INVALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -102,25 +108,46 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
-    public void toModelType_nullInjuryStatus_throwsIllegalValueException() {
+    public void toModelType_invalidInjuries_throwsIllegalValueException() {
+        List<JsonAdaptedInjury> invalidInjuries = new ArrayList<>(VALID_INJURIES);
+        invalidInjuries.add(new JsonAdaptedInjury(INVALID_INJURY_STATUS));
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                null, VALID_TEAM, VALID_POSITION, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Injury.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+                invalidInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        assertThrows(IllegalValueException.class, Injury.MESSAGE_CONSTRAINTS, person::toModelType);
     }
 
     @Test
-    public void toModelType_invalidInjuryStatus_throwsIllegalValueException() {
+    public void toModelType_emptyInjuryList_addsDefaultInjury() throws Exception {
+        List<JsonAdaptedInjury> emptyInjuries = new ArrayList<>();
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                INVALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, VALID_TAGS);
-        String expectedMessage = Injury.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+                emptyInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person modelPerson = person.toModelType();
+
+        assertTrue(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertEquals(1, modelPerson.getInjuries().size());
+    }
+
+    @Test
+    public void toModelType_nonEmptyInjuryList_preservesAllInjuries() throws Exception {
+        List<JsonAdaptedInjury> validInjuries = new ArrayList<>(VALID_INJURIES);
+        validInjuries.add(new JsonAdaptedInjury(new Injury("ACL")));
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                validInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person modelPerson = person.toModelType();
+
+        // Should contain all provided injuries
+        assertTrue(modelPerson.getInjuries().contains(new Injury("Broken foot")));
+        assertTrue(modelPerson.getInjuries().contains(new Injury("ACL")));
+        assertEquals(2, modelPerson.getInjuries().size());
+
+        // Should not contain the default "FIT" injury status when other injuries are present
+        assertFalse(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -128,14 +155,14 @@ public class JsonAdaptedPersonTest {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, VALID_TEAM, VALID_POSITION, invalidTags);
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, invalidTags);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 
     @Test
     public void toModelType_nullTeam_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_INJURY_STATUS, null, VALID_POSITION, VALID_TAGS);
+                VALID_INJURIES, null, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "Team");
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }

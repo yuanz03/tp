@@ -8,6 +8,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
@@ -48,47 +51,44 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void execute_duplicateInjuryAssignment_throwsCommandException() {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
         Name name = validPerson.getName();
         Injury duplicateInjury = new Injury("ACL");
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertThrows(CommandException.class,
-                String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY, name, duplicateInjury), () ->
-                        new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+        assertThrows(CommandException.class, String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY,
+                validPerson.getName(), validPerson.getInjuries()), () ->
+                new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+    }
+
+    @Test
+    public void execute_defaultInjuryAssignment_throwsCommandException() {
+        Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
+        Name name = validPerson.getName();
+
+        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
+
+        assertThrows(CommandException.class, AssignInjuryCommand.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
+                new AssignInjuryCommand(name, Person.DEFAULT_INJURY_STATUS).execute(modelStub));
     }
 
     @Test
     public void execute_personFound_assignSuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
+        Person validPerson = new PersonBuilder().withName("Musiala").build();
         Name name = validPerson.getName();
         Injury newInjury = new Injury("Broken Foot");
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, newInjury),
+        String expectedInjury = "[" + newInjury + "]";
+        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS,
+                validPerson.getName(), expectedInjury),
                 new AssignInjuryCommand(name, newInjury).execute(modelStub).getFeedbackToUser());
 
-        assertEquals(validPerson, modelStub.personUpdated);
         assertEquals(newInjury, modelStub.injuryAssigned);
-    }
-
-    @Test
-    public void execute_lowercaseDefaultInjury_assignsDefaultInjurySuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().withName("Musiala").withInjury("ACL").build();
-        Name name = validPerson.getName();
-        Injury lowercaseFitInjuryStatus = new Injury("fit");
-
-        ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
-
-        // Execute command with lowercase "fit", which should assign the default injury status
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS, name, lowercaseFitInjuryStatus),
-                new AssignInjuryCommand(name, lowercaseFitInjuryStatus).execute(modelStub).getFeedbackToUser());
-
-        // Verify that the default injury status was assigned and not the lowercase "fit"
-        assertEquals(validPerson, modelStub.personUpdated);
-        assertEquals(Person.DEFAULT_INJURY_STATUS, modelStub.injuryAssigned);
+        assertTrue(modelStub.personUpdated.getInjuries().contains(newInjury));
+        assertFalse(modelStub.personUpdated.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -124,9 +124,10 @@ public class AssignInjuryCommandTest {
 
     @Test
     public void toStringMethod() {
-        AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(), ALICE.getInjury());
+        AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(),
+                ALICE.getInjuries().iterator().next());
         String expected = AssignInjuryCommand.class.getCanonicalName() + "{personToAssign=" + ALICE.getName() + ", "
-                + "injuryToAssign=" + ALICE.getInjury() + "}";
+                + "injuryToAssign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, assignInjuryCommand.toString());
     }
 
@@ -146,6 +147,10 @@ public class AssignInjuryCommandTest {
         @Override
         public Person getPersonByName(Name name) {
             requireNonNull(name);
+            if (personUpdated != null && personUpdated.getName().equals(name)) {
+                return this.personUpdated;
+            }
+
             if (person.getName().equals(name)) {
                 return this.person;
             }
@@ -153,16 +158,23 @@ public class AssignInjuryCommandTest {
         }
 
         @Override
-        public void updatePersonInjuryStatus(Person target, Injury injury) {
+        public void addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
-            this.personUpdated = target;
-            this.injuryAssigned = injury;
-        }
 
-        @Override
-        public boolean isDuplicateInjuryAssigned(Person target, Injury injury) {
-            requireAllNonNull(target, injury);
-            return target.getInjury().equals(injury);
+            Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
+
+            // Remove FIT status when assigning any other injury
+            if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
+                updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+            }
+            updatedInjuries.add(injury);
+
+            Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                    target.getAddress(), target.getTeam(), target.getTags(), target.getPosition(),
+                    updatedInjuries, target.isCaptain());
+
+            this.personUpdated = updatedPerson;
+            this.injuryAssigned = injury;
         }
 
         @Override

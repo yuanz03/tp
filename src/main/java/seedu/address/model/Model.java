@@ -91,24 +91,23 @@ public interface Model {
     void addPerson(Person person);
 
     /**
-     * Assigns the specified {@code injury} to the given person {@code target}.
+     * Adds the specified {@code injury} to the given person {@code target}'s injury list.
      * {@code target} must exist in the address book.
      */
-    void updatePersonInjuryStatus(Person target, Injury injury);
+    void addInjury(Person target, Injury injury);
 
     /**
-     * Returns true if the given person {@code target} has an injury status
+     * Removes the specified {@code injury} from the given person {@code target}'s injury list.
+     * {@code target} must exist in the address book.
+     */
+    void deleteInjury(Person target, Injury injury);
+
+    /**
+     * Returns true if the given person {@code target} has any injury status
      * that is not the default {@code "FIT"} status.
      * {@code target} must exist in the address book.
      */
     boolean hasInjury(Person target);
-
-    /**
-     * Returns true if the given person {@code target} has already been
-     * assigned the injury status represented by {@code injury}.
-     * {@code target} must exist in the address book.
-     */
-    boolean isDuplicateInjuryAssigned(Person target, Injury injury);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

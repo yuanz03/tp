@@ -5,10 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_INJURY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -24,7 +22,6 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
@@ -46,7 +43,6 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -63,7 +59,7 @@ public class EditCommandParserTest {
     private EditCommandParser parser = new EditCommandParser();
 
     @Test
-    public void parse_missingParts_failure() {
+    public void parse_compulsoryFieldMissing_failure() {
         // Empty input
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
 
@@ -97,9 +93,6 @@ public class EditCommandParserTest {
         // invalid team
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TEAM_DESC, Team.MESSAGE_CONSTRAINTS);
 
-        // invalid injury
-        assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_INJURY_DESC, Injury.MESSAGE_CONSTRAINTS);
-
         // invalid tag
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
 
@@ -127,12 +120,11 @@ public class EditCommandParserTest {
     @Test
     public void parse_allFieldsSpecified_success() {
         String userInput = PLAYER_DESC_BOB + PHONE_DESC_BOB + TAG_DESC_HUSBAND + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + NAME_DESC_AMY + TEAM_DESC_AMY + INJURY_DESC_AMY + TAG_DESC_FRIEND;
+                + NAME_DESC_AMY + TEAM_DESC_AMY + TAG_DESC_FRIEND;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTeam(VALID_TEAM_AMY).withInjury(VALID_INJURY_AMY)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withTeam(VALID_TEAM_AMY).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(new Name(VALID_NAME_BOB), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -178,12 +170,6 @@ public class EditCommandParserTest {
         // team
         userInput = PLAYER_DESC_AMY + TEAM_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withTeam(VALID_TEAM_AMY).build();
-        expectedCommand = new EditCommand(new Name(VALID_NAME_AMY), descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // injury
-        userInput = PLAYER_DESC_AMY + INJURY_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withInjury(VALID_INJURY_AMY).build();
         expectedCommand = new EditCommand(new Name(VALID_NAME_AMY), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 

@@ -11,7 +11,7 @@
       "tags": [
         "friends"
       ],
-      "injury status": "ACL"
+      "injuries": ["ACL"]
     },
     {
       "name": "Alice Pauline",
@@ -21,7 +21,7 @@
       "team": {
         "name": "U16"
       },
-      "injury status": "ACL"
+      "injuries": ["ACL"]
     }
   ],
   "teams": [
