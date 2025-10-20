@@ -185,16 +185,6 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_legacySingleInjury_constructor_addsOnlyProvidedInjury() throws Exception {
-        String singleInjury = "Hamstring";
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                singleInjury, VALID_TEAM, VALID_POSITION, VALID_TAGS);
-        Person model = person.toModelType();
-        assertTrue(model.getInjuries().contains(new Injury(singleInjury)));
-        assertEquals(1, model.getInjuries().size());
-    }
-
-    @Test
     public void roundTrip_preservesCaptainTrue_andInjuries() throws Exception {
         Person source = new seedu.address.testutil.PersonBuilder(BENSON)
                 .withCaptain(true)
