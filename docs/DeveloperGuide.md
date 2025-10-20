@@ -312,9 +312,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
-| `* * *`  | coach    | save a player's dietary restriction            | save players dietary restrictions                                    |
-| `* * *`  | coach    | save a player's jersey number                  | easily know what jersey number each player is wearing                |
-| `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
+| `* * *`  | coach    | save a player as captain                       | assign leader assignments when needed                                |
+| `* * *`  | coach    | remove captain from a player                   | remove leader assignments when needed                                |
+| `* *`    | coach    | filter players by captain status               | quickly view all captains                                            |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
 | `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
 | `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
@@ -495,7 +495,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-=======
 **Use case: UC07 - List all players**
 
 **MSS**
@@ -588,21 +587,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The injury status is missing.
+* 1a. No players match the given injury status.
 
-  * 1a1. PlayBook shows an message.
-
-    Use case ends.
-
-* 1b. The injury status is invalid.
-
-  * 1b1. PlayBook shows an error message.
-
-    Use case ends.
-
-* 2a. No players match the given injury status.
-
-  * 2a1. PlayBook shows an error message.
+  * 1a1. PlayBook shows an empty list message.
 
     Use case ends.
 
@@ -618,21 +605,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The position is missing.
+* 1a. No players are in that position.
 
   * 1a1. PlayBook shows an error message.
-
-    Use case ends.
-
-* 1b. The position is invalid.
-
-  * 1b1. PlayBook shows an error message.
-
-    Use case ends.
-
-* 2a. No players are in that position.
-
-  * 2a1. PlayBook shows an error message.
 
     Use case ends.
 
@@ -734,12 +709,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC16 - Save player's dietary restriction**
+**Use case: UC16 - Remove captain from a player**
 
 **MSS**
 
-1.  User requests to save a player's dietary restriction under player's details
-2.  AddressBook updates dietary restriction under player's detail
+1.  User requests to remove the captain role from a player
+2.  AddressBook updates the player's details to reflect they are no longer captain
 
     Use case ends.
 
@@ -751,29 +726,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Save player's jersey number**
+* 1b. The player is not currently a captain.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC17 - Filter players by captain status**
 
 **MSS**
 
-1.  User requests to save a player's jersey number under player's details
-2.  AddressBook updates jersey number under player's detail
+1.  User requests to filter players who are captains
+2.  PlayBook shows the list of players marked as captains
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given player is invalid.
+* 1a. No players are marked as captains.
 
-    * 1a1. AddressBook shows an error message.
-
-      Use case ends.
-
-* 1b. The jersey number had already been taken
-
-    * 1b1. AddressBook ask for confirmation to give number to this player despite another player having this number.
-    * 1b2. User confirms decision
-    * 1b3. AddressBook removes old player's number
-    * 1b4. AddressBook updates jersey number of player
+    * 1a1. PlayBook shows an empty list message.
 
       Use case ends.
 
