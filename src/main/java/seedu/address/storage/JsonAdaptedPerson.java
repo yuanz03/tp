@@ -64,13 +64,39 @@ class JsonAdaptedPerson {
     }
 
     /**
+     * Convenience constructor matching legacy call sites that provide injuries but not captain status.
+     * Delegates to the main constructor with {@code isCaptain} set to null.
+     */
+    public JsonAdaptedPerson(String name, String phone, String email, String address,
+                             List<JsonAdaptedInjury> injuries, JsonAdaptedTeam team,
+                             JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        this(name, phone, email, address, injuries, team, position, tags, null);
+    }
+
+    /**
      * Backward-compatible constructor retained for tests and older code that do not pass captain status.
      * Delegates to the main constructor with {@code isCaptain} set to null so downstream defaults apply.
      */
     public JsonAdaptedPerson(String name, String phone, String email, String address,
                              String injuryName, JsonAdaptedTeam team,
                              JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
-        this(name, phone, email, address, injuryName, team, position, tags, null);
+        List<JsonAdaptedInjury> injuriesList = new ArrayList<>();
+        if (injuryName != null) {
+            injuriesList.add(new JsonAdaptedInjury(injuryName));
+        }
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.team = team;
+        this.position = position;
+        this.isCaptain = null;
+        if (!injuriesList.isEmpty()) {
+            this.injuries.addAll(injuriesList);
+        }
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
     }
 
     /**
@@ -83,7 +109,6 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
-        injuryStatus = source.getInjury().getInjuryName();
         isCaptain = source.isCaptain();
         injuries.addAll(source.getInjuries().stream()
                 .map(JsonAdaptedInjury::new)
@@ -157,6 +182,6 @@ class JsonAdaptedPerson {
         final Set<Tag> modelTags = new HashSet<>(personTags);
         final boolean modelIsCaptain = (isCaptain == null) ? Person.DEFAULT_CAPTAIN_STATUS : isCaptain;
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
-                modelPosition, modelInjury, modelIsCaptain);
+                modelPosition, modelInjuries, modelIsCaptain);
     }
 }
