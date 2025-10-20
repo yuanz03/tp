@@ -459,8 +459,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list players
 2.  AddressBook shows a list of players
-3.  User requests to assign an injury status to an existing player by specifying the player name and injury name
-4.  AddressBook adds the specified injury to the player's injury list
+3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
+4.  AddressBook updates the player's availability and rehab timeline
 
     Use case ends.
 
@@ -776,12 +776,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Save player's dietary restriction**
+**Use case: UC16 - Remove captain from a player**
 
 **MSS**
 
-1.  User requests to save a player's dietary restriction under player's details
-2.  AddressBook updates dietary restriction under player's detail
+1.  User requests to remove the captain role from a player
+2.  AddressBook updates the player's details to reflect they are no longer captain
 
     Use case ends.
 
@@ -793,29 +793,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC18 - Save player's jersey number**
+* 1b. The player is not currently a captain.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC17 - Filter players by captain status**
 
 **MSS**
 
-1.  User requests to save a player's jersey number under player's details
-2.  AddressBook updates jersey number under player's detail
+1.  User requests to filter players who are captains
+2.  PlayBook shows the list of players marked as captains
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given player is invalid.
+* 1a. No players are marked as captains.
 
-    * 1a1. AddressBook shows an error message.
-
-      Use case ends.
-
-* 1b. The jersey number had already been taken
-
-    * 1b1. AddressBook ask for confirmation to give number to this player despite another player having this number.
-    * 1b2. User confirms decision
-    * 1b3. AddressBook removes old player's number
-    * 1b4. AddressBook updates jersey number of player
+    * 1a1. PlayBook shows an empty list message.
 
       Use case ends.
 
