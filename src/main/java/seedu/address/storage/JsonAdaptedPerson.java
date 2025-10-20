@@ -62,6 +62,16 @@ class JsonAdaptedPerson {
     }
 
     /**
+     * Backward-compatible constructor retained for tests and older code that do not pass captain status.
+     * Delegates to the main constructor with {@code isCaptain} set to null so downstream defaults apply.
+     */
+    public JsonAdaptedPerson(String name, String phone, String email, String address,
+                             String injuryName, JsonAdaptedTeam team,
+                             JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        this(name, phone, email, address, injuryName, team, position, tags, null);
+    }
+
+    /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
