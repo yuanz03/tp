@@ -43,6 +43,7 @@ public class JsonAdaptedPersonTest {
     private static final List<JsonAdaptedInjury> VALID_INJURIES = BENSON.getInjuries().stream()
             .map(JsonAdaptedInjury::new)
             .collect(Collectors.toList());
+    private static final String VALID_SINGLE_INJURY = "Hamstring";
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -182,6 +183,15 @@ public class JsonAdaptedPersonTest {
                 VALID_INJURIES, VALID_TEAM, VALID_POSITION, null);
         Person model = person.toModelType();
         assertTrue(model.getTags().isEmpty());
+    }
+
+    @Test
+    public void toModelType_legacySingleInjury_addsOnlyProvidedInjury() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_SINGLE_INJURY, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person model = person.toModelType();
+        assertTrue(model.getInjuries().contains(new Injury(VALID_SINGLE_INJURY)));
+        assertEquals(1, model.getInjuries().size());
     }
 
     @Test
