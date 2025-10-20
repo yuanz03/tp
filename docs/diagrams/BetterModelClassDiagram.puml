@@ -18,4 +18,11 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> Team
+Person *--> Position
+Person *--> Injury
+
+note right of Person
+  isCaptain: boolean
+end note
 @enduml
