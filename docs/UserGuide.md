@@ -822,7 +822,7 @@ This command will permanently delete:
 * All positions
 * All assignments (injuries, captaincy, etc.)
 
-**There is no undo.** Make sure you have a backup of your data file (`addressbook.json`) before using this command!
+**There is no undo.** Make sure you have a backup of your data file (located under `/data/addressbook.json`) before using this command!
 </box>
 
 <box type="tip" seamless>
@@ -855,13 +855,13 @@ PlayBook data are saved in the hard disk automatically after any command that ch
 
 <box type="tip" seamless>
 
-**Tip:** Find your data at `[JAR file location]/data/addressbook.json`
+**Tip:** Find your data at `/data/addressbook.json`
 
 </box>
 
 ### Editing the data file
 
-PlayBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+PlayBook data are saved automatically as a JSON file `/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
