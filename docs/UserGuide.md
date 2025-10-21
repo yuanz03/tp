@@ -288,6 +288,7 @@ Assigns an existing player to another existing team.
 
 Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
+**Requirements:**
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
@@ -297,9 +298,21 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 * `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
 
-Examples:
-* `assignteam pl/John Doe tm/u16`
-* `assignteam pl/Betsy Crowe tm/u16`
+<box type="tip" seamless>
+
+**Tip:** Use this command when promoting players between age groups (e.g., moving a player from U16 to U18) or reassigning players to different squads.
+</box>
+
+**Examples:**
+* `assignteam pl/John Doe tm/U16` - Moves John Doe to the U16 team
+* `assignteam pl/Betsy Crowe tm/U18` - Moves Betsy Crowe to the U18 team
+
+<box type="info" seamless>
+
+**Expected output:** "Assigned John Doe to team: U16"
+
+The player's team will be immediately updated in their player card.
+</box>
 
 ### Assign injury to player: `assigninjury`
 
@@ -307,6 +320,7 @@ Assigns an injury status to an existing player.
 
 Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
+**Requirements:**
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -314,15 +328,30 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 * `INJURY` should not be blank.
 * `INJURY` should contain alphanumeric characters and spaces only.
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-**Tip:** Keyword `FIT` (in any letter case) is not allowed as a valid injury. Use `unassigninjury` instead to restore the player's injury status to `FIT`.
-
+**Warning:** The keyword `FIT` (in any letter case) is not allowed as a valid injury. Use `unassigninjury` instead to restore the player's injury status to `FIT`.
 </box>
 
-Examples:
-* `assigninjury pl/John Doe i/ACL` assigns the injury status `ACL` to `John Doe` in the PlayBook.
-* `assigninjury pl/Musiala i/fibula fracture` assigns the injury status `fibula fracture` to `Musiala` in the PlayBook.
+<box type="tip" seamless>
+
+**Tips:**
+* Players can have multiple concurrent injuries. Simply use `assigninjury` multiple times with different injury names.
+* Use specific injury names (e.g., "ACL", "hamstring strain", "ankle sprain") for better tracking.
+* After assigning an injury, use `listinjured` to see all injured players at a glance.
+</box>
+
+**Examples:**
+* `assigninjury pl/John Doe i/ACL` - Marks John Doe with an ACL injury
+* `assigninjury pl/Musiala i/fibula fracture` - Marks Musiala with a fibula fracture
+* `assigninjury pl/John Doe i/hamstring strain` - Adds a second injury to John Doe
+
+<box type="info" seamless>
+
+**Expected output:** "Assigned injury ACL to John Doe"
+
+The player's injury status will be updated immediately in their player card, replacing "FIT" with the injury name.
+</box>
 
 ### Unassign injury from player: `unassigninjury`
 
@@ -330,6 +359,7 @@ Removes an injury status currently assigned to an existing player.
 
 Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
+**Requirements:**
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -341,14 +371,22 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 <box type="tip" seamless>
 
-**Tip:** If the player has no remaining injuries, the injury status of the player is reset to the default `FIT` status.
-
+**Tips:**
+* If the player has multiple injuries, removing one injury will keep the others. Only when all injuries are removed will the status return to `FIT`.
+* The injury name must match exactly (case-insensitive) with what was assigned.
+* Use `listinjured` to check current injury statuses before unassigning.
 </box>
 
-Examples:
-* `unassigninjury pl/John Doe i/ACL` removes the injury status `ACL` from `John Doe` in the Playbook.
-* `unassigninjury pl/Musiala i/fibula fracture` removes the injury status `fibula fracture` from `Musiala` in the Playbook.
+**Examples:**
+* `unassigninjury pl/John Doe i/ACL` - Removes the ACL injury from John Doe
+* `unassigninjury pl/Musiala i/fibula fracture` - Removes the fibula fracture from Musiala
 
+<box type="info" seamless>
+
+**Expected output:** "Removed injury ACL from John Doe"
+
+If this was the player's only injury, their status will automatically return to "FIT".
+</box>
 
 ### Creating a new position: `newposition`
 
@@ -356,14 +394,26 @@ Creates a new position in the PlayBook.
 
 Format: `newposition ps/POSITION_NAME`
 
+**Requirements:**
 * `POSITION_NAME` must not be the same as an existing position in the PlayBook.
 * `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
 * `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
 * `POSITION_NAME` should not be blank.
 
-Examples:
-* `newposition ps/LW` creates a position named `LW` (Left Wing).
-* `newposition ps/ST` creates a position named `ST` (Striker).
+<box type="tip" seamless>
+
+**Tip:** Create standard football positions like GK (Goalkeeper), CB (Center Back), LW (Left Wing), ST (Striker), etc. for easier team management.
+</box>
+
+**Examples:**
+* `newposition ps/LW` - Creates Left Wing position
+* `newposition ps/ST` - Creates Striker position
+* `newposition ps/GK` - Creates Goalkeeper position
+
+<box type="info" seamless>
+
+**Expected output:** "New position added: LW" (or the position name you specified)
+</box>
 
 ### Assigning a position to player: `assignposition`
 
@@ -371,6 +421,7 @@ Assigns an existing position to an existing player in the PlayBook.
 
 Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
+**Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -380,9 +431,26 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 * `POSITION_NAME` should not be blank.
 * The player must not already be assigned to the same position.
 
-Examples:
-* `assignposition pl/John Doe ps/LW` assigns the position `LW` to the player `John Doe`.
-* `assignposition pl/Musiala ps/ST` assigns the position `ST` to the player `Musiala`.
+<box type="warning" seamless>
+
+**Warning:** You must create the position first using `newposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** Players can be assigned multiple positions. Use this feature to track versatile players who can play in different roles.
+</box>
+
+**Examples:**
+* `assignposition pl/John Doe ps/LW` - Assigns Left Wing position to John Doe
+* `assignposition pl/Musiala ps/ST` - Assigns Striker position to Musiala
+
+<box type="info" seamless>
+
+**Expected output:** "Assigned position LW to John Doe"
+
+The position will be immediately visible in the player's card.
+</box>
 
 ### Assigning player as captain: `makecaptain`
 
@@ -390,29 +458,50 @@ Assigns an existing player in the PlayBook to be captain.
 
 Format: `makecaptain pl/PLAYER_NAME`
 
+**Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * The player must not already be an assigned captain.
 
-Examples:
-* `makecaptain pl/John Doe` assigns the player `John Doe` as a captain.
-* `makecaptain pl/Sergio Ramos` assigns the player `Sergio Ramos` as a captain.
+<box type="tip" seamless>
+
+**Tip:** You can have multiple captains for different teams. Use `listcaptains` to see all current team captains.
+</box>
+
+**Examples:**
+* `makecaptain pl/John Doe` - Makes John Doe a captain
+* `makecaptain pl/Sergio Ramos` - Makes Sergio Ramos a captain
+
+<box type="info" seamless>
+
+**Expected output:** "Made John Doe a captain"
+
+A captain badge or indicator will appear on the player's card.
+</box>
 
 ### Unassigning player as captain: `stripcaptain`
 
-Unassigns captain from existing player in the PlayBook.
+Removes captain status from an existing player in the PlayBook.
 
 Format: `stripcaptain pl/PLAYER_NAME`
 
+**Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * The player must already be an assigned captain.
 
-Examples:
-* `stripcaptain pl/John Doe` unassigns the player `John Doe` as a captain.
-* `stripcaptain pl/Sergio Ramos` unassigns the player `Sergio Ramos` as a captain.
+**Examples:**
+* `stripcaptain pl/John Doe` - Removes captain status from John Doe
+* `stripcaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
+
+<box type="info" seamless>
+
+**Expected output:** "Removed John Doe as captain"
+
+The captain badge/indicator will be removed from the player's card.
+</box>
 
 ### Listing all players: `list`
 
@@ -420,11 +509,31 @@ Shows a list of all players in the PlayBook.
 
 Format: `list`
 
+<box type="tip" seamless>
+
+**Tip:** Use this command to reset your view after using filters or searches. It displays all players regardless of team, position, or injury status.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** All players in your PlayBook will be displayed in the player list panel.
+</box>
+
 ### Listing all teams: `listteam`
 
 Shows a list of all teams in the PlayBook.
 
 Format: `listteam`
+
+<box type="tip" seamless>
+
+**Tip:** Use this to quickly see all teams you've created. Helpful for verifying team names before adding new players.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** A list of all team names will be displayed in the result box (e.g., "U16, U18, Reserves").
+</box>
 
 ### Listing all positions: `listposition`
 
@@ -432,17 +541,50 @@ Shows a list of all positions in the PlayBook.
 
 Format: `listposition`
 
+<box type="tip" seamless>
+
+**Tip:** Use this to check which positions you've already created before assigning positions to players.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** A list of all position names will be displayed (e.g., "LW, ST, GK, CB").
+</box>
+
 ### Listing all injured players: `listinjured`
 
-Shows a list of the injured players in the PlayBook.
+Shows a list of all injured players in the PlayBook.
 
 Format: `listinjured`
 
+<box type="tip" seamless>
+
+**Tips:**
+* Use this command before match day to quickly see who's unavailable.
+* Combine with team information in the player cards to see which teams are affected by injuries.
+* This shows all players with any injury status (not "FIT").
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** Only players with injuries (non-FIT status) will be displayed in the player list panel. Their injury details will be visible on their player cards.
+</box>
+
 ### Listing all captains: `listcaptains`
 
-Shows a list of the captains in the PlayBook.
+Shows a list of all captains in the PlayBook.
 
 Format: `listcaptains`
+
+<box type="tip" seamless>
+
+**Tip:** Useful for quickly identifying team leaders across all your squads.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** Only players designated as captains will be displayed in the player list panel.
+</box>
 
 ### Editing a player: `edit`
 
@@ -450,6 +592,7 @@ Edits an existing player in the PlayBook. Existing values will be updated to the
 
 Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…​`
 
+**Requirements:**
 * At least one of the optional fields must be provided.
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
@@ -465,17 +608,30 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 * `TEAM_NAME` should not be blank.
 * `TAG` should contain alphanumeric characters only.
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-**Tip:** 
-* When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
-* You can remove all the player's tags by typing `t/` without specifying any tags after it.
-
+**Warning:** When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
 </box>
 
-Examples:
-*  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
-*  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
+<box type="tip" seamless>
+
+**Tips:**
+* You can edit multiple fields at once (e.g., both phone and email).
+* To remove all tags, use `t/` without any tag names after it.
+* You cannot edit injury status or position through this command - use dedicated commands instead.
+</box>
+
+**Examples:**
+* `edit pl/John Doe p/91234567 e/johndoe@example.com` - Updates phone and email
+* `edit pl/John Doe n/Betsy Crower t/` - Renames player and removes all tags
+* `edit pl/John Doe tm/U18 t/captain t/veteran` - Moves to U18 team and adds tags
+
+<box type="info" seamless>
+
+**Expected output:** "Edited Person: Betsy Crower; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+
+The player card will immediately reflect all changes.
+</box>
 
 ### Locating players by name: `find`
 
@@ -483,6 +639,7 @@ Finds players whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
+**Requirements:**
 * The search is case-insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the player's name is searched.
@@ -490,10 +647,24 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Players matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+<box type="tip" seamless>
+
+**Tips:**
+* Use `find` when you remember part of a player's name but not the full name.
+* To return to viewing all players after a search, use the `list` command.
+* For more advanced filtering by team, position, or injury, use the `filter` command instead.
+</box>
+
+**Examples:**
+* `find John` - Returns players like "John Doe" and "John Smith"
+* `find alex david` - Returns "Alex Yeoh" and "David Li" (matches either keyword)
+
+<box type="info" seamless>
+
+**Expected output:** "X persons listed!" where X is the number of matching players. The player list panel will show only the matching players.
+
+![result for 'find alex david'](images/findAlexDavidResult.png)
+</box>
 
 ### Filtering players by team, injury and/or position: `filter`
 
@@ -501,18 +672,33 @@ Filter players by team, injury and/or position.
 
 Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 
-* Shows all the players that matches the specified `TEAM_NAME`, `POSITION` and/or `INJURY` if they are provided.
+**Requirements:**
 * At least one of the optional fields must be provided.
+* Shows all the players that match the specified `TEAM_NAME`, `POSITION` and/or `INJURY`.
 * Duplicate flags are not allowed.
-* The fields are all case-insensitive. e.g `acl` will match `ACL`.
-* The order of the keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
+* All fields are case-insensitive. e.g `acl` will match `ACL`.
+* The order of keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
 * Only full words will be matched by the injury field. `ACL` will not match `ACLs`.
 
-Examples:
-* `filter tm/U16 ps/FW` shows players that are from the team `U16` and play the position `FW`.
-* `filter ps/FW tm/U17 i/FIT` shows players that are from the team `U17`, play the position `FW` and are `FIT`.
-* `filter i/Leg Broken ps/MF` shows players that play the position `MF` and have their `Leg Broken`.
-* `filter tm/Chelsea` shows players that are from the team `Chelsea`.
+<box type="tip" seamless>
+
+**Tips:**
+* **Pre-match planning**: Use `filter tm/U16 i/FIT` to see all available U16 players.
+* **Position planning**: Use `filter ps/ST i/FIT` to find all fit strikers across teams.
+* **Injury tracking**: Use `filter tm/U18 i/ACL` to see all U18 players with ACL injuries.
+* Combine multiple filters for precise results. All conditions must be met (AND logic).
+</box>
+
+**Examples:**
+* `filter tm/U16 ps/FW` - Shows U16 players who play Forward
+* `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
+* `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
+* `filter tm/Chelsea` - Shows all Chelsea team players
+
+<box type="info" seamless>
+
+**Expected output:** "X persons listed!" where X is the number of players matching all filter criteria. Only matching players will be displayed.
+</box>
 
 ### Deleting a player: `delete`
 
@@ -520,18 +706,30 @@ Deletes the specified player from the PlayBook.
 
 Format: `delete pl/PLAYER_NAME`
 
+**Requirements:**
 * `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
 * The player to be deleted must exist in the PlayBook.
 
-<box type="info" seamless>
+<box type="warning" seamless>
 
-* The command can only delete one player at a time.
-
+**Warning:** This action cannot be undone! The player and all their information (team, position, injuries, tags) will be permanently removed. Consider making a backup of your data file before bulk deletions.
 </box>
 
-Examples:
-* `delete pl/John Doe` deletes the player named `John Doe` from the PlayBook.
-* `delete pl/Betsy Crowe` deletes the player named `Betsy Crowe` from the PlayBook.
+<box type="info" seamless>
+
+**Note:** The command can only delete one player at a time.
+</box>
+
+**Examples:**
+* `delete pl/John Doe` - Permanently deletes John Doe from PlayBook
+* `delete pl/Betsy Crowe` - Permanently deletes Betsy Crowe from PlayBook
+
+<box type="info" seamless>
+
+**Expected output:** "Deleted Person: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+
+The player card will immediately disappear from the player list.
+</box>
 
 ### Deleting a team: `deleteteam`
 
@@ -548,7 +746,7 @@ Format: `deleteteam tm/TEAM_NAME`
 
 <box type="warning" seamless>
 
-**Warning:** Team deletion is only allowed if there are **no players assigned** to the team. You must reassign all players to other teams or delete them first before you can delete the team.
+**Warning:** Deleting a team will remove all players assigned to that team. Make sure this is intentional before proceeding.
 </box>
 
 <box type="info" seamless>
@@ -557,14 +755,14 @@ Format: `deleteteam tm/TEAM_NAME`
 </box>
 
 **Examples:**
-* `deleteteam tm/U16` - Deletes the U16 team (only if it has no players)
-* `deleteteam tm/Reserves` - Deletes the Reserves team (only if it has no players)
+* `deleteteam tm/U16` - Deletes the U16 team from PlayBook
+* `deleteteam tm/Reserves` - Deletes the Reserves team from PlayBook
 
 <box type="info" seamless>
 
-**Expected output:** "Deleted Team: U16" (or the team name you specified)
+**Expected output:** "Deleted team: U16"
 
-If the team still has players, you'll see an error: "Cannot delete team with existing players. Please reassign or remove all players first."
+All players previously assigned to this team will have their team assignment removed.
 </box>
 
 ### Deleting a position: `deleteposition`
@@ -573,38 +771,86 @@ Deletes the specified position from the PlayBook.
 
 Format: `deleteposition ps/POSITION_NAME`
 
-* Deletes the position with the specified `POSITION_NAME` from the PlayBook.
+**Requirements:**
 * `POSITION_NAME` must be an existing position in the PlayBook.
 * `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
 * `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
 * `POSITION_NAME` should not be blank.
 * The position to be deleted must exist in the PlayBook.
 
-<box type="info" seamless>
+<box type="warning" seamless>
 
-* The command can only delete one position at a time.
-
+**Warning:** Deleting a position will remove it from all players who were assigned to that position. Make sure this is intentional before proceeding.
 </box>
 
-Examples:
-* `deleteposition ps/LW` deletes the position named `LW` from the PlayBook.
-* `deleteposition ps/ST` deletes the position named `ST` from the PlayBook, assuming it exists.
+<box type="info" seamless>
 
-### Clearing all entries : `clear`
+**Note:** The command can only delete one position at a time.
+</box>
+
+**Examples:**
+* `deleteposition ps/LW` - Deletes Left Wing position from PlayBook
+* `deleteposition ps/ST` - Deletes Striker position from PlayBook
+
+<box type="info" seamless>
+
+**Expected output:** "Deleted Position: LW"
+
+All players previously assigned to this position will have it removed from their cards.
+</box>
+
+### Clearing all entries: `clear`
 
 Clears all entries from the PlayBook.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+<box type="warning" seamless>
+
+**WARNING: IRREVERSIBLE ACTION!**
+
+This command will permanently delete:
+* All players and their information
+* All teams
+* All positions
+* All assignments (injuries, captaincy, etc.)
+
+**There is no undo.** Make sure you have a backup of your data file (`addressbook.json`) before using this command!
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** Use this command at the start of a new season to begin with a clean slate, but always backup your previous season's data first.
+
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** "Address book has been cleared!"
+
+The player list panel will be completely empty.
+</box>
+
+### Exiting the program: `exit`
 
 Exits the program.
 
 Format: `exit`
 
+<box type="info" seamless>
+
+**Expected output:** The PlayBook application window will close immediately. Your data is safely stored in `addressbook.json`.
+</box>
+
 ### Saving the data
 
 PlayBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+<box type="tip" seamless>
+
+**Tip:** Find your data at `[JAR file location]/data/addressbook.json`
+
+</box>
 
 ### Editing the data file
 
@@ -613,13 +859,20 @@ PlayBook data are saved automatically as a JSON file `[JAR file location]/data/a
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, PlayBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the PlayBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+* If your changes to the data file make its format invalid, PlayBook will discard all data and start with an empty data file at the next run.
+* Always make a backup of the file before editing it manually.
+* Certain edits can cause PlayBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range).
+* Only edit the data file if you are confident that you can update it correctly.
 </box>
 
 ### Generating sample data
 
 PlayBook comes with sample data to help users get started. To generate sample data, delete the existing data file located at `[JAR file location]/data/addressbook.json` and restart the application. A new data file with sample data will be created automatically.
+
+<box type="tip" seamless>
+
+**Tip:** Use sample data to practice commands before managing your real team data. Once comfortable, use the `clear` command to remove sample data and start fresh.
+</box>
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -695,3 +948,5 @@ _Details coming soon ..._
 | **List Positions**              | `listposition`                                                                                                                                                                                                      |
 | **List Injured Players**        | `listinjured`                                                                                                                                                                                                       |
 | **Help**                        | `help`                                                                                                                                                                                                              |
+
+
