@@ -16,7 +16,13 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
+        - [Who is PlayBook for?](#who-is-playbook-for)
+        - [What you should know before using PlayBook](#what-you-should-know-before-using-playbook)
+        - [Why choose PlayBook?](#why-choose-playbook)
     - [Quick start](#quick-start)
+        - [Installation and setup](#installation-and-setup)
+        - [Understanding the PlayBook GUI](#understanding-the-playbook-gui)
+        - [Your First Commands](#your-first-commands)
     - [Features](#features)
         - [Viewing help: `help`](#viewing-help-help)
         - [Adding a team: `addteam`](#adding-a-team-addteam)
@@ -26,12 +32,12 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
         - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
-        - [Assigning player as captain: 'makecaptain'](#assigning-player-as-captain-makecaptain)
-        - [Unassigning player as captain: 'stripcaptain'](#unassigning-player-as-captain-stripcaptain)
+        - [Assigning player as captain: `makecaptain`](#assigning-player-as-captain-makecaptain)
+        - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
         - [Listing all players: `list`](#listing-all-players-list)
-        - [Listing all teams: `listteams`](#listing-all-teams-listteams)
+        - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
-        - [Listing all injured: `listinjured`](#listing-all-injured-players-listinjured)
+        - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
         - [Listing all captains: `listcaptains`](#listing-all-captains-listcaptains)
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
@@ -39,10 +45,11 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Deleting a player: `delete`](#deleting-a-player-delete)
         - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
         - [Deleting a position: `deleteposition`](#deleting-a-position-deleteposition)
-        - [Clearing all entries : `clear`](#clearing-all-entries--clear)
-        - [Exiting the program : `exit`](#exiting-the-program--exit)
+        - [Clearing all entries: `clear`](#clearing-all-entries-clear)
+        - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
         - [Editing the data file](#editing-the-data-file)
+        - [Generating sample data](#generating-sample-data)
         - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
     - [FAQ](#faq)
     - [Known issues](#known-issues)
@@ -127,7 +134,7 @@ Type commands in the command box and press Enter to execute them. Here's a quick
    
    <box type="info" seamless>
 
-   **Expected output:** You should see "Address book has been cleared!" and the player list becomes empty.
+   **Expected output:** "Address book has been cleared!" and the player list becomes empty.
    </box>
 
 2. **Create your first team** - Type `addteam tm/U16` and press Enter.
@@ -948,5 +955,3 @@ _Details coming soon ..._
 | **List Positions**              | `listposition`                                                                                                                                                                                                      |
 | **List Injured Players**        | `listinjured`                                                                                                                                                                                                       |
 | **Help**                        | `help`                                                                                                                                                                                                              |
-
-
