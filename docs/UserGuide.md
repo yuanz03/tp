@@ -707,7 +707,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Filter players by team, injury and/or position.
 
-Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
+Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 
 **Requirements:**
 * At least one of the optional fields must be provided.
@@ -852,7 +852,7 @@ Format: `deleteposition ps/POSITION_NAME`
 
 All players previously assigned to this position will have it removed from their cards.
 
-![help message](images/deletePositionResult.png)
+![delete position message](images/deletePositionResult.png)
 </box>
 
 ### Clearing all entries: `clear`
