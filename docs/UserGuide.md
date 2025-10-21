@@ -753,7 +753,7 @@ Format: `deleteteam tm/TEAM_NAME`
 
 <box type="warning" seamless>
 
-**Warning:** Deleting a team will remove all players assigned to that team. Make sure this is intentional before proceeding.
+**Warning:** You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
 </box>
 
 <box type="info" seamless>
