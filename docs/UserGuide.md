@@ -8,100 +8,174 @@
 
 PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). 
 
-If you can type fast, PB can help you manage your players' contacts and related information, such as injuries, teams, positions and captaincy, more efficiently, compared to traditional GUI-based apps.
+--------------------------------------------------------------------------------------------------------------------
+
+#### Table of Contents
 
 <!-- * Table of Contents -->
 
-- [PlayBook User Guide](#playbook-user-guide)
-  - [Quick start](#quick-start)
-  - [Features](#features)
-    - [Viewing help: `help`](#viewing-help-help)
-    - [Adding a team: `addteam`](#adding-a-team-addteam)
-    - [Adding a player: `add`](#adding-a-player-add)
-    - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
-    - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
-    - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
-    - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
-    - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
-    - [Assigning player as captain: 'makecaptain'](#assigning-player-as-captain-makecaptain)
-    - [Unassigning player as captain: 'stripcaptain'](#unassigning-player-as-captain-stripcaptain)
-    - [Listing all players: `list`](#listing-all-players-list)
-    - [Listing all teams: `listteams`](#listing-all-teams-listteams)
-    - [Listing all positions: `listposition`](#listing-all-positions-listposition)
-    - [Listing all injured: `listinjured`](#listing-all-injured-players-listinjured)
-    - [Listing all captains: `listcaptains`](#listing-all-captains-listcaptains)
-    - [Editing a player: `edit`](#editing-a-player-edit)
-    - [Locating players by name: `find`](#locating-players-by-name-find)
-    - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
-    - [Deleting a player: `delete`](#deleting-a-player-delete)
-    - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
-    - [Deleting a position: `deleteposition`](#deleting-a-position-deleteposition)
-    - [Clearing all entries : `clear`](#clearing-all-entries--clear)
-    - [Exiting the program : `exit`](#exiting-the-program--exit)
-    - [Saving the data](#saving-the-data)
-    - [Editing the data file](#editing-the-data-file)
-    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
-  - [FAQ](#faq)
-  - [Known issues](#known-issues)
-  - [Command summary](#command-summary)
+- [PlayBook User Guide](#playbook-user-guide) 
+    - [Introduction](#introduction)
+    - [Quick start](#quick-start)
+    - [Features](#features)
+        - [Viewing help: `help`](#viewing-help-help)
+        - [Adding a team: `addteam`](#adding-a-team-addteam)
+        - [Adding a player: `add`](#adding-a-player-add)
+        - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
+        - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
+        - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
+        - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
+        - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
+        - [Assigning player as captain: 'makecaptain'](#assigning-player-as-captain-makecaptain)
+        - [Unassigning player as captain: 'stripcaptain'](#unassigning-player-as-captain-stripcaptain)
+        - [Listing all players: `list`](#listing-all-players-list)
+        - [Listing all teams: `listteams`](#listing-all-teams-listteams)
+        - [Listing all positions: `listposition`](#listing-all-positions-listposition)
+        - [Listing all injured: `listinjured`](#listing-all-injured-players-listinjured)
+        - [Listing all captains: `listcaptains`](#listing-all-captains-listcaptains)
+        - [Editing a player: `edit`](#editing-a-player-edit)
+        - [Locating players by name: `find`](#locating-players-by-name-find)
+        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
+        - [Deleting a player: `delete`](#deleting-a-player-delete)
+        - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
+        - [Deleting a position: `deleteposition`](#deleting-a-position-deleteposition)
+        - [Clearing all entries : `clear`](#clearing-all-entries--clear)
+        - [Exiting the program : `exit`](#exiting-the-program--exit)
+        - [Saving the data](#saving-the-data)
+        - [Editing the data file](#editing-the-data-file)
+        - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+    - [FAQ](#faq)
+    - [Known issues](#known-issues)
+    - [Command summary](#command-summary)
 
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Introduction
+
+#### Who is PlayBook for?
+
+PlayBook is designed specifically for **semi-professional youth football coaches** who:
+* Manage multiple teams (e.g., U16, U18, U21 squads)
+* Need to track 20-50+ players across different age groups
+* Prefer keyboard-based workflows for faster data entry
+* Are comfortable with basic command-line operations
+* Need quick access to player availability, injuries, and team assignments
+
+#### What you should know before using PlayBook
+
+**Technical Requirements:**
+* Basic familiarity with command-line interfaces (typing commands rather than clicking buttons)
+* Basic ability to navigate folders and run programs from a terminal
+* Java 17 installed on your computer
+
+**No prior coding experience needed** - all commands are simple, English-based instructions like `add`, `delete`, and `list`.
+
+#### Why choose PlayBook?
+
+Unlike traditional contact management apps, PlayBook is **optimized for football team management**:
+* **Speed**: Type commands faster than clicking through multiple menus
+* **Team-focused**: Built-in support for teams, positions, injuries, and captaincy
+* **Flexible filtering**: Quickly find available players by position, team, or injury status
+* **Always accessible**: Works offline, with instant local storage
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+#### Installation and setup
+
+1. Ensure you have Java `17` or above installed in your Computer.
 
    <box type="tip" seamless>
    
-    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+   **Quick help: Checking your Java installation**
+
+   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
     
-    **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+   **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
     
-    **Linux users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
+   **Linux users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
 
-    You can check your Java version by running the command `java --version` in your command terminal.
-    </box>
+   You can check your Java version by running the command `java --version` in your command terminal.
+   </box>
 
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
+3. Copy the file to the folder you want to use as the _home folder_ for your PlayBook.
 
-1. Copy the file to the folder you want to use as the _home folder_ for your PlayBook.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing `help` and pressing Enter will open the help window.<br>
+#### Understanding the PlayBook GUI
 
-    <box type="tip" seamless>
+The PlayBook window consists of:
+* **Command Box** (top): Where you type your commands
+* **Result Display**: Shows feedback messages after each command
+* **Player List Panel**: Displays all players matching your current view
+* **Player Card**: Shows individual player details including name, team, position, injury status, phone, email, address, and tags
+
+#### Your First Commands
+
+Type commands in the command box and press Enter to execute them. Here's a quick tutorial:
+
+1. **Start fresh** - Type `clear` and press Enter to remove all sample data.
    
-   Some example commands you can try:
+   <box type="info" seamless>
 
-   * `list` : Lists all players.
+   **Expected output:** You should see "Address book has been cleared!" and the player list becomes empty.
+   </box>
+
+2. **Create your first team** - Type `addteam tm/U16` and press Enter.
+
+   <box type="info" seamless>
+
+   **Expected output:** "New team added: U16"
+   </box>
+
+3. **Add your first player** - Type:
+   ```
+   add pl/Alex Tan p/87654321 e/alex@example.com a/123 Main St tm/U16
+   ```
+
+   <box type="info" seamless>
+
+   **Expected output:** "New person added: Alex Tan; Phone: 87654321; Email: alex@example.com; Address: 123 Main St; Team: U16; Injury: FIT; Position: ; Tags: "
    
-   * `addteam tm/u16`: Adds a team named `u16` to the PlayBook.
+   You should now see Alex Tan's player card in the player list.
+   </box>
 
-   * `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
+4. **View all players** - Type `list` to see all players in your PlayBook.
 
-   * `assignteam pl/Jane Doe tm/u16` : Assigns `John Doe` to the team `u16` in the PlayBook (make sure both the player and team exist first).
+<box type="tip" seamless>
 
-   * `newposition ps/LW` : Creates a new position named `LW` (Left Wing) in the PlayBook.
+**More example commands to try:**
 
-   * `assignposition pl/John Doe ps/LW` : Assigns the position `LW` to `John Doe` in the PlayBook (make sure both the player and position exist first).
+* `addteam tm/U18`: Add another team named `U18` to the PlayBook.
 
-   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook (make sure the player exists first).
+* `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16` : Add another player to the U16 team.
 
-   * `delete pl/John Doe` : Deletes `John Doe` from the PlayBook (make sure the player exists first).
+* `newposition ps/LW` : Create a new position named `LW` (Left Wing) in the PlayBook.
 
-   * `clear` : Deletes all players' contacts and teams from the PlayBook.
+* `assignposition pl/Alex Tan ps/LW` : Assign the position `LW` to `Alex Tan` (create the position first using `newposition`).
 
-   * `exit` : Exits the app.
+* `assigninjury pl/Alex Tan i/ACL` : Mark `Alex Tan` as injured with an ACL injury.
 
-    </box>
+* `filter i/FIT` : View only players who are fit (not injured).
 
-1. Refer to the [Features](#features) below for details of each command.
+* `delete pl/John Doe` : Delete `John Doe` from the PlayBook.
+
+* `help` : Open the help window.
+
+* `exit` : Exit the app.
+
+</box>
+
+Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -144,13 +218,26 @@ Adds a team to the PlayBook.
 
 Format: `addteam tm/TEAM_NAME`
 
+**Requirements:**
 * `TEAM_NAME` must not be the same as an existing team in the PlayBook.
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
 
-Examples:
-* `addteam tm/u16`
+<box type="warning" seamless>
+
+**Warning:** Team names cannot contain spaces. Use naming conventions like `U16`, `U18`, or `Reserves` instead of `U 16` or `U 18`.
+</box>
+
+**Examples:**
+* `addteam tm/U16` - Creates a team for under-16 players
+* `addteam tm/U18` - Creates a team for under-18 players
+* `addteam tm/Reserves` - Creates a reserves team
+
+<box type="info" seamless>
+
+**Expected output:** "New team added: U16" (or the team name you specified)
+</box>
 
 ### Adding a player: `add`
 
@@ -158,6 +245,7 @@ Adds a player to the PlayBook.
 
 Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…​`
 
+**Requirements:**
 * `PLAYER_NAME` should contain alphanumeric characters and spaces only.
 * `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
@@ -173,15 +261,26 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 * `TEAM_NAME` should not be blank.
 * `TAG` should contain alphanumeric characters only.
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-**Tip:** A player can have any number of tags (including 0).
-
+**Warning:** You must create the team first using `addteam` before adding players to it. If the team doesn't exist, you'll get an error message.
 </box>
 
-Examples:
-* `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16`
-* `add pl/Betsy Crowe t/friend e/betsycrowe@example.com tm/u16 a/Newgate Prison p/1234567 t/criminal`
+<box type="tip" seamless>
+
+**Tip:** A player can have any number of tags (including 0). Use tags to mark players as "scholarship", "youth", "newcomer", etc.
+</box>
+
+**Examples:**
+* `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16`
+* `add pl/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison tm/U16 t/friend t/scholarship`
+
+<box type="info" seamless>
+
+**Expected output:** "New person added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: ; Tags: "
+
+The player will appear in the player list panel with a "FIT" injury status and no position assigned by default.
+</box>
 
 ### Assign player to team: `assignteam`
 
@@ -440,21 +539,33 @@ Deletes the specified team from the PlayBook.
 
 Format: `deleteteam tm/TEAM_NAME`
 
-* Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
+**Requirements:**
 * `TEAM_NAME` must be an existing team in the PlayBook.
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
 * The team to be deleted must exist in the PlayBook.
 
-<box type="info" seamless>
+<box type="warning" seamless>
 
-* The command can only delete one team at a time.
-
+**Warning:** Team deletion is only allowed if there are **no players assigned** to the team. You must reassign all players to other teams or delete them first before you can delete the team.
 </box>
 
-Examples:
-* `deleteteam tm/u16` deletes the team named `u16` from the PlayBook, assuming it exists.
+<box type="info" seamless>
+
+**Note:** The command can only delete one team at a time.
+</box>
+
+**Examples:**
+* `deleteteam tm/U16` - Deletes the U16 team (only if it has no players)
+* `deleteteam tm/Reserves` - Deletes the Reserves team (only if it has no players)
+
+<box type="info" seamless>
+
+**Expected output:** "Deleted Team: U16" (or the team name you specified)
+
+If the team still has players, you'll see an error: "Cannot delete team with existing players. Please reassign or remove all players first."
+</box>
 
 ### Deleting a position: `deleteposition`
 
@@ -518,8 +629,35 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PlayBook home folder.
+**Q: How do I transfer my data to another Computer?**<br>
+**A:** Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PlayBook home folder.
+
+**Q: Can I manage multiple teams at the same time?**<br>
+**A:** Yes! PlayBook is designed for coaches managing multiple teams. Simply create different teams using `addteam` (e.g., `addteam tm/U16`, `addteam tm/U18`) and assign players accordingly.
+
+**Q: What happens if I accidentally delete a player?**<br>
+**A:** Unfortunately, there's no undo feature. However, since PlayBook automatically saves your data, you can manually restore from a backup of the `addressbook.json` file if you made one. We recommend making regular backups of your data file.
+
+**Q: Can a player be in multiple teams?**<br>
+**A:** No, each player can only be assigned to one team at a time. If you need to move a player to a different team, use the `assignteam` command.
+
+**Q: How do I quickly find all available players for a match?**<br>
+**A:** Use the `filter i/FIT` command to show only players with no injuries. You can combine this with team filtering: `filter tm/U16 i/FIT` to see all fit players in the U16 team.
+
+**Q: Can I track multiple injuries for one player?**<br>
+**A:** Yes! Players can have multiple concurrent injuries. Use `assigninjury` multiple times for different injuries, and use `unassigninjury` to remove specific injuries when they recover.
+
+**Q: What if I make a typo in a player's name?**<br>
+**A:** Use the `edit` command to correct it. For example: `edit pl/Jon Doe n/John Doe` will rename "Jon Doe" to "John Doe".
+
+**Q: Why can't I delete a team?**<br>
+**A:** Teams can only be deleted if they have no players assigned. First reassign all players to other teams using `assignteam`, or delete the players, then delete the team using `deleteteam`.
+
+**Q: Does PlayBook work offline?**<br>
+**A:** Yes! PlayBook works completely offline and stores all data locally on your computer.
+
+**Q: Can I export my player data to Excel or CSV?**<br>
+**A:** Not directly through the app, but advanced users can work with the JSON data file located at `[JAR file location]/data/addressbook.json` and convert it using external tools.
 
 --------------------------------------------------------------------------------------------------------------------
 
