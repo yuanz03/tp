@@ -6,7 +6,9 @@
 
 # PlayBook User Guide
 
-PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PB can get your contact management tasks done faster than traditional GUI apps.
+PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). 
+
+If you can type fast, PB can help you manage your players' contacts and related information, such as injuries, teams, positions and captaincy, more efficiently, compared to traditional GUI-based apps.
 
 <!-- * Table of Contents -->
 
@@ -50,7 +52,18 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+
+   <box type="tip" seamless>
+   
+    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+    
+    **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+    
+    **Linux users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
+
+    You can check your Java version by running the command `java --version` in your command terminal.
+    </box>
+
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
@@ -60,7 +73,10 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+1. Type the command in the command box and press Enter to execute it. e.g. typing `help` and pressing Enter will open the help window.<br>
+
+    <box type="tip" seamless>
+   
    Some example commands you can try:
 
    * `list` : Lists all players.
@@ -69,17 +85,21 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
    * `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/u16` : Adds a player named `John Doe` to the PlayBook (make sure to add the team `u16` first).
 
+   * `assignteam pl/Jane Doe tm/u16` : Assigns `John Doe` to the team `u16` in the PlayBook (make sure both the player and team exist first).
+
    * `newposition ps/LW` : Creates a new position named `LW` (Left Wing) in the PlayBook.
 
-   * `assignposition pl/John Doe ps/LW` : Assigns the position `LW` to `John Doe` in the PlayBook.
+   * `assignposition pl/John Doe ps/LW` : Assigns the position `LW` to `John Doe` in the PlayBook (make sure both the player and position exist first).
 
-   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook. 
+   * `assigninjury pl/John Doe i/ACL` : Assigns an injury status of `ACL` to `John Doe` from the PlayBook (make sure the player exists first).
 
-   * `delete pl/John Doe` : Deletes `John Doe` from the PlayBook.
+   * `delete pl/John Doe` : Deletes `John Doe` from the PlayBook (make sure the player exists first).
 
    * `clear` : Deletes all players' contacts and teams from the PlayBook.
 
    * `exit` : Exits the app.
+
+    </box>
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -113,9 +133,10 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 Shows a message explaining how to access the help page.
 
+Format: `help`
+
 ![help message](images/helpMessage.png)
 
-Format: `help`
 
 ### Adding a team: `addteam`
 
@@ -217,8 +238,13 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 * `INJURY` should not be blank.
 * `INJURY` should contain alphanumeric characters and spaces only.
 * `INJURY` must match an injury that is already assigned to the specified player.
-* If the player has no remaining injuries, the injury status of the player is reset to the default `FIT` status.
 * The player must not already have the default `FIT` status.
+
+<box type="tip" seamless>
+
+**Tip:** If the player has no remaining injuries, the injury status of the player is reset to the default `FIT` status.
+
+</box>
 
 Examples:
 * `unassigninjury pl/John Doe i/ACL` removes the injury status `ACL` from `John Doe` in the Playbook.
@@ -246,7 +272,6 @@ Assigns an existing position to an existing player in the PlayBook.
 
 Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
-* Assigns the position with the specified `POSITION_NAME` to the player with the specified `PLAYER_NAME`.
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -266,7 +291,6 @@ Assigns an existing player in the PlayBook to be captain.
 
 Format: `makecaptain pl/PLAYER_NAME`
 
-* Assigns specified `PLAYER_NAME` to be captain.
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -282,7 +306,6 @@ Unassigns captain from existing player in the PlayBook.
 
 Format: `stripcaptain pl/PLAYER_NAME`
 
-* Unassigns specified `PLAYER_NAME` to be no longer captain.
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -324,16 +347,11 @@ Format: `listcaptains`
 
 ### Editing a player: `edit`
 
-Edits an existing player in the PlayBook.
+Edits an existing player in the PlayBook. Existing values will be updated to the input values.
 
 Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…​`
 
-* Edits the player with the specified `PLAYER_NAME` from the PlayBook.
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing the `NEW_PLAYER_NAME` or `TEAM_NAME` fields, comparisons are case-insensitive, i.e., values differing only by letter case are treated as identical.
-* When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
-* You can remove all the player's tags by typing `t/` without specifying any tags after it.
 * `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
@@ -348,6 +366,14 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 * `TEAM_NAME` should not be blank.
 * `TAG` should contain alphanumeric characters only.
 
+<box type="tip" seamless>
+
+**Tip:** 
+* When editing tags, the existing tags of the player will be removed i.e, adding of tags is not cumulative.
+* You can remove all the player's tags by typing `t/` without specifying any tags after it.
+
+</box>
+
 Examples:
 *  `edit pl/John Doe p/91234567 e/johndoe@example.com` edits the phone number and email address of `John Doe` to be `91234567` and `johndoe@example.com` respectively.
 *  `edit pl/John Doe n/Betsy Crower t/` edits the name of `John Doe` to be `Betsy Crower` and clears all existing tags.
@@ -360,7 +386,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
-* Only the name is searched.
+* Only the player's name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
@@ -395,10 +421,14 @@ Deletes the specified player from the PlayBook.
 
 Format: `delete pl/PLAYER_NAME`
 
-* Deletes the player with the specified `PLAYER_NAME` from the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
 * The player to be deleted must exist in the PlayBook.
+
+<box type="info" seamless>
+
 * The command can only delete one player at a time.
+
+</box>
 
 Examples:
 * `delete pl/John Doe` deletes the player named `John Doe` from the PlayBook.
@@ -410,14 +440,18 @@ Deletes the specified team from the PlayBook.
 
 Format: `deleteteam tm/TEAM_NAME`
 
-* Deletes the team with the specified `TEAM_NAME` from the PlayBook.
 * Team deletion is only allowed if there are no players assigned to the team, i.e. all players assigned to the team must be reassigned to other teams or deleted first.
 * `TEAM_NAME` must be an existing team in the PlayBook.
 * `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
 * The team to be deleted must exist in the PlayBook.
+
+<box type="info" seamless>
+
 * The command can only delete one team at a time.
+
+</box>
 
 Examples:
 * `deleteteam tm/u16` deletes the team named `u16` from the PlayBook, assuming it exists.
@@ -434,7 +468,12 @@ Format: `deleteposition ps/POSITION_NAME`
 * `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
 * `POSITION_NAME` should not be blank.
 * The position to be deleted must exist in the PlayBook.
+
+<box type="info" seamless>
+
 * The command can only delete one position at a time.
+
+</box>
 
 Examples:
 * `deleteposition ps/LW` deletes the position named `LW` from the PlayBook.
@@ -466,6 +505,10 @@ PlayBook data are saved automatically as a JSON file `[JAR file location]/data/a
 If your changes to the data file makes its format invalid, PlayBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the PlayBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
+### Generating sample data
+
+PlayBook comes with sample data to help users get started. To generate sample data, delete the existing data file located at `[JAR file location]/data/addressbook.json` and restart the application. A new data file with sample data will be created automatically.
 
 ### Archiving data files `[coming in v2.0]`
 
