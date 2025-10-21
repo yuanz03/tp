@@ -35,20 +35,20 @@
 
         <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets top="5" right="20" bottom="5" left="20" />
           </padding>
         </StackPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
                    minHeight="80" prefHeight="80" maxHeight="120">
           <padding>
-            <Insets top="8" right="10" bottom="8" left="10" />
+            <Insets top="8" right="10" bottom="12" left="10" />
           </padding>
         </StackPane>
 
         <StackPane fx:id="viewStatusPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER" minHeight="30" prefHeight="30">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets top="10" right="25" bottom="5" left="25" />
           </padding>
           <Label fx:id="viewStatusLabel"
                 text="Viewing Players"
@@ -57,7 +57,7 @@
 
         <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
           <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
+            <Insets top="5" right="10" bottom="10" left="10" />
           </padding>
           <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           <StackPane fx:id="teamListPanelPlaceholder" VBox.vgrow="ALWAYS" />
