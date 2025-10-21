@@ -34,8 +34,12 @@ public class FilterByInjuryPredicate implements Predicate<Person> {
         if (keyword.isEmpty()) {
             return true;
         }
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase("FIT", keyword)); // TODO: FIX
+        return person.getInjuries().stream()
+        .map(Injury::getInjuryName)
+        .anyMatch(injuryName ->
+            keywords.stream()
+                    .anyMatch(keyword ->
+                        StringUtil.containsWordIgnoreCase(injuryName, keyword)));
     }
 
     @Override
