@@ -872,15 +872,6 @@ PlayBook data are saved automatically as a JSON file `[JAR file location]/data/a
 * Only edit the data file if you are confident that you can update it correctly.
 </box>
 
-### Generating sample data
-
-PlayBook comes with sample data to help users get started. To generate sample data, delete the existing data file located at `[JAR file location]/data/addressbook.json` and restart the application. A new data file with sample data will be created automatically.
-
-<box type="tip" seamless>
-
-**Tip:** Use sample data to practice commands before managing your real team data. Once comfortable, use the `clear` command to remove sample data and start fresh.
-</box>
-
 ### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
@@ -915,9 +906,6 @@ _Details coming soon ..._
 
 **Q: Does PlayBook work offline?**<br>
 **A:** Yes! PlayBook works completely offline and stores all data locally on your computer.
-
-**Q: Can I export my player data to Excel or CSV?**<br>
-**A:** Not directly through the app, but advanced users can work with the JSON data file located at `[JAR file location]/data/addressbook.json` and convert it using external tools.
 
 --------------------------------------------------------------------------------------------------------------------
 
