@@ -327,7 +327,7 @@
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
-    -fx-padding: 5, 0, 5, 0;
+    -fx-padding: 5 0 5 0;
 }
 
 #commandTextField {
