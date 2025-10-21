@@ -74,22 +74,6 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Backward-compatible named factory for older call sites that passed a single injury name.
-     * This avoids overload ambiguity when the fifth argument is null and ensures all initialization
-     * is centralized via the main constructor.
-     */
-    public static JsonAdaptedPerson fromLegacySingleInjury(String name, String phone, String email, String address,
-                                                           String injuryName, JsonAdaptedTeam team,
-                                                           JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
-        List<JsonAdaptedInjury> injuriesList = null;
-        if (injuryName != null) {
-            injuriesList = new ArrayList<>();
-            injuriesList.add(new JsonAdaptedInjury(injuryName));
-        }
-        return new JsonAdaptedPerson(name, phone, email, address, injuriesList, team, position, tags, null);
-    }
-
-    /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
@@ -106,6 +90,22 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+    }
+
+    /**
+     * Backward-compatible named factory for older call sites that passed a single injury name.
+     * This avoids overload ambiguity when the fifth argument is null and ensures all initialization
+     * is centralized via the main constructor.
+     */
+    public static JsonAdaptedPerson fromLegacySingleInjury(String name, String phone, String email, String address,
+                                                           String injuryName, JsonAdaptedTeam team,
+                                                           JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        List<JsonAdaptedInjury> injuriesList = null;
+        if (injuryName != null) {
+            injuriesList = new ArrayList<>();
+            injuriesList.add(new JsonAdaptedInjury(injuryName));
+        }
+        return new JsonAdaptedPerson(name, phone, email, address, injuriesList, team, position, tags, null);
     }
 
     /**
