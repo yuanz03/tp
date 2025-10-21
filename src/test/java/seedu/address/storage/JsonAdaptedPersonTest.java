@@ -187,7 +187,8 @@ public class JsonAdaptedPersonTest {
 
     @Test
     public void toModelType_legacySingleInjury_addsOnlyProvidedInjury() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPerson person = JsonAdaptedPerson.fromLegacySingleInjury(
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_SINGLE_INJURY, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         Person model = person.toModelType();
         assertTrue(model.getInjuries().contains(new Injury(VALID_SINGLE_INJURY)));

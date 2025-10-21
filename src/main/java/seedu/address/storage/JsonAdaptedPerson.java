@@ -74,29 +74,19 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Backward-compatible constructor retained for tests and older code that do not pass captain status.
-     * Delegates to the main constructor with {@code isCaptain} set to null so downstream defaults apply.
+     * Backward-compatible named factory for older call sites that passed a single injury name.
+     * This avoids overload ambiguity when the fifth argument is null and ensures all initialization
+     * is centralized via the main constructor.
      */
-    public JsonAdaptedPerson(String name, String phone, String email, String address,
-                             String injuryName, JsonAdaptedTeam team,
-                             JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
-        List<JsonAdaptedInjury> injuriesList = new ArrayList<>();
+    public static JsonAdaptedPerson fromLegacySingleInjury(String name, String phone, String email, String address,
+                                                           String injuryName, JsonAdaptedTeam team,
+                                                           JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        List<JsonAdaptedInjury> injuriesList = null;
         if (injuryName != null) {
+            injuriesList = new ArrayList<>();
             injuriesList.add(new JsonAdaptedInjury(injuryName));
         }
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.team = team;
-        this.position = position;
-        this.isCaptain = null;
-        if (!injuriesList.isEmpty()) {
-            this.injuries.addAll(injuriesList);
-        }
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
+        return new JsonAdaptedPerson(name, phone, email, address, injuriesList, team, position, tags, null);
     }
 
     /**
