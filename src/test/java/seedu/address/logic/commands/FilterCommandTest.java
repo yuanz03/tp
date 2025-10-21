@@ -156,8 +156,8 @@ public class FilterCommandTest {
         expectedModel.updateFilteredPersonList(person -> injPred.test(person));
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
                 expectedModel.getFilteredPersonList().size());
-        // TODO: FIX
-        // assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -174,8 +174,8 @@ public class FilterCommandTest {
                 person -> teamPred.test(person) && injPred.test(person));
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
                 expectedModel.getFilteredPersonList().size());
-        // TODO: FIX
-        // assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
