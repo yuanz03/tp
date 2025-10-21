@@ -244,6 +244,8 @@ Format: `addteam tm/TEAM_NAME`
 <box type="info" seamless>
 
 **Expected output:** "New team added: U16" (or the team name you specified)
+
+![add team message](images/addTeamResult.png)
 </box>
 
 ### Adding a player: `add`
@@ -287,6 +289,8 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 **Expected output:** "New person added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: ; Tags: "
 
 The player will appear in the player list panel with a "FIT" injury status and no position assigned by default.
+
+![add message](images/addPlayerResult.png)
 </box>
 
 ### Assign player to team: `assignteam`
@@ -319,6 +323,8 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 **Expected output:** "Assigned John Doe to team: U16"
 
 The player's team will be immediately updated in their player card.
+
+![assign team message](images/assignTeamResult.png)
 </box>
 
 ### Assign injury to player: `assigninjury`
@@ -358,6 +364,8 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 **Expected output:** "Assigned injury ACL to John Doe"
 
 The player's injury status will be updated immediately in their player card, replacing "FIT" with the injury name.
+
+![assign injury message](images/assignInjuryResult.png)
 </box>
 
 ### Unassign injury from player: `unassigninjury`
@@ -393,6 +401,8 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 **Expected output:** "Removed injury ACL from John Doe"
 
 If this was the player's only injury, their status will automatically return to "FIT".
+
+![unassign injury message](images/unassignInjuryResult.png)
 </box>
 
 ### Creating a new position: `newposition`
@@ -419,7 +429,9 @@ Format: `newposition ps/POSITION_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "New position added: LW" (or the position name you specified)
+**Expected output:** "Position RWB has been created successfully!" (or the position name you specified)
+
+![new position message](images/newPositionResult.png)
 </box>
 
 ### Assigning a position to player: `assignposition`
@@ -454,9 +466,11 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Assigned position LW to John Doe"
+**Expected output:** "John Doe has been successfully assigned position GK!"
 
 The position will be immediately visible in the player's card.
+
+![assign position message](images/assignPositionResult.png)
 </box>
 
 ### Assigning player as captain: `makecaptain`
@@ -482,9 +496,11 @@ Format: `makecaptain pl/PLAYER_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Made John Doe a captain"
+**Expected output:** "Jovan Doe is now a captain of ClementiRovers"
 
 A captain badge or indicator will appear on the player's card.
+
+![make captain message](images/makeCaptainResult.png)
 </box>
 
 ### Unassigning player as captain: `stripcaptain`
@@ -505,9 +521,11 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Removed John Doe as captain"
+**Expected output:** "Jovan Doe is no longer team captain"
 
 The captain badge/indicator will be removed from the player's card.
+
+![strip captain message](images/stripCaptainResult.png)
 </box>
 
 ### Listing all players: `list`
@@ -524,6 +542,8 @@ Format: `list`
 <box type="info" seamless>
 
 **Expected output:** All players in your PlayBook will be displayed in the player list panel.
+
+![list message](images/listResult.png)
 </box>
 
 ### Listing all teams: `listteam`
@@ -540,6 +560,8 @@ Format: `listteam`
 <box type="info" seamless>
 
 **Expected output:** A list of all team names will be displayed in the result box (e.g., "U16, U18, Reserves").
+
+![list team message](images/listTeamResult.png)
 </box>
 
 ### Listing all positions: `listposition`
@@ -556,6 +578,8 @@ Format: `listposition`
 <box type="info" seamless>
 
 **Expected output:** A list of all position names will be displayed (e.g., "LW, ST, GK, CB").
+
+![list position message](images/listPositionResult.png)
 </box>
 
 ### Listing all injured players: `listinjured`
@@ -575,13 +599,15 @@ Format: `listinjured`
 <box type="info" seamless>
 
 **Expected output:** Only players with injuries (non-FIT status) will be displayed in the player list panel. Their injury details will be visible on their player cards.
+
+![list injured message](images/listInjuredResult.png)
 </box>
 
-### Listing all captains: `listcaptains`
+### Listing all captains: `filtercaptains`
 
 Shows a list of all captains in the PlayBook.
 
-Format: `listcaptains`
+Format: `filtercaptains`
 
 <box type="tip" seamless>
 
@@ -591,6 +617,8 @@ Format: `listcaptains`
 <box type="info" seamless>
 
 **Expected output:** Only players designated as captains will be displayed in the player list panel.
+
+![filter captains message](images/filterCaptainsResult.png)
 </box>
 
 ### Editing a player: `edit`
@@ -635,9 +663,11 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 <box type="info" seamless>
 
-**Expected output:** "Edited Person: Betsy Crower; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+**Expected output:** "Edited Player: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Injuries: [FIT]; Tags: "
 
 The player card will immediately reflect all changes.
+
+![edit message](images/editResult.png)
 </box>
 
 ### Locating players by name: `find`
@@ -647,10 +677,10 @@ Finds players whose names contain any of the given keywords.
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Requirements:**
-* The search is case-insensitive. e.g `hans` will match `Hans`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
-* Only the player's name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`.
+* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `PLAYER_NAME` will only match full words e.g. `Han` will not match `Hans`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
@@ -670,7 +700,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Expected output:** "X persons listed!" where X is the number of matching players. The player list panel will show only the matching players.
 
-![result for 'find alex david'](images/findAlexDavidResult.png)
+![result for 'find Doe'](images/findResult.png)
 </box>
 
 ### Filtering players by team, injury and/or position: `filter`
@@ -681,11 +711,21 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 
 **Requirements:**
 * At least one of the optional fields must be provided.
-* Shows all the players that match the specified `TEAM_NAME`, `POSITION` and/or `INJURY`.
-* Duplicate flags are not allowed.
-* All fields are case-insensitive. e.g `acl` will match `ACL`.
-* The order of keywords for the injury field does not matter. e.g. `Leg Broken` will match `Broken Leg`.
-* Only full words will be matched by the injury field. `ACL` will not match `ACLs`.
+* `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
+* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should not be blank.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should not be blank.
+* `INJURY` should contain alphanumeric characters and spaces only.
+* `INJURY` must match an injury that is already assigned to the specified player.
+* `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
+* `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
+* `POSITION_NAME` must be an existing position in the PlayBook. Use the `newposition` command to add a position first.
+* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
+* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
+* `POSITION_NAME` should not be blank.
 
 <box type="tip" seamless>
 
@@ -701,10 +741,13 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`
 * `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
 * `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
 * `filter tm/Chelsea` - Shows all Chelsea team players
+* `filter tm/Manchester i/Leg Arm` - Shows all Manchester team players with an injuries with the words Leg or Arm in them
 
 <box type="info" seamless>
 
 **Expected output:** "X persons listed!" where X is the number of players matching all filter criteria. Only matching players will be displayed.
+
+![result for filter](images/filterResult.png)
 </box>
 
 ### Deleting a player: `delete`
@@ -736,6 +779,8 @@ Format: `delete pl/PLAYER_NAME`
 **Expected output:** "Deleted Person: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
 
 The player card will immediately disappear from the player list.
+
+![delete player message](images/deletePlayerResult.png)
 </box>
 
 ### Deleting a team: `deleteteam`
@@ -767,9 +812,11 @@ Format: `deleteteam tm/TEAM_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Deleted team: U16"
+**Expected output:** "Team U100 has been deleted successfully!"
 
 All players previously assigned to this team will have their team assignment removed.
+
+![delte team message](images/deleteTeamResult.png)
 </box>
 
 ### Deleting a position: `deleteposition`
@@ -801,9 +848,11 @@ Format: `deleteposition ps/POSITION_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Deleted Position: LW"
+**Expected output:** "Position LWB has been deleted successfully!"
 
 All players previously assigned to this position will have it removed from their cards.
+
+![help message](images/deletePositionResult.png)
 </box>
 
 ### Clearing all entries: `clear`
