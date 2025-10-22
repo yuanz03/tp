@@ -38,7 +38,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
         - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
-        - [Listing all captains: `listcaptains`](#listing-all-captains-listcaptains)
+        - [Filtering all captains: `filtercaptains`](#listing-all-captains-filtercaptains)
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
@@ -484,10 +484,11 @@ Format: `makecaptain pl/PLAYER_NAME`
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * The player must not already be an assigned captain.
+* **Multiple captains per team are supported** - you can assign multiple players from the same team as captains to facilitate co-leadership structures (e.g., co-captains, senior/junior captain pairings).
 
 <box type="tip" seamless>
 
-**Tip:** You can have multiple captains for different teams. Use `listcaptains` to see all current team captains.
+**Tip:** You can have multiple captains for different teams. Use `filtercaptains` to see all current team captains.
 </box>
 
 **Examples:**
