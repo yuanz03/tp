@@ -152,7 +152,7 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
-* `JsonAdaptedPerson` has four JSON-adapted components — `JsonAdaptedInjury`, `JsonAdaptedTag`, `JsonAdaptedPosition`, and `JsonAdaptedTeam` — each representing a corresponding part of the `Person` model for saving to and reading from the JSON.
+* `JsonAdaptedPerson` persists player details including primitive fields (`name`, `phone`, `email`, `address`, `isCaptain`) and JSON-adapted components — `JsonAdaptedInjury`, `JsonAdaptedTag`, `JsonAdaptedPosition`, and `JsonAdaptedTeam`.
 
 ### Common classes
 
@@ -313,9 +313,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
-| `* * *`  | coach    | save a player's dietary restriction            | save players dietary restrictions                                    |
-| `* * *`  | coach    | save a player's jersey number                  | easily know what jersey number each player is wearing                |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
+| `* * *`  | coach    | remove captain from a player                   | update leadership assignments when needed                            |
+| `* *`    | coach    | filter players by captain status               | quickly view all captains                                            |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
 | `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
 | `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
@@ -776,7 +776,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC16 - Remove captain from a player**
+**Use case: UC17 - Remove captain from a player**
 
 **MSS**
 
@@ -799,7 +799,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Filter players by captain status**
+**Use case: UC18 - Filter players by captain status**
 
 **MSS**
 

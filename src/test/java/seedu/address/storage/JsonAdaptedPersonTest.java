@@ -20,6 +20,7 @@ import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.position.Position;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -42,6 +43,7 @@ public class JsonAdaptedPersonTest {
     private static final List<JsonAdaptedInjury> VALID_INJURIES = BENSON.getInjuries().stream()
             .map(JsonAdaptedInjury::new)
             .collect(Collectors.toList());
+    private static final String VALID_SINGLE_INJURY = "Hamstring";
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -165,5 +167,52 @@ public class JsonAdaptedPersonTest {
                 VALID_INJURIES, null, VALID_POSITION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "Team");
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullPosition_defaultsToNone() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_INJURIES, VALID_TEAM, null, VALID_TAGS);
+        Person model = person.toModelType();
+        assertEquals(new Position("NONE"), model.getPosition());
+    }
+
+    @Test
+    public void toModelType_nullTags_allowsEmpty() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, null);
+        Person model = person.toModelType();
+        assertTrue(model.getTags().isEmpty());
+    }
+
+    @Test
+    public void toModelType_legacySingleInjury_addsOnlyProvidedInjury() throws Exception {
+        JsonAdaptedPerson person = JsonAdaptedPerson.fromLegacySingleInjury(
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_SINGLE_INJURY, VALID_TEAM, VALID_POSITION, VALID_TAGS);
+        Person model = person.toModelType();
+        assertTrue(model.getInjuries().contains(new Injury(VALID_SINGLE_INJURY)));
+        assertEquals(1, model.getInjuries().size());
+    }
+
+    @Test
+    public void roundTrip_preservesCaptainTrue_andInjuries() throws Exception {
+        Person source = new seedu.address.testutil.PersonBuilder(BENSON)
+                .withCaptain(true)
+                .withInjuries("ACL", "BrokenFoot")
+                .build();
+        JsonAdaptedPerson adapted = new JsonAdaptedPerson(source);
+        Person restored = adapted.toModelType();
+        assertTrue(restored.isCaptain());
+        assertTrue(restored.getInjuries().contains(new Injury("ACL")));
+        assertTrue(restored.getInjuries().contains(new Injury("BrokenFoot")));
+    }
+
+    @Test
+    public void toModelType_captainNull_defaultsFalse() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_INJURIES, VALID_TEAM, VALID_POSITION, VALID_TAGS, null);
+        Person model = person.toModelType();
+        assertFalse(model.isCaptain());
     }
 }

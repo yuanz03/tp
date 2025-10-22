@@ -35,6 +35,7 @@ class JsonAdaptedPerson {
     private final JsonAdaptedPosition position;
     private final List<JsonAdaptedInjury> injuries = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final Boolean isCaptain;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -45,19 +46,31 @@ class JsonAdaptedPerson {
                              @JsonProperty("injuries") List<JsonAdaptedInjury> injuries,
                              @JsonProperty("team") JsonAdaptedTeam team,
                              @JsonProperty("position") JsonAdaptedPosition position,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("isCaptain") Boolean isCaptain) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.team = team;
         this.position = position;
+        this.isCaptain = isCaptain;
         if (injuries != null) {
             this.injuries.addAll(injuries);
         }
         if (tags != null) {
             this.tags.addAll(tags);
         }
+    }
+
+    /**
+     * Convenience constructor matching legacy call sites that provide injuries but not captain status.
+     * Delegates to the main constructor with {@code isCaptain} set to null.
+     */
+    public JsonAdaptedPerson(String name, String phone, String email, String address,
+                             List<JsonAdaptedInjury> injuries, JsonAdaptedTeam team,
+                             JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        this(name, phone, email, address, injuries, team, position, tags, null);
     }
 
     /**
@@ -70,12 +83,29 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         team = new JsonAdaptedTeam(source.getTeam());
         position = new JsonAdaptedPosition(source.getPosition());
+        isCaptain = source.isCaptain();
         injuries.addAll(source.getInjuries().stream()
                 .map(JsonAdaptedInjury::new)
                 .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+    }
+
+    /**
+     * Backward-compatible named factory for older call sites that passed a single injury name.
+     * This avoids overload ambiguity when the fifth argument is null and ensures all initialization
+     * is centralized via the main constructor.
+     */
+    public static JsonAdaptedPerson fromLegacySingleInjury(String name, String phone, String email, String address,
+                                                           String injuryName, JsonAdaptedTeam team,
+                                                           JsonAdaptedPosition position, List<JsonAdaptedTag> tags) {
+        List<JsonAdaptedInjury> injuriesList = null;
+        if (injuryName != null) {
+            injuriesList = new ArrayList<>();
+            injuriesList.add(new JsonAdaptedInjury(injuryName));
+        }
+        return new JsonAdaptedPerson(name, phone, email, address, injuriesList, team, position, tags, null);
     }
 
     /**
@@ -140,8 +170,8 @@ class JsonAdaptedPerson {
 
         final Set<Injury> modelInjuries = new HashSet<>(personInjuries);
         final Set<Tag> modelTags = new HashSet<>(personTags);
-
+        final boolean modelIsCaptain = (isCaptain == null) ? Person.DEFAULT_CAPTAIN_STATUS : isCaptain;
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTeam, modelTags,
-                modelPosition, modelInjuries, Person.DEFAULT_CAPTAIN_STATUS);
+                modelPosition, modelInjuries, modelIsCaptain);
     }
 }
