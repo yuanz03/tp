@@ -12,8 +12,6 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 #### Table of Contents
 
-<!-- * Table of Contents -->
-
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
         - [Who is PlayBook for?](#who-is-playbook-for)
@@ -54,8 +52,6 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
     - [FAQ](#faq)
     - [Known issues](#known-issues)
     - [Command summary](#command-summary)
-
-<page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
