@@ -9,15 +9,15 @@ import seedu.address.model.position.Position;
 /**
  * Creates a new {@code Position} and adds it to the PlayBook.
  * <p>
- * Usage: {@code newposition ps/<position_name>}
+ * Usage: {@code addposition ps/<position_name>}
  */
 public class NewPositionCommand extends Command {
-    public static final String COMMAND_WORD = "newposition";
+    public static final String COMMAND_WORD = "addposition";
     public static final String MESSAGE_SUCCESS = "Position %s has been created successfully!";
     public static final String MESSAGE_DUPLICATE = "%s already exists!";
-    public static final String MESSAGE_MISSING_FLAG = "Missing 'ps/' flag for newposition command";
+    public static final String MESSAGE_MISSING_FLAG = "Missing 'ps/' flag for addposition command";
     public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid command format. Please ensure correct form at: newposition ps/<position_name>";
+            "Invalid command format. Please ensure correct form at: addposition ps/<position_name>";
 
     private final String rawPositionName;
 

@@ -28,7 +28,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
         - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
         - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
-        - [Creating a new position: `newposition`](#creating-a-new-position-newposition)
+        - [Creating a new position: `addposition`](#creating-a-new-position-addposition)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
         - [Assigning player as captain: `makecaptain`](#assigning-player-as-captain-makecaptain)
         - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
@@ -162,9 +162,9 @@ Type commands in the command box and press Enter to execute them. Here's a quick
 
 * `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16` : Add another player to the U16 team.
 
-* `newposition ps/LW` : Create a new position named `LW` (Left Wing) in the PlayBook.
+* `addposition ps/LW` : Create a new position named `LW` (Left Wing) in the PlayBook.
 
-* `assignposition pl/Alex Tan ps/LW` : Assign the position `LW` to `Alex Tan` (create the position first using `newposition`).
+* `assignposition pl/Alex Tan ps/LW` : Assign the position `LW` to `Alex Tan` (create the position first using `addposition`).
 
 * `assigninjury pl/Alex Tan i/ACL` : Mark `Alex Tan` as injured with an ACL injury.
 
@@ -401,11 +401,11 @@ If this was the player's only injury, their status will automatically return to 
 ![unassign injury message](images/unassignInjuryResult.png)
 </box>
 
-### Creating a new position: `newposition`
+### Creating a new position: `addposition`
 
 Creates a new position in the PlayBook.
 
-Format: `newposition ps/POSITION_NAME`
+Format: `addposition ps/POSITION_NAME`
 
 **Requirements:**
 * `POSITION_NAME` must not be the same as an existing position in the PlayBook.
@@ -419,9 +419,9 @@ Format: `newposition ps/POSITION_NAME`
 </box>
 
 **Examples:**
-* `newposition ps/LW` - Creates Left Wing position
-* `newposition ps/ST` - Creates Striker position
-* `newposition ps/GK` - Creates Goalkeeper position
+* `addposition ps/LW` - Creates Left Wing position
+* `addposition ps/ST` - Creates Striker position
+* `addposition ps/GK` - Creates Goalkeeper position
 
 <box type="info" seamless>
 
@@ -440,7 +440,7 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
-* `POSITION_NAME` must be an existing position in the PlayBook. Use the `newposition` command to add a position first.
+* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
 * `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
 * `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
 * `POSITION_NAME` should not be blank.
@@ -448,7 +448,7 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
 <box type="warning" seamless>
 
-**Warning:** You must create the position first using `newposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
+**Warning:** You must create the position first using `addposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
 </box>
 
 <box type="tip" seamless>
@@ -719,7 +719,7 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 * `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
 * `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
-* `POSITION_NAME` must be an existing position in the PlayBook. Use the `newposition` command to add a position first.
+* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
 * `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
 * `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
 * `POSITION_NAME` should not be blank.
@@ -971,7 +971,7 @@ _Details coming soon ..._
 | **Assign Player to Team**       | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                                 |
 | **Assign Injury to Player**     | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                                  |
 | **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                                             |
-| **Create New Position**         | `newposition ps/POSITION_NAME` <br> e.g., `newposition ps/LW`                                                                                                                                                       |
+| **Create New Position**         | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                                       |
 | **Assign Position to Player**   | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                      |
 | **Clear**                       | `clear`                                                                                                                                                                                                             |
 | **Delete Player**               | `delete pl/PLAYER_NAME`<br> e.g., `delete pl/James Ho`                                                                                                                                                              |
