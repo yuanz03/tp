@@ -40,9 +40,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
-        - [Deleting a player: `delete`](#deleting-a-player-delete)
-        - [Deleting a team: `deleteteam`](#deleting-a-team-deleteteam)
-        - [Deleting a position: `deleteposition`](#deleting-a-position-deleteposition)
+        - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
         - [Clearing all entries: `clear`](#clearing-all-entries-clear)
         - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
@@ -223,14 +221,9 @@ Format: `addteam tm/TEAM_NAME`
 
 **Requirements:**
 * `TEAM_NAME` must not be the same as an existing team in the PlayBook.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
+* `TEAM_NAME` should contain alphanumeric characters and spaces only.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-
-<box type="warning" seamless>
-
-**Warning:** Team names cannot contain spaces. Use naming conventions like `U16`, `U18`, or `Reserves` instead of `U 16` or `U 18`.
-</box>
 
 **Examples:**
 * `addteam tm/U16` - Creates a team for under-16 players
@@ -261,9 +254,9 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 * `EMAIL` should not be blank.
 * `ADDRESS` should not be blank.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
+* `TEAM_NAME` should contain only alphanumeric characters and spaces.
 * `TEAM_NAME` should not be blank.
+* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TAG` should contain alphanumeric characters only.
 
 <box type="warning" seamless>
@@ -297,10 +290,7 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
 **Requirements:**
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
@@ -639,7 +629,6 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
 * `TAG` should contain alphanumeric characters only.
-
 <box type="warning" seamless>
 
 **Warning:** When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
@@ -709,12 +698,10 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 **Requirements:**
 * At least one of the optional fields must be provided.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
+* `TEAM_NAME` should contain only alphanumeric characters and spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
 * `INJURY` should not be blank.
-* `INJURY` should contain alphanumeric characters and spaces only.
 * `INJURY` must match an injury that is already assigned to the specified player.
 * `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
 * `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
@@ -747,105 +734,53 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 ![result for filter](images/filterResult.png)
 </box>
 
-### Deleting a player: `delete`
+### Deleting a player, team or position: `delete`
 
-Deletes the specified player from the PlayBook.
+Deletes the specified player, team or position from the PlayBook.
 
-Format: `delete pl/PLAYER_NAME`
+Format: `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`
 
 **Requirements:**
-* `PLAYER_NAME` is case-insensitive, e.g `hans` will match `Hans`.
-* The player to be deleted must exist in the PlayBook.
+* You must provide **exactly one** parameter (either `pl/`, `tm/`, or `ps/`).
+* Names are case-insensitive, e.g `hans` will match `Hans`, `u16` will match `U16`.
+* The player, team or position to be deleted must exist in the PlayBook.
+* Names should not be blank.
 
 <box type="warning" seamless>
 
-**Warning:** This action cannot be undone! The player and all their information (team, position, injuries, tags) will be permanently removed. Consider making a backup of your data file before bulk deletions.
+**Warning:** This action cannot be undone! 
+- **Deleting a player**: The player and all their information (team, position, injuries, tags) will be permanently removed.
+- **Deleting a team**: You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
+- **Deleting a position**: TODO
+
+Consider making a backup of your data file before bulk deletions.
 </box>
 
 <box type="info" seamless>
 
-**Note:** The command can only delete one player at a time.
+**Note:** The command can only delete one player, team or position at a time.
 </box>
 
 **Examples:**
-* `delete pl/John Doe` - Permanently deletes John Doe from PlayBook
-* `delete pl/Betsy Crowe` - Permanently deletes Betsy Crowe from PlayBook
+* `delete pl/John Doe` - Permanently deletes player John Doe from PlayBook
+* `delete tm/U16` - Deletes the U16 team from PlayBook (only if no players are assigned)
+* `delete ps/LW` - Deletes LW position from PlayBook
 
 <box type="info" seamless>
 
-**Expected output:** "Deleted Person: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+**Expected output:**
+
+**For player deletion:** "Deleted Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
 
 The player card will immediately disappear from the player list.
 
 ![delete player message](images/deletePlayerResult.png)
-</box>
 
-### Deleting a team: `deleteteam`
+**For team deletion:** "Team U16 has been deleted successfully!"
 
-Deletes the specified team from the PlayBook.
+![delete team message](images/deleteTeamResult.png)
 
-Format: `deleteteam tm/TEAM_NAME`
-
-**Requirements:**
-* `TEAM_NAME` must be an existing team in the PlayBook.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TEAM_NAME` should not be blank.
-* The team to be deleted must exist in the PlayBook.
-
-<box type="warning" seamless>
-
-**Warning:** You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
-</box>
-
-<box type="info" seamless>
-
-**Note:** The command can only delete one team at a time.
-</box>
-
-**Examples:**
-* `deleteteam tm/U16` - Deletes the U16 team from PlayBook
-* `deleteteam tm/Reserves` - Deletes the Reserves team from PlayBook
-
-<box type="info" seamless>
-
-**Expected output:** "Team U100 has been deleted successfully!"
-
-All players previously assigned to this team will have their team assignment removed.
-
-![delte team message](images/deleteTeamResult.png)
-</box>
-
-### Deleting a position: `deleteposition`
-
-Deletes the specified position from the PlayBook.
-
-Format: `deleteposition ps/POSITION_NAME`
-
-**Requirements:**
-* `POSITION_NAME` must be an existing position in the PlayBook.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-* The position to be deleted must exist in the PlayBook.
-
-<box type="warning" seamless>
-
-**Warning:** Deleting a position will remove it from all players who were assigned to that position. Make sure this is intentional before proceeding.
-</box>
-
-<box type="info" seamless>
-
-**Note:** The command can only delete one position at a time.
-</box>
-
-**Examples:**
-* `deleteposition ps/LW` - Deletes Left Wing position from PlayBook
-* `deleteposition ps/ST` - Deletes Striker position from PlayBook
-
-<box type="info" seamless>
-
-**Expected output:** "Position LWB has been deleted successfully!"
+**For position deletion:** "Position LW has been deleted successfully!"
 
 All players previously assigned to this position will have it removed from their cards.
 
@@ -974,9 +909,7 @@ _Details coming soon ..._
 | **Create New Position**         | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                                       |
 | **Assign Position to Player**   | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                      |
 | **Clear**                       | `clear`                                                                                                                                                                                                             |
-| **Delete Player**               | `delete pl/PLAYER_NAME`<br> e.g., `delete pl/James Ho`                                                                                                                                                              |
-| **Delete Team**                 | `deleteteam tm/TEAM_NAME`<br> e.g., `deleteteam tm/u16`                                                                                                                                                             |
-| **Delete Position**             | `deleteposition ps/POSITION_NAME`<br> e.g., `deleteposition ps/LW`                                                                                                                                                  |
+| **Delete**                      | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                                         |
 | **Edit**                        | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                        |
 | **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                          |
 | **Filter Players**              | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                               |
