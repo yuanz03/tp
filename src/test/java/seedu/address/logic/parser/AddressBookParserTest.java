@@ -6,8 +6,10 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.INJURY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TEAM_NAME_DESC_12;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_NAME_12;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalTeams.U16;
 
@@ -23,7 +25,6 @@ import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.logic.commands.AssignTeamCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteTeamCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -65,11 +66,21 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_delete() throws Exception {
+    public void parseCommand_delete_player() throws Exception {
         Name name = new Name(VALID_NAME_AMY);
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + PLAYER_DESC_AMY);
-        assertEquals(new DeleteCommand(name), command);
+        DeleteCommand expectedCommand = DeleteCommand.createDeletePlayerCommand(new Name(VALID_NAME_AMY));
+        assertEquals(expectedCommand, command);
+    }
+
+    @Test
+    public void parseCommand_delete_team() throws Exception {
+        Team team = new Team(VALID_TEAM_NAME_12);
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(
+                DeleteCommand.COMMAND_WORD + TEAM_NAME_DESC_12);
+        DeleteCommand expectedCommand = DeleteCommand.createDeleteTeamCommand(team);
+        assertEquals(expectedCommand, command);
     }
 
     @Test
@@ -119,13 +130,6 @@ public class AddressBookParserTest {
         AssignTeamCommand command = (AssignTeamCommand)
                 parser.parseCommand(TeamUtil.getAssignTeamCommand(name, U16));
         assertEquals(new AssignTeamCommand(name, U16), command);
-    }
-
-    @Test
-    public void parseCommand_deleteTeam() throws Exception {
-        Team team = U16;
-        DeleteTeamCommand command = (DeleteTeamCommand) parser.parseCommand(TeamUtil.getDeleteTeamCommand(team));
-        assertEquals(new DeleteTeamCommand(team), command);
     }
 
     @Test
