@@ -39,6 +39,18 @@ public class UniqueTeamList implements Iterable<Team> {
     }
 
     /**
+     * Returns the team in the list that matches the given team (case-insensitive).
+     * The team must exist in the list.
+     */
+    public Team getTeamByName(Team toFind) {
+        requireNonNull(toFind);
+        return internalList.stream()
+                .filter(toFind::isSameTeam)
+                .findFirst()
+                .orElseThrow(() -> new TeamNotFoundException());
+    }
+
+    /**
      * Adds a team to the list.
      * The team must not already exist in the list.
      */

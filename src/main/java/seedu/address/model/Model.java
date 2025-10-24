@@ -131,6 +131,11 @@ public interface Model {
     boolean hasTeam(Team team);
 
     /**
+     * Returns the team from the team list that matches the given team (case-insensitive).
+     */
+    Team getTeamByName(Team team);
+
+    /**
      * Adds the given team.
      * {@code team} must not already exist in the address book.
      */
