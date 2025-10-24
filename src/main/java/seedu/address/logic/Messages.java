@@ -34,6 +34,7 @@ public class Messages {
     public static final String MESSAGE_NO_TEAMS = "There are currently no teams in the PlayBook.";
     public static final String MESSAGE_NO_POSITIONS = "There are currently no positions in the PlayBook.";
     public static final String MESSAGE_NO_INJURED = "There are currently no injured players in the PlayBook.";
+    public static final String MESSAGE_TOO_MANY_PREFIXES = "There are too many prefixes specified. \n%1$s";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

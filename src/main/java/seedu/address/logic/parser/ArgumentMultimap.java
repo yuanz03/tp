@@ -77,6 +77,13 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Returns size of map, including the preamble.
+     */
+    public int getSize() {
+        return argMultimap.size();
+    }
+
+    /**
      * Returns true if the map contains no key-value mappings.
      * A map is considered empty if it contains no prefixes or only the preamble.
      * size() == 1 indicates that only the preamble is present.
