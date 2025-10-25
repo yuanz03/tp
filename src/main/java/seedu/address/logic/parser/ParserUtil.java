@@ -145,6 +145,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses and validates a position {@code String position} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parsePositionName(String position) throws ParseException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Position.isValidPositionName(trimmedPosition)) {
+            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
+        }
+        return trimmedPosition;
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *

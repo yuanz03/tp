@@ -12,6 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -35,18 +36,25 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Player: %1$s has been deleted successfully!";
     public static final String MESSAGE_DELETE_TEAM_SUCCESS = "Team: %s has been deleted successfully!";
+    public static final String MESSAGE_DELETE_POSITION_SUCCESS = "Position: %s has been deleted successfully!";
+
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_EMPTY = "Team: %s still has players assigned to it!\n"
             + "Please either delete player if no longer managing player\n"
             + "or reassign player to another team before deleting this team.";
+    public static final String MESSAGE_POSITION_NOT_FOUND = "Position: %s doesn't exist!";
+    public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
+            + " one or more players.";
 
 
     private final Name personNameToDelete;
     private final Team teamToDelete;
+    private final String positionToDelete;
 
-    private DeleteCommand(Name personNameToDelete, Team teamToDelete) {
+    private DeleteCommand(Name personNameToDelete, Team teamToDelete, String positionToDelete) {
         this.personNameToDelete = personNameToDelete;
         this.teamToDelete = teamToDelete;
+        this.positionToDelete = positionToDelete;
     }
 
     /**
@@ -54,7 +62,7 @@ public class DeleteCommand extends Command {
      */
     public static DeleteCommand createDeleteTeamCommand(Team teamToDelete) {
         requireNonNull(teamToDelete);
-        return new DeleteCommand(null, teamToDelete);
+        return new DeleteCommand(null, teamToDelete, null);
     }
 
     /**
@@ -62,7 +70,15 @@ public class DeleteCommand extends Command {
      */
     public static DeleteCommand createDeletePlayerCommand(Name playerNameToDelete) {
         requireNonNull(playerNameToDelete);
-        return new DeleteCommand(playerNameToDelete, null);
+        return new DeleteCommand(playerNameToDelete, null, null);
+    }
+
+    /**
+     * Creates a DeleteCommand to delete the specified {@code Position} by name.
+     */
+    public static DeleteCommand createDeletePositionCommand(String positionToDelete) {
+        requireNonNull(positionToDelete);
+        return new DeleteCommand(null, null, positionToDelete);
     }
 
     @Override
@@ -72,6 +88,8 @@ public class DeleteCommand extends Command {
             return executeDeletePlayer(model);
         } else if (isDeleteTeamCommand()) {
             return executeDeleteTeam(model);
+        } else if (isDeletePositionCommand()) {
+            return executeDeletePosition(model);
         } else {
             throw new CommandException("No valid delete command found.");
         }
@@ -89,6 +107,13 @@ public class DeleteCommand extends Command {
      */
     private boolean isDeletePlayerCommand() {
         return personNameToDelete != null;
+    }
+
+    /**
+     * Checks if the command is to delete a position.
+     */
+    private boolean isDeletePositionCommand() {
+        return positionToDelete != null;
     }
 
     /**
@@ -127,6 +152,36 @@ public class DeleteCommand extends Command {
                 Messages.format(personToDelete)));
     }
 
+    //@@author gabrieltang515
+    /**
+     * Executes the delete position command.
+     */
+    private CommandResult executeDeletePosition(Model model) throws CommandException {
+
+        final String name = positionToDelete.trim();
+        if (!Position.isValidPositionName(name)) {
+            throw new CommandException(Position.MESSAGE_CONSTRAINTS);
+        }
+
+        final Position toDelete;
+        try {
+            toDelete = model.getPositionByName(name);
+        } catch (RuntimeException e) {
+            throw new CommandException(String.format(MESSAGE_POSITION_NOT_FOUND, name));
+        }
+
+        // Check if the position is assigned to any player
+        if (model.isPositionAssigned(toDelete)) {
+            throw new CommandException(String.format(MESSAGE_POSITION_ASSIGNED, name));
+        }
+
+        model.deletePosition(toDelete);
+
+        return new CommandResult(String.format(MESSAGE_DELETE_POSITION_SUCCESS,
+                name));
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -54,7 +54,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         // Handle delete position
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_POSITION);
-            throw new ParseException("NOT IMPLEMENTED YET");
+            String posName = ParserUtil.parsePositionName(argMultimap.getValue(PREFIX_POSITION).get());
+            return DeleteCommand.createDeletePositionCommand(posName);
         }
 
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
