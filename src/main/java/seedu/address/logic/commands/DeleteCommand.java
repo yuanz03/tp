@@ -198,6 +198,8 @@ public class DeleteCommand extends Command {
             return teamToDelete.equals(otherDeleteCommand.teamToDelete);
         } else if (this.personNameToDelete != null && otherDeleteCommand.personNameToDelete != null) {
             return personNameToDelete.equals(otherDeleteCommand.personNameToDelete);
+        } else if (this.positionToDelete != null && otherDeleteCommand.positionToDelete != null) {
+            return positionToDelete.equals(otherDeleteCommand.positionToDelete);
         }
         return false;
     }
@@ -207,6 +209,7 @@ public class DeleteCommand extends Command {
         return new ToStringBuilder(this)
                 .add("personToDelete", personNameToDelete)
                 .add("teamToDelete", teamToDelete)
+                .add("positionToDelete", positionToDelete)
                 .toString();
     }
 }

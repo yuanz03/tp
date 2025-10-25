@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_TOO_MANY_PREFIXES;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PLAYER_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSITION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TEAM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PLAYER_DESC_BOB;
@@ -10,8 +11,10 @@ import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -21,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.model.person.Name;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -60,6 +64,19 @@ public class DeleteCommandParserTest {
     }
 
     @Test
+    public void parse_validPositionArgs_returnsDeleteCommand() {
+        // Valid position name
+        assertParseSuccess(parser, POSITION_DESC_AMY, DeleteCommand.createDeletePositionCommand(VALID_POSITION_AMY));
+    }
+
+    @Test
+    public void parse_validPositionArgsWithExtraWhitespace_returnsDeleteCommand() {
+        // Valid position name with extra whitespace
+        assertParseSuccess(parser, POSITION_DESC_AMY + "  ",
+                DeleteCommand.createDeletePositionCommand(VALID_POSITION_AMY));
+    }
+
+    @Test
     public void parse_missingPrefix_throwsParseException() {
         // Missing any prefix
         assertParseFailure(parser, VALID_NAME_AMY,
@@ -79,6 +96,12 @@ public class DeleteCommandParserTest {
     }
 
     @Test
+    public void parse_missingPositionName_throwsParseException() {
+        // Missing position name after prefix
+        assertParseFailure(parser, " " + PREFIX_POSITION, Position.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
     public void parse_invalidPlayerName_throwsParseException() {
         // Invalid name with special characters
         assertParseFailure(parser, INVALID_PLAYER_DESC, Name.MESSAGE_CONSTRAINTS);
@@ -88,6 +111,12 @@ public class DeleteCommandParserTest {
     public void parse_invalidTeamName_throwsParseException() {
         // Invalid team name with special characters
         assertParseFailure(parser, INVALID_TEAM_DESC, Team.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidPositionName_throwsParseException() {
+        // Invalid position name with special characters
+        assertParseFailure(parser, INVALID_POSITION_DESC, Position.MESSAGE_CONSTRAINTS);
     }
 
     @Test
