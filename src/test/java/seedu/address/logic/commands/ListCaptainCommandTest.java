@@ -13,7 +13,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 
 /**
- * Contains integration tests for {@code ListCaptaionCommand}.
+ * Contains integration tests for {@code ListCaptainCommand}.
  */
 public class ListCaptainCommandTest {
 
