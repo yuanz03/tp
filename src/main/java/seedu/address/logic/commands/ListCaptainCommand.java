@@ -12,8 +12,8 @@ import seedu.address.model.Model;
  * {@code PREDICATE_SHOW_CAPTAINS} and returns a message indicating
  * the successful operation.
  */
-public class FilterCaptainCommand extends Command {
-    public static final String COMMAND_WORD = "filtercaptains";
+public class ListCaptainCommand extends Command {
+    public static final String COMMAND_WORD = "listcaptain";
     public static final String MESSAGE_SUCCESS = "Listed all captains";
 
     /**
