@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -99,6 +100,43 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getTeamCaptain_teamWithCaptain_returnsCaptain() {
+        Person captain = new PersonBuilder(ALICE).withTeam(U16.getName()).withCaptain(true).build();
+
+        modelManager.addTeam(U16);
+        modelManager.addPerson(captain);
+
+        assertEquals(captain, modelManager.getTeamCaptain(U16));
+    }
+
+    @Test
+    public void getTeamCaptain_teamWithoutCaptain_returnsNull() {
+        Person member = new PersonBuilder(ALICE).withTeam(U16.getName()).withCaptain(false).build();
+
+        modelManager.addTeam(U16);
+        modelManager.addPerson(member);
+
+        assertNull(modelManager.getTeamCaptain(U16));
+    }
+
+    @Test
+    public void getTeamCaptain_teamWithMultipleCaptains_returnsFirstCaptainFound() {
+        Person captain1 = new PersonBuilder(ALICE).withTeam(U16.getName()).withCaptain(true).build();
+        Person captain2 = new PersonBuilder(BENSON).withTeam(U16.getName()).withCaptain(true).build();
+
+        modelManager.addTeam(U16);
+        modelManager.addPerson(captain1);
+        modelManager.addPerson(captain2);
+
+        assertEquals(captain1, modelManager.getTeamCaptain(U16));
+    }
+
+    @Test
+    public void getTeamCaptain_nullTeam_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.getTeamCaptain(null));
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
     }
@@ -122,15 +160,13 @@ public class ModelManagerTest {
 
     @Test
     public void addInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () ->
-                modelManager.addInjury(null, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
     public void addInjury_nullInjury_throwsNullPointerException() {
         modelManager.addPerson(ALICE);
-        assertThrows(NullPointerException.class, () ->
-                modelManager.addInjury(ALICE, null));
+        assertThrows(NullPointerException.class, () -> modelManager.addInjury(ALICE, null));
     }
 
     @Test
@@ -194,8 +230,7 @@ public class ModelManagerTest {
     public void addInjury_defaultInjury_throwsIllegalArgumentException() {
         modelManager.addPerson(ALICE);
 
-        assertThrows(IllegalArgumentException.class, () ->
-                modelManager.addInjury(ALICE, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(IllegalArgumentException.class, () -> modelManager.addInjury(ALICE, Person.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -218,8 +253,7 @@ public class ModelManagerTest {
 
     @Test
     public void hasInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () ->
-                modelManager.hasInjury(null));
+        assertThrows(NullPointerException.class, () -> modelManager.hasInjury(null));
     }
 
     @Test
@@ -264,15 +298,13 @@ public class ModelManagerTest {
 
     @Test
     public void deleteInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () ->
-                modelManager.deleteInjury(null, new Injury("ACL")));
+        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(null, new Injury("ACL")));
     }
 
     @Test
     public void deleteInjury_nullInjury_throwsNullPointerException() {
         modelManager.addPerson(ALICE);
-        assertThrows(NullPointerException.class, () ->
-                modelManager.deleteInjury(ALICE, null));
+        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(ALICE, null));
     }
 
     @Test
@@ -332,7 +364,8 @@ public class ModelManagerTest {
     @Test
     public void getFilteredTeamList_returnsUnfilteredTeamList() {
         ModelManager modelManager = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        // The default filteredTeams should contain all teams in the typical address book
+        // The default filteredTeams should contain all teams in the typical address
+        // book
         ObservableList<Team> filteredList = modelManager.getFilteredTeamList();
         assertEquals(getTypicalAddressBook().getTeamList(), filteredList);
     }
@@ -438,7 +471,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void assignCaptain_validPerson_makesCaptainCorrectly() {
+    public void assignCaptain_validPerson_assignsCaptainCorrectly() {
         modelManager.addPerson(ALICE);
         assertFalse(ALICE.isCaptain());
 

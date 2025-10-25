@@ -488,8 +488,8 @@ Format: `assigncaptain pl/PLAYER_NAME`
 </box>
 
 **Examples:**
-* `assigncaptain pl/John Doe` - Makes John Doe a captain
-* `assigncaptain pl/Sergio Ramos` - Makes Sergio Ramos a captain
+* `assigncaptain pl/John Doe` - Assigns John Doe a captain
+* `assigncaptain pl/Sergio Ramos` - Assigns Sergio Ramos a captain
 
 <box type="info" seamless>
 
