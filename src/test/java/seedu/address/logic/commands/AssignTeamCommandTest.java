@@ -21,6 +21,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TeamBuilder;
@@ -109,6 +110,30 @@ public class AssignTeamCommandTest {
     }
 
     @Test
+    public void execute_assignTeamCaseInsensitive_usesCanonicalTeamName() throws Exception {
+        // Test that case-insensitive team matching uses the canonical team name from address book
+        Model model = new ModelManager();
+        Team canonicalTeam = new TeamBuilder().withName("U16").build(); // Canonical name with uppercase
+        model.addTeam(canonicalTeam);
+
+        Person alice = new PersonBuilder(ALICE).build();
+        model.addPerson(alice);
+
+        // User inputs lowercase "u16" but should get assigned to canonical "U16"
+        Team lowercaseTeam = new TeamBuilder().withName("u16").build();
+        AssignTeamCommand assignTeamCommand = new AssignTeamCommand(ALICE.getName(), lowercaseTeam);
+        CommandResult commandResult = assignTeamCommand.execute(model);
+
+        // Verify the success message uses the canonical team name "U16", not "u16"
+        assertEquals(String.format(AssignTeamCommand.MESSAGE_SUCCESS, ALICE.getName(), "U16"),
+                commandResult.getFeedbackToUser());
+
+        // Verify the person's team name matches the canonical name
+        Person updatedAlice = model.getPersonByName(ALICE.getName());
+        assertEquals("U16", updatedAlice.getTeam().getName());
+    }
+
+    @Test
     public void equals() {
         AssignTeamCommand assignAliceU12 = new AssignTeamCommand(ALICE.getName(), U12);
         AssignTeamCommand assignAliceU16 = new AssignTeamCommand(ALICE.getName(), U16);
@@ -170,6 +195,15 @@ public class AssignTeamCommandTest {
         public boolean hasTeam(Team team) {
             requireNonNull(team);
             return this.team.isSameTeam(team);
+        }
+
+        @Override
+        public Team getTeamByName(Team team) {
+            requireNonNull(team);
+            if (this.team.isSameTeam(team)) {
+                return this.team;
+            }
+            throw new TeamNotFoundException();
         }
 
         @Override

@@ -259,6 +259,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Team getTeamByName(Team team) {
+        requireNonNull(team);
+        return addressBook.getTeamByName(team);
+    }
+
+    @Override
     public void addTeam(Team team) {
         requireNonNull(team);
         addressBook.addTeam(team);

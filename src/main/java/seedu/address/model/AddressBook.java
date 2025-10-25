@@ -124,6 +124,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns the team from the team list that matches the given team (case-insensitive).
+     */
+    public Team getTeamByName(Team team) {
+        requireNonNull(team);
+        return teams.getTeamByName(team);
+    }
+
+    /**
      * Adds a team to the address book.
      * The team must not already exist in the address book.
      */
