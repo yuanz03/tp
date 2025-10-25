@@ -57,7 +57,7 @@ public class AssignInjuryCommandTest {
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertThrows(CommandException.class, String.format(AssignInjuryCommand.MESSAGE_ASSIGNED_SAME_INJURY,
+        assertThrows(CommandException.class, String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
                 validPerson.getName(), validPerson.getInjuries()), () ->
                 new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
     }
@@ -69,7 +69,7 @@ public class AssignInjuryCommandTest {
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        assertThrows(CommandException.class, AssignInjuryCommand.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
                 new AssignInjuryCommand(name, Person.DEFAULT_INJURY_STATUS).execute(modelStub));
     }
 
@@ -82,7 +82,7 @@ public class AssignInjuryCommandTest {
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         String expectedInjury = "[" + newInjury + "]";
-        assertEquals(String.format(AssignInjuryCommand.MESSAGE_ASSIGN_INJURY_SUCCESS,
+        assertEquals(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
                 validPerson.getName(), expectedInjury),
                 new AssignInjuryCommand(name, newInjury).execute(modelStub).getFeedbackToUser());
 
