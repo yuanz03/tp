@@ -24,18 +24,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UnassignInjuryCommand extends Command {
 
     public static final String COMMAND_WORD = "unassigninjury";
-    public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's %2$s injury status has been removed!";
-    public static final String MESSAGE_INJURY_NOT_FOUND = "%1$s has no record of this %2$s injury status!";
-    public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
-            "%1$s's injury status has already been set to the default 'FIT' status!";
-
-    public static final String MESSAGE_EMPTY_COMMAND = "Your unassigninjury command cannot be empty!\n";
-    public static final String MESSAGE_NON_EMPTY_PREAMBLE =
-            "Your unassigninjury command contains extra parameters or irrelevant prefixes!\n";
-    public static final String MESSAGE_MISSING_BOTH_PREFIXES =
-            "Your unassigninjury is missing both player and injury parameters!\n";
-    public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your unassigninjury is missing the injury parameter!\n";
-    public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your unassigninjury is missing the player parameter!\n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes an injury status from a player in the PlayBook.\n"
@@ -67,19 +55,20 @@ public class UnassignInjuryCommand extends Command {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToUnassign));
         }
 
-        // Check if the player's injury status has already been set to the default 'FIT' status
-        if (!model.hasInjury(personToUnassign)) {
-            throw new CommandException(String.format(MESSAGE_INJURY_ALREADY_UNASSIGNED, personToUnassign.getName()));
-        }
-
         // Check if the player has the specified injury before updating the injury status
         if (!personToUnassign.getInjuries().contains(injuryToUnassign)) {
-            throw new CommandException(String.format(MESSAGE_INJURY_NOT_FOUND,
+            throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
                     personToUnassign.getName(), injuryToUnassign.getInjuryName()));
         }
 
+        // Check if the player's injury status has already been set to the default 'FIT' status
+        if (!model.hasInjury(personToUnassign)) {
+            throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
+                    personToUnassign.getName()));
+        }
+
         model.deleteInjury(personToUnassign, injuryToUnassign);
-        return CommandResult.showPersonCommandResult(String.format(MESSAGE_UNASSIGN_INJURY_SUCCESS,
+        return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 personToUnassign.getName(), injuryToUnassign.getInjuryName()));
     }
 

@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Injury;
@@ -36,8 +37,9 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
 
     private void checkEmptyArguments(String args) throws ParseException {
         if (args.trim().isEmpty()) {
-            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_EMPTY_COMMAND
-                    + AssignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_EMPTY_COMMAND, AssignInjuryCommand.COMMAND_WORD)
+                            + AssignInjuryCommand.MESSAGE_USAGE);
         }
     }
 
@@ -46,16 +48,19 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
         boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
         if (!hasPlayerPrefix && !hasInjuryPrefix) {
-            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_BOTH_PREFIXES
-                    + AssignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_BOTH_PREFIXES, AssignInjuryCommand.COMMAND_WORD)
+                            + AssignInjuryCommand.MESSAGE_USAGE);
         }
         if (!hasPlayerPrefix) {
-            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_PLAYER_PREFIX
-                    + AssignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, AssignInjuryCommand.COMMAND_WORD)
+                            + AssignInjuryCommand.MESSAGE_USAGE);
         }
         if (!hasInjuryPrefix) {
-            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_INJURY_PREFIX
-                    + AssignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, AssignInjuryCommand.COMMAND_WORD)
+                            + AssignInjuryCommand.MESSAGE_USAGE);
         }
     }
 
@@ -69,8 +74,9 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
 
     private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_NON_EMPTY_PREAMBLE
-                    + AssignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, AssignInjuryCommand.COMMAND_WORD)
+                            + AssignInjuryCommand.MESSAGE_USAGE);
         }
     }
 

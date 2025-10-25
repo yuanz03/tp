@@ -22,18 +22,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class AssignInjuryCommand extends Command {
 
     public static final String COMMAND_WORD = "assigninjury";
-    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
-    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
-    public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"
-            + "Please use the unassigninjury pl/<player> i/<injury> command instead to restore 'FIT' status.";
-
-    public static final String MESSAGE_EMPTY_COMMAND = "Your assigninjury command cannot be empty!\n";
-    public static final String MESSAGE_NON_EMPTY_PREAMBLE =
-            "Your assigninjury command contains extra parameters or irrelevant prefixes!\n";
-    public static final String MESSAGE_MISSING_BOTH_PREFIXES =
-            "Your assigninjury is missing both player and injury parameters!\n";
-    public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your assigninjury is missing the injury parameter!\n";
-    public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your assigninjury is missing the player parameter!\n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Assigns an injury status to a player in the PlayBook.\n"
@@ -66,17 +54,17 @@ public class AssignInjuryCommand extends Command {
 
         // Check if the player has already been assigned the same injury
         if (personToAssign.getInjuries().contains(injuryToAssign)) {
-            throw new CommandException(String.format(MESSAGE_ASSIGNED_SAME_INJURY,
+            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
                     personToAssign.getName(), personToAssign.getInjuries()));
         }
 
         // Disallow assigning "FIT" as an injury status
         if (injuryToAssign.equals(Person.DEFAULT_INJURY_STATUS)) {
-            throw new CommandException(MESSAGE_INVALID_INJURY_ASSIGNMENT);
+            throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 
         model.addInjury(personToAssign, injuryToAssign);
-        return CommandResult.showPersonCommandResult(String.format(MESSAGE_ASSIGN_INJURY_SUCCESS,
+        return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
                 personToAssign.getName(), model.getPersonByName(personNameToAssign).getInjuries()));
     }
 

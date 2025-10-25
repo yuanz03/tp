@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Injury;
@@ -36,8 +37,9 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
 
     private void checkEmptyArguments(String args) throws ParseException {
         if (args.trim().isEmpty()) {
-            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_EMPTY_COMMAND
-                    + UnassignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_EMPTY_COMMAND, UnassignInjuryCommand.COMMAND_WORD)
+                            + UnassignInjuryCommand.MESSAGE_USAGE);
         }
     }
 
@@ -46,16 +48,19 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
         if (!hasPlayerPrefix && !hasInjuryPrefix) {
-            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_BOTH_PREFIXES
-                    + UnassignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_BOTH_PREFIXES, UnassignInjuryCommand.COMMAND_WORD)
+                            + UnassignInjuryCommand.MESSAGE_USAGE);
         }
         if (!hasPlayerPrefix) {
-            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_PLAYER_PREFIX
-                    + UnassignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
+                            + UnassignInjuryCommand.MESSAGE_USAGE);
         }
         if (!hasInjuryPrefix) {
-            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_INJURY_PREFIX
-                    + UnassignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
+                            + UnassignInjuryCommand.MESSAGE_USAGE);
         }
     }
 
@@ -69,8 +74,9 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
 
     private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_NON_EMPTY_PREAMBLE
-                    + UnassignInjuryCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, UnassignInjuryCommand.COMMAND_WORD)
+                            + UnassignInjuryCommand.MESSAGE_USAGE);
         }
     }
 

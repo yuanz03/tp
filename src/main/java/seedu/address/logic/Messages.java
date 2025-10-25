@@ -12,14 +12,41 @@ import seedu.address.model.team.Team;
  * Container for user visible messages.
  */
 public class Messages {
-
+    // General Command Messages
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
+    public static final String MESSAGE_EMPTY_COMMAND = "Your %1$s command cannot be empty!\n";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_NON_EMPTY_PREAMBLE =
+            "Your %1$s command contains extra parameters or irrelevant prefixes!\n";
+
+    // General Error Messages for Input Validation
+    public static final String MESSAGE_TOO_MANY_PREFIXES = "There are too many prefixes specified. \n%1$s";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
+
+    // Player Command Messages
     public static final String MESSAGE_PERSON_NOT_FOUND = "The person '%1$s' does not exist.";
+    public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your %1$s command is missing the player parameter!\n";
+
+    // Team Command Messages
     public static final String MESSAGE_INVALID_TEAM = "No such team in the address book.";
+
+    // Injury Command Messages
+    public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your %1$s command is missing the injury parameter!\n";
+    public static final String MESSAGE_MISSING_BOTH_PREFIXES =
+            "Your %1$s command is missing both player and injury parameters!\n";
+
+    public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
+    public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's %2$s injury status has been removed!";
+    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
+    public static final String MESSAGE_INJURY_NOT_FOUND = "%1$s has no record of this %2$s injury status!";
+    public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
+            "%1$s's injury status has already been set to the default 'FIT' status!";
+    public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"
+            + "Please use the unassigninjury pl/<player> i/<injury> command instead to restore 'FIT' status.";
+
+    // Filter Command Messages
     public static final String MESSAGE_NO_PLAYERS_IN_TEAM = "No players assigned to team \"%1$s\".";
     public static final String MESSAGE_NO_PLAYERS_WITH_INJURY = "No players with injury \"%1$s\".";
     public static final String MESSAGE_NO_PLAYERS_WITH_POSITION = "No players with position \"%1$s\".";
@@ -31,10 +58,11 @@ public class Messages {
             "No players matching team \"%1$s\" and position \"%2$s\".";
     public static final String MESSAGE_NO_MATCHING_INJURY_AND_POSITION =
             "No players matching injury \"%1$s\" and position \"%2$s\".";
+
+    // List Command Messages
     public static final String MESSAGE_NO_TEAMS = "There are currently no teams in the PlayBook.";
     public static final String MESSAGE_NO_POSITIONS = "There are currently no positions in the PlayBook.";
     public static final String MESSAGE_NO_INJURED = "There are currently no injured players in the PlayBook.";
-    public static final String MESSAGE_TOO_MANY_PREFIXES = "There are too many prefixes specified. \n%1$s";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
