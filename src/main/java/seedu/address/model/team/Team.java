@@ -10,8 +10,9 @@ import java.util.Objects;
  */
 public class Team {
 
-    public static final String MESSAGE_CONSTRAINTS = "Team names should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CONSTRAINTS = "Team names should only contain alphanumeric characters"
+            + " and spaces, and it should not be blank";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     // Identity fields
     private final String name;
