@@ -13,9 +13,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 
 /**
- * Contains integration tests for {@code FilterCaptainCommand}.
+ * Contains integration tests for {@code ListCaptainCommand}.
  */
-public class FilterCaptainCommandTest {
+public class ListCaptainCommandTest {
 
     private Model model;
     private Model expectedModel;
@@ -30,8 +30,8 @@ public class FilterCaptainCommandTest {
     public void execute_filtersToCaptains() {
         // Apply expected filter first
         expectedModel.updateFilteredPersonList(seedu.address.model.Model.PREDICATE_SHOW_CAPTAINS);
-        assertCommandSuccess(new FilterCaptainCommand(), model,
-                FilterCaptainCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCaptainCommand(), model,
+                ListCaptainCommand.MESSAGE_SUCCESS, expectedModel);
 
         long expectedCaptainsCount = expectedModel.getFilteredPersonList().stream().filter(Person::isCaptain).count();
         long actualCaptainsCount = model.getFilteredPersonList().stream().filter(Person::isCaptain).count();

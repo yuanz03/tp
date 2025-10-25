@@ -19,10 +19,10 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterCaptainCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCaptainCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListInjuredCommand;
 import seedu.address.logic.commands.ListPositionCommand;
@@ -114,8 +114,8 @@ public class AddressBookParser {
         case UnassignInjuryCommand.COMMAND_WORD:
             return new UnassignInjuryCommandParser().parse(arguments);
 
-        case FilterCaptainCommand.COMMAND_WORD:
-            return new FilterCaptainCommand();
+        case ListCaptainCommand.COMMAND_WORD:
+            return new ListCaptainCommand();
 
         case StripCaptainCommand.COMMAND_WORD:
             return new StripCaptainCommandParser().parse(arguments);

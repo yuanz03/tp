@@ -29,10 +29,10 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterCaptainCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCaptainCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
@@ -185,8 +185,8 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_filterCaptains() throws Exception {
-        assertTrue(parser.parseCommand(FilterCaptainCommand.COMMAND_WORD) instanceof FilterCaptainCommand);
+    public void parseCommand_listcaptain() throws Exception {
+        assertTrue(parser.parseCommand(ListCaptainCommand.COMMAND_WORD) instanceof ListCaptainCommand);
     }
 
     @Test
