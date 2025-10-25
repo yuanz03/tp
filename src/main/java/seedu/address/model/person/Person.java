@@ -101,7 +101,7 @@ public class Person {
         return isCaptain;
     }
 
-    public void makeCaptain() {
+    public void assignCaptain() {
         this.isCaptain = true;
     }
 

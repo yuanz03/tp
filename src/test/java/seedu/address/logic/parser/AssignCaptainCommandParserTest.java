@@ -8,23 +8,23 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.MakeCaptainCommand;
+import seedu.address.logic.commands.AssignCaptainCommand;
 import seedu.address.model.person.Name;
 
-public class MakeCaptainCommandParserTest {
+public class AssignCaptainCommandParserTest {
 
-    private final MakeCaptainCommandParser parser = new MakeCaptainCommandParser();
+    private final AssignCaptainCommandParser parser = new AssignCaptainCommandParser();
 
     @Test
     public void parse_validArgs_returnsCommand() {
         Name name = new Name("Amy Bee");
-        assertParseSuccess(parser, PLAYER_DESC_AMY, new MakeCaptainCommand(name));
+        assertParseSuccess(parser, PLAYER_DESC_AMY, new AssignCaptainCommand(name));
     }
 
     @Test
     public void parse_missingPrefix_throwsParseException() {
         assertParseFailure(parser, "Amy Bee",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MakeCaptainCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCaptainCommand.MESSAGE_USAGE));
     }
 
     @Test

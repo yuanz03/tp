@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTeamCommand;
+import seedu.address.logic.commands.AssignCaptainCommand;
 import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.logic.commands.AssignTeamCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -33,7 +34,6 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamCommand;
-import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
 import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -167,10 +167,10 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_makeCaptain() throws Exception {
+    public void parseCommand_assignCaptain() throws Exception {
         Name name = new Name(VALID_NAME_AMY);
-        assertEquals(new MakeCaptainCommand(name),
-                parser.parseCommand(MakeCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
+        assertEquals(new AssignCaptainCommand(name),
+                parser.parseCommand(AssignCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
     }
 
     @Test

@@ -30,7 +30,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
         - [Creating a new position: `addposition`](#creating-a-new-position-addposition)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
-        - [Assigning player as captain: `makecaptain`](#assigning-player-as-captain-makecaptain)
+        - [Assigning player as captain: `assigncaptain`](#assigning-player-as-captain-assigncaptain)
         - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
         - [Listing all players: `list`](#listing-all-players-list)
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
@@ -469,27 +469,27 @@ The position will be immediately visible in the player's card.
 ![assign position message](images/assignPositionResult.png)
 </box>
 
-### Assigning player as captain: `makecaptain`
+### Assigning player as captain: `assigncaptain`
 
 Assigns an existing player in the PlayBook to be captain.
 
-Format: `makecaptain pl/PLAYER_NAME`
+Format: `assigncaptain pl/PLAYER_NAME`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` should not be blank.
 * The player must not already be an assigned captain.
-* **Multiple captains per team are supported** - you can assign multiple players from the same team as captains to facilitate co-leadership structures (e.g., co-captains, senior/junior captain pairings).
+* **Only one captain per team is allowed** - when you assign a new captain to a team that already has a captain, the previous captain will automatically be stripped of their captaincy.
 
 <box type="tip" seamless>
 
-**Tip:** You can have multiple captains for different teams. Use `filtercaptains` to see all current team captains.
+**Tip:** Each team can have only one captain at a time. If you assign a new captain, the old captain will be automatically removed. Use `filtercaptains` to see all current team captains.
 </box>
 
 **Examples:**
-* `makecaptain pl/John Doe` - Makes John Doe a captain
-* `makecaptain pl/Sergio Ramos` - Makes Sergio Ramos a captain
+* `assigncaptain pl/John Doe` - Makes John Doe a captain
+* `assigncaptain pl/Sergio Ramos` - Makes Sergio Ramos a captain
 
 <box type="info" seamless>
 
@@ -497,7 +497,7 @@ Format: `makecaptain pl/PLAYER_NAME`
 
 A captain badge or indicator will appear on the player's card.
 
-![make captain message](images/makeCaptainResult.png)
+![assign captain message](images/assignCaptainResult.png)
 </box>
 
 ### Unassigning player as captain: `stripcaptain`
@@ -981,7 +981,7 @@ _Details coming soon ..._
 | **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                          |
 | **Filter Players**              | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                               |
 | **List**                        | `list`                                                                                                                                                                                                              |
-| **Make Captain**                | `makecaptain pl/PLAYER_NAME` <br> e.g., `makecaptain pl/John Doe`                                                                                                                                                   |
+| **Assign Captain**              | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                                               |
 | **Strip Captain**               | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                                 |
 | **Filter Captains**             | `filtercaptains`                                                                                                                                                                                                    |
 | **List Teams**                  | `listteam`                                                                                                                                                                                                          |

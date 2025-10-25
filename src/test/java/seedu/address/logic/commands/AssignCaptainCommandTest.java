@@ -15,9 +15,9 @@ import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains unit tests for {@code MakeCaptainCommand}.
+ * Contains unit tests for {@code AssignCaptainCommand}.
  */
-public class MakeCaptainCommandTest {
+public class AssignCaptainCommandTest {
 
     @Test
     public void execute_personExistsAndNotCaptain_marksAsCaptain() throws Exception {
@@ -34,13 +34,19 @@ public class MakeCaptainCommandTest {
                 }
                 return person;
             }
+
+            @Override
+            public Person getTeamCaptain(seedu.address.model.team.Team team) {
+                // No existing captain
+                return null;
+            }
         };
 
-        MakeCaptainCommand command = new MakeCaptainCommand(name);
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
         CommandResult result = command.execute(modelStub);
 
         assertTrue(person.isCaptain());
-        String expectedSuccess = String.format(MakeCaptainCommand.MESSAGE_SUCCESS,
+        String expectedSuccess = String.format(AssignCaptainCommand.MESSAGE_SUCCESS,
                 person.getName(), person.getTeam().getName());
         assertEquals(CommandResult.showPersonCommandResult(expectedSuccess), result);
     }
@@ -55,7 +61,7 @@ public class MakeCaptainCommandTest {
             }
         };
 
-        MakeCaptainCommand command = new MakeCaptainCommand(name);
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
         try {
             command.execute(modelStub);
         } catch (CommandException e) {
@@ -78,19 +84,25 @@ public class MakeCaptainCommandTest {
                 if (!queryName.equals(name)) {
                     throw new PersonNotFoundException();
                 }
-                // ModelStub.makeCaptain will throw AlreadyCaptainException when execute() calls
-                // model.makeCaptain
+                // ModelStub.assignCaptain will throw AlreadyCaptainException when execute() calls
+                // model.assignCaptain
                 return person;
+            }
+
+            @Override
+            public Person getTeamCaptain(seedu.address.model.team.Team team) {
+                // Not used in this test since person is already captain
+                return null;
             }
         };
 
-        MakeCaptainCommand command = new MakeCaptainCommand(name);
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
 
         try {
             command.execute(modelStub);
         } catch (CommandException e) {
             assertEquals(
-                    String.format(MakeCaptainCommand.MESSAGE_ALREADY_CAPTAIN, person.getName()),
+                    String.format(AssignCaptainCommand.MESSAGE_ALREADY_CAPTAIN, person.getName()),
                     e.getMessage());
             return;
         } catch (Exception e) {
@@ -100,12 +112,55 @@ public class MakeCaptainCommandTest {
     }
 
     @Test
+    public void execute_teamAlreadyHasCaptain_stripsOldCaptainAndMakesNewCaptain() throws Exception {
+        Person oldCaptain = new PersonBuilder().withName("Old Captain").withCaptain(true).build();
+        Person newCaptain = new PersonBuilder().withName("New Captain").build();
+        newCaptain.stripCaptain();
+        Name newCaptainName = newCaptain.getName();
+
+        ModelStub modelStub = new ModelStub() {
+            private boolean oldCaptainStripped = false;
+
+            @Override
+            public Person getPersonByName(Name queryName) {
+                if (queryName.equals(newCaptainName)) {
+                    return newCaptain;
+                }
+                throw new PersonNotFoundException();
+            }
+
+            @Override
+            public Person getTeamCaptain(seedu.address.model.team.Team team) {
+                return oldCaptainStripped ? null : oldCaptain;
+            }
+
+            @Override
+            public void stripCaptain(Person person) {
+                if (person.equals(oldCaptain)) {
+                    oldCaptainStripped = true;
+                }
+                super.stripCaptain(person);
+            }
+        };
+
+        AssignCaptainCommand command = new AssignCaptainCommand(newCaptainName);
+        CommandResult result = command.execute(modelStub);
+
+        assertTrue(newCaptain.isCaptain());
+        String expectedMessage = String.format(AssignCaptainCommand.MESSAGE_STRIPPED_PREVIOUS_CAPTAIN,
+                oldCaptain.getName())
+                + String.format(AssignCaptainCommand.MESSAGE_SUCCESS,
+                newCaptain.getName(), newCaptain.getTeam().getName());
+        assertEquals(CommandResult.showPersonCommandResult(expectedMessage), result);
+    }
+
+    @Test
     public void equals() {
         Name sergio = new Name("Sergio Ramos");
         Name leo = new Name("Lionel Messi");
-        MakeCaptainCommand makeSergio = new MakeCaptainCommand(sergio);
-        MakeCaptainCommand makeSergioCopy = new MakeCaptainCommand(sergio);
-        MakeCaptainCommand makeLeo = new MakeCaptainCommand(leo);
+        AssignCaptainCommand makeSergio = new AssignCaptainCommand(sergio);
+        AssignCaptainCommand makeSergioCopy = new AssignCaptainCommand(sergio);
+        AssignCaptainCommand makeLeo = new AssignCaptainCommand(leo);
 
         // same object -> true
         assertTrue(makeSergio.equals(makeSergio));

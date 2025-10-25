@@ -428,21 +428,21 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void makeCaptain_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.makeCaptain(null));
+    public void assignCaptain_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.assignCaptain(null));
     }
 
     @Test
-    public void makeCaptain_personNotInAddressBook_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> modelManager.makeCaptain(ALICE));
+    public void assignCaptain_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.assignCaptain(ALICE));
     }
 
     @Test
-    public void makeCaptain_validPerson_makesCaptainCorrectly() {
+    public void assignCaptain_validPerson_makesCaptainCorrectly() {
         modelManager.addPerson(ALICE);
         assertFalse(ALICE.isCaptain());
 
-        modelManager.makeCaptain(ALICE);
+        modelManager.assignCaptain(ALICE);
 
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
         assertTrue(updatedPerson.isCaptain());
@@ -459,12 +459,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void makeCaptain_alreadyCaptain_remainsCaptain() {
+    public void assignCaptain_alreadyCaptain_remainsCaptain() {
         Person captain = new PersonBuilder(ALICE).withCaptain(true).build();
         modelManager.addPerson(captain);
         assertTrue(captain.isCaptain());
 
-        modelManager.makeCaptain(modelManager.getPersonByName(captain.getName()));
+        modelManager.assignCaptain(modelManager.getPersonByName(captain.getName()));
 
         Person updatedPerson = modelManager.getPersonByName(captain.getName());
         assertTrue(updatedPerson.isCaptain());

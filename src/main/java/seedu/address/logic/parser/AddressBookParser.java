@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTeamCommand;
+import seedu.address.logic.commands.AssignCaptainCommand;
 import seedu.address.logic.commands.AssignInjuryCommand;
 import seedu.address.logic.commands.AssignPositionCommand;
 import seedu.address.logic.commands.AssignTeamCommand;
@@ -28,7 +29,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListInjuredCommand;
 import seedu.address.logic.commands.ListPositionCommand;
 import seedu.address.logic.commands.ListTeamCommand;
-import seedu.address.logic.commands.MakeCaptainCommand;
 import seedu.address.logic.commands.NewPositionCommand;
 import seedu.address.logic.commands.StripCaptainCommand;
 import seedu.address.logic.commands.UnassignInjuryCommand;
@@ -128,8 +128,8 @@ public class AddressBookParser {
         case StripCaptainCommand.COMMAND_WORD:
             return new StripCaptainCommandParser().parse(arguments);
 
-        case MakeCaptainCommand.COMMAND_WORD:
-            return new MakeCaptainCommandParser().parse(arguments);
+        case AssignCaptainCommand.COMMAND_WORD:
+            return new AssignCaptainCommandParser().parse(arguments);
 
         case ListPositionCommand.COMMAND_WORD:
             return new ListPositionCommand();

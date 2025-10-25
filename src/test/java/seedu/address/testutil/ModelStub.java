@@ -124,11 +124,11 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void makeCaptain(Person person) {
+    public void assignCaptain(Person person) {
         if (person.isCaptain()) {
             throw new AlreadyCaptainException();
         }
-        person.makeCaptain();
+        person.assignCaptain();
     }
 
     @Override
@@ -196,6 +196,11 @@ public class ModelStub implements Model {
 
     @Override
     public boolean isPositionAssigned(Position position) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public Person getTeamCaptain(Team team) {
         throw new AssertionError("This method should not be called.");
     }
 
