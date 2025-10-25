@@ -22,11 +22,26 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     public AssignInjuryCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
 
+        checkEmptyArguments(args);
+        checkCompulsoryPrefixes(argMultimap);
+        verifyNoDuplicatePrefixes(argMultimap);
+
+        Name playerName = parsePlayerName(argMultimap);
+        Injury injury = parseInjury(argMultimap);
+
+        checkEmptyPreamble(argMultimap);
+
+        return new AssignInjuryCommand(playerName, injury);
+    }
+
+    private void checkEmptyArguments(String args) throws ParseException {
         if (args.trim().isEmpty()) {
             throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_EMPTY_COMMAND
                     + AssignInjuryCommand.MESSAGE_USAGE));
         }
+    }
 
+    private void checkCompulsoryPrefixes(ArgumentMultimap argMultimap) throws ParseException {
         boolean hasPlayerPrefix = arePrefixesPresent(argMultimap, PREFIX_PLAYER);
         boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
@@ -42,32 +57,36 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
             throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_INJURY_PREFIX
                     + AssignInjuryCommand.MESSAGE_USAGE));
         }
+    }
 
+    private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
         } catch (ParseException exception) {
             throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
         }
+    }
 
-        Name playerName;
-        Injury injury;
-
-        try {
-            playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        } catch (ParseException exception) {
-            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
-        }
-
-        try {
-            injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
-        } catch (ParseException exception) {
-            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
-        }
-
+    private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_NON_EMPTY_PREAMBLE
                     + AssignInjuryCommand.MESSAGE_USAGE));
         }
-        return new AssignInjuryCommand(playerName, injury);
+    }
+
+    private Name parsePlayerName(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
+        }
+    }
+
+    private Injury parseInjury(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            return ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
+        }
     }
 }
