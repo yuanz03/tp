@@ -748,10 +748,10 @@ Format: `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`
 
 <box type="warning" seamless>
 
-**Warning:** This action cannot be undone! 
+**Warning:** This action cannot be undone!
 - **Deleting a player**: The player and all their information (team, position, injuries, tags) will be permanently removed.
 - **Deleting a team**: You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
-- **Deleting a position**: TODO
+- **Deleting a position**: You can only delete a position if it is not assigned to any players. Please unassign the position from all players before attempting to delete it.
 
 Consider making a backup of your data file before bulk deletions.
 </box>
@@ -780,9 +780,9 @@ The player card will immediately disappear from the player list.
 
 ![delete team message](images/deleteTeamResult.png)
 
-**For position deletion:** "Position LW has been deleted successfully!"
+**For position deletion:** "Position: LW has been deleted successfully!"
 
-All players previously assigned to this position will have it removed from their cards.
+
 
 ![delete position message](images/deletePositionResult.png)
 </box>
