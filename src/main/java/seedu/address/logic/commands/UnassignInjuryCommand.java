@@ -29,9 +29,17 @@ public class UnassignInjuryCommand extends Command {
     public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
             "%1$s's injury status has already been set to the default 'FIT' status!";
 
+    public static final String MESSAGE_EMPTY_COMMAND = "Your unassigninjury command cannot be empty!\n";
+    public static final String MESSAGE_NON_EMPTY_PREAMBLE =
+            "Your unassigninjury command contains extra parameters or irrelevant prefixes!\n";
+    public static final String MESSAGE_MISSING_BOTH_PREFIXES =
+            "Your unassigninjury is missing both player and injury parameters!\n";
+    public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your unassigninjury is missing the injury parameter!\n";
+    public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your unassigninjury is missing the player parameter!\n";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes an injury status from a player in the PlayBook.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY "
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
     private final Name personNameToUnassign;

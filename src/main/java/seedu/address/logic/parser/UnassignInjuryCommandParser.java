@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
@@ -23,15 +22,71 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     public UnassignInjuryCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PLAYER, PREFIX_INJURY) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    UnassignInjuryCommand.MESSAGE_USAGE));
-        }
+        checkEmptyArguments(args);
+        checkCompulsoryPrefixes(argMultimap);
+        verifyNoDuplicatePrefixes(argMultimap);
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
-        Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        Injury injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
+        Name playerName = parsePlayerName(argMultimap);
+        Injury injury = parseInjury(argMultimap);
+
+        checkEmptyPreamble(argMultimap);
 
         return new UnassignInjuryCommand(playerName, injury);
+    }
+
+    private void checkEmptyArguments(String args) throws ParseException {
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_EMPTY_COMMAND
+                    + UnassignInjuryCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private void checkCompulsoryPrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        boolean hasPlayerPrefix = arePrefixesPresent(argMultimap, PREFIX_PLAYER);
+        boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
+
+        if (!hasPlayerPrefix && !hasInjuryPrefix) {
+            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_BOTH_PREFIXES
+                    + UnassignInjuryCommand.MESSAGE_USAGE));
+        }
+        if (!hasPlayerPrefix) {
+            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_PLAYER_PREFIX
+                    + UnassignInjuryCommand.MESSAGE_USAGE));
+        }
+        if (!hasInjuryPrefix) {
+            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_MISSING_INJURY_PREFIX
+                    + UnassignInjuryCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+        }
+    }
+
+    private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(UnassignInjuryCommand.MESSAGE_NON_EMPTY_PREAMBLE
+                    + UnassignInjuryCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private Name parsePlayerName(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+        }
+    }
+
+    private Injury parseInjury(ArgumentMultimap argMultimap) throws ParseException {
+        try {
+            return ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+        }
     }
 }
