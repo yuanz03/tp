@@ -91,7 +91,7 @@ public class DeleteCommand extends Command {
         } else if (isDeletePositionCommand()) {
             return executeDeletePosition(model);
         } else {
-            throw new CommandException("No valid delete command found.");
+            throw new CommandException(MESSAGE_USAGE);
         }
     }
 

@@ -140,8 +140,8 @@ public class DeleteCommandTest {
         DeleteCommand deleteBensonCommand = DeleteCommand.createDeletePlayerCommand(bensonName);
         DeleteCommand deleteTeamAmyCommand = DeleteCommand.createDeleteTeamCommand(teamAmy);
         DeleteCommand deleteTeamU16Command = DeleteCommand.createDeleteTeamCommand(teamU16);
-        DeleteCommand deletePositionFWCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
-        DeleteCommand deletePositionGKCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_GK);
+        DeleteCommand deletePositionFwCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
+        DeleteCommand deletePositionGkCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_GK);
 
         // same object -> returns true
         assertTrue(deleteAliceCommand.equals(deleteAliceCommand));
@@ -167,16 +167,16 @@ public class DeleteCommandTest {
         assertFalse(deleteTeamAmyCommand.equals(deleteTeamU16Command));
 
         // different position -> returns false
-        assertFalse(deletePositionFWCommand.equals(deletePositionGKCommand));
+        assertFalse(deletePositionFwCommand.equals(deletePositionGkCommand));
 
         // player vs team -> returns false
         assertFalse(deleteAliceCommand.equals(deleteTeamAmyCommand));
 
         // player vs position -> returns false
-        assertFalse(deleteAliceCommand.equals(deletePositionFWCommand));
+        assertFalse(deleteAliceCommand.equals(deletePositionFwCommand));
 
         // team vs position -> returns false
-        assertFalse(deleteTeamAmyCommand.equals(deletePositionFWCommand));
+        assertFalse(deleteTeamAmyCommand.equals(deletePositionFwCommand));
     }
 
     @Test
