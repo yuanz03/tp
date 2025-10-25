@@ -47,7 +47,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TEAM + "TEAM] "
+            + "[" + PREFIX_TEAM + "TEAM_NAME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + "  "
             + PREFIX_PLAYER + "John Doe "
@@ -121,6 +121,22 @@ public class EditCommand extends Command {
         if (!model.hasTeam(editedPerson.getTeam())) {
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, editedPerson.getTeam().getName()));
         }
+
+        // Get the canonical team from the team list (with correct casing)
+        Team canonicalTeam = model.getTeamByName(editedPerson.getTeam());
+
+        // Update editedPerson to use canonical team
+        editedPerson = new Person(
+                editedPerson.getName(),
+                editedPerson.getPhone(),
+                editedPerson.getEmail(),
+                editedPerson.getAddress(),
+                canonicalTeam,
+                editedPerson.getTags(),
+                editedPerson.getPosition(),
+                editedPerson.getInjuries(),
+                editedPerson.isCaptain()
+        );
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

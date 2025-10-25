@@ -63,14 +63,17 @@ public class AssignTeamCommand extends Command {
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, team.getName()));
         }
 
+        // Get the canonical team from the team list (with correct casing)
+        Team canonicalTeam = model.getTeamByName(team);
+
         // Check if player is already assigned to the team
-        if (player.getTeam() != null && player.getTeam().isSameTeam(team)) {
-            throw new CommandException(String.format(MESSAGE_ALREADY_ASSIGNED, playerName, team.getName()));
+        if (player.getTeam() != null && player.getTeam().isSameTeam(canonicalTeam)) {
+            throw new CommandException(String.format(MESSAGE_ALREADY_ASSIGNED, playerName, canonicalTeam.getName()));
         }
 
-        model.assignTeam(player, team);
+        model.assignTeam(player, canonicalTeam);
         return CommandResult.showPersonCommandResult(
-                String.format(MESSAGE_SUCCESS, player.getName(), team.getName()));
+                String.format(MESSAGE_SUCCESS, player.getName(), canonicalTeam.getName()));
     }
 
     /**

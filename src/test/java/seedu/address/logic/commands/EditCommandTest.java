@@ -135,6 +135,26 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_editTeamCaseInsensitive_usesCanonicalTeamName() throws Exception {
+        // Test that case-insensitive team matching uses the canonical team name from address book
+        Model testModel = new ModelManager();
+        Team canonicalTeam = new Team("U16"); // Canonical name with uppercase
+        testModel.addTeam(canonicalTeam);
+
+        Person alice = new PersonBuilder().withName("Alice Pauline").build();
+        testModel.addPerson(alice);
+
+        // User edits with lowercase "u16" but should get assigned to canonical "U16"
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTeam("u16").build();
+        EditCommand editCommand = new EditCommand(alice.getName(), descriptor);
+        editCommand.execute(testModel);
+
+        // Verify the person's team name matches the canonical name
+        Person updatedAlice = testModel.getPersonByName(alice.getName());
+        assertEquals("U16", updatedAlice.getTeam().getName());
+    }
+
+    @Test
     public void equals() {
         final Name name = new Name(VALID_NAME_AMY);
         final EditCommand standardCommand = new EditCommand(name, DESC_AMY);

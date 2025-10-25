@@ -150,6 +150,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public Team getTeamByName(Team team) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void addTeam(Team team) {
         throw new AssertionError("This method should not be called.");
     }
