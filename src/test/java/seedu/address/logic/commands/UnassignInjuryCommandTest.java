@@ -45,7 +45,7 @@ public class UnassignInjuryCommandTest {
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithInjury.getName(),
                 new Injury("ACL"));
 
-        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS, personWithInjury.getName(),
+        assertEquals(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS, personWithInjury.getName(),
                 personWithInjury.getInjuries().iterator().next()),
                 unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
@@ -64,10 +64,10 @@ public class UnassignInjuryCommandTest {
         Person personWithDefaultInjury = new PersonBuilder().build();
         ModelStubWithPerson modelStub = new ModelStubWithPerson(personWithDefaultInjury);
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithDefaultInjury.getName(),
-                new Injury("ACL"));
+                new Injury("FIT"));
 
         assertThrows(CommandException.class,
-                String.format(UnassignInjuryCommand.MESSAGE_INJURY_ALREADY_UNASSIGNED,
+                String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
                         personWithDefaultInjury.getName()), () -> unassignInjuryCommand.execute(modelStub));
     }
 
@@ -79,7 +79,7 @@ public class UnassignInjuryCommandTest {
                 new Injury("Concussion"));
 
         assertThrows(CommandException.class,
-                String.format(UnassignInjuryCommand.MESSAGE_INJURY_NOT_FOUND, personWithInjury.getName(),
+                String.format(Messages.MESSAGE_INJURY_NOT_FOUND, personWithInjury.getName(),
                         "Concussion"), () -> unassignInjuryCommand.execute(modelStub));
     }
 
@@ -90,7 +90,7 @@ public class UnassignInjuryCommandTest {
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(personWithMultipleInjuries.getName(),
                 new Injury("MCL"));
 
-        assertEquals(String.format(UnassignInjuryCommand.MESSAGE_UNASSIGN_INJURY_SUCCESS,
+        assertEquals(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 personWithMultipleInjuries.getName(), personWithMultipleInjuries.getInjuries().iterator().next()),
                 unassignInjuryCommand.execute(modelStub).getFeedbackToUser());
     }
