@@ -27,9 +27,17 @@ public class AssignInjuryCommand extends Command {
     public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"
             + "Please use the unassigninjury pl/<player> i/<injury> command instead to restore 'FIT' status.";
 
+    public static final String MESSAGE_EMPTY_COMMAND = "Your assigninjury command cannot be empty!\n";
+    public static final String MESSAGE_NON_EMPTY_PREAMBLE =
+            "Your assigninjury command contains extra parameters or irrelevant prefixes!\n";
+    public static final String MESSAGE_MISSING_BOTH_PREFIXES =
+            "Your assigninjury is missing both player and injury parameters!\n";
+    public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your assigninjury is missing the injury parameter!\n";
+    public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your assigninjury is missing the player parameter!\n";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Assigns an injury status to a player in the PlayBook.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY "
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
     private final Name personNameToAssign;

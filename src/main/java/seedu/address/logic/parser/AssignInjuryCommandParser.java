@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
@@ -23,14 +22,52 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     public AssignInjuryCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PLAYER, PREFIX_INJURY) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignInjuryCommand.MESSAGE_USAGE));
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_EMPTY_COMMAND
+                    + AssignInjuryCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
-        Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        Injury injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
+        boolean hasPlayerPrefix = arePrefixesPresent(argMultimap, PREFIX_PLAYER);
+        boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
+        if (!hasPlayerPrefix && !hasInjuryPrefix) {
+            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_BOTH_PREFIXES
+                    + AssignInjuryCommand.MESSAGE_USAGE));
+        }
+        if (!hasPlayerPrefix) {
+            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_PLAYER_PREFIX
+                    + AssignInjuryCommand.MESSAGE_USAGE));
+        }
+        if (!hasInjuryPrefix) {
+            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_MISSING_INJURY_PREFIX
+                    + AssignInjuryCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
+        }
+
+        Name playerName;
+        Injury injury;
+
+        try {
+            playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
+        }
+
+        try {
+            injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
+        } catch (ParseException exception) {
+            throw new ParseException(exception.getMessage() + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
+        }
+
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(AssignInjuryCommand.MESSAGE_NON_EMPTY_PREAMBLE
+                    + AssignInjuryCommand.MESSAGE_USAGE));
+        }
         return new AssignInjuryCommand(playerName, injury);
     }
 }
