@@ -1,7 +1,7 @@
 package seedu.address.model.person.exceptions;
 
 /**
- * Signals that the operation will result in trying to makeCaptain on an already existing captain
+ * Signals that the operation will result in trying to assignCaptain on an already existing captain
  */
 public class AlreadyCaptainException extends RuntimeException {
     public AlreadyCaptainException() {

@@ -18,11 +18,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * <p>
  * Example usage:
  * <pre>
- * {@code makeCaptain p/Sergio Ramos}
+ * {@code assigncaptain pl/Sergio Ramos}
  * </pre>
  */
-public class MakeCaptainCommand extends Command {
-    public static final String COMMAND_WORD = "makecaptain";
+public class AssignCaptainCommand extends Command {
+    public static final String COMMAND_WORD = "assigncaptain";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
             + "as captain.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER "
@@ -30,17 +30,18 @@ public class MakeCaptainCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "%1$s is now captain of %2$s";
     public static final String MESSAGE_ALREADY_CAPTAIN = "%1$s is already a captain!";
+    public static final String MESSAGE_STRIPPED_PREVIOUS_CAPTAIN = "%1$s is no longer captain. ";
 
     private final Name targetName;
 
     /**
-     * Creates a {@code MakeCaptainCommand} targeting the person with
+     * Creates a {@code AssignCaptainCommand} targeting the person with
      * {@code targetName}.
      *
      * @param targetName the name of the person to mark as captain; must not be
      *                   null.
      */
-    public MakeCaptainCommand(Name targetName) {
+    public AssignCaptainCommand(Name targetName) {
         this.targetName = targetName;
     }
 
@@ -60,11 +61,18 @@ public class MakeCaptainCommand extends Command {
             throw new CommandException(String.format(MESSAGE_ALREADY_CAPTAIN, targetPerson.getName()));
         }
 
-        model.makeCaptain(targetPerson);
+        Person currentCaptain = model.getTeamCaptain(targetPerson.getTeam());
+        String resultMessage = "";
+        if (currentCaptain != null) {
+            model.stripCaptain(currentCaptain);
+            resultMessage = String.format(MESSAGE_STRIPPED_PREVIOUS_CAPTAIN, currentCaptain.getName());
+        }
 
-        String success = String.format(MESSAGE_SUCCESS,
+        model.assignCaptain(targetPerson);
+
+        resultMessage += String.format(MESSAGE_SUCCESS,
                 targetPerson.getName(), targetPerson.getTeam().getName());
-        return CommandResult.showPersonCommandResult(success);
+        return CommandResult.showPersonCommandResult(resultMessage);
 
     }
 
@@ -80,11 +88,11 @@ public class MakeCaptainCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof MakeCaptainCommand)) {
+        if (!(other instanceof AssignCaptainCommand)) {
             return false;
         }
 
-        MakeCaptainCommand otherCommand = (MakeCaptainCommand) other;
+        AssignCaptainCommand otherCommand = (AssignCaptainCommand) other;
         return targetName.equals(otherCommand.targetName);
     }
 }

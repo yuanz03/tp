@@ -218,7 +218,7 @@ public class ModelManager implements Model {
     //=========== Captain Commands =============================================================
 
     @Override
-    public void makeCaptain(Person person) {
+    public void assignCaptain(Person person) {
         Person updatedPerson = new Person(
                 person.getName(),
                 person.getPhone(),
@@ -247,6 +247,15 @@ public class ModelManager implements Model {
                 Person.DEFAULT_CAPTAIN_STATUS
         );
         setPerson(person, updatedPerson);
+    }
+
+    @Override
+    public Person getTeamCaptain(Team team) {
+        requireNonNull(team);
+        return addressBook.getPersonList().stream()
+                .filter(person -> person.getTeam().equals(team) && person.isCaptain())
+                .findFirst()
+                .orElse(null);
     }
 
     //=========== Team Commands =============================================================

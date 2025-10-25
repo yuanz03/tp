@@ -776,7 +776,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC17 - Remove captain from a player**
+**Use case: UC17 - Assign captain to a player**
+
+**MSS**
+
+1.  User requests to assign the captain role to a player
+2.  AddressBook updates the player's details to reflect they are now their team's captain
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given player is invalid.
+
+    * 1a1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 1b. The player is already a captain.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 1c. Another player is already the captain.
+
+    * 1c1. AddressBook unassigns previous captain
+    * 1c2. AddressBook assigns the player as new captain
+
+      Use case ends.
+
+**Use case: UC18 - Remove captain from a player**
 
 **MSS**
 
@@ -799,7 +829,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC18 - Filter players by captain status**
+**Use case: UC19 - Filter players by captain status**
 
 **MSS**
 

@@ -190,7 +190,14 @@ public interface Model {
      */
     boolean isPositionAssigned(Position position);
 
-    void makeCaptain(Person person);
+    void assignCaptain(Person person);
 
     void stripCaptain(Person person);
+
+    /**
+     * Returns the current captain of the given team, if one exists.
+     * @param team the team to check for a captain
+     * @return the Person who is captain of the team, or null if no captain exists
+     */
+    Person getTeamCaptain(Team team);
 }
