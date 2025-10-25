@@ -701,6 +701,8 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 * `TEAM_NAME` should contain only alphanumeric characters and spaces.
 * `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
 * `TEAM_NAME` should not be blank.
+* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
+* `INJURY` should contain alphanumeric characters and spaces only.
 * `INJURY` should not be blank.
 * `INJURY` must match an injury that is already assigned to the specified player.
 * `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.

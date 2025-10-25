@@ -134,7 +134,7 @@ public class DeleteCommandParserTest {
     }
 
     @Test
-    public void parse_multiplePrefixes_throwsParseException() {
+    public void parse_multiplePrefixesPlayerAndTeam_throwsParseException() {
         // Multiple different prefixes (pl/ and tm/)
         assertParseFailure(parser, PLAYER_DESC_AMY + TEAM_DESC_AMY,
                 String.format(MESSAGE_TOO_MANY_PREFIXES, DeleteCommand.MESSAGE_USAGE));
