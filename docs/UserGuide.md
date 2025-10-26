@@ -636,18 +636,18 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 Edits an existing player in the PlayBook. Existing values will be updated to the input values.
 
-Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…​`
+Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 **Requirements:**
 * At least one of the optional fields must be provided.
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * `NEW_PLAYER_NAME` must not be the same as an existing player in the PlayBook.
-* `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
+
 <box type="warning" seamless>
 
 **Warnings:**
 * When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
-* You cannot edit injury status or position through this command - use the respective dedicated commands instead.
+* You cannot edit team, injury status or position through this command - use `assignteam`, `assigninjury` or `assignposition` commands instead.
 </box>
 
 <box type="tip" seamless>
@@ -661,7 +661,7 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 **Examples:**
 1. `edit pl/John Doe p/91234567 e/johndoe@example.com` - Updates phone and email
 2. `edit pl/John Doe n/Betsy Crower t/` - Renames player and removes all tags
-3. `edit pl/John Doe tm/U18 t/captain t/veteran` - Moves to U18 team and adds tags
+3. `edit pl/John Doe a/21 Lower Kent Ridge Rd t/scholarship` - Updates address and adds tag
 
 <box type="info" seamless>
 
@@ -961,7 +961,7 @@ _Details coming soon ..._
 | **Delete Player, Team or Position** | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                       |
 | **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `unassigninjury pl/John Doe i/Ankle sprain`                                                                                                   |
 | **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                               |
-| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
+| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
 | **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                        |
 | **List**                            | `list`                                                                                                                                                                                            |
 | **List Captains**                   | `listcaptain`                                                                                                                                                                                     |

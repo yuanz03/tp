@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -29,7 +28,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.team.Team;
 
 /**
  * Edits the details of an existing person in the PlayBook.
@@ -47,7 +45,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TEAM + "TEAM_NAME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + "  "
             + PREFIX_PLAYER + "John Doe "
@@ -57,8 +54,6 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
-    public static final String MESSAGE_TEAM_NOT_FOUND = "The team '%1$s' does not exist. "
-            + "Please create the team first using the 'addteam' command.";
 
     private final Name personNameToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -88,11 +83,10 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTeam, updatedTags,
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, personToEdit.getTeam(), updatedTags,
                 updatedPosition, personToEdit.getInjuries(), personToEdit.isCaptain());
     }
 
@@ -117,26 +111,6 @@ public class EditCommand extends Command {
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-
-        if (!model.hasTeam(editedPerson.getTeam())) {
-            throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, editedPerson.getTeam().getName()));
-        }
-
-        // Get the canonical team from the team list (with correct casing)
-        Team canonicalTeam = model.getTeamByName(editedPerson.getTeam());
-
-        // Update editedPerson to use canonical team
-        editedPerson = new Person(
-                editedPerson.getName(),
-                editedPerson.getPhone(),
-                editedPerson.getEmail(),
-                editedPerson.getAddress(),
-                canonicalTeam,
-                editedPerson.getTags(),
-                editedPerson.getPosition(),
-                editedPerson.getInjuries(),
-                editedPerson.isCaptain()
-        );
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -177,7 +151,6 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Team team;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -191,7 +164,6 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTeam(toCopy.team);
             setTags(toCopy.tags);
         }
 
@@ -199,7 +171,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, team, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
         }
 
         public Optional<Name> getName() {
@@ -232,14 +204,6 @@ public class EditCommand extends Command {
 
         public void setAddress(Address address) {
             this.address = address;
-        }
-
-        public Optional<Team> getTeam() {
-            return Optional.ofNullable(team);
-        }
-
-        public void setTeam(Team team) {
-            this.team = team;
         }
 
         /**
@@ -275,7 +239,6 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(team, otherEditPersonDescriptor.team)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -286,7 +249,6 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("team", team)
                     .add("tags", tags)
                     .toString();
         }
