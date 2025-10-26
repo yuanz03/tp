@@ -17,6 +17,10 @@
         - [Installation and setup](#installation-and-setup)
         - [Understanding the PlayBook GUI](#understanding-the-playbook-gui)
         - [Your First Commands](#your-first-commands)
+    - [Command Reference](#command-reference)
+        - [Command Format Conventions](#command-format-conventions)
+        - [Global Feature Behaviours](#global-feature-behaviours)
+        - [Field Requirements](#field-requirements)
     - [Features](#features)
         - [Viewing help: `help`](#viewing-help-help)
         - [Adding a team: `addteam`](#adding-a-team-addteam)
@@ -174,11 +178,13 @@ For complete documentation of all commands, see the [Features](#features) sectio
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Command Reference
+
+This section explains how to read and use commands in PlayBook.
+
+### Command Format Conventions
 
 <box type="info" seamless>
-
-**Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add pl/PLAYER_NAME`, `PLAYER_NAME` is a parameter which can be used as `add pl/John Doe`.
@@ -187,7 +193,7 @@ For complete documentation of all commands, see the [Features](#features) sectio
   - e.g `pl/PLAYER_NAME [t/TAG]` can be used as `pl/John Doe t/friend` or as `pl/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `pl/PLAYER_NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER pl/PLAYER_NAME` is also acceptable.
@@ -200,8 +206,6 @@ For complete documentation of all commands, see the [Features](#features) sectio
 
 ### Global Feature Behaviours
 
-<box type="info" seamless>
-
 1. **Team creation and deletion commands**:
     - Automatically switches to the `Viewing Teams` panel (if not already in that view).
 
@@ -211,6 +215,8 @@ For complete documentation of all commands, see the [Features](#features) sectio
 3. **Player-related commands**: (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)
     - Automatically switches to the `Viewing Players` panel (if not already in that view).
 
+<box type="info" seamless>
+
 **Notes:**
 * The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
 * See below for the specific behaviours of the different types of list commands.
@@ -218,8 +224,6 @@ For complete documentation of all commands, see the [Features](#features) sectio
 </box>
 
 ### Field Requirements
-
-<box type="info" seamless>
 
 The following requirements apply to all commands unless otherwise specified:
 
@@ -244,6 +248,7 @@ The following requirements apply to all commands unless otherwise specified:
 * Should not be blank
 
 **Email (`EMAIL`):**
+* Should be a valid email format (e.g., `john@example.com`)
 * Should not be blank
 
 **Address (`ADDRESS`):**
@@ -259,6 +264,25 @@ The following requirements apply to all commands unless otherwise specified:
 * Is case-sensitive (e.g., `Friend` is different from `friend`)
 
 </box>
+
+<box type="info" seamless>
+
+**Important Note on Team and Position Names:**
+
+When you create a team or position, PlayBook stores the exact capitalization you first use. All future references to that team or position (regardless of how you type it) will use this original capitalization.
+
+**Example:**
+* If you create `addteam tm/u16`, the team is stored as "u16"
+* Later commands like `add pl/John tm/U16` or `assignteam pl/John tm/U16` will work (case-insensitive matching)
+* But John's team will be displayed as "u16" (the original capitalization)
+
+The same applies to positions: if you create `addposition ps/LW`, all players assigned to that position will show "LW" even if you type `assignposition pl/John ps/lw`.
+
+</box>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Features
 
 #### Viewing help: `help`
 
