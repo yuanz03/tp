@@ -30,7 +30,9 @@ public class Messages {
     public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your %1$s command is missing the player parameter!\n";
 
     // Team Command Messages
-    public static final String MESSAGE_INVALID_TEAM = "No such team in the address book.";
+    public static final String MESSAGE_INVALID_TEAM = "No such team in the PlayBook.";
+
+    public static final String MESSAGE_INVALID_POSITION = "No such position in the PlayBook.";
 
     // Injury Command Messages
     public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your %1$s command is missing the injury parameter!\n";
