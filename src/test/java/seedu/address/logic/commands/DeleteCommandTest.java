@@ -81,7 +81,7 @@ public class DeleteCommandTest {
     @Test
     public void execute_positionNotFound_throwsCommandException() {
         String nonExistentPosition = "NonExistentPosition";
-        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(nonExistentPosition);
+        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(new Position(nonExistentPosition));
 
         assertCommandFailure(deleteCommand, model,
                 String.format(DeleteCommand.MESSAGE_POSITION_NOT_FOUND, nonExistentPosition));
@@ -107,7 +107,7 @@ public class DeleteCommandTest {
 
         model.setPerson(personWithPosition, updatedPerson);
 
-        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
+        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(position);
 
         assertCommandFailure(deleteCommand, model,
                 String.format(DeleteCommand.MESSAGE_POSITION_ASSIGNED, VALID_POSITION_FW));
@@ -119,7 +119,7 @@ public class DeleteCommandTest {
         Position positionToDelete = new Position(VALID_POSITION_GK);
         model.addPosition(positionToDelete);
 
-        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_GK);
+        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(positionToDelete);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_POSITION_SUCCESS, VALID_POSITION_GK);
 
@@ -140,8 +140,12 @@ public class DeleteCommandTest {
         DeleteCommand deleteBensonCommand = DeleteCommand.createDeletePlayerCommand(bensonName);
         DeleteCommand deleteTeamAmyCommand = DeleteCommand.createDeleteTeamCommand(teamAmy);
         DeleteCommand deleteTeamU16Command = DeleteCommand.createDeleteTeamCommand(teamU16);
-        DeleteCommand deletePositionFwCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
-        DeleteCommand deletePositionGkCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_GK);
+        DeleteCommand deletePositionFwCommand = DeleteCommand.createDeletePositionCommand(
+                new Position(VALID_POSITION_FW)
+        );
+        DeleteCommand deletePositionGkCommand = DeleteCommand.createDeletePositionCommand(
+                new Position(VALID_POSITION_GK)
+        );
 
         // same object -> returns true
         assertTrue(deleteAliceCommand.equals(deleteAliceCommand));
@@ -193,9 +197,10 @@ public class DeleteCommandTest {
                 + "{personToDelete=null, teamToDelete=" + targetTeam + ", positionToDelete=null}";
         assertEquals(expectedTeam, deleteTeamCommand.toString());
 
-        DeleteCommand deletePositionCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
+        Position targetPosition = new Position(VALID_POSITION_FW);
+        DeleteCommand deletePositionCommand = DeleteCommand.createDeletePositionCommand(targetPosition);
         String expectedPosition = DeleteCommand.class.getCanonicalName()
-                + "{personToDelete=null, teamToDelete=null, positionToDelete=" + VALID_POSITION_FW + "}";
+                + "{personToDelete=null, teamToDelete=null, positionToDelete=" + targetPosition + "}";
         assertEquals(expectedPosition, deletePositionCommand.toString());
     }
 
@@ -272,7 +277,8 @@ public class DeleteCommandTest {
 
     @Test
     public void createDeletePositionCommand_validPosition_success() {
-        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
+        Position validPosition = new Position(VALID_POSITION_FW);
+        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(validPosition);
         assertTrue(deleteCommand instanceof DeleteCommand);
     }
 
@@ -284,8 +290,10 @@ public class DeleteCommandTest {
 
     @Test
     public void createDeletePositionCommand_differentPositions_createsDistinctCommands() {
-        DeleteCommand command1 = DeleteCommand.createDeletePositionCommand(VALID_POSITION_FW);
-        DeleteCommand command2 = DeleteCommand.createDeletePositionCommand(VALID_POSITION_GK);
+        Position position1 = new Position(VALID_POSITION_FW);
+        Position position2 = new Position(VALID_POSITION_GK);
+        DeleteCommand command1 = DeleteCommand.createDeletePositionCommand(position1);
+        DeleteCommand command2 = DeleteCommand.createDeletePositionCommand(position2);
 
         // Verify commands are not equal
         assertFalse(command1.equals(command2));

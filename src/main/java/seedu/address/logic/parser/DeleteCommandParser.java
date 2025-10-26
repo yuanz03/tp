@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
 /**
@@ -54,8 +55,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         // Handle delete position
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_POSITION);
-            String posName = ParserUtil.parsePositionName(argMultimap.getValue(PREFIX_POSITION).get());
-            return DeleteCommand.createDeletePositionCommand(posName);
+            Position position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION).get());
+            return DeleteCommand.createDeletePositionCommand(position);
         }
 
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
