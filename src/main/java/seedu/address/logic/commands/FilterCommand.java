@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.FilterByInjuryPredicate;
 import seedu.address.model.position.FilterByPositionPredicate;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
 
@@ -42,8 +43,8 @@ public class FilterCommand extends Command {
     private final Optional<String> positionArg;
 
     /**
-     * Creates a FilterCommand to filter the persons with the specified {@code teamPredicate}
-     * and {@code injuryPredicate}.
+     * Creates a FilterCommand to filter the persons with the specified {@code teamPredicate},
+     * {@code injuryPredicate}, and {@code positionPredicate}.
      */
     public FilterCommand(FilterByTeamPredicate teamPred, FilterByInjuryPredicate injuryPred,
             FilterByPositionPredicate positionPred, Optional<String> teamArg,
@@ -62,49 +63,77 @@ public class FilterCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Optional<String> tArg = teamArg;
-        Optional<String> iArg = injuryArg;
-        Optional<String> psArg = positionArg;
-
-        if (tArg.isPresent()) {
-            Team check = new Team(tArg.get());
-            if (!model.hasTeam(check)) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TEAM);
-            }
-        }
+        validateTeamIfPresent(model);
+        validatePositionIfPresent(model);
 
         model.updateFilteredPersonList(person ->
             teamPredicate.test(person) && injuryPredicate.test(person) && positionPredicate.test(person));
 
-        int size = model.getFilteredPersonList().size();
-        if (size == 0) {
-            if (tArg.isPresent() && iArg.isPresent() && psArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
-                            tArg.get(), iArg.get(), psArg.get()));
-            } else if (tArg.isPresent() && iArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY, tArg.get(), iArg.get()));
-            } else if (tArg.isPresent() && psArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION, tArg.get(), psArg.get()));
-            } else if (psArg.isPresent() && iArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_MATCHING_INJURY_AND_POSITION, iArg.get(), psArg.get()));
-            } else if (tArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, tArg.get()));
-            } else if (psArg.isPresent()) {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, psArg.get()));
-            } else {
-                throw new CommandException(
-                    String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, iArg.get()));
-            }
+        int filteredSize = model.getFilteredPersonList().size();
+
+        if (filteredSize == 0) {
+            throw createNoMatchingPlayersException();
         }
 
         return CommandResult.showPersonCommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, size));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, filteredSize));
+    }
+
+    /**
+     * Validates the team if it is present in the filter criteria.
+     *
+     * @throws CommandException if the team does not exist
+     */
+    private void validateTeamIfPresent(Model model) throws CommandException {
+        if (teamArg.isPresent()) {
+            Team teamToCheck = new Team(teamArg.get());
+            if (!model.hasTeam(teamToCheck)) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TEAM);
+            }
+        }
+    }
+
+    /**
+     * Validates the position if it is present in the filter criteria.
+     *
+     * @throws CommandException if the position does not exist
+     */
+    private void validatePositionIfPresent(Model model) throws CommandException {
+        if (positionArg.isPresent()) {
+            Position positionToCheck = new Position(positionArg.get());
+            if (!model.hasPosition(positionToCheck)) {
+                throw new CommandException(Messages.MESSAGE_INVALID_POSITION);
+            }
+        }
+    }
+
+    /**
+     * Creates an appropriate exception based on which filter criteria are present.
+     */
+    private CommandException createNoMatchingPlayersException() {
+        if (teamArg.isPresent() && injuryArg.isPresent() && positionArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
+                        teamArg.get(), injuryArg.get(), positionArg.get()));
+        } else if (teamArg.isPresent() && injuryArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY, teamArg.get(), injuryArg.get()));
+        } else if (teamArg.isPresent() && positionArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION, teamArg.get(), positionArg.get()));
+        } else if (positionArg.isPresent() && injuryArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_MATCHING_INJURY_AND_POSITION, injuryArg.get(), positionArg.get()));
+        } else if (teamArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, teamArg.get()));
+        } else if (positionArg.isPresent()) {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, positionArg.get()));
+        } else {
+            return new CommandException(
+                String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, injuryArg.get()));
+        }
     }
 
     @Override

@@ -218,8 +218,7 @@ public class FilterCommandTest {
                 Optional.empty(),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION,
-                NON_EXISTENT_POSITION), exception.getMessage());
+        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
     }
 
     @Test
@@ -234,8 +233,7 @@ public class FilterCommandTest {
                 Optional.empty(),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION,
-                VALID_TEAM_AMY, NON_EXISTENT_POSITION), exception.getMessage());
+        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
     }
 
     // Matching team but no one matching injury (equivalent to both-present failure)
@@ -333,7 +331,6 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_INJURY),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
-                 VALID_TEAM_AMY, NON_EXISTENT_INJURY, NON_EXISTENT_POSITION), exception.getMessage());
+        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
     }
 }
