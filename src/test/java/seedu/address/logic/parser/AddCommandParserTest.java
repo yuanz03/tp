@@ -205,31 +205,38 @@ public class AddCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid player name
         assertParseFailure(parser, INVALID_PLAYER_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS));
 
         // invalid phone
         assertParseFailure(parser, PLAYER_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                String.format("Invalid phone number: %s\n%s", "911a", Phone.MESSAGE_CONSTRAINTS));
 
         // invalid email
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                String.format("Invalid email: %s\n%s", "bob!yahoo", Email.MESSAGE_CONSTRAINTS));
 
         // invalid address
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                String.format("Invalid address: %s\n%s", "", Address.MESSAGE_CONSTRAINTS));
 
         // invalid team
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + INVALID_TEAM_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Team.MESSAGE_CONSTRAINTS);
+                + INVALID_TEAM_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
 
         // invalid tag
         assertParseFailure(parser, PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TEAM_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND,
+                String.format("Invalid tag name: %s\n%s", "hubby*friend", Tag.MESSAGE_CONSTRAINTS));
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_PLAYER_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + TEAM_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TEAM_DESC_BOB,
+                String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS));
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

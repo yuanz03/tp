@@ -84,13 +84,15 @@ public class UnassignInjuryCommandParserTest {
     @Test
     public void parse_invalidPlayer_failure() {
         assertParseFailure(parser, PREAMBLE_WHITESPACE + INVALID_PLAYER_DESC + INJURY_DESC_BOB,
-                Name.MESSAGE_CONSTRAINTS + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+                String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS)
+                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
     }
 
     @Test
     public void parse_invalidInjury_failure() {
         assertParseFailure(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + INVALID_INJURY_DESC,
-                Injury.MESSAGE_CONSTRAINTS + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+                String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS)
+                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
     }
 
     @Test

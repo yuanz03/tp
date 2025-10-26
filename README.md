@@ -1,3 +1,4 @@
+[![Java CI](https://github.com/AY2526S1-CS2103T-T13-3/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-T13-3/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/github/AY2526S1-CS2103T-T13-3/tp/graph/badge.svg)](https://codecov.io/github/AY2526S1-CS2103T-T13-3/tp)
 
 ![Ui](docs/images/Ui.png)

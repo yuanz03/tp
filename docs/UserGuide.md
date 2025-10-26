@@ -78,7 +78,7 @@ Traditional contact apps weren't built for coaching. PlayBook solves common team
 
 Follow these steps to install PlayBook and add your first player.
 
-### 1. Verify Java installation
+#### 1. Verify Java installation
 
 PlayBook requires Java 17 or above. Check your version by running:
 
@@ -91,13 +91,13 @@ If you need to install Java:
 * **Windows**: [Installation guide](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
 * **Linux**: [Installation guide](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
 
-### 2. Download PlayBook
+#### 2. Download PlayBook
 
 Download the latest `playbook.jar` from our [releases page](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
 Save it to a dedicated folder (e.g., `Documents/PlayBook`). PlayBook will create data files in this location.
 
-### 3. Launch the application
+#### 3. Launch the application
 
 Navigate to your PlayBook folder and run:
 
@@ -112,7 +112,7 @@ java -jar playbook.jar
 
 The PlayBook window should open with sample data loaded.
 
-### 4. Understanding the interface
+#### 4. Understanding the interface
 
 ![Ui](images/Ui.png)
 
@@ -125,7 +125,7 @@ The PlayBook interface consists of:
 | **List View**      | Displays players, teams, or positions based on your current command. |
 | **Detail Cards**   | Shows complete information for each item in the list.                |
 
-### 5. Try your first commands
+#### 5. Try your first commands
 
 Type each command in the Command Box and press Enter.
 
@@ -160,7 +160,7 @@ list
 ```
 **Expected result:** All players in your PlayBook are displayed in the list view.
 
-### Next steps
+#### Next steps
 
 You're now ready to manage your teams. Common tasks include:
 
@@ -198,7 +198,7 @@ For complete documentation of all commands, see the [Features](#features) sectio
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Field Requirements
+#### Field Requirements
 
 <box type="info" seamless>
 
@@ -241,7 +241,7 @@ The following requirements apply to all commands unless otherwise specified:
 
 </box>
 
-### Viewing help: `help`
+#### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -250,7 +250,7 @@ Format: `help`
 ![help message](images/helpMessage.png)
 
 
-### Adding a team: `addteam`
+#### Adding a team: `addteam`
 
 Adds a team to the PlayBook.
 
@@ -273,7 +273,7 @@ Switches to the `Viewing Teams` panel if not already in it.
 ![add team message](images/addTeamResult.png)
 </box>
 
-### Adding a player: `add`
+#### Adding a player: `add`
 
 Adds a player to the PlayBook.
 
@@ -309,7 +309,7 @@ The player will appear in the player list panel with a "FIT" injury status and n
 </box>
 
 
-### Adding a position: `addposition`
+#### Adding a position: `addposition`
 
 Adds a position to the PlayBook.
 
@@ -335,7 +335,7 @@ Format: `addposition ps/POSITION_NAME`
 ![new position message](images/newPositionResult.png)
 </box>
 
-### Assign player to team: `assignteam`
+#### Assign player to team: `assignteam`
 
 Assigns an existing player to another existing team.
 
@@ -379,7 +379,7 @@ The player's team will be immediately updated in their player card, and if they 
 ![assign team message](images/assignTeamResult.png)
 </box>
 
-### Assigning a position to player: `assignposition`
+#### Assigning a position to player: `assignposition`
 
 Assigns an existing position to an existing player in the PlayBook.
 
@@ -415,7 +415,7 @@ The position will be immediately visible in the player's card.
 ![assign position message](images/assignPositionResult.png)
 </box>
 
-### Assign injury to player: `assigninjury`
+#### Assign injury to player: `assigninjury`
 
 Assigns an injury status to an existing player.
 
@@ -453,7 +453,7 @@ The player's injury status will be updated immediately in their player card.
 ![assign injury message](images/assignInjuryResult.png)
 </box>
 
-### Assigning player as captain: `assigncaptain`
+#### Assigning player as captain: `assigncaptain`
 
 Assigns an existing player in the PlayBook to be captain.
 
@@ -485,7 +485,7 @@ A captain badge or indicator will appear on the player's card.
 ![assign captain message](images/assignCaptainResult.png)
 </box>
 
-### Deleting a player, team or position: `delete`
+#### Deleting a player, team or position: `delete`
 
 Deletes the specified player, team or position from the PlayBook.
 
@@ -534,7 +534,7 @@ The player card will immediately disappear from the player list.
 ![delete position message](images/deletePositionResult.png)
 </box>
 
-### Unassign injury from player: `unassigninjury`
+#### Unassign injury from player: `unassigninjury`
 
 Removes an injury status currently assigned to an existing player.
 
@@ -568,7 +568,7 @@ If the player has no other injury status, their status will automatically return
 ![unassign injury message](images/unassignInjuryResult.png)
 </box>
 
-### Unassigning player as captain: `stripcaptain`
+#### Unassigning player as captain: `stripcaptain`
 
 Removes captain status from an existing player in the PlayBook.
 
@@ -591,7 +591,7 @@ The captain badge/indicator will be removed from the player's card.
 ![strip captain message](images/stripCaptainResult.png)
 </box>
 
-### Editing a player: `edit`
+#### Editing a player: `edit`
 
 Edits an existing player in the PlayBook. Existing values will be updated to the input values.
 
@@ -629,7 +629,7 @@ The player card will immediately reflect all changes.
 ![edit message](images/editResult.png)
 </box>
 
-### Locating players by name: `find`
+#### Locating players by name: `find`
 
 Finds players whose names contain any of the given keywords.
 
@@ -659,7 +659,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 ![result for 'find Doe'](images/findResult.png)
 </box>
 
-### Listing all players: `list`
+#### Listing all players: `list`
 
 Shows a list of all players in the PlayBook.
 
@@ -677,7 +677,7 @@ Format: `list`
 ![list message](images/listResult.png)
 </box>
 
-### Listing all captains: `listcaptain`
+#### Listing all captains: `listcaptain`
 
 Shows a list of all captains in the PlayBook.
 
@@ -695,7 +695,7 @@ Format: `listcaptain`
 ![list captains message](images/listCaptainsResult.png)
 </box>
 
-### Listing all teams: `listteam`
+#### Listing all teams: `listteam`
 
 Shows a list of all teams in the PlayBook.
 
@@ -713,7 +713,7 @@ Format: `listteam`
 ![list team message](images/listTeamResult.png)
 </box>
 
-### Listing all positions: `listposition`
+#### Listing all positions: `listposition`
 
 Shows a list of all positions in the PlayBook.
 
@@ -731,7 +731,7 @@ Format: `listposition`
 ![list position message](images/listPositionResult.png)
 </box>
 
-### Listing all injured players: `listinjured`
+#### Listing all injured players: `listinjured`
 
 Shows a list of all injured players in the PlayBook.
 
@@ -752,7 +752,7 @@ Format: `listinjured`
 ![list injured message](images/listInjuredResult.png)
 </box>
 
-### Filtering players by team, injury and/or position: `filter`
+#### Filtering players by team, injury and/or position: `filter`
 
 Filter players by team, injury and/or position.
 
@@ -789,7 +789,7 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 ![result for filter](images/filterResult.png)
 </box>
 
-### Clearing all entries: `clear`
+#### Clearing all entries: `clear`
 
 Clears all entries from the PlayBook.
 
@@ -821,7 +821,7 @@ This command will permanently delete:
 The player list panel will be completely empty.
 </box>
 
-### Exiting the program: `exit`
+#### Exiting the program: `exit`
 
 Exits the program.
 
@@ -832,7 +832,7 @@ Format: `exit`
 **Expected output:** The PlayBook application window will close immediately. Your data is safely stored in `addressbook.json`.
 </box>
 
-### Saving the data
+#### Saving the data
 
 PlayBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
@@ -842,7 +842,7 @@ PlayBook data are saved in the hard disk automatically after any command that ch
 
 </box>
 
-### Editing the data file
+#### Editing the data file
 
 PlayBook data are saved automatically as a JSON file `/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -855,7 +855,7 @@ PlayBook data are saved automatically as a JSON file `/data/addressbook.json`. A
 * Only edit the data file if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
+#### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 

@@ -29,6 +29,7 @@ public class StripCaptainCommandParserTest {
 
     @Test
     public void parse_invalidName_throwsParseException() {
-        assertParseFailure(parser, INVALID_PLAYER_DESC, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_PLAYER_DESC,
+                String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS));
     }
 }
