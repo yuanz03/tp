@@ -39,7 +39,7 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the player identified "
-            + "by name in the displayed player list. "
+            + "by name in the displayed player list. \n"
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER_NAME "

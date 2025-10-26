@@ -23,10 +23,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class AssignCaptainCommand extends Command {
     public static final String COMMAND_WORD = "assigncaptain";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
-            + "as captain.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER "
-            + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns the player as captain of their team. \n"
+            + "Parameters: "
+            + PREFIX_PLAYER + "PLAYER_NAME "
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PLAYER + "Sergio Ramos";
 
     public static final String MESSAGE_SUCCESS = "%1$s is now captain of %2$s";
     public static final String MESSAGE_ALREADY_CAPTAIN = "%1$s is already a captain!";

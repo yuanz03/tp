@@ -11,12 +11,13 @@ import seedu.address.model.team.Team;
 
 /**
  * Adds a team to the PlayBook.
+ * Usage: addteam tm/TEAM_NAME
  */
 public class AddTeamCommand extends Command {
 
     public static final String COMMAND_WORD = "addteam";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the PlayBook. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the PlayBook. \n"
         + "Parameters: "
         + PREFIX_TEAM + "TEAM_NAME "
         + "Example: " + COMMAND_WORD + " "

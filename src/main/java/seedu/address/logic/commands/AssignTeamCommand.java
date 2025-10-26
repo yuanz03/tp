@@ -26,7 +26,7 @@ public class AssignTeamCommand extends Command {
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_ALREADY_ASSIGNED = "Player: %s is already assigned to Team: %s!";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a team to a player in the PlayBook. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a team to a player in the PlayBook. \n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER_NAME "
             + PREFIX_TEAM + "TEAM_NAME "

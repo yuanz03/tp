@@ -457,7 +457,7 @@ Format: `assigncaptain pl/PLAYER_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Jovan Doe is now a captain of ClementiRovers"
+**Expected output:** "John Doe is now a captain of U16"
 
 A captain badge or indicator will appear on the player's card.
 
@@ -511,8 +511,6 @@ The player card will immediately disappear from the player list.
 ![delete team message](images/deleteTeamResult.png)
 
 **For position deletion:** "Position: LW has been deleted successfully!"
-
-
 
 ![delete position message](images/deletePositionResult.png)
 </box>

@@ -16,19 +16,19 @@ import seedu.address.model.person.Person;
 
 /**
  * Adds a player to the PlayBook.
+ * Usage: add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a player to the PlayBook. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a player to the PlayBook. \n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER_NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_TEAM + "TEAM_NAME "
-            // TODO: implement support for position
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe "
@@ -36,7 +36,6 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TEAM + "U16 "
-            // TODO: implement support for position
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
