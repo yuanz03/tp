@@ -530,7 +530,7 @@ Consider making a backup of your data file before bulk deletions.
 
 **Expected success message:**
 
-**For player deletion** (Example 1): "Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injury: FIT; Captain Status: Active; Tags: ;  has been deleted successfully!"
+**For player deletion** (Example 1): "Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injuries: [ACL]; Captain Status: Active; Tags: ;  has been deleted successfully!"
 
 * **Expected behaviour:** The player card will immediately disappear from the player list.
 
@@ -641,7 +641,7 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 <box type="info" seamless>
 
-**Expected success message** (Example 1): "Edited Player: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injury: FIT; Captain Status: Active; Tags: ;"
+**Expected success message** (Example 1): "Edited Player: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injuries: [FIT]; Captain Status: Inactive; Tags: ;"
 
 **Expected behaviour:** The player card will immediately display all newly updated field changes.
 
