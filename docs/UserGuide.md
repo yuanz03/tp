@@ -25,7 +25,7 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Viewing help: `help`](#viewing-help-help)
         - [Adding a team: `addteam`](#adding-a-team-addteam)
         - [Adding a player: `add`](#adding-a-player-add)
-        - [Creating a new position: `addposition`](#creating-a-new-position-addposition)
+        - [Add a position: `addposition`](#adding-a-position-addposition)
         - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
         - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
@@ -108,17 +108,18 @@ Unlike traditional contact management apps, PlayBook is **optimized for football
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
 
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-
-   ![Ui](images/Ui.png)
-
 #### Understanding the PlayBook GUI
 
-The PlayBook window consists of:
+![Ui](images/Ui.png)
+
+The PlayBook GUI consists of:
 * **Command Box** (top): Where you type your commands
 * **Result Display**: Shows feedback messages after each command
-* **Player List Panel**: Displays all players matching your current view
-* **Player Card**: Shows individual player details including name, team, position, injury status, phone, email, address, and tags
+* **View**: Displays either list of players, teams or positions depending on your current view
+  * **Viewing Players**: Shows players in the PlayBook
+  * **Viewing Teams**: Shows teams in the PlayBook
+  * **Viewing Positions**: Shows positions in the PlayBook
+* **Card**: Displays details of the selected player, team or position
 
 #### Your First Commands
 
@@ -128,7 +129,7 @@ Type commands in the command box and press Enter to execute them. Here's a quick
    
    <box type="info" seamless>
 
-   **Expected output:** "Address book has been cleared!" and the player list becomes empty.
+   **Expected output:** "PlayBook has been cleared!" and the list becomes empty.
    </box>
 
 2. **Create your first team** - Type `addteam tm/U16` and press Enter.
@@ -145,7 +146,7 @@ Type commands in the command box and press Enter to execute them. Here's a quick
 
    <box type="info" seamless>
 
-   **Expected output:** "New person added: Alex Tan; Phone: 87654321; Email: alex@example.com; Address: 123 Main St; Team: U16; Injury: FIT; Position: ; Tags: "
+   **Expected output:** "New player added: Alex Tan; Phone: 87654321; Email: alex@example.com; Address: 123 Main St; Team: U16; Injuries: [FIT]; Tags: "
    
    You should now see Alex Tan's player card in the player list.
    </box>
@@ -156,11 +157,7 @@ Type commands in the command box and press Enter to execute them. Here's a quick
 
 **More example commands to try:**
 
-* `addteam tm/U18`: Add another team named `U18` to the PlayBook.
-
-* `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16` : Add another player to the U16 team.
-
-* `addposition ps/LW` : Create a new position named `LW` (Left Wing) in the PlayBook.
+* `addposition ps/LW` : Create a new position named `LW` in the PlayBook.
 
 * `assignposition pl/Alex Tan ps/LW` : Assign the position `LW` to `Alex Tan` (create the position first using `addposition`).
 
@@ -287,9 +284,9 @@ The player will appear in the player list panel with a "FIT" injury status and n
 </box>
 
 
-### Creating a new position: `addposition`
+### Adding a position: `addposition`
 
-Creates a new position in the PlayBook.
+Adds a position to the PlayBook.
 
 Format: `addposition ps/POSITION_NAME`
 
