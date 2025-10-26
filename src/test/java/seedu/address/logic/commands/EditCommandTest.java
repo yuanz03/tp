@@ -27,7 +27,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -121,37 +120,6 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(nonExistentName, descriptor);
 
         assertCommandFailure(editCommand, model, String.format(Messages.MESSAGE_PERSON_NOT_FOUND, nonExistentName));
-    }
-
-    @Test
-    public void execute_teamNotFound_failure() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Team nonExistentTeam = new Team("NonExistentTeam");
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTeam("NonExistentTeam").build();
-        EditCommand editCommand = new EditCommand(firstPerson.getName(), descriptor);
-
-        assertCommandFailure(editCommand, model,
-                String.format(EditCommand.MESSAGE_TEAM_NOT_FOUND, nonExistentTeam.getName()));
-    }
-
-    @Test
-    public void execute_editTeamCaseInsensitive_usesCanonicalTeamName() throws Exception {
-        // Test that case-insensitive team matching uses the canonical team name from address book
-        Model testModel = new ModelManager();
-        Team canonicalTeam = new Team("U16"); // Canonical name with uppercase
-        testModel.addTeam(canonicalTeam);
-
-        Person alice = new PersonBuilder().withName("Alice Pauline").build();
-        testModel.addPerson(alice);
-
-        // User edits with lowercase "u16" but should get assigned to canonical "U16"
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTeam("u16").build();
-        EditCommand editCommand = new EditCommand(alice.getName(), descriptor);
-        editCommand.execute(testModel);
-
-        // Verify the person's team name matches the canonical name
-        Person updatedAlice = testModel.getPersonByName(alice.getName());
-        assertEquals("U16", updatedAlice.getTeam().getName());
     }
 
     @Test
