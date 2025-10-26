@@ -74,10 +74,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .toString();
+        return this.name;
     }
 }
-
-
