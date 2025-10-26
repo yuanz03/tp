@@ -201,6 +201,49 @@ Refer to the [Features](#features) below for details of each command.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+### Field Requirements
+
+<box type="info" seamless>
+
+The following requirements apply to all commands unless otherwise specified:
+
+**Player Name (`PLAYER_NAME`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `john doe` is the same as `John Doe`)
+
+**Team Name (`TEAM_NAME`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `u16` is the same as `U16`)
+
+**Position Name (`POSITION_NAME`):**
+* Should contain only alphanumeric characters, with no spaces
+* Should not be blank
+* Is case-insensitive (e.g., `fw` is the same as `FW`)
+
+**Phone Number (`PHONE_NUMBER`):**
+* Should only contain numbers
+* Should be at least 3 digits long
+* Should not be blank
+
+**Email (`EMAIL`):**
+* Should not be blank
+
+**Address (`ADDRESS`):**
+* Should not be blank
+
+**Injury (`INJURY`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `acl` is the same as `ACL`)
+
+**Tag (`TAG`):**
+* Should contain alphanumeric characters only
+* Is case-sensitive (e.g., `Friend` is different from `friend`)
+
+</box>
+
 ### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
@@ -218,9 +261,6 @@ Format: `addteam tm/TEAM_NAME`
 
 **Requirements:**
 * `TEAM_NAME` must not be the same as an existing team in the PlayBook.
-* `TEAM_NAME` should contain alphanumeric characters and spaces only.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TEAM_NAME` should not be blank.
 
 **Examples:**
 * `addteam tm/U16` - Creates a team named `U16`
@@ -243,20 +283,8 @@ Adds a player to the PlayBook.
 Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…​`
 
 **Requirements:**
-* `PLAYER_NAME` should contain alphanumeric characters and spaces only.
-* `PLAYER_NAME` should not be blank.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
 * `PLAYER_NAME` must not be the same as an existing player in the PlayBook.
-* `PHONE_NUMBER` should only contain numbers.
-* `PHONE_NUMBER` should be at least 3 digits long.
-* `PHONE_NUMBER` should not be blank.
-* `EMAIL` should not be blank.
-* `ADDRESS` should not be blank.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters and spaces.
-* `TEAM_NAME` should not be blank.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TAG` should contain alphanumeric characters only.
 
 <box type="warning" seamless>
 
@@ -292,9 +320,6 @@ Format: `addposition ps/POSITION_NAME`
 
 **Requirements:**
 * `POSITION_NAME` must not be the same as an existing position in the PlayBook.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
 
 <box type="tip" seamless>
 
@@ -320,10 +345,8 @@ Assigns an existing player to another existing team.
 Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
 **Requirements:**
+* `PLAYER_NAME` must be an existing player in the PlayBook.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should not be blank.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
 
 <box type="tip" seamless>
@@ -354,12 +377,7 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
 * `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
 * The player must not already be assigned to the same position.
 
 <box type="warning" seamless>
@@ -394,12 +412,7 @@ Assigns an injury status to an existing player.
 Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 **Requirements:**
-* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
-* `INJURY` should not be blank.
-* `INJURY` should contain alphanumeric characters and spaces only.
+* `PLAYER_NAME` must be an existing player in the PlayBook.
 
 <box type="warning" seamless>
 
@@ -438,8 +451,6 @@ Format: `assigncaptain pl/PLAYER_NAME`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
 * The player must not already be an assigned captain.
 * **Only one captain per team is allowed** - when you assign a new captain to a team that already has a captain, the previous captain will automatically be stripped of their captaincy.
 
@@ -469,9 +480,7 @@ Format: `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`
 
 **Requirements:**
 * You must provide **exactly one** parameter (either `pl/`, `tm/`, or `ps/`).
-* Names are case-insensitive, e.g `hans` will match `Hans`, `u16` will match `U16`.
 * The player, team or position to be deleted must exist in the PlayBook.
-* Names should not be blank.
 
 <box type="warning" seamless>
 
@@ -519,12 +528,7 @@ Removes an injury status currently assigned to an existing player.
 Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 **Requirements:**
-* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
-* `INJURY` should not be blank.
-* `INJURY` should contain alphanumeric characters and spaces only.
+* `PLAYER_NAME` must be an existing player in the PlayBook.
 * `INJURY` must match an injury that is already assigned to the specified player.
 * The player must not already have the default `FIT` status.
 
@@ -559,8 +563,6 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
 * The player must already be an assigned captain.
 
 **Examples:**
@@ -584,19 +586,9 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 **Requirements:**
 * At least one of the optional fields must be provided.
-* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `NEW_PLAYER_NAME` should contain alphanumeric characters and spaces only.
-* `NEW_PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` must be an existing player in the PlayBook.
 * `NEW_PLAYER_NAME` must not be the same as an existing player in the PlayBook.
-* `PHONE_NUMBER` should only contain numbers.
-* `PHONE_NUMBER` should be at least 3 digits long.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters, with no spaces.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TEAM_NAME` should not be blank.
-* `TAG` should contain alphanumeric characters only.
 <box type="warning" seamless>
 
 **Warning:** When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
@@ -631,10 +623,7 @@ Finds players whose names contain any of the given keywords.
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Requirements:**
-* `PLAYER_NAME` must be the same as an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `PLAYER_NAME` will only match full words e.g. `Han` will not match `Hans`.
+* Keywords will only match full words e.g. `Han` will not match `Hans`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
@@ -759,20 +748,10 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 **Requirements:**
 * At least one of the optional fields must be provided.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
-* `TEAM_NAME` should contain only alphanumeric characters and spaces.
-* `TEAM_NAME` is case-insensitive, e.g. `u16` is the same as `U16`.
-* `TEAM_NAME` should not be blank.
-* `INJURY` is case-insensitive, e.g. `acl` is the same as `ACL`.
-* `INJURY` should contain alphanumeric characters and spaces only.
-* `INJURY` should not be blank.
-* `INJURY` must match an injury that is already assigned to the specified player.
+* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
 * `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
 * `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
-* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
 
 <box type="tip" seamless>
 
