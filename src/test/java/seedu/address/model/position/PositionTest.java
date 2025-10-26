@@ -109,7 +109,7 @@ public class PositionTest {
     @Test
     public void toString_validPosition_correctFormat() {
         Position position = new Position("FW");
-        String expected = "seedu.address.model.position.Position{name=FW}";
+        String expected = position.getName();
         assertEquals(expected, position.toString());
     }
 }
