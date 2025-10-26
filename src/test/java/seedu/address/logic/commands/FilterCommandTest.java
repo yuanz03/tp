@@ -219,7 +219,7 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
-        }
+    }
 
     @Test
     public void execute_noOneMatchingPositionTeam_throwsCommandException() {
@@ -234,7 +234,7 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
-        }
+    }
 
     // Matching team but no one matching injury (equivalent to both-present failure)
     @Test
@@ -332,5 +332,5 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
-        }
+    }
 }
