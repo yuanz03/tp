@@ -198,7 +198,7 @@ For complete documentation of all commands, see the [Features](#features) sectio
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-#### Global Feature Behaviours
+### Global Feature Behaviours
 
 <box type="info" seamless>
 
@@ -208,7 +208,7 @@ For complete documentation of all commands, see the [Features](#features) sectio
 2. **Position creation and deletion commands**:
     - Automatically switches to the `Viewing Positions` panel (if not already in that view).
 
-3. **Player-related commands (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)**:
+3. **Player-related commands**: (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)
     - Automatically switches to the `Viewing Players` panel (if not already in that view).
 
 **Notes:**
@@ -217,7 +217,7 @@ For complete documentation of all commands, see the [Features](#features) sectio
 
 </box>
 
-#### Field Requirements
+### Field Requirements
 
 <box type="info" seamless>
 
