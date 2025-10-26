@@ -49,7 +49,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid player name: %s\n%s", trimmedName, Name.MESSAGE_CONSTRAINTS));
         }
         return new Name(trimmedName);
     }
@@ -64,7 +64,7 @@ public class ParserUtil {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
         if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid phone number: %s\n%s", trimmedPhone, Phone.MESSAGE_CONSTRAINTS));
         }
         return new Phone(trimmedPhone);
     }
@@ -79,7 +79,7 @@ public class ParserUtil {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid address: %s\n%s", trimmedAddress, Address.MESSAGE_CONSTRAINTS));
         }
         return new Address(trimmedAddress);
     }
@@ -94,7 +94,7 @@ public class ParserUtil {
         requireNonNull(email);
         String trimmedEmail = email.trim();
         if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid email: %s\n%s", trimmedEmail, Email.MESSAGE_CONSTRAINTS));
         }
         return new Email(trimmedEmail);
     }
@@ -109,7 +109,7 @@ public class ParserUtil {
         requireNonNull(injuryName);
         String trimmedInjuryName = injuryName.trim();
         if (!Injury.isValidInjuryName(trimmedInjuryName)) {
-            throw new ParseException(Injury.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid injury: %s\n%s", trimmedInjuryName, Injury.MESSAGE_CONSTRAINTS));
         }
         return new Injury(trimmedInjuryName);
     }
@@ -124,7 +124,7 @@ public class ParserUtil {
         requireNonNull(team);
         String trimmedTeam = team.trim();
         if (!Team.isValidTeamName(trimmedTeam)) {
-            throw new ParseException(Team.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid team name: %s\n%s", trimmedTeam, Team.MESSAGE_CONSTRAINTS));
         }
         return new Team(trimmedTeam);
     }
@@ -139,7 +139,7 @@ public class ParserUtil {
         requireNonNull(position);
         String trimmedPosition = position.trim();
         if (!Position.isValidPositionName(trimmedPosition)) {
-            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid position name: %s\n%s", trimmedPosition, Position.MESSAGE_CONSTRAINTS));
         }
         return new Position(trimmedPosition);
     }
@@ -152,7 +152,7 @@ public class ParserUtil {
         requireNonNull(position);
         String trimmedPosition = position.trim();
         if (!Position.isValidPositionName(trimmedPosition)) {
-            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid position name: %s\n%s", trimmedPosition, Position.MESSAGE_CONSTRAINTS));
         }
         return trimmedPosition;
     }
@@ -167,7 +167,7 @@ public class ParserUtil {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
         if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid tag name: %s\n%s", trimmedTag, Tag.MESSAGE_CONSTRAINTS));
         }
         return new Tag(trimmedTag);
     }
