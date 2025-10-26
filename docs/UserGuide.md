@@ -24,10 +24,10 @@
         - [Add a position: `addposition`](#adding-a-position-addposition)
         - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
-        - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
+        - [Assign an injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
         - [Assigning player as captain: `assigncaptain`](#assigning-player-as-captain-assigncaptain)
         - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
-        - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
+        - [Unassign an injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
         - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
@@ -166,7 +166,7 @@ You're now ready to manage your teams. Common tasks include:
 
 * **Add positions**: `addposition ps/LW`
 * **Assign positions**: `assignposition pl/Alex Tan ps/LW`
-* **Record injuries**: `assigninjury pl/Alex Tan i/ACL`
+* **Record injuries**: `assigninjury pl/Alex Tan i/Ankle sprain`
 * **Filter players**: `filter i/FIT` (show only fit players)
 * **Get help**: `help`
 
@@ -219,6 +219,11 @@ The following requirements apply to all commands unless otherwise specified:
 * Should not be blank
 * Is case-insensitive (e.g., `fw` is the same as `FW`)
 
+**Injury (`INJURY`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `acl` is the same as `ACL`)
+
 **Phone Number (`PHONE_NUMBER`):**
 * Should only contain numbers
 * Should be at least 3 digits long
@@ -229,11 +234,6 @@ The following requirements apply to all commands unless otherwise specified:
 
 **Address (`ADDRESS`):**
 * Should not be blank
-
-**Injury (`INJURY`):**
-* Should contain alphanumeric characters and spaces only
-* Should not be blank
-* Is case-insensitive (e.g., `acl` is the same as `ACL`)
 
 **Tag (`TAG`):**
 * Should contain alphanumeric characters only
@@ -266,11 +266,11 @@ Format: `addteam tm/TEAM_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "New team added: U16"
+**Expected success message:** "New team added: U16"
 
 Switches to the `Viewing Teams` panel if not already in it.
 
-![add team message](images/addTeamResult.png)
+![add team message](images/addTeamResult.png)c
 </box>
 
 #### Adding a player: `add`
@@ -303,7 +303,7 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 
 Switches to the `Viewing Players` panel if not already in it.
 
-The player will appear in the player list panel with a "FIT" injury status and no position assigned by default.
+The player will appear in the player list panel with the "FIT" injury status and no position assigned by default.
 
 ![add message](images/addPlayerResult.png)
 </box>
@@ -415,9 +415,9 @@ The position will be immediately visible in the player's card.
 ![assign position message](images/assignPositionResult.png)
 </box>
 
-#### Assign injury to player: `assigninjury`
+#### Assign an injury to player: `assigninjury`
 
-Assigns an injury status to an existing player.
+Assigns an injury status to an existing player in the PlayBook.
 
 Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
@@ -426,31 +426,31 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 <box type="warning" seamless>
 
-**Warning:** The keyword `FIT` (in any letter case) is not allowed as a valid injury. Use `unassigninjury` instead to restore the player's injury status to `FIT`.
+**Warning:** The keyword `FIT` (in any letter case) is not allowed as a valid injury status. Use `unassigninjury` instead to restore the player's injury status to `FIT`.
 </box>
 
 <box type="tip" seamless>
 
 **Tips:**
-* Players can have multiple concurrent injuries. Simply use `assigninjury` multiple times with different injury names.
-* Use specific injury names (e.g., "ACL", "hamstring strain", "ankle sprain") for better tracking.
-* After assigning an injury, use `listinjured` to see all injured players at a glance.
+* Players can sustain multiple concurrent injuries. Simply use `assigninjury` multiple times with different injury names.
+* Use specific injury names (e.g., "ACL", "hamstring strain", "ankle sprain") for better injury tracking.
+* After assigning an injury, use `listinjured` to view all injured players at a glance.
 </box>
 
 **Examples:**
-* `assigninjury pl/John Doe i/ACL` - Marks John Doe with an ACL injury
-* `assigninjury pl/Musiala i/fibula fracture` - Marks Musiala with a fibula fracture
-* `assigninjury pl/John Doe i/hamstring strain` - Adds a second injury to John Doe
+* `assigninjury pl/John Doe i/ACL` - Marks John Doe with an ACL injury status
+* `assigninjury pl/Musiala i/fibula fracture` - Marks Musiala with a fibula fracture injury status
+* `assigninjury pl/John Doe i/hamstring strain` - Assigns a second injury status, hamstring strain, to John Doe
 
 <box type="info" seamless>
 
-**Expected output:** "Assigned injury ACL to John Doe"
+**Expected output:** "John Doe's injury status has been set to: [ACL]"
 
 Switches to the `Viewing Players` panel if not already in it.
 
-The player's injury status will be updated immediately in their player card.
+The player's injury status will be updated immediately and reflected in their player card.
 
-![assign injury message](images/assignInjuryResult.png)
+![assign an injury message](images/assignInjuryResult.png)
 </box>
 
 #### Assigning player as captain: `assigncaptain`
@@ -534,38 +534,42 @@ The player card will immediately disappear from the player list.
 ![delete position message](images/deletePositionResult.png)
 </box>
 
-#### Unassign injury from player: `unassigninjury`
+#### Unassign an injury from player: `unassigninjury`
 
-Removes an injury status currently assigned to an existing player.
+Removes an injury status currently assigned to an existing player in the Playbook.
 
 Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
-* `INJURY` must match an injury that is already assigned to the specified player.
-* The player must not already have the default `FIT` status.
+* `INJURY` must match an injury status that is already assigned to the specified player.
+
+<box type="warning" seamless>
+
+**Warning:** The player must not already have the default `FIT` status.
+</box>
 
 <box type="tip" seamless>
 
 **Tips:**
-* If the player has multiple injuries, removing one injury will keep the others. Only when all injuries are removed will the status return to `FIT`.
-* The injury name must match exactly (case-insensitive) with what was assigned.
-* Use `listinjured` to check current injury statuses before unassigning.
+* If the player has multiple injuries, removing one injury will keep the others. Only when all injuries are removed will the injury status return to `FIT`.
+* The injury name must match exactly (case-insensitive) with what was assigned to the specified player.
+* Use `listinjured` to check the current injury statuses before unassigning.
 </box>
 
 **Examples:**
-* `unassigninjury pl/John Doe i/ACL` - Removes the ACL injury from John Doe
-* `unassigninjury pl/Musiala i/fibula fracture` - Removes the fibula fracture from Musiala
+* `unassigninjury pl/John Doe i/ACL` - Removes the ACL injury status from John Doe
+* `unassigninjury pl/Musiala i/fibula fracture` - Removes the fibula fracture injury status from Musiala
 
 <box type="info" seamless>
 
-**Expected output:** "Removed injury ACL from John Doe"
+**Expected output:** "David Li's ACL injury status has been removed!"
 
 Switches to the `Viewing Players` panel if not already in it.
 
-If the player has no other injury status, their status will automatically return to "FIT".
+If the player has no other injury status, their status will automatically return to the default "FIT" status.
 
-![unassign injury message](images/unassignInjuryResult.png)
+![unassign an injury message](images/unassignInjuryResult.png)
 </box>
 
 #### Unassigning player as captain: `stripcaptain`
@@ -604,7 +608,9 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 <box type="warning" seamless>
 
-**Warning:** When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
+**Warnings:**
+* When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
+* You cannot edit injury status or position through this command - use the respective dedicated commands instead.
 </box>
 
 <box type="tip" seamless>
@@ -612,7 +618,6 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 **Tips:**
 * You can edit multiple fields at once (e.g., both phone and email).
 * To remove all tags, use `t/` without any tag names after it.
-* You cannot edit injury status or position through this command - use dedicated commands instead.
 </box>
 
 **Examples:**
@@ -645,7 +650,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 **Tips:**
 * Use `find` when you remember part of a player's name but not the full name.
 * To return to viewing all players after a search, use the `list` command.
-* For more advanced filtering by team, position, or injury, use the `filter` command instead.
+* For more advanced filtering by team, position, or injury status, use the `filter` command instead.
 </box>
 
 **Examples:**
@@ -742,7 +747,7 @@ Format: `listinjured`
 **Tips:**
 * Use this command before match day to quickly see who's unavailable.
 * Combine with team information in the player cards to see which teams are affected by injuries.
-* This shows all players with any injury status (not "FIT").
+* This shows all players with any injury status other than "FIT".
 </box>
 
 <box type="info" seamless>
@@ -805,7 +810,7 @@ This command will permanently delete:
 * All positions
 * All assignments (injuries, captaincy, etc.)
 
-**There is no undo.** Make sure you have a backup of your data file (located under `/data/addressbook.json`) before using this command!
+**There is no undo.** Make sure you have a backup of your data file (located under `/data/playbook.json`) before using this command!
 </box>
 
 <box type="tip" seamless>
@@ -829,7 +834,7 @@ Format: `exit`
 
 <box type="info" seamless>
 
-**Expected output:** The PlayBook application window will close immediately. Your data is safely stored in `addressbook.json`.
+**Expected output:** The PlayBook application window will close immediately. Your data is safely stored in `playbook.json`.
 </box>
 
 #### Saving the data
@@ -838,13 +843,13 @@ PlayBook data are saved in the hard disk automatically after any command that ch
 
 <box type="tip" seamless>
 
-**Tip:** Find your data at `/data/addressbook.json`
+**Tip:** Find your data at `/data/playbook.json`
 
 </box>
 
 #### Editing the data file
 
-PlayBook data are saved automatically as a JSON file `/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+PlayBook data are saved automatically as a JSON file `/data/playbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
@@ -878,8 +883,8 @@ _Details coming soon ..._
 **Q: How do I quickly find all available players for a match?**<br>
 **A:** Use the `filter i/FIT` command to show only players with no injuries. You can combine this with team filtering: `filter tm/U16 i/FIT` to see all fit players in the U16 team.
 
-**Q: Can I track multiple injuries for one player?**<br>
-**A:** Yes! Players can have multiple concurrent injuries. Use `assigninjury` multiple times for different injuries, and use `unassigninjury` to remove specific injuries when they recover.
+**Q: Can I track multiple injuries for a player?**<br>
+**A:** Yes! Players can sustain multiple concurrent injuries. Use `assigninjury` multiple times for different injuries, and use `unassigninjury` to remove specific injuries when they recover.
 
 **Q: What if I make a typo in a player's name?**<br>
 **A:** Use the `edit` command to correct it. For example: `edit pl/Jon Doe n/John Doe` will rename "Jon Doe" to "John Doe".
@@ -901,25 +906,25 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                              | Format, Examples                                                                                                                                                                                               |
-|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**                            | `help`                                                                                                                                                                                                         |
-| **Add Team**                        | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                             |
-| **Add Player**                      | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 t/friend t/colleague`              |
-| **Add Position**                    | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                                  |
-| **Assign Player to Team**           | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                            |
-| **Assign Position to Player**       | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                 |
-| **Assign Injury to Player**         | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                             |
-| **Assign Captain**                  | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                                          |
-| **Delete Player, Team or Position** | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                                    |
-| **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                                        |
-| **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                            |
-| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                    |
-| **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                     |
-| **List**                            | `list`                                                                                                                                                                                                         |
-| **List Captains**                   | `listcaptain`                                                                                                                                                                                                  |
-| **List Teams**                      | `listteam`                                                                                                                                                                                                     |
-| **List Positions**                  | `listposition`                                                                                                                                                                                                 |
-| **List Injured Players**            | `listinjured`                                                                                                                                                                                                  |
-| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                          |
-| **Clear**                           | `clear`                                                                                                                                                                                                        |
+| Action                              | Format, Examples                                                                                                                                                                                  |
+|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**                            | `help`                                                                                                                                                                                            |
+| **Add Team**                        | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                |
+| **Add Player**                      | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 t/friend t/colleague` |
+| **Add Position**                    | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                     |
+| **Assign Player to Team**           | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                               |
+| **Assign Position to Player**       | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                    |
+| **Assign Injury to Player**         | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/Ankle sprain`                                                                                                       |
+| **Assign Captain**                  | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                             |
+| **Delete Player, Team or Position** | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                       |
+| **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `unassigninjury pl/John Doe i/Ankle sprain`                                                                                                   |
+| **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                               |
+| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
+| **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                        |
+| **List**                            | `list`                                                                                                                                                                                            |
+| **List Captains**                   | `listcaptain`                                                                                                                                                                                     |
+| **List Teams**                      | `listteam`                                                                                                                                                                                        |
+| **List Positions**                  | `listposition`                                                                                                                                                                                    |
+| **List Injured Players**            | `listinjured`                                                                                                                                                                                     |
+| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                             |
+| **Clear**                           | `clear`                                                                                                                                                                                           |
