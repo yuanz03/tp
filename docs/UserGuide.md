@@ -6,10 +6,6 @@
 
 # PlayBook User Guide
 
-PlayBook (PB) is a **desktop app for semi-professional youth football coaches to manage their players' contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). 
-
---------------------------------------------------------------------------------------------------------------------
-
 #### Table of Contents
 
 - [PlayBook User Guide](#playbook-user-guide) 
@@ -55,125 +51,126 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
 
 ## Introduction
 
-#### Who is PlayBook for?
+PlayBook is a **desktop application for semi-professional youth football coaches** to manage player contacts, track injuries, and organize their teams. 
 
-PlayBook is designed specifically for **semi-professional youth football coaches** who:
-* Manage multiple teams (e.g., U16, U18, U21 squads)
-* Need to track 20-50+ players across different age groups
-* Prefer keyboard-based workflows for faster data entry
-* Are comfortable with basic command-line operations
-* Need quick access to player availability, injuries, and team assignments
+#### Who should use PlayBook?
 
-#### What you should know before using PlayBook
+PlayBook is designed for semi-professional youth football coaches who:
+* Manage multiple teams
+* Track 20-50+ players across different age groups
+* Need quick access to player availability, positions, captaincy and injury status
+* Prefer typing commands over navigating complex GUIs
 
-**Technical Requirements:**
-* Basic familiarity with command-line interfaces (typing commands rather than clicking buttons)
-* Basic ability to navigate folders and run programs from a terminal
-* Java 17 installed on your computer
+No coding experience required. Commands use simple English keywords like `add`, `delete`, `list`, and `filter`.
 
-**No prior coding experience needed** - all commands are simple, English-based instructions like `add`, `delete`, and `list`.
+#### Why PlayBook?
 
-#### Why choose PlayBook?
+Traditional contact apps weren't built for coaching. PlayBook solves common team management challenges:
 
-Unlike traditional contact management apps, PlayBook is **optimized for football team management**:
-* **Speed**: Type commands faster than clicking through multiple menus
-* **Team-focused**: Built-in support for teams, positions, injuries, and captaincy
-* **Flexible filtering**: Quickly find available players by position, team, or injury status
-* **Always accessible**: Works offline, with instant local storage
+* **Find available players instantly** - `filter tm/U16 i/FIT ps/ST` shows all fit strikers on your U16 team in one command
+* **Update records in seconds** - Record an injury, assign a captain, or change positions without clicking through menus
+* **No internet dependency** - Access your full roster offline during matches, training sessions, or team selection
+* **Complete team overview** - Track positions, injuries, captaincy, and contact details in one application
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
 
-#### Installation and setup
+Follow these steps to install PlayBook and add your first player.
 
-1. Ensure you have Java `17` or above installed in your Computer.
+### 1. Verify Java installation
 
-   <box type="tip" seamless>
-   
-   **Quick help: Checking your Java installation**
+PlayBook requires Java 17 or above. Check your version by running:
 
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-    
-   **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
-    
-   **Linux users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
+```
+java --version
+```
 
-   You can check your Java version by running the command `java --version` in your command terminal.
-   </box>
+If you need to install Java:
+* **macOS**: [Installation guide](https://se-education.org/guides/tutorials/javaInstallationMac.html)
+* **Windows**: [Installation guide](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
+* **Linux**: [Installation guide](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
+### 2. Download PlayBook
 
-3. Copy the file to the folder you want to use as the _home folder_ for your PlayBook.
+Download the latest `playbook.jar` from our [releases page](https://github.com/AY2526S1-CS2103T-T13-3/tp/releases).
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar playbook.jar` command to run the application.<br>
+Save it to a dedicated folder (e.g., `Documents/PlayBook`). PlayBook will create data files in this location.
 
-#### Understanding the PlayBook GUI
+### 3. Launch the application
+
+Navigate to your PlayBook folder and run:
+
+```bash
+# Navigate to your folder (example paths)
+cd ~/Documents/PlayBook          # macOS/Linux
+cd %USERPROFILE%\Documents\PlayBook    # Windows
+
+# Launch PlayBook
+java -jar playbook.jar
+```
+
+The PlayBook window should open with sample data loaded.
+
+### 4. Understanding the interface
 
 ![Ui](images/Ui.png)
 
-The PlayBook GUI consists of:
-* **Command Box** (top): Where you type your commands
-* **Result Display**: Shows feedback messages after each command
-* **View**: Displays either list of players, teams or positions depending on your current view
-  * **Viewing Players**: Shows players in the PlayBook
-  * **Viewing Teams**: Shows teams in the PlayBook
-  * **Viewing Positions**: Shows positions in the PlayBook
-* **Card**: Displays details of the selected player, team or position
+The PlayBook interface consists of:
 
-#### Your First Commands
+| Component          | Description                                                          |
+|--------------------|----------------------------------------------------------------------|
+| **Command Box**    | Enter commands here. Press Enter to execute.                         |
+| **Result Display** | Shows command feedback, success messages, and error details.         |
+| **List View**      | Displays players, teams, or positions based on your current command. |
+| **Detail Cards**   | Shows complete information for each item in the list.                |
 
-Type commands in the command box and press Enter to execute them. Here's a quick tutorial:
+### 5. Try your first commands
 
-1. **Start fresh** - Type `clear` and press Enter to remove all sample data.
-   
-   <box type="info" seamless>
+Type each command in the Command Box and press Enter.
 
-   **Expected output:** "PlayBook has been cleared!" and the list becomes empty.
-   </box>
+**Clear sample data:**
+```
+clear
+```
+**Expected result:** PlayBook displays "PlayBook has been cleared!" and the list becomes empty.
 
-2. **Create your first team** - Type `addteam tm/U16` and press Enter.
+**Create a team:**
+```
+addteam tm/U16
+```
+**Expected result:** "New team added: U16"
 
-   <box type="info" seamless>
+**Add a player:**
 
-   **Expected output:** "New team added: U16"
-   </box>
 
-3. **Add your first player** - Type:
-   ```
-   add pl/Alex Tan p/87654321 e/alex@example.com a/123 Main St tm/U16
-   ```
+```
+add pl/Alex Tan p/87654321 e/alex@example.com a/123 Main St tm/U16
+```
+**Expected result:** Alex Tan's player card appears in the list with all details displayed. The result display shows the confirmation message with player information.
 
-   <box type="info" seamless>
+<box type="info" seamless>
 
-   **Expected output:** "New player added: Alex Tan; Phone: 87654321; Email: alex@example.com; Address: 123 Main St; Team: U16; Injuries: [FIT]; Tags: "
-   
-   You should now see Alex Tan's player card in the player list.
-   </box>
-
-4. **View all players** - Type `list` to see all players in your PlayBook.
-
-<box type="tip" seamless>
-
-**More example commands to try:**
-
-* `addposition ps/LW` : Create a new position named `LW` in the PlayBook.
-
-* `assignposition pl/Alex Tan ps/LW` : Assign the position `LW` to `Alex Tan` (create the position first using `addposition`).
-
-* `assigninjury pl/Alex Tan i/ACL` : Mark `Alex Tan` as injured with an ACL injury.
-
-* `filter i/FIT` : View only players who are fit (not injured).
-
-* `delete pl/John Doe` : Delete `John Doe` from the PlayBook.
-
-* `help` : Open the help window.
-
-* `exit` : Exit the app.
-
+**Note:** You must create the team (U16) first before adding players to it.
 </box>
 
-Refer to the [Features](#features) below for details of each command.
+**View all players:**
+```
+list
+```
+**Expected result:** All players in your PlayBook are displayed in the list view.
+
+### Next steps
+
+You're now ready to manage your teams. Common tasks include:
+
+* **Add positions**: `addposition ps/LW`
+* **Assign positions**: `assignposition pl/Alex Tan ps/LW`
+* **Record injuries**: `assigninjury pl/Alex Tan i/ACL`
+* **Filter players**: `filter i/FIT` (show only fit players)
+* **Get help**: `help`
+
+For complete documentation of all commands, see the [Features](#features) section below.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -853,11 +850,8 @@ _Details coming soon ..._
 **Q: How do I transfer my data to another Computer?**<br>
 **A:** Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PlayBook home folder.
 
-**Q: Can I manage multiple teams at the same time?**<br>
-**A:** Yes! PlayBook is designed for coaches managing multiple teams. Simply create different teams using `addteam` (e.g., `addteam tm/U16`, `addteam tm/U18`) and assign players accordingly.
-
 **Q: What happens if I accidentally delete a player?**<br>
-**A:** Unfortunately, there's no undo feature. However, since PlayBook automatically saves your data, you can manually restore from a backup of the `addressbook.json` file if you made one. We recommend making regular backups of your data file.
+**A:** Unfortunately, there's no undo feature.
 
 **Q: Can a player be in multiple teams?**<br>
 **A:** No, each player can only be assigned to one team at a time. If you need to move a player to a different team, use the `assignteam` command.
