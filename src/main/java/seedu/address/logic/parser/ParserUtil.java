@@ -32,8 +32,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(String.format("Invalid player name: %s\n%s",
-                    trimmedName, Name.MESSAGE_CONSTRAINTS));
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
     }

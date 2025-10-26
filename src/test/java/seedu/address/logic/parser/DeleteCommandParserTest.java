@@ -66,14 +66,16 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_validPositionArgs_returnsDeleteCommand() {
         // Valid position name
-        assertParseSuccess(parser, POSITION_DESC_AMY, DeleteCommand.createDeletePositionCommand(VALID_POSITION_AMY));
+        Position position = new Position(VALID_POSITION_AMY);
+        assertParseSuccess(parser, POSITION_DESC_AMY, DeleteCommand.createDeletePositionCommand(position));
     }
 
     @Test
     public void parse_validPositionArgsWithExtraWhitespace_returnsDeleteCommand() {
         // Valid position name with extra whitespace
+        Position position = new Position(VALID_POSITION_AMY);
         assertParseSuccess(parser, POSITION_DESC_AMY + "  ",
-                DeleteCommand.createDeletePositionCommand(VALID_POSITION_AMY));
+                DeleteCommand.createDeletePositionCommand(position));
     }
 
     @Test

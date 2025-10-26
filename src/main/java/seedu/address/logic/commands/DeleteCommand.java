@@ -47,12 +47,11 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
             + " one or more players.";
 
-
     private final Name personNameToDelete;
     private final Team teamToDelete;
-    private final String positionToDelete;
+    private final Position positionToDelete;
 
-    private DeleteCommand(Name personNameToDelete, Team teamToDelete, String positionToDelete) {
+    private DeleteCommand(Name personNameToDelete, Team teamToDelete, Position positionToDelete) {
         this.personNameToDelete = personNameToDelete;
         this.teamToDelete = teamToDelete;
         this.positionToDelete = positionToDelete;
@@ -77,7 +76,7 @@ public class DeleteCommand extends Command {
     /**
      * Creates a DeleteCommand to delete the specified {@code Position} by name.
      */
-    public static DeleteCommand createDeletePositionCommand(String positionToDelete) {
+    public static DeleteCommand createDeletePositionCommand(Position positionToDelete) {
         requireNonNull(positionToDelete);
         return new DeleteCommand(null, null, positionToDelete);
     }
@@ -159,11 +158,7 @@ public class DeleteCommand extends Command {
      */
     private CommandResult executeDeletePosition(Model model) throws CommandException {
 
-        final String name = positionToDelete.trim();
-        if (!Position.isValidPositionName(name)) {
-            throw new CommandException(Position.MESSAGE_CONSTRAINTS);
-        }
-
+        String name = positionToDelete.getName();
         final Position toDelete;
         try {
             toDelete = model.getPositionByName(name);
