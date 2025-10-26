@@ -329,6 +329,15 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 * `PLAYER_NAME` should not be blank.
 * `PLAYER_NAME` must not already be assigned to `TEAM_NAME`.
 
+<box type="warning" seamless>
+
+**Important: Captain Status Removal**
+
+When a player who is captain of their current team is reassigned to a new team, they will **automatically lose their captain status**. 
+This prevents having multiple captains in the same team. 
+You will be notified when this happens, and you can reassign captaincy using the `assigncaptain` command if needed.
+</box>
+
 <box type="tip" seamless>
 
 **Tip:** Use this command when promoting players between age groups (e.g., moving a player from U16 to U18) or reassigning players to different squads.
@@ -340,11 +349,15 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Assigned John Doe to team: U16"
+**Expected output:**
+
+**For non-captain players:** "Player: John Doe has been successfully assigned to Team: U16!"
+
+**For captain players:** "Player: John Doe has been successfully assigned to Team: U16!<br>John Doe has been stripped of captaincy from their previous team."
 
 Switches to the `Viewing Players` panel if not already in it.
 
-The player's team will be immediately updated in their player card.
+The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
 
 ![assign team message](images/assignTeamResult.png)
 </box>
@@ -448,7 +461,10 @@ Format: `assigncaptain pl/PLAYER_NAME`
 
 <box type="tip" seamless>
 
-**Tip:** Each team can have only one captain at a time. If you assign a new captain, the old captain will be automatically removed. Use `listcaptain` to see all current team captains.
+**Tips:**
+* Each team can have only one captain at a time. If you assign a new captain, the old captain will be automatically removed.
+* Use `listcaptain` to see all current team captains.
+* **Captain status is team-specific**: If a captain is reassigned to a different team using `assignteam`, they will automatically lose their captain status. You'll need to use `assigncaptain` again if you want them to be captain of their new team.
 </box>
 
 **Examples:**
@@ -885,6 +901,9 @@ _Details coming soon ..._
 
 **Q: Can a player be in multiple teams?**<br>
 **A:** No, each player can only be assigned to one team at a time. If you need to move a player to a different team, use the `assignteam` command.
+
+**Q: What happens to a captain when they change teams?**<br>
+**A:** When a captain is reassigned to a new team using `assignteam`, they automatically lose their captain status. This prevents having multiple captains on the same team. You will receive a notification message when this happens. If you want them to be captain of their new team, use the `assigncaptain` command after the team change.
 
 **Q: How do I quickly find all available players for a match?**<br>
 **A:** Use the `filter i/FIT` command to show only players with no injuries. You can combine this with team filtering: `filter tm/U16 i/FIT` to see all fit players in the U16 team.
