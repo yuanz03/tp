@@ -198,6 +198,25 @@ For complete documentation of all commands, see the [Features](#features) sectio
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+#### Global Feature Behaviours
+
+<box type="info" seamless>
+
+1. **Team creation and deletion commands**:
+    - Automatically switches to the `Viewing Teams` panel (if not already in that view).
+
+2. **Position creation and deletion commands**:
+    - Automatically switches to the `Viewing Positions` panel (if not already in that view).
+
+3. **Player-related commands (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)**:
+    - Automatically switches to the `Viewing Players` panel (if not already in that view).
+
+**Notes:**
+* The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
+* See below for the specific behaviours of the different types of list commands.
+
+</box>
+
 #### Field Requirements
 
 <box type="info" seamless>
@@ -238,25 +257,6 @@ The following requirements apply to all commands unless otherwise specified:
 **Tag (`TAG`):**
 * Should contain alphanumeric characters only
 * Is case-sensitive (e.g., `Friend` is different from `friend`)
-
-</box>
-
-#### Global Feature Behaviours
-
-<box type="info" seamless>
-
-1. **Team creation and deletion commands**:
-   - Automatically switches to the `Viewing Teams` panel (if not already in that view).
-   
-2. **Position creation and deletion commands**:
-   - Automatically switches to the `Viewing Positions` panel (if not already in that view).
-
-3. **Player-related commands (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)**:
-   - Automatically switches to the `Viewing Players` panel (if not already in that view).
-
-**Notes:** 
-* The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
-* See below for the specific behaviours of the different types of list commands.
 
 </box>
 
