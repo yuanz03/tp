@@ -219,11 +219,6 @@ The following requirements apply to all commands unless otherwise specified:
 * Should not be blank
 * Is case-insensitive (e.g., `fw` is the same as `FW`)
 
-**Injury (`INJURY`):**
-* Should contain alphanumeric characters and spaces only
-* Should not be blank
-* Is case-insensitive (e.g., `acl` is the same as `ACL`)
-
 **Phone Number (`PHONE_NUMBER`):**
 * Should only contain numbers
 * Should be at least 3 digits long
@@ -235,9 +230,33 @@ The following requirements apply to all commands unless otherwise specified:
 **Address (`ADDRESS`):**
 * Should not be blank
 
+**Injury (`INJURY`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `acl` is the same as `ACL`)
+
 **Tag (`TAG`):**
 * Should contain alphanumeric characters only
 * Is case-sensitive (e.g., `Friend` is different from `friend`)
+
+</box>
+
+#### Global Feature Behaviours
+
+<box type="info" seamless>
+
+1. **Team creation and deletion commands**:
+   - Automatically switches to the `Viewing Teams` panel (if not already in that view).
+   
+2. **Position creation and deletion commands**:
+   - Automatically switches to the `Viewing Positions` panel (if not already in that view).
+
+3. **Player-related commands (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)**:
+   - Automatically switches to the `Viewing Players` panel (if not already in that view).
+
+**Notes:** 
+* The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
+* See below for the specific behaviours of the different types of list commands.
 
 </box>
 
@@ -260,15 +279,14 @@ Format: `addteam tm/TEAM_NAME`
 * `TEAM_NAME` must not be the same as an existing team in the PlayBook.
 
 **Examples:**
-* `addteam tm/U16` - Creates a team named `U16`
-* `addteam tm/U18` - Creates a team named `U18`
-* `addteam tm/Reserves` - Creates a team named `Reserves`
+1. `addteam tm/U16` - Creates a team named `U16`
+2. `addteam tm/Reserves` - Creates a team named `Reserves`
 
 <box type="info" seamless>
 
-**Expected success message:** "New team added: U16"
+**Expected success message** (Example 1): "New team added: U16"
 
-Switches to the `Viewing Teams` panel if not already in it.
+**Expected behaviour:** Creates a new team named `U16`.
 
 ![add team message](images/addTeamResult.png)c
 </box>
@@ -294,16 +312,14 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 </box>
 
 **Examples:**
-* `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16`
-* `add pl/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison tm/U16 t/friend t/scholarship`
+1. `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16`
+2. `add pl/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison tm/U16 t/friend t/scholarship`
 
 <box type="info" seamless>
 
-**Expected output:** "New player added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injuries: [FIT]; Tags:  "
+**Expected success message** (Example 1): "New player added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Position: NONE; Injuries: [FIT]; Captain Status: Inactive; Tags: ;"
 
-Switches to the `Viewing Players` panel if not already in it.
-
-The player will appear in the player list panel with the "FIT" injury status and no position assigned by default.
+**Expected behaviour:** The player will appear in the player list panel with the "FIT" status, no assigned position, and not designated as a captain by default.
 
 ![add message](images/addPlayerResult.png)
 </box>
@@ -324,15 +340,16 @@ Format: `addposition ps/POSITION_NAME`
 </box>
 
 **Examples:**
-* `addposition ps/LW` - Creates position named `LW`
-* `addposition ps/ST` - Creates position named `ST`
-* `addposition ps/GK` - Creates position named `GK`
+1. `addposition ps/LW` - Creates position named `LW`
+2. `addposition ps/ST` - Creates position named `ST`
 
 <box type="info" seamless>
 
-**Expected output:** "Position LW has been created successfully!" (or the position name you specified)
+**Expected success message** (Example 1): "Position LW has been created successfully!" 
 
-![new position message](images/newPositionResult.png)
+**Expected behaviour:** Creates a new position named `LW`.
+
+![add position message](images/newPositionResult.png)
 </box>
 
 #### Assign player to team: `assignteam`
@@ -361,20 +378,18 @@ You will be notified when this happens, and you can reassign captaincy using the
 </box>
 
 **Examples:**
-* `assignteam pl/John Doe tm/U16` - Moves John Doe to the U16 team
-* `assignteam pl/Betsy Crowe tm/U18` - Moves Betsy Crowe to the U18 team
+1. `assignteam pl/John Doe tm/U16` - Moves John Doe to the U16 team
+2. `assignteam pl/Betsy Crowe tm/U18` - Moves Betsy Crowe to the U18 team
 
 <box type="info" seamless>
 
-**Expected output:**
+**Expected success message** (Example 1):
 
-**For non-captain players:** "Player: John Doe has been successfully assigned to Team: U16!"
+* **For non-captain players:** "Player: John Doe has been successfully assigned to Team: U16!"
 
-**For captain players:** "Player: John Doe has been successfully assigned to Team: U16!<br>John Doe has been stripped of captaincy from their previous team."
+* **For captain players:** "Player: John Doe has been successfully assigned to Team: U16!<br>John Doe has been stripped of captaincy from their previous team."
 
-Switches to the `Viewing Players` panel if not already in it.
-
-The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
+**Expected behaviour:** The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
 
 ![assign team message](images/assignTeamResult.png)
 </box>
@@ -401,16 +416,14 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 </box>
 
 **Examples:**
-* `assignposition pl/John Doe ps/LW` - Assigns `LW` position to John Doe
-* `assignposition pl/Musiala ps/ST` - Assigns `ST` position to Musiala
+1. `assignposition pl/John Doe ps/LW` - Assigns `LW` position to John Doe
+2. `assignposition pl/Musiala ps/ST` - Assigns `ST` position to Musiala
 
 <box type="info" seamless>
 
-**Expected output:** "John Doe has been successfully assigned position GK!"
+**Expected success message** (Example 1): "John Doe has been successfully assigned position LW!"
 
-Switches to the `Viewing Players` panel if not already in it.
-
-The position will be immediately visible in the player's card.
+**Expected behaviour:** The position will be immediately visible in the player's card.
 
 ![assign position message](images/assignPositionResult.png)
 </box>
@@ -438,17 +451,15 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 </box>
 
 **Examples:**
-* `assigninjury pl/John Doe i/ACL` - Marks John Doe with an ACL injury status
-* `assigninjury pl/Musiala i/fibula fracture` - Marks Musiala with a fibula fracture injury status
-* `assigninjury pl/John Doe i/hamstring strain` - Assigns a second injury status, hamstring strain, to John Doe
+1. `assigninjury pl/John Doe i/ACL` - Marks John Doe with an ACL injury status
+2. `assigninjury pl/Musiala i/fibula fracture` - Marks Musiala with a fibula fracture injury status
+3. `assigninjury pl/John Doe i/hamstring strain` - Assigns a second injury status, hamstring strain, to John Doe
 
 <box type="info" seamless>
 
-**Expected output:** "John Doe's injury status has been set to: [ACL]"
+**Expected success message** (Example 1): "John Doe's injury status has been set to: [ACL]"
 
-Switches to the `Viewing Players` panel if not already in it.
-
-The player's injury status will be updated immediately and reflected in their player card.
+**Expected behaviour:** The player's injury status will be updated immediately and reflected in their player card.
 
 ![assign an injury message](images/assignInjuryResult.png)
 </box>
@@ -473,14 +484,14 @@ Format: `assigncaptain pl/PLAYER_NAME`
 </box>
 
 **Examples:**
-* `assigncaptain pl/John Doe` - Assigns John Doe as captain.
-* `assigncaptain pl/Sergio Ramos` - Assigns Sergio Ramos as captain. Unassigns the previous captain.
+1. `assigncaptain pl/John Doe` - Assigns John Doe as captain.
+2. `assigncaptain pl/Sergio Ramos` - Assigns Sergio Ramos as captain. Unassigns the previous captain.
 
 <box type="info" seamless>
 
-**Expected output:** "John Doe is now a captain of U16"
+**Expected success message** (Example 1): "John Doe is now captain of U16"
 
-A captain badge or indicator will appear on the player's card.
+**Expected behaviour:** A captain badge will appear on the player's card.
 
 ![assign captain message](images/assignCaptainResult.png)
 </box>
@@ -511,25 +522,29 @@ Consider making a backup of your data file before bulk deletions.
 </box>
 
 **Examples:**
-* `delete pl/John Doe` - Permanently deletes player John Doe from PlayBook
-* `delete tm/U16` - Deletes the U16 team from PlayBook (only if no players are assigned)
-* `delete ps/LW` - Deletes LW position from PlayBook
+1. `delete pl/John Doe` - Permanently deletes player John Doe from PlayBook
+2. `delete tm/U16` - Deletes the U16 team from PlayBook (only if no players are assigned)
+3. `delete ps/LW` - Deletes LW position from PlayBook
 
 <box type="info" seamless>
 
-**Expected output:**
+**Expected success message:**
 
-**For player deletion:** "Deleted Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+**For player deletion** (Example 1): "Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injury: FIT; Captain Status: Active; Tags: ;  has been deleted successfully!"
 
-The player card will immediately disappear from the player list.
+* **Expected behaviour:** The player card will immediately disappear from the player list.
 
 ![delete player message](images/deletePlayerResult.png)
 
-**For team deletion:** "Team U16 has been deleted successfully!"
+**For team deletion** (Example 2): "Team: U16 has been deleted successfully!"
+
+* **Expected behaviour:** The team card will immediately disappear from the team list.
 
 ![delete team message](images/deleteTeamResult.png)
 
-**For position deletion:** "Position: LW has been deleted successfully!"
+**For position deletion** (Example 3): "Position: LW has been deleted successfully!"
+
+* **Expected behaviour:** The position card will immediately disappear from the position list.
 
 ![delete position message](images/deletePositionResult.png)
 </box>
@@ -558,16 +573,14 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 </box>
 
 **Examples:**
-* `unassigninjury pl/John Doe i/ACL` - Removes the ACL injury status from John Doe
-* `unassigninjury pl/Musiala i/fibula fracture` - Removes the fibula fracture injury status from Musiala
+1. `unassigninjury pl/John Doe i/ACL` - Removes the ACL injury status from John Doe
+2. `unassigninjury pl/Musiala i/fibula fracture` - Removes the fibula fracture injury status from Musiala
 
 <box type="info" seamless>
 
-**Expected output:** "David Li's ACL injury status has been removed!"
+**Expected success message** (Example 1): "John Doe's ACL injury status has been removed!"
 
-Switches to the `Viewing Players` panel if not already in it.
-
-If the player has no other injury status, their status will automatically return to the default "FIT" status.
+**Expected behaviour:** If the player has no other injury status, their status will automatically return to the default "FIT" status.
 
 ![unassign an injury message](images/unassignInjuryResult.png)
 </box>
@@ -583,14 +596,14 @@ Format: `stripcaptain pl/PLAYER_NAME`
 * The player must already be an assigned captain.
 
 **Examples:**
-* `stripcaptain pl/John Doe` - Removes captain status from John Doe
-* `stripcaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
+1. `stripcaptain pl/John Doe` - Removes captain status from John Doe
+2. `stripcaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
 
 <box type="info" seamless>
 
-**Expected output:** "John Doe is no longer team captain."
+**Expected success message** (Example 1): "John Doe is no longer team captain."
 
-The captain badge/indicator will be removed from the player's card.
+**Expected behaviour:** The captain badge will be removed from the player's card.
 
 ![strip captain message](images/stripCaptainResult.png)
 </box>
@@ -618,18 +631,19 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 **Tips:**
 * You can edit multiple fields at once (e.g., both phone and email).
 * To remove all tags, use `t/` without any tag names after it.
+* Edit accepts a combination of unchanged and updated fields, provided that the entered values meet the stated requirements. It will update only the fields that differ. However, it does not allow all fields to be unchanged.
 </box>
 
 **Examples:**
-* `edit pl/John Doe p/91234567 e/johndoe@example.com` - Updates phone and email
-* `edit pl/John Doe n/Betsy Crower t/` - Renames player and removes all tags
-* `edit pl/John Doe tm/U18 t/captain t/veteran` - Moves to U18 team and adds tags
+1. `edit pl/John Doe p/91234567 e/johndoe@example.com` - Updates phone and email
+2. `edit pl/John Doe n/Betsy Crower t/` - Renames player and removes all tags
+3. `edit pl/John Doe tm/U18 t/captain t/veteran` - Moves to U18 team and adds tags
 
 <box type="info" seamless>
 
-**Expected output:** "Edited Player: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Injuries: [FIT]; Tags: "
+**Expected success message** (Example 1): "Edited Player: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: John street, block 123, #01-01; Team: U16; Position: LW; Injury: FIT; Captain Status: Active; Tags: ;"
 
-The player card will immediately reflect all changes.
+**Expected behaviour:** The player card will immediately display all newly updated field changes.
 
 ![edit message](images/editResult.png)
 </box>
@@ -654,12 +668,14 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 </box>
 
 **Examples:**
-* `find John` - Returns players like "John Doe" and "John Smith"
-* `find alex david` - Returns "Alex Yeoh" and "David Li" (matches either keyword)
+1. `find John` - Returns players like "John Doe" and "John Smith"
+2. `find alex david` - Returns "Alex Yeoh" and "David Li" (matches either keyword)
 
 <box type="info" seamless>
 
-**Expected output:** "X persons listed!" where X is the number of matching players. The player list panel will show only the matching players.
+**Expected success message:** "X persons listed!" where X is the number of matching players. 
+
+**Expected behaviour:** The player list panel will show only the matching players.
 
 ![result for 'find Doe'](images/findResult.png)
 </box>
@@ -677,7 +693,7 @@ Format: `list`
 
 <box type="info" seamless>
 
-**Expected output:** All players in your PlayBook will be displayed in the player list panel.
+**Expected behaviour:** All players in your PlayBook will be displayed in the `Viewing Players` panel.
 
 ![list message](images/listResult.png)
 </box>
@@ -695,7 +711,7 @@ Format: `listcaptain`
 
 <box type="info" seamless>
 
-**Expected output:** Only players designated as captains will be displayed in the player list panel.
+**Expected behaviour:** Only players designated as captains will be displayed in the `Viewing Players` panel.
 
 ![list captains message](images/listCaptainsResult.png)
 </box>
@@ -713,7 +729,7 @@ Format: `listteam`
 
 <box type="info" seamless>
 
-**Expected output:** A list of all team names will be displayed in the result box (e.g., "U16, U18, Reserves").
+**Expected behaviour:** A list of all team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
 
 ![list team message](images/listTeamResult.png)
 </box>
@@ -731,7 +747,7 @@ Format: `listposition`
 
 <box type="info" seamless>
 
-**Expected output:** A list of all position names will be displayed (e.g., "LW, ST, GK, CB").
+**Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, CB").
 
 ![list position message](images/listPositionResult.png)
 </box>
@@ -752,7 +768,7 @@ Format: `listinjured`
 
 <box type="info" seamless>
 
-**Expected output:** Only players with injuries (non-FIT status) will be displayed in the player list panel. Their injury details will be visible on their player cards.
+**Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details will be visible on their player cards.
 
 ![list injured message](images/listInjuredResult.png)
 </box>
@@ -781,15 +797,17 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 </box>
 
 **Examples:**
-* `filter tm/U16 ps/FW` - Shows U16 players who play Forward
-* `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
-* `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
-* `filter tm/Chelsea` - Shows all Chelsea team players
-* `filter tm/Manchester i/Leg Arm` - Shows all Manchester team players with an injuries with the words Leg or Arm in them
+1. `filter tm/U16 ps/FW` - Shows U16 players who play Forward
+2. `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
+3. `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
+4. `filter tm/Chelsea` - Shows all Chelsea team players
+5. `filter tm/Manchester i/Leg Arm` - Shows all Manchester team players with an injuries with the words Leg or Arm in them
 
 <box type="info" seamless>
 
-**Expected output:** "X persons listed!" where X is the number of players matching all filter criteria. Only matching players will be displayed.
+**Expected success message:** "X persons listed!" where X is the number of players matching all filter criteria. 
+
+**Expected behaviour:** Only matching players will be displayed.
 
 ![result for filter](images/filterResult.png)
 </box>
@@ -821,9 +839,9 @@ This command will permanently delete:
 
 <box type="info" seamless>
 
-**Expected output:** "Address book has been cleared!"
+**Expected success message:** "Playbook has been cleared!"
 
-The player list panel will be completely empty.
+**Expected behaviour:** The player list panel will be completely empty.
 </box>
 
 #### Exiting the program: `exit`
@@ -834,7 +852,7 @@ Format: `exit`
 
 <box type="info" seamless>
 
-**Expected output:** The PlayBook application window will close immediately. Your data is safely stored in `playbook.json`.
+**Expected behaviour:** The PlayBook application window will close immediately. Your data is safely stored in `playbook.json`.
 </box>
 
 #### Saving the data
