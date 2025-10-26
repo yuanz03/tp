@@ -288,7 +288,7 @@ Format: `addteam tm/TEAM_NAME`
 
 **Expected behaviour:** Creates a new team named `U16`.
 
-![add team message](images/addTeamResult.png)c
+![add team message](images/addTeamResult.png)
 </box>
 
 #### Adding a player: `add`
