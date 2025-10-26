@@ -32,7 +32,8 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+            throw new ParseException(String.format("Invalid player name: %s\n%s",
+                    trimmedName, Name.MESSAGE_CONSTRAINTS));
         }
         return new Name(trimmedName);
     }
@@ -131,20 +132,6 @@ public class ParserUtil {
                     trimmedPosition, Position.MESSAGE_CONSTRAINTS));
         }
         return new Position(trimmedPosition);
-    }
-
-    /**
-     * Parses and validates a position {@code String position} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    public static String parsePositionName(String position) throws ParseException {
-        requireNonNull(position);
-        String trimmedPosition = position.trim();
-        if (!Position.isValidPositionName(trimmedPosition)) {
-            throw new ParseException(String.format("Invalid position name: %s\n%s",
-                    trimmedPosition, Position.MESSAGE_CONSTRAINTS));
-        }
-        return trimmedPosition;
     }
 
     /**

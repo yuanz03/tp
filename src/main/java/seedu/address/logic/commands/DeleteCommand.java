@@ -41,7 +41,7 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_EMPTY = "Team: %s still has players assigned to it!\n"
-            + "Please either delete player if no longer managing player\n"
+            + "Please either delete player if no longer managing player"
             + "or reassign player to another team before deleting this team.";
     public static final String MESSAGE_POSITION_NOT_FOUND = "Position: %s doesn't exist!";
     public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
