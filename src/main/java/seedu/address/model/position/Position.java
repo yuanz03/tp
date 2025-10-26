@@ -5,8 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import seedu.address.commons.util.ToStringBuilder;
-
 /**
  * Represents a player position in the address book (e.g. LW, RW, ST).
  * <p>
