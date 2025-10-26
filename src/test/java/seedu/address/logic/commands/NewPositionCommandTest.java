@@ -32,6 +32,7 @@ public class NewPositionCommandTest {
         assertEquals(String.format(NewPositionCommand.MESSAGE_SUCCESS, VALID_POSITION_FW),
                 result.getFeedbackToUser());
         assertTrue(model.hasPosition(new Position(VALID_POSITION_FW)));
+        assertTrue(result.isShowPositions());
     }
 
     @Test
@@ -40,6 +41,7 @@ public class NewPositionCommandTest {
         NewPositionCommand add = new NewPositionCommand(VALID_POSITION_AMY);
         CommandResult res = add.execute(model);
         assertEquals(String.format(NewPositionCommand.MESSAGE_SUCCESS, VALID_POSITION_AMY), res.getFeedbackToUser());
+        assertTrue(res.isShowPositions());
 
         // duplicate
         assertThrows(CommandException.class, () ->

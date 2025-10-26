@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_POSITIONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -48,7 +49,8 @@ public class NewPositionCommand extends Command {
             throw new CommandException(String.format(MESSAGE_DUPLICATE, normalized));
         }
         model.addPosition(position);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, normalized));
+        model.updateFilteredPositionList(PREDICATE_SHOW_ALL_POSITIONS);
+        return CommandResult.showPositionCommandResult(String.format(MESSAGE_SUCCESS, normalized));
     }
 
     @Override

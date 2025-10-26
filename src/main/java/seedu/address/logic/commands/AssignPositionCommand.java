@@ -21,8 +21,10 @@ public class AssignPositionCommand extends Command {
     public static final String MESSAGE_PLAYER_NOT_FOUND = "%s doesn't exist";
     public static final String MESSAGE_POSITION_NOT_FOUND = "%s doesn't exist";
     public static final String MESSAGE_DUPLICATE_ASSIGN = "%s is already assigned position %s!";
-    public static final String MESSAGE_MISSING_PLAYER_FLAG = "Missing '" + PREFIX_PLAYER + "' flag for assignposition command";
-    public static final String MESSAGE_MISSING_POSITION_FLAG = "Missing '" + PREFIX_POSITION + "' flag for assignposition command";
+    public static final String MESSAGE_MISSING_PLAYER_FLAG = "Missing '" + PREFIX_PLAYER
+            + "' flag for assignposition command";
+    public static final String MESSAGE_MISSING_POSITION_FLAG = "Missing '" + PREFIX_POSITION
+            + "' flag for assignposition command";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a position to a player in the PlayBook.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_POSITION + "POSITION_NAME\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_POSITION + "Striker";
