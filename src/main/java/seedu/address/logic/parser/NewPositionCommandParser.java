@@ -28,6 +28,10 @@ public class NewPositionCommandParser implements Parser<NewPositionCommand> {
             throw new ParseException(NewPositionCommand.MESSAGE_USAGE);
         }
         String posName = m.group("name");
+        // Check for multiple ps/ flags (invalid format)
+        if (posName.contains(PREFIX_POSITION.getPrefix())) {
+            throw new ParseException(NewPositionCommand.MESSAGE_USAGE);
+        }
         return new NewPositionCommand(posName);
     }
 }
