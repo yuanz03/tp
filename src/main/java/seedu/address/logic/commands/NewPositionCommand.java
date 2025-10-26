@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -15,9 +16,10 @@ public class NewPositionCommand extends Command {
     public static final String COMMAND_WORD = "addposition";
     public static final String MESSAGE_SUCCESS = "Position %s has been created successfully!";
     public static final String MESSAGE_DUPLICATE = "%s already exists!";
-    public static final String MESSAGE_MISSING_FLAG = "Missing 'ps/' flag for addposition command";
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid command format. Please ensure correct form at: addposition ps/<position_name>";
+    public static final String MESSAGE_MISSING_FLAG = "Missing '" + PREFIX_POSITION + "' flag for addposition command";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a position to the PlayBook.\n"
+            + "Parameters: " + PREFIX_POSITION + "POSITION_NAME\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_POSITION + "Striker";
 
     private final String rawPositionName;
 

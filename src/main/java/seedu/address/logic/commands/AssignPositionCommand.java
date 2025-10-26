@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -19,10 +21,11 @@ public class AssignPositionCommand extends Command {
     public static final String MESSAGE_PLAYER_NOT_FOUND = "%s doesn't exist";
     public static final String MESSAGE_POSITION_NOT_FOUND = "%s doesn't exist";
     public static final String MESSAGE_DUPLICATE_ASSIGN = "%s is already assigned position %s!";
-    public static final String MESSAGE_MISSING_PLAYER_FLAG = "Missing 'pl/' flag for assignposition command";
-    public static final String MESSAGE_MISSING_POSITION_FLAG = "Missing 'ps/' flag for assignposition command";
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid command format. Please ensure correct format: assignposition pl/<player> ps/<position>";
+    public static final String MESSAGE_MISSING_PLAYER_FLAG = "Missing '" + PREFIX_PLAYER + "' flag for assignposition command";
+    public static final String MESSAGE_MISSING_POSITION_FLAG = "Missing '" + PREFIX_POSITION + "' flag for assignposition command";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a position to a player in the PlayBook.\n"
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_POSITION + "POSITION_NAME\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_POSITION + "Striker";
 
     private final String rawPlayerName;
     private final String rawPositionName;
