@@ -22,6 +22,9 @@ public class AssignTeamCommand extends Command {
 
     public static final String COMMAND_WORD = "assignteam";
     public static final String MESSAGE_SUCCESS = "Player: %s has been successfully assigned to Team: %s!";
+    public static final String MESSAGE_SUCCESS_WITH_CAPTAIN_STRIPPED =
+            "Player: %s has been successfully assigned to Team: %s!\n"
+            + "%s has been stripped of captaincy from their previous team.";
     public static final String MESSAGE_PLAYER_NOT_FOUND = "Player: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_ALREADY_ASSIGNED = "Player: %s is already assigned to Team: %s!";
@@ -71,9 +74,18 @@ public class AssignTeamCommand extends Command {
             throw new CommandException(String.format(MESSAGE_ALREADY_ASSIGNED, playerName, canonicalTeam.getName()));
         }
 
+        // Check if player was a captain before team reassignment
+        boolean wasCaptain = player.isCaptain();
+
         model.assignTeam(player, canonicalTeam);
-        return CommandResult.showPersonCommandResult(
-                String.format(MESSAGE_SUCCESS, player.getName(), canonicalTeam.getName()));
+
+        // Generate appropriate success message
+        String successMessage = wasCaptain
+                ? String.format(MESSAGE_SUCCESS_WITH_CAPTAIN_STRIPPED,
+                        player.getName(), canonicalTeam.getName(), player.getName())
+                : String.format(MESSAGE_SUCCESS, player.getName(), canonicalTeam.getName());
+
+        return CommandResult.showPersonCommandResult(successMessage);
     }
 
     /**
