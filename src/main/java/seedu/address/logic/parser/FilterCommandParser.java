@@ -31,56 +31,54 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION);
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION);
 
-        List<Prefix> presentPrefixes = Stream.of(PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION)
-                .filter(p -> argMultimap.getValue(p).isPresent())
-                .sorted(Comparator.comparingInt(p -> args.indexOf(p.getPrefix())))
-                .collect(Collectors.toList());
-
-        for (Prefix p : presentPrefixes) {
-            String value = argMultimap.getValue(p).get();
-            if (p == PREFIX_TEAM) {
-                ParserUtil.parseTeam(value);
-            } else if (p == PREFIX_INJURY) {
-                ParserUtil.parseInjury(value);
-            } else if (p == PREFIX_POSITION) {
-                ParserUtil.parsePosition(value);
-            }
-        }
+        // Validate all present prefixes in the order they appear
+        validatePresentPrefixes(argMultimap, args);
 
         boolean hasTeam = argMultimap.getValue(PREFIX_TEAM).isPresent();
         boolean hasInjury = argMultimap.getValue(PREFIX_INJURY).isPresent();
         boolean hasPosition = argMultimap.getValue(PREFIX_POSITION).isPresent();
-
-        if (hasTeam) {
-            ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
-        }
-
-        if (hasInjury) {
-            ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
-        }
-
-        if (hasPosition) {
-            ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION).get());
-        }
 
         if ((!hasTeam && !hasInjury && !hasPosition) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        FilterByTeamPredicate teamPred = argMultimap.getValue(PREFIX_TEAM)
-                .map(name -> new FilterByTeamPredicate(name))
+        FilterByTeamPredicate teamPredicate = argMultimap.getValue(PREFIX_TEAM)
+                .map(FilterByTeamPredicate::new)
                 .orElse(FilterByTeamPredicate.ALWAYS_TRUE);
-        FilterByInjuryPredicate injuryPred = argMultimap.getValue(PREFIX_INJURY)
-                .map(inj -> new FilterByInjuryPredicate(inj))
+        FilterByInjuryPredicate injuryPredicate = argMultimap.getValue(PREFIX_INJURY)
+                .map(FilterByInjuryPredicate::new)
                 .orElse(FilterByInjuryPredicate.ALWAYS_TRUE);
-        FilterByPositionPredicate positionPred = argMultimap.getValue(PREFIX_POSITION)
-                .map(pos -> new FilterByPositionPredicate(pos))
+        FilterByPositionPredicate positionPredicate = argMultimap.getValue(PREFIX_POSITION)
+                .map(FilterByPositionPredicate::new)
                 .orElse(FilterByPositionPredicate.ALWAYS_TRUE);
 
-        return new FilterCommand(teamPred, injuryPred, positionPred,
+        return new FilterCommand(teamPredicate, injuryPredicate, positionPredicate,
                 argMultimap.getValue(PREFIX_TEAM),
                 argMultimap.getValue(PREFIX_INJURY),
                 argMultimap.getValue(PREFIX_POSITION));
+    }
+
+    /**
+     * Validates all present prefixes in the argument multimap in the order they appear in the input.
+     *
+     * @throws ParseException if any of the present prefix values are invalid
+     */
+    private void validatePresentPrefixes(ArgumentMultimap argMultimap, String args) throws ParseException {
+        List<Prefix> presentPrefixes = Stream.of(PREFIX_TEAM, PREFIX_INJURY, PREFIX_POSITION)
+                .filter(p -> argMultimap.getValue(p).isPresent())
+                .sorted(Comparator.comparingInt(p -> args.indexOf(p.getPrefix())))
+                .collect(Collectors.toList());
+
+        for (Prefix prefix : presentPrefixes) {
+            String value = argMultimap.getValue(prefix).get();
+            if (prefix == PREFIX_TEAM) {
+                ParserUtil.parseTeam(value);
+            } else if (prefix == PREFIX_INJURY) {
+                ParserUtil.parseInjury(value);
+            } else if (prefix == PREFIX_POSITION) {
+                ParserUtil.parsePosition(value);
+            }
+        }
     }
 }
