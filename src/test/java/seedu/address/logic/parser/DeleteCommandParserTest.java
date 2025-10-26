@@ -86,37 +86,43 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_missingPlayerName_throwsParseException() {
         // Missing player name after prefix
-        assertParseFailure(parser, " " + PREFIX_PLAYER, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_PLAYER,
+                String.format("Invalid player name: %s\n%s", "", Name.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_missingTeamName_throwsParseException() {
         // Missing team name after prefix
-        assertParseFailure(parser, " " + PREFIX_TEAM, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_TEAM,
+                String.format("Invalid team name: %s\n%s", "", Team.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_missingPositionName_throwsParseException() {
         // Missing position name after prefix
-        assertParseFailure(parser, " " + PREFIX_POSITION, Position.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_POSITION,
+                String.format("Invalid position name: %s\n%s", "", Position.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_invalidPlayerName_throwsParseException() {
         // Invalid name with special characters
-        assertParseFailure(parser, INVALID_PLAYER_DESC, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_PLAYER_DESC,
+                String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_invalidTeamName_throwsParseException() {
         // Invalid team name with special characters
-        assertParseFailure(parser, INVALID_TEAM_DESC, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_TEAM_DESC,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_invalidPositionName_throwsParseException() {
         // Invalid position name with special characters
-        assertParseFailure(parser, INVALID_POSITION_DESC, Position.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_POSITION_DESC,
+                String.format("Invalid position name: %s\n%s", "MF*", Position.MESSAGE_CONSTRAINTS));
     }
 
     @Test

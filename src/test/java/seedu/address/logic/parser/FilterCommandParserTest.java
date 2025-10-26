@@ -58,25 +58,29 @@ public class FilterCommandParserTest {
     @Test
     public void parse_invalidTeamName_throwsParseException() {
         String input = INVALID_TEAM_DESC;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void execute_invalidInjury_throwsCommandException() {
         String input = INVALID_INJURY_DESC;
-        assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void execute_invalidPosition_throwsCommandException() {
         String input = INVALID_POSITION_DESC;
-        assertParseFailure(parser, input, Position.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid position name: %s\n%s", "MF*", Position.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_emptyTeamName_throwsParseException() {
         String input = TEAM_PREFIX_WITH_NO_FIELD;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "", Team.MESSAGE_CONSTRAINTS));
     }
 
     @Test
@@ -134,41 +138,52 @@ public class FilterCommandParserTest {
     public void parse_invalidFields_throwsParseException() {
         // invalid team with valid injury
         String input = INVALID_TEAM_DESC + VALID_INJURY_BOB;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "U@16Meniscus tear", Team.MESSAGE_CONSTRAINTS));
         // valid team with invalid injury
         input = TEAM_DESC_BOB + INVALID_INJURY_DESC;
-        assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS));
         // invalid team with invalid injury
         input = INVALID_TEAM_DESC + INVALID_INJURY_DESC;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
         // invalid injury with invalid team
         input = INVALID_INJURY_DESC + INVALID_TEAM_DESC;
-        assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS));
         // all fields invalid
         input = INVALID_TEAM_DESC + INVALID_INJURY_DESC + INVALID_POSITION_DESC;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
         // valid position with invalid team
         input = INVALID_TEAM_DESC + POSITION_DESC_BOB;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS));
     }
 
     @Test
     public void parse_missingFields_throwsParseException() {
         // valid team with missing injury
         String input = TEAM_DESC_BOB + INJURY_PREFIX_WITH_NO_FIELD;
-        assertParseFailure(parser, input, Injury.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid injury: %s\n%s", "", Injury.MESSAGE_CONSTRAINTS));
         // valid injury with missing team
         input = INJURY_DESC_BOB + TEAM_PREFIX_WITH_NO_FIELD;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "", Team.MESSAGE_CONSTRAINTS));
         // missing position and valid team and injury
         input = POSITION_PREFIX_WITH_NO_FIELD + TEAM_DESC_BOB + INJURY_DESC_BOB;
-        assertParseFailure(parser, input, Position.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid position name: %s\n%s", "", Position.MESSAGE_CONSTRAINTS));
         // missing all fields
         input = TEAM_PREFIX_WITH_NO_FIELD + INJURY_PREFIX_WITH_NO_FIELD + POSITION_PREFIX_WITH_NO_FIELD;
-        assertParseFailure(parser, input, Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid team name: %s\n%s", "", Team.MESSAGE_CONSTRAINTS));
         // missing position with valid team
         input = TEAM_DESC_BOB + POSITION_PREFIX_WITH_NO_FIELD;
-        assertParseFailure(parser, input, Position.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, input,
+                String.format("Invalid position name: %s\n%s", "", Position.MESSAGE_CONSTRAINTS));
     }
 
     @Test

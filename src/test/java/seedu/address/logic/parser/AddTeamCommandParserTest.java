@@ -36,7 +36,8 @@ public class AddTeamCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid team name
-        assertParseFailure(parser, INVALID_TEAM_NAME_DESC, Team.MESSAGE_CONSTRAINTS);
+        String expectedMessage = String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_TEAM_NAME_DESC, expectedMessage);
     }
 
     @Test

@@ -61,12 +61,12 @@ public class AssignTeamCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid player name
         String userInput = INVALID_PLAYER_DESC + TEAM_DESC_AMY;
-        String expectedMessage = Name.MESSAGE_CONSTRAINTS;
+        String expectedMessage = String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, userInput, expectedMessage);
 
         // invalid team name
         userInput = PLAYER_DESC_AMY + INVALID_TEAM_DESC;
-        expectedMessage = Team.MESSAGE_CONSTRAINTS;
+        expectedMessage = String.format("Invalid team name: %s\n%s", "U@16", Team.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, userInput, expectedMessage);
     }
 
