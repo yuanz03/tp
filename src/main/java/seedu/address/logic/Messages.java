@@ -95,9 +95,10 @@ public class Messages {
                 .append("; Injuries: ")
                 .append(person.getInjuries())
                 .append("; Captain Status: ")
-                .append(person.isCaptain() ? "YES" : "NO")
+                .append(person.isCaptain() ? "Active" : "Inactive")
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
+        builder.append("; ");
         return builder.toString();
     }
 
