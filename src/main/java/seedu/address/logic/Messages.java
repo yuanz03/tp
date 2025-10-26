@@ -98,6 +98,7 @@ public class Messages {
                 .append(person.isCaptain() ? "Active" : "Inactive")
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
+        builder.append("; ");
         return builder.toString();
     }
 
