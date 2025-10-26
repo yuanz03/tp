@@ -164,6 +164,7 @@
     -fx-font-size: 13pt;
     -fx-text-fill: black;
     -fx-padding: 8;
+    -fx-wrap-text: true;
 }
 
 .result-display .label {
@@ -341,6 +342,7 @@
     -fx-text-fill: black;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
+    -fx-pref-height: 60;
     -fx-prompt-text-fill: #888888;
 }
 
