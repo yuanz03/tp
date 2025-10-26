@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_CAPTAINS;
 
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
@@ -25,9 +27,15 @@ public class ListCaptainCommand extends Command {
      * @return a {@link CommandResult} containing the success message
      */
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         model.updateFilteredPersonList(PREDICATE_SHOW_CAPTAINS);
+
+        if (model.getFilteredPersonList().isEmpty()) {
+            throw new CommandException(Messages.MESSAGE_NO_CAPTAINS);
+        }
+
         return CommandResult.showPersonCommandResult(MESSAGE_SUCCESS);
     }
 }
