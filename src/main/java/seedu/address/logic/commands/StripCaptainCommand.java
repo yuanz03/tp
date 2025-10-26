@@ -25,7 +25,7 @@ public class StripCaptainCommand extends Command {
     public static final String COMMAND_WORD = "stripcaptain";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
             + "as no longer captain.\n"
-            + "Parameters: " + PREFIX_PLAYER + "PLAYER "
+            + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME "
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
 
     public static final String MESSAGE_SUCCESS = "%1$s is no longer team captain.";

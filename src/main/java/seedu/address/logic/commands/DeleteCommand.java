@@ -19,6 +19,7 @@ import seedu.address.model.team.Team;
  * Deletes a specified person, team or position from PlayBook
  * Only allows deleting one at a time
  * Usage: delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]
+ * Where exactly one prefix must be present
  */
 public class DeleteCommand extends Command {
 

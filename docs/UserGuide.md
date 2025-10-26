@@ -25,22 +25,22 @@ PlayBook (PB) is a **desktop app for semi-professional youth football coaches to
         - [Viewing help: `help`](#viewing-help-help)
         - [Adding a team: `addteam`](#adding-a-team-addteam)
         - [Adding a player: `add`](#adding-a-player-add)
-        - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
-        - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
-        - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
         - [Creating a new position: `addposition`](#creating-a-new-position-addposition)
+        - [Assign player to team: `assignteam`](#assign-player-to-team-assignteam)
         - [Assigning a position to player: `assignposition`](#assigning-a-position-to-player-assignposition)
+        - [Assign injury to player: `assigninjury`](#assign-injury-to-player-assigninjury)
         - [Assigning player as captain: `assigncaptain`](#assigning-player-as-captain-assigncaptain)
+        - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
+        - [Unassign injury from player: `unassigninjury`](#unassign-injury-from-player-unassigninjury)
         - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
+        - [Editing a player: `edit`](#editing-a-player-edit)
+        - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Listing all players: `list`](#listing-all-players-list)
+        - [Listing all captains: `listcaptain`](#listing-all-captains-listcaptain)
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
         - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
-        - [Listing all captains: `listcaptain`](#listing-all-captains-listcaptain)
-        - [Editing a player: `edit`](#editing-a-player-edit)
-        - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
-        - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
         - [Clearing all entries: `clear`](#clearing-all-entries-clear)
         - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
@@ -226,13 +226,15 @@ Format: `addteam tm/TEAM_NAME`
 * `TEAM_NAME` should not be blank.
 
 **Examples:**
-* `addteam tm/U16` - Creates a team for under-16 players
-* `addteam tm/U18` - Creates a team for under-18 players
-* `addteam tm/Reserves` - Creates a reserves team
+* `addteam tm/U16` - Creates a team named `U16`
+* `addteam tm/U18` - Creates a team named `U18`
+* `addteam tm/Reserves` - Creates a team named `Reserves`
 
 <box type="info" seamless>
 
-**Expected output:** "New team added: U16" (or the team name you specified)
+**Expected output:** "New team added: U16"
+
+Switches to the `Viewing Teams` panel if not already in it.
 
 ![add team message](images/addTeamResult.png)
 </box>
@@ -275,11 +277,43 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 
 <box type="info" seamless>
 
-**Expected output:** "New person added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: ; Tags: "
+**Expected output:** "New player added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injuries: [FIT]; Tags:  "
+
+Switches to the `Viewing Players` panel if not already in it.
 
 The player will appear in the player list panel with a "FIT" injury status and no position assigned by default.
 
 ![add message](images/addPlayerResult.png)
+</box>
+
+
+### Creating a new position: `addposition`
+
+Creates a new position in the PlayBook.
+
+Format: `addposition ps/POSITION_NAME`
+
+**Requirements:**
+* `POSITION_NAME` must not be the same as an existing position in the PlayBook.
+* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
+* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
+* `POSITION_NAME` should not be blank.
+
+<box type="tip" seamless>
+
+**Tip:** Create standard football positions like GK (Goalkeeper), CB (Center Back), LW (Left Wing), ST (Striker), etc. for easier team management.
+</box>
+
+**Examples:**
+* `addposition ps/LW` - Creates position named `LW`
+* `addposition ps/ST` - Creates position named `ST`
+* `addposition ps/GK` - Creates position named `GK`
+
+<box type="info" seamless>
+
+**Expected output:** "Position LW has been created successfully!" (or the position name you specified)
+
+![new position message](images/newPositionResult.png)
 </box>
 
 ### Assign player to team: `assignteam`
@@ -308,9 +342,52 @@ Format: `assignteam pl/PLAYER_NAME tm/TEAM_NAME`
 
 **Expected output:** "Assigned John Doe to team: U16"
 
+Switches to the `Viewing Players` panel if not already in it.
+
 The player's team will be immediately updated in their player card.
 
 ![assign team message](images/assignTeamResult.png)
+</box>
+
+### Assigning a position to player: `assignposition`
+
+Assigns an existing position to an existing player in the PlayBook.
+
+Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
+
+**Requirements:**
+* `PLAYER_NAME` must be an existing player in the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
+* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
+* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
+* `POSITION_NAME` should not be blank.
+* The player must not already be assigned to the same position.
+
+<box type="warning" seamless>
+
+**Warning:** You must create the position first using `addposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** Players can be assigned multiple positions. Use this feature to track versatile players who can play in different roles.
+</box>
+
+**Examples:**
+* `assignposition pl/John Doe ps/LW` - Assigns `LW` position to John Doe
+* `assignposition pl/Musiala ps/ST` - Assigns `ST` position to Musiala
+
+<box type="info" seamless>
+
+**Expected output:** "John Doe has been successfully assigned position GK!"
+
+Switches to the `Viewing Players` panel if not already in it.
+
+The position will be immediately visible in the player's card.
+
+![assign position message](images/assignPositionResult.png)
 </box>
 
 ### Assign injury to player: `assigninjury`
@@ -349,14 +426,98 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected output:** "Assigned injury ACL to John Doe"
 
-The player's injury status will be updated immediately in their player card, replacing "FIT" with the injury name.
+Switches to the `Viewing Players` panel if not already in it.
+
+The player's injury status will be updated immediately in their player card.
 
 ![assign injury message](images/assignInjuryResult.png)
 </box>
 
+### Assigning player as captain: `assigncaptain`
+
+Assigns an existing player in the PlayBook to be captain.
+
+Format: `assigncaptain pl/PLAYER_NAME`
+
+**Requirements:**
+* `PLAYER_NAME` must be an existing player in the PlayBook.
+* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
+* `PLAYER_NAME` should not be blank.
+* The player must not already be an assigned captain.
+* **Only one captain per team is allowed** - when you assign a new captain to a team that already has a captain, the previous captain will automatically be stripped of their captaincy.
+
+<box type="tip" seamless>
+
+**Tip:** Each team can have only one captain at a time. If you assign a new captain, the old captain will be automatically removed. Use `listcaptain` to see all current team captains.
+</box>
+
+**Examples:**
+* `assigncaptain pl/John Doe` - Assigns John Doe as captain.
+* `assigncaptain pl/Sergio Ramos` - Assigns Sergio Ramos as captain. Unassigns the previous captain.
+
+<box type="info" seamless>
+
+**Expected output:** "John Doe is now a captain of U16"
+
+A captain badge or indicator will appear on the player's card.
+
+![assign captain message](images/assignCaptainResult.png)
+</box>
+
+### Deleting a player, team or position: `delete`
+
+Deletes the specified player, team or position from the PlayBook.
+
+Format: `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`
+
+**Requirements:**
+* You must provide **exactly one** parameter (either `pl/`, `tm/`, or `ps/`).
+* Names are case-insensitive, e.g `hans` will match `Hans`, `u16` will match `U16`.
+* The player, team or position to be deleted must exist in the PlayBook.
+* Names should not be blank.
+
+<box type="warning" seamless>
+
+**Warning:** This action cannot be undone!
+- **Deleting a player**: The player and all their information (team, position, injuries, tags) will be permanently removed.
+- **Deleting a team**: You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
+- **Deleting a position**: You can only delete a position if it is not assigned to any players. Please unassign the position from all players before attempting to delete it.
+
+Consider making a backup of your data file before bulk deletions.
+</box>
+
+<box type="info" seamless>
+
+**Note:** The command can only delete one player, team or position at a time.
+</box>
+
+**Examples:**
+* `delete pl/John Doe` - Permanently deletes player John Doe from PlayBook
+* `delete tm/U16` - Deletes the U16 team from PlayBook (only if no players are assigned)
+* `delete ps/LW` - Deletes LW position from PlayBook
+
+<box type="info" seamless>
+
+**Expected output:**
+
+**For player deletion:** "Deleted Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
+
+The player card will immediately disappear from the player list.
+
+![delete player message](images/deletePlayerResult.png)
+
+**For team deletion:** "Team U16 has been deleted successfully!"
+
+![delete team message](images/deleteTeamResult.png)
+
+**For position deletion:** "Position: LW has been deleted successfully!"
+
+![delete position message](images/deletePositionResult.png)
+</box>
+
 ### Unassign injury from player: `unassigninjury`
 
-Removes an injury status currently assigned to an existing player. 
+Removes an injury status currently assigned to an existing player.
 
 Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
@@ -386,108 +547,11 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected output:** "Removed injury ACL from John Doe"
 
-If this was the player's only injury, their status will automatically return to "FIT".
+Switches to the `Viewing Players` panel if not already in it.
+
+If the player has no other injury status, their status will automatically return to "FIT".
 
 ![unassign injury message](images/unassignInjuryResult.png)
-</box>
-
-### Creating a new position: `addposition`
-
-Creates a new position in the PlayBook.
-
-Format: `addposition ps/POSITION_NAME`
-
-**Requirements:**
-* `POSITION_NAME` must not be the same as an existing position in the PlayBook.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-
-<box type="tip" seamless>
-
-**Tip:** Create standard football positions like GK (Goalkeeper), CB (Center Back), LW (Left Wing), ST (Striker), etc. for easier team management.
-</box>
-
-**Examples:**
-* `addposition ps/LW` - Creates Left Wing position
-* `addposition ps/ST` - Creates Striker position
-* `addposition ps/GK` - Creates Goalkeeper position
-
-<box type="info" seamless>
-
-**Expected output:** "Position RWB has been created successfully!" (or the position name you specified)
-
-![new position message](images/newPositionResult.png)
-</box>
-
-### Assigning a position to player: `assignposition`
-
-Assigns an existing position to an existing player in the PlayBook.
-
-Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
-
-**Requirements:**
-* `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `POSITION_NAME` should contain only alphanumeric characters, with no spaces.
-* `POSITION_NAME` is case-insensitive, e.g. `fw` is the same as `FW`.
-* `POSITION_NAME` should not be blank.
-* The player must not already be assigned to the same position.
-
-<box type="warning" seamless>
-
-**Warning:** You must create the position first using `addposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
-</box>
-
-<box type="tip" seamless>
-
-**Tip:** Players can be assigned multiple positions. Use this feature to track versatile players who can play in different roles.
-</box>
-
-**Examples:**
-* `assignposition pl/John Doe ps/LW` - Assigns Left Wing position to John Doe
-* `assignposition pl/Musiala ps/ST` - Assigns Striker position to Musiala
-
-<box type="info" seamless>
-
-**Expected output:** "John Doe has been successfully assigned position GK!"
-
-The position will be immediately visible in the player's card.
-
-![assign position message](images/assignPositionResult.png)
-</box>
-
-### Assigning player as captain: `assigncaptain`
-
-Assigns an existing player in the PlayBook to be captain.
-
-Format: `assigncaptain pl/PLAYER_NAME`
-
-**Requirements:**
-* `PLAYER_NAME` must be an existing player in the PlayBook.
-* `PLAYER_NAME` is case-insensitive, e.g. `john doe` is the same as `John Doe`.
-* `PLAYER_NAME` should not be blank.
-* The player must not already be an assigned captain.
-* **Only one captain per team is allowed** - when you assign a new captain to a team that already has a captain, the previous captain will automatically be stripped of their captaincy.
-
-<box type="tip" seamless>
-
-**Tip:** Each team can have only one captain at a time. If you assign a new captain, the old captain will be automatically removed. Use `listcaptain` to see all current team captains.
-</box>
-
-**Examples:**
-* `assigncaptain pl/John Doe` - Assigns John Doe as captain.
-* `assigncaptain pl/Sergio Ramos` - Assigns Sergio Ramos as captain. Unassigns the previous captain.
-
-<box type="info" seamless>
-
-**Expected output:** "Jovan Doe is now a captain of ClementiRovers"
-
-A captain badge or indicator will appear on the player's card.
-
-![assign captain message](images/assignCaptainResult.png)
 </box>
 
 ### Unassigning player as captain: `stripcaptain`
@@ -508,104 +572,11 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 <box type="info" seamless>
 
-**Expected output:** "Jovan Doe is no longer team captain"
+**Expected output:** "John Doe is no longer team captain."
 
 The captain badge/indicator will be removed from the player's card.
 
 ![strip captain message](images/stripCaptainResult.png)
-</box>
-
-### Listing all players: `list`
-
-Shows a list of all players in the PlayBook.
-
-Format: `list`
-
-<box type="tip" seamless>
-
-**Tip:** Use this command to reset your view after using filters or searches. It displays all players regardless of team, position, or injury status.
-</box>
-
-<box type="info" seamless>
-
-**Expected output:** All players in your PlayBook will be displayed in the player list panel.
-
-![list message](images/listResult.png)
-</box>
-
-### Listing all teams: `listteam`
-
-Shows a list of all teams in the PlayBook.
-
-Format: `listteam`
-
-<box type="tip" seamless>
-
-**Tip:** Use this to quickly see all teams you've created. Helpful for verifying team names before adding new players.
-</box>
-
-<box type="info" seamless>
-
-**Expected output:** A list of all team names will be displayed in the result box (e.g., "U16, U18, Reserves").
-
-![list team message](images/listTeamResult.png)
-</box>
-
-### Listing all positions: `listposition`
-
-Shows a list of all positions in the PlayBook.
-
-Format: `listposition`
-
-<box type="tip" seamless>
-
-**Tip:** Use this to check which positions you've already created before assigning positions to players.
-</box>
-
-<box type="info" seamless>
-
-**Expected output:** A list of all position names will be displayed (e.g., "LW, ST, GK, CB").
-
-![list position message](images/listPositionResult.png)
-</box>
-
-### Listing all injured players: `listinjured`
-
-Shows a list of all injured players in the PlayBook.
-
-Format: `listinjured`
-
-<box type="tip" seamless>
-
-**Tips:**
-* Use this command before match day to quickly see who's unavailable.
-* Combine with team information in the player cards to see which teams are affected by injuries.
-* This shows all players with any injury status (not "FIT").
-</box>
-
-<box type="info" seamless>
-
-**Expected output:** Only players with injuries (non-FIT status) will be displayed in the player list panel. Their injury details will be visible on their player cards.
-
-![list injured message](images/listInjuredResult.png)
-</box>
-
-### Listing all captains: `listcaptain`
-
-Shows a list of all captains in the PlayBook.
-
-Format: `listcaptain`
-
-<box type="tip" seamless>
-
-**Tip:** Useful for quickly identifying team leaders across all your squads.
-</box>
-
-<box type="info" seamless>
-
-**Expected output:** Only players designated as captains will be displayed in the player list panel.
-
-![list captains message](images/listCaptainsResult.png)
 </box>
 
 ### Editing a player: `edit`
@@ -689,6 +660,99 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 ![result for 'find Doe'](images/findResult.png)
 </box>
 
+### Listing all players: `list`
+
+Shows a list of all players in the PlayBook.
+
+Format: `list`
+
+<box type="tip" seamless>
+
+**Tip:** Use this command to reset your view after using filters or searches. It displays all players regardless of team, position, or injury status.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** All players in your PlayBook will be displayed in the player list panel.
+
+![list message](images/listResult.png)
+</box>
+
+### Listing all captains: `listcaptain`
+
+Shows a list of all captains in the PlayBook.
+
+Format: `listcaptain`
+
+<box type="tip" seamless>
+
+**Tip:** Useful for quickly identifying team leaders across all your squads.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** Only players designated as captains will be displayed in the player list panel.
+
+![list captains message](images/listCaptainsResult.png)
+</box>
+
+### Listing all teams: `listteam`
+
+Shows a list of all teams in the PlayBook.
+
+Format: `listteam`
+
+<box type="tip" seamless>
+
+**Tip:** Use this to quickly see all teams you've created. Helpful for verifying team names before adding new players.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** A list of all team names will be displayed in the result box (e.g., "U16, U18, Reserves").
+
+![list team message](images/listTeamResult.png)
+</box>
+
+### Listing all positions: `listposition`
+
+Shows a list of all positions in the PlayBook.
+
+Format: `listposition`
+
+<box type="tip" seamless>
+
+**Tip:** Use this to check which positions you've already created before assigning positions to players.
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** A list of all position names will be displayed (e.g., "LW, ST, GK, CB").
+
+![list position message](images/listPositionResult.png)
+</box>
+
+### Listing all injured players: `listinjured`
+
+Shows a list of all injured players in the PlayBook.
+
+Format: `listinjured`
+
+<box type="tip" seamless>
+
+**Tips:**
+* Use this command before match day to quickly see who's unavailable.
+* Combine with team information in the player cards to see which teams are affected by injuries.
+* This shows all players with any injury status (not "FIT").
+</box>
+
+<box type="info" seamless>
+
+**Expected output:** Only players with injuries (non-FIT status) will be displayed in the player list panel. Their injury details will be visible on their player cards.
+
+![list injured message](images/listInjuredResult.png)
+</box>
+
 ### Filtering players by team, injury and/or position: `filter`
 
 Filter players by team, injury and/or position.
@@ -734,59 +798,6 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 **Expected output:** "X persons listed!" where X is the number of players matching all filter criteria. Only matching players will be displayed.
 
 ![result for filter](images/filterResult.png)
-</box>
-
-### Deleting a player, team or position: `delete`
-
-Deletes the specified player, team or position from the PlayBook.
-
-Format: `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`
-
-**Requirements:**
-* You must provide **exactly one** parameter (either `pl/`, `tm/`, or `ps/`).
-* Names are case-insensitive, e.g `hans` will match `Hans`, `u16` will match `U16`.
-* The player, team or position to be deleted must exist in the PlayBook.
-* Names should not be blank.
-
-<box type="warning" seamless>
-
-**Warning:** This action cannot be undone!
-- **Deleting a player**: The player and all their information (team, position, injuries, tags) will be permanently removed.
-- **Deleting a team**: You can only delete a team if there are no players assigned to it. Please remove all players from the team before attempting to delete it.
-- **Deleting a position**: You can only delete a position if it is not assigned to any players. Please unassign the position from all players before attempting to delete it.
-
-Consider making a backup of your data file before bulk deletions.
-</box>
-
-<box type="info" seamless>
-
-**Note:** The command can only delete one player, team or position at a time.
-</box>
-
-**Examples:**
-* `delete pl/John Doe` - Permanently deletes player John Doe from PlayBook
-* `delete tm/U16` - Deletes the U16 team from PlayBook (only if no players are assigned)
-* `delete ps/LW` - Deletes LW position from PlayBook
-
-<box type="info" seamless>
-
-**Expected output:**
-
-**For player deletion:** "Deleted Player: John Doe; Phone: 98765432; Email: johnd@example.com; Address: John street, block 123, #01-01; Team: U16; Injury: FIT; Position: LW; Tags: "
-
-The player card will immediately disappear from the player list.
-
-![delete player message](images/deletePlayerResult.png)
-
-**For team deletion:** "Team U16 has been deleted successfully!"
-
-![delete team message](images/deleteTeamResult.png)
-
-**For position deletion:** "Position: LW has been deleted successfully!"
-
-
-
-![delete position message](images/deletePositionResult.png)
 </box>
 
 ### Clearing all entries: `clear`
@@ -901,25 +912,25 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                          | Format, Examples                                                                                                                                                                                                    |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Player**                  | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [i/INJURY] [t/TAG]…​` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 i/ACL t/friend t/colleague` |
-| **Add Team**                    | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                                  |
-| **Assign Player to Team**       | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                                 |
-| **Assign Injury to Player**     | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                                  |
-| **Unassign Injury from Player** | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                                             |
-| **Create New Position**         | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                                       |
-| **Assign Position to Player**   | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                      |
-| **Clear**                       | `clear`                                                                                                                                                                                                             |
-| **Delete**                      | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                                         |
-| **Edit**                        | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…​`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                        |
-| **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                          |
-| **Filter Players**              | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                               |
-| **List**                        | `list`                                                                                                                                                                                                              |
-| **Assign Captain**              | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                                               |
-| **Strip Captain**               | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                                 |
-| **List Captains**               | `listcaptain`                                                                                                                                                                                                       |
-| **List Teams**                  | `listteam`                                                                                                                                                                                                          |
-| **List Positions**              | `listposition`                                                                                                                                                                                                      |
-| **List Injured Players**        | `listinjured`                                                                                                                                                                                                       |
-| **Help**                        | `help`                                                                                                                                                                                                              |
+| Action                              | Format, Examples                                                                                                                                                                                               |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**                            | `help`                                                                                                                                                                                                         |
+| **Add Team**                        | `addteam tm/TEAM_NAME` <br> e.g., `addteam tm/u16`                                                                                                                                                             |
+| **Add Player**                      | `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG]…` <br> e.g., `add pl/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tm/u16 t/friend t/colleague`              |
+| **Add Position**                    | `addposition ps/POSITION_NAME` <br> e.g., `addposition ps/LW`                                                                                                                                                  |
+| **Assign Player to Team**           | `assignteam pl/PLAYER_NAME tm/TEAM_NAME` <br> e.g., `assignteam pl/John Doe tm/u16`                                                                                                                            |
+| **Assign Position to Player**       | `assignposition pl/PLAYER_NAME ps/POSITION_NAME` <br> e.g., `assignposition pl/John Doe ps/LW`                                                                                                                 |
+| **Assign Injury to Player**         | `assigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `assigninjury pl/John Doe i/ACL`                                                                                                                             |
+| **Assign Captain**                  | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                                          |
+| **Delete Player, Team or Position** | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                                    |
+| **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME` <br> e.g., `unassigninjury pl/John Doe`                                                                                                                                        |
+| **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                                            |
+| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tm/TEAM_NAME] [i/INJURY] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                    |
+| **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                     |
+| **List**                            | `list`                                                                                                                                                                                                         |
+| **List Captains**                   | `listcaptain`                                                                                                                                                                                                  |
+| **List Teams**                      | `listteam`                                                                                                                                                                                                     |
+| **List Positions**                  | `listposition`                                                                                                                                                                                                 |
+| **List Injured Players**            | `listinjured`                                                                                                                                                                                                  |
+| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                                          |
+| **Clear**                           | `clear`                                                                                                                                                                                                        |
