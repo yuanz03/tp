@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -19,8 +22,16 @@ import seedu.address.model.team.Team;
  */
 public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]: Filters players by team, injury and/or position.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filter players by team, injury and/or position.\n"
+            + "At least one filter criteria is required.\n"
+            + "Parameters: "
+            + "[" + PREFIX_TEAM + "TEAM_NAME] "
+            + "[" + PREFIX_INJURY + "INJURY] "
+            + "[" + PREFIX_POSITION + "POSITION]\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_TEAM + "U16 "
+            + PREFIX_INJURY + "ACL "
+            + PREFIX_POSITION + "MF";
 
     private final FilterByTeamPredicate teamPredicate;
     private final FilterByInjuryPredicate injuryPredicate;

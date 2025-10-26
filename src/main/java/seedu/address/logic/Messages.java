@@ -90,8 +90,12 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Team: ")
                 .append(person.getTeam())
+                .append("; Position: ")
+                .append(person.getPosition())
                 .append("; Injuries: ")
                 .append(person.getInjuries())
+                .append("; Captain Status: ")
+                .append(person.isCaptain() ? "YES" : "NO")
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();
