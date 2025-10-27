@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_NO_CAPTAINS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -51,6 +52,6 @@ public class ListCaptainCommandTest {
 
         ListCaptainCommand command = new ListCaptainCommand();
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals("There are currently no captains in the PlayBook.", exception.getMessage());
+        assertEquals(MESSAGE_NO_CAPTAINS, exception.getMessage());
     }
 }

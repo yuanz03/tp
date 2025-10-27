@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_NO_PLAYERS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -48,6 +49,6 @@ public class ListCommandTest {
 
         ListCommand command = new ListCommand();
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(emptyModel));
-        assertEquals("There are currently no players in the PlayBook.", exception.getMessage());
+        assertEquals(MESSAGE_NO_PLAYERS, exception.getMessage());
     }
 }
