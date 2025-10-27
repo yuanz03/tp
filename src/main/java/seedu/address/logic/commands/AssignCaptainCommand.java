@@ -30,7 +30,6 @@ public class AssignCaptainCommand extends Command {
             + PREFIX_PLAYER + "Sergio Ramos";
 
     public static final String MESSAGE_SUCCESS = "%1$s is now captain of %2$s";
-    public static final String MESSAGE_ALREADY_CAPTAIN = "%1$s is already a captain!";
     public static final String MESSAGE_STRIPPED_PREVIOUS_CAPTAIN = "%1$s is no longer captain. ";
 
     private final Name targetName;
@@ -56,10 +55,6 @@ public class AssignCaptainCommand extends Command {
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
-        }
-
-        if (targetPerson.isCaptain()) {
-            throw new CommandException(String.format(MESSAGE_ALREADY_CAPTAIN, targetPerson.getName()));
         }
 
         Person currentCaptain = model.getTeamCaptain(targetPerson.getTeam());

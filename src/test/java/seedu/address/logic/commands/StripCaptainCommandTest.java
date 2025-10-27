@@ -70,34 +70,6 @@ public class StripCaptainCommandTest {
     }
 
     @Test
-    public void execute_personAlreadyNotCaptain_throwsCommandException() {
-        Person person = new PersonBuilder().withCaptain(false).build();
-        Name name = person.getName();
-
-        ModelStub modelStub = new ModelStub() {
-            @Override
-            public Person getPersonByName(Name queryName) {
-                if (!queryName.equals(name)) {
-                    throw new seedu.address.model.person.exceptions.PersonNotFoundException();
-                }
-                return person;
-            }
-        };
-
-        StripCaptainCommand command = new StripCaptainCommand(name);
-
-        try {
-            command.execute(modelStub);
-        } catch (CommandException e) {
-            assertEquals(String.format(StripCaptainCommand.MESSAGE_NOT_CAPTAIN, person.getName()), e.getMessage());
-            return;
-        } catch (Exception e) {
-            throw new AssertionError("Expected CommandException for not-a-captain.");
-        }
-        throw new AssertionError("Expected CommandException for not-a-captain.");
-    }
-
-    @Test
     public void equals() {
         Name sergio = new Name("Sergio Ramos");
         Name leo = new Name("Lionel Messi");

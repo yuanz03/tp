@@ -29,7 +29,6 @@ public class StripCaptainCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
 
     public static final String MESSAGE_SUCCESS = "%1$s is no longer team captain.";
-    public static final String MESSAGE_NOT_CAPTAIN = "%1$s is not a captain!";
 
     private final Name targetName;
 
@@ -54,10 +53,6 @@ public class StripCaptainCommand extends Command {
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
-        }
-
-        if (!targetPerson.isCaptain()) {
-            throw new CommandException(String.format(MESSAGE_NOT_CAPTAIN, targetPerson.getName()));
         }
 
         model.stripCaptain(targetPerson);
