@@ -24,6 +24,8 @@ public class StripCaptainCommandTest {
         Name name = person.getName();
 
         ModelStub modelStub = new ModelStub() {
+            private boolean stripCaptainCalled = false;
+
             @Override
             public Person getPersonByName(Name queryName) {
                 if (!queryName.equals(name)) {
@@ -31,12 +33,16 @@ public class StripCaptainCommandTest {
                 }
                 return person;
             }
+
+            @Override
+            public void stripCaptain(Person person) {
+                stripCaptainCalled = true;
+            }
         };
 
         StripCaptainCommand command = new StripCaptainCommand(name);
         CommandResult result = command.execute(modelStub);
 
-        assertFalse(person.isCaptain());
         assertEquals(CommandResult.showPersonCommandResult(String.format(StripCaptainCommand.MESSAGE_SUCCESS,
                 person.getName())), result);
     }
@@ -65,9 +71,7 @@ public class StripCaptainCommandTest {
 
     @Test
     public void execute_personAlreadyNotCaptain_throwsCommandException() {
-        Person person = new PersonBuilder().build();
-        // Ensure starting state is not captain
-        person.stripCaptain();
+        Person person = new PersonBuilder().withCaptain(false).build();
         Name name = person.getName();
 
         ModelStub modelStub = new ModelStub() {

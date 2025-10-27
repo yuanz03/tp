@@ -32,7 +32,7 @@ public class Person {
     private final Set<Injury> injuries = new HashSet<>();
     private final Team team;
     private final Position position;
-    private boolean isCaptain;
+    private final boolean isCaptain;
 
     /**
      * Creates a Person object assigned to a team with the default injury status, position, and captain status.
@@ -99,14 +99,6 @@ public class Person {
 
     public boolean isCaptain() {
         return isCaptain;
-    }
-
-    public void assignCaptain() {
-        this.isCaptain = true;
-    }
-
-    public void stripCaptain() {
-        this.isCaptain = false;
     }
 
     /**

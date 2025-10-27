@@ -11,8 +11,6 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.AlreadyCaptainException;
-import seedu.address.model.person.exceptions.AlreadyNotCaptainException;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
@@ -125,18 +123,12 @@ public class ModelStub implements Model {
 
     @Override
     public void assignCaptain(Person person) {
-        if (person.isCaptain()) {
-            throw new AlreadyCaptainException();
-        }
-        person.assignCaptain();
+        throw new AssertionError("This method should not be called.");
     }
 
     @Override
     public void stripCaptain(Person person) {
-        if (!person.isCaptain()) {
-            throw new AlreadyNotCaptainException();
-        }
-        person.stripCaptain();
+        throw new AssertionError("This method should not be called.");
     }
 
     @Override
