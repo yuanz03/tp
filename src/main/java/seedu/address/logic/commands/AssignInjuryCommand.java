@@ -43,29 +43,39 @@ public class AssignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Person personToAssign;
 
         // Check if the player exists
-        try {
-            personToAssign = model.getPersonByName(personNameToAssign);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToAssign));
-        }
-
-        // Check if the player has already been assigned the same injury
-        if (personToAssign.getInjuries().contains(injuryToAssign)) {
-            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                    personToAssign.getName(), injuryToAssign));
-        }
+        Person personToAssign = findPersonByName(model, personNameToAssign);
 
         // Disallow assigning "FIT" as an injury status
-        if (injuryToAssign.equals(Injury.DEFAULT_INJURY_STATUS)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
-        }
+        validateNotDefaultInjury(injuryToAssign);
+
+        // Check if the player has already been assigned the same injury
+        validateNoDuplicateInjury(personToAssign, injuryToAssign);
 
         Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
                 personToAssign.getName(), updatedPerson.getInjuries()));
+    }
+
+    private Person findPersonByName(Model model, Name name) throws CommandException {
+        try {
+            return model.getPersonByName(name);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
+        }
+    }
+
+    private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
+        if (person.getInjuries().contains(injury)) {
+            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
+        }
+    }
+
+    private void validateNotDefaultInjury(Injury injury) throws CommandException {
+        if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
+        }
     }
 
     /**
