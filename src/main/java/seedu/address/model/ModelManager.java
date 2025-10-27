@@ -157,7 +157,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteInjury(Person target, Injury injury) {
+    public Person deleteInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
@@ -168,10 +168,19 @@ public class ModelManager implements Model {
             updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
-        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
-
+        Person updatedPerson = new Person(
+                target.getName(),
+                target.getPhone(),
+                target.getEmail(),
+                target.getAddress(),
+                target.getTeam(),
+                target.getTags(),
+                target.getPosition(),
+                updatedInjuries,
+                target.isCaptain()
+        );
         setPerson(target, updatedPerson);
+        return updatedPerson;
     }
 
     @Override

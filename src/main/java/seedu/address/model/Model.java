@@ -101,7 +101,7 @@ public interface Model {
      * Removes the specified {@code injury} from the given person {@code target}'s injury list.
      * {@code target} must exist in the address book.
      */
-    void deleteInjury(Person target, Injury injury);
+    Person deleteInjury(Person target, Injury injury);
 
     /**
      * Returns true if the given person {@code target} has any injury status
