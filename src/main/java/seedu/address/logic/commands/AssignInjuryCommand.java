@@ -66,15 +66,15 @@ public class AssignInjuryCommand extends Command {
         }
     }
 
-    private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
-        if (person.getInjuries().contains(injury)) {
-            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
-        }
-    }
-
     private void validateNotDefaultInjury(Injury injury) throws CommandException {
         if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
+        }
+    }
+
+    private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
+        if (person.getInjuries().contains(injury)) {
+            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
         }
     }
 

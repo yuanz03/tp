@@ -46,30 +46,42 @@ public class UnassignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Person personToUnassign;
 
         // Check if the player exists
-        try {
-            personToUnassign = model.getPersonByName(personNameToUnassign);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToUnassign));
-        }
+        Person personToUnassign = findPersonByName(model, personNameToUnassign);
+
+        // Ensure the player is currently injured before attempting to unassign
+        validatePlayerIsInjured(model, personToUnassign);
 
         // Check if the player has the specified injury before updating the injury status
-        if (!personToUnassign.getInjuries().contains(injuryToUnassign)) {
-            throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
-                    personToUnassign.getName(), injuryToUnassign.getInjuryName()));
-        }
-
-        // Check if the player's injury status has already been set to the default 'FIT' status
-        if (!model.hasInjury(personToUnassign)) {
-            throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
-                    personToUnassign.getName()));
-        }
+        validatePlayerHasInjury(personToUnassign, injuryToUnassign);
 
         model.deleteInjury(personToUnassign, injuryToUnassign);
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 personToUnassign.getName(), injuryToUnassign.getInjuryName()));
+    }
+
+    private Person findPersonByName(Model model, Name name) throws CommandException {
+        try {
+            return model.getPersonByName(name);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
+        }
+    }
+
+    private void validatePlayerIsInjured(Model model, Person person) throws CommandException {
+        if (!model.hasInjury(person)) {
+            throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
+                    person.getName()));
+        }
+
+    }
+
+    private void validatePlayerHasInjury(Person person, Injury injury) throws CommandException {
+        if (!person.getInjuries().contains(injury)) {
+            throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
+                    person.getName(), injury.getInjuryName()));
+        }
     }
 
     /**
