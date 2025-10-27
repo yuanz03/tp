@@ -32,6 +32,7 @@ public class Messages {
     // Team Command Messages
     public static final String MESSAGE_INVALID_TEAM = "No such team in the PlayBook.";
 
+    // Position Command Messages
     public static final String MESSAGE_INVALID_POSITION = "No such position in the PlayBook.";
 
     // Injury Command Messages
@@ -65,6 +66,8 @@ public class Messages {
     public static final String MESSAGE_NO_TEAMS = "There are currently no teams in the PlayBook.";
     public static final String MESSAGE_NO_POSITIONS = "There are currently no positions in the PlayBook.";
     public static final String MESSAGE_NO_INJURED = "There are currently no injured players in the PlayBook.";
+    public static final String MESSAGE_NO_PLAYERS = "There are currently no players in the PlayBook.";
+    public static final String MESSAGE_NO_CAPTAINS = "There are currently no captains in the PlayBook.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
