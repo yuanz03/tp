@@ -23,6 +23,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.IllegalInjuryException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
 import seedu.address.model.team.exceptions.TeamNotFoundException;
@@ -230,7 +231,7 @@ public class ModelManagerTest {
     public void addInjury_defaultInjury_throwsIllegalArgumentException() {
         modelManager.addPerson(ALICE);
 
-        assertThrows(IllegalArgumentException.class, () -> modelManager.addInjury(ALICE, Injury.DEFAULT_INJURY_STATUS));
+        assertThrows(IllegalInjuryException.class, () -> modelManager.addInjury(ALICE, Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
