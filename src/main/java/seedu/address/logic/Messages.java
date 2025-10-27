@@ -16,6 +16,7 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_EMPTY_COMMAND = "Your %1$s command cannot be empty!";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_NON_EMPTY_PREAMBLE =
             "Your %1$s command contains extra parameters or irrelevant prefixes!";
@@ -28,17 +29,19 @@ public class Messages {
     // Player Command Messages
     public static final String MESSAGE_PERSON_NOT_FOUND = "The person '%1$s' does not exist.";
     public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your %1$s command is missing the player parameter!";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
 
     // Team Command Messages
     public static final String MESSAGE_INVALID_TEAM = "No such team in the PlayBook.";
 
+    // Position Command Messages
     public static final String MESSAGE_INVALID_POSITION = "No such position in the PlayBook.";
 
     // Injury Command Messages
     public static final String MESSAGE_MISSING_INJURY_PREFIX = "Your %1$s command is missing the injury parameter!";
     public static final String MESSAGE_MISSING_BOTH_PREFIXES =
             "Your %1$s command is missing both player and injury parameters!";
-
     public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
     public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's %2$s injury status has been removed!";
     public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s is already assigned the injury status: %2$s";

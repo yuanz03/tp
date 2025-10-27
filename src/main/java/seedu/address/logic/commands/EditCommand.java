@@ -50,10 +50,6 @@ public class EditCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
-
     private final Name personNameToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -104,7 +100,7 @@ public class EditCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return CommandResult.showPersonCommandResult(
-                String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+                String.format(Messages.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
@@ -117,13 +113,13 @@ public class EditCommand extends Command {
 
     private void validatePersonUnchanged(Person target, Person editedPerson) throws CommandException {
         if (target.equals(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }
     }
 
     private void validateNoDuplicatePerson(Model model, Person target, Person editedPerson) throws CommandException {
         if (!target.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }
     }
 
