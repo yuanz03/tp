@@ -99,6 +99,7 @@ public interface Model {
 
     /**
      * Removes the specified {@code injury} from the given person {@code target}'s injury list.
+     * Returns a new {@code Person} instance with the updated injuries.
      * {@code target} must exist in the address book.
      */
     Person deleteInjury(Person target, Injury injury);
