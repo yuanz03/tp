@@ -17,8 +17,6 @@ import seedu.address.model.team.Team;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
-    public static final Injury DEFAULT_INJURY_STATUS = new Injury("FIT");
-    public static final Position DEFAULT_POSITION = new Position("NONE");
     public static final boolean DEFAULT_CAPTAIN_STATUS = false;
 
     // Identity fields
@@ -48,8 +46,8 @@ public class Person {
         this.address = address;
         this.team = team;
         this.tags.addAll(tags);
-        this.position = DEFAULT_POSITION;
-        this.injuries.add(DEFAULT_INJURY_STATUS);
+        this.position = Position.DEFAULT_POSITION;
+        this.injuries.add(Injury.DEFAULT_INJURY_STATUS);
         this.isCaptain = DEFAULT_CAPTAIN_STATUS;
     }
 

@@ -8,6 +8,6 @@ import java.util.function.Predicate;
 public class FilterInjuredPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
-        return person.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
+        return person.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
     }
 }

@@ -92,22 +92,29 @@ public interface Model {
 
     /**
      * Adds the specified {@code injury} to the given person {@code target}'s injury list.
+     * Returns a new {@code Person} instance with the updated injuries.
      * {@code target} must exist in the address book.
      */
-    void addInjury(Person target, Injury injury);
+    Person addInjury(Person target, Injury injury);
 
     /**
      * Removes the specified {@code injury} from the given person {@code target}'s injury list.
+     * Returns a new {@code Person} instance with the updated injuries.
      * {@code target} must exist in the address book.
      */
-    void deleteInjury(Person target, Injury injury);
+    Person deleteInjury(Person target, Injury injury);
 
     /**
      * Returns true if the given person {@code target} has any injury status
      * that is not the default {@code "FIT"} status.
      * {@code target} must exist in the address book.
      */
-    boolean hasInjury(Person target);
+    boolean hasNonDefaultInjury(Person target);
+
+    /**
+     * Returns true if the given person {@code target} has the specified {@code injury}.
+     */
+    boolean hasSpecificInjury(Person target, Injury injury);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

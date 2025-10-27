@@ -44,6 +44,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -56,7 +57,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName())
+        Person expectedPerson = new PersonBuilder(BOB).withInjuries(Injury.DEFAULT_INJURY_STATUS.getInjuryName())
                 .withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
@@ -65,7 +66,7 @@ public class AddCommandParserTest {
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName()).build();
+                .withInjuries(Injury.DEFAULT_INJURY_STATUS.getInjuryName()).build();
         assertParseSuccess(parser,
                 PLAYER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TEAM_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
@@ -152,7 +153,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person firstPerson = new PersonBuilder(AMY).withInjuries(Person.DEFAULT_INJURY_STATUS.getInjuryName())
+        Person firstPerson = new PersonBuilder(AMY).withInjuries(Injury.DEFAULT_INJURY_STATUS.getInjuryName())
                 .withTags().build();
         assertParseSuccess(parser,
                 PLAYER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY

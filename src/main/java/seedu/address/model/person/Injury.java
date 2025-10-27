@@ -9,14 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Injury {
 
+    public static final Injury DEFAULT_INJURY_STATUS = new Injury("FIT");
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_CONSTRAINTS =
             "Injuries should only contain alphanumeric characters and spaces, and it should not be blank";
-
-    /*
-     * The first character of the injury must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     private final String injuryName;
 

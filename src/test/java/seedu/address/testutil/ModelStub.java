@@ -84,17 +84,22 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addInjury(Person target, Injury injury) {
+    public Person addInjury(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void deleteInjury(Person target, Injury injury) {
+    public Person deleteInjury(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public boolean hasInjury(Person target) {
+    public boolean hasNonDefaultInjury(Person target) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasSpecificInjury(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 

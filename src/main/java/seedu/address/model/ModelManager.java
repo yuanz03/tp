@@ -17,6 +17,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.IllegalInjuryException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
@@ -123,62 +124,100 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addInjury(Person target, Injury injury) {
+    public void setPerson(Person target, Person editedPerson) {
+        requireAllNonNull(target, editedPerson);
+
+        addressBook.setPerson(target, editedPerson);
+    }
+
+    //=========== Injury Commands =============================================================
+
+    @Override
+    public Person addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
+
         // Disallow assigning "FIT" as an injury
-        if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
-            throw new IllegalArgumentException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
+        if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
+            throw new IllegalInjuryException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
 
         // Remove FIT status when assigning any other injury
-        if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
-            updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+        if (updatedInjuries.contains(Injury.DEFAULT_INJURY_STATUS)) {
+            updatedInjuries.remove(Injury.DEFAULT_INJURY_STATUS);
         }
         updatedInjuries.add(injury);
 
-        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
-
+        Person updatedPerson = new Person(
+                target.getName(),
+                target.getPhone(),
+                target.getEmail(),
+                target.getAddress(),
+                target.getTeam(),
+                target.getTags(),
+                target.getPosition(),
+                updatedInjuries,
+                target.isCaptain()
+        );
         setPerson(target, updatedPerson);
+        return updatedPerson;
     }
 
     @Override
-    public void deleteInjury(Person target, Injury injury) {
+    public Person deleteInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
 
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
         updatedInjuries.remove(injury);
 
         // Ensure that the person has at least the default injury status
         if (updatedInjuries.isEmpty()) {
-            updatedInjuries.add(Person.DEFAULT_INJURY_STATUS);
+            updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
-        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
-
+        Person updatedPerson = new Person(
+                target.getName(),
+                target.getPhone(),
+                target.getEmail(),
+                target.getAddress(),
+                target.getTeam(),
+                target.getTags(),
+                target.getPosition(),
+                updatedInjuries,
+                target.isCaptain()
+        );
         setPerson(target, updatedPerson);
+        return updatedPerson;
     }
 
     @Override
-    public boolean hasInjury(Person target) {
+    public boolean hasNonDefaultInjury(Person target) {
         requireNonNull(target);
 
         if (!hasPerson(target)) {
             throw new PersonNotFoundException();
         }
         // Check whether the person has at least one injury that is not the default "FIT" status
-        return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
+        return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public boolean hasSpecificInjury(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
 
-        addressBook.setPerson(target, editedPerson);
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
+        return target.getInjuries().contains(injury);
     }
 
     //=========== Filtered Person List Accessors =============================================================

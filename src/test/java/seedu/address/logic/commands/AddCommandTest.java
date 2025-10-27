@@ -49,7 +49,7 @@ public class AddCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class,
-            AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+            Messages.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
 
     @Test
@@ -155,9 +155,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addInjury(Person target, Injury injury) {
+        public Person addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
-            // Simulate update
+            return target;
         }
 
         @Override

@@ -38,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TEAM, PREFIX_TAG); // TODO: implement support for position
+                        PREFIX_TEAM, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TEAM)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -46,17 +46,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_TEAM); // TODO: implement support for position
+                PREFIX_TEAM);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        Position position = Person.DEFAULT_POSITION; // TODO: implement support for position
-        Set<Injury> injuryList = new HashSet<>(Set.of(Person.DEFAULT_INJURY_STATUS));
+        Set<Injury> injuryList = new HashSet<>(Set.of(Injury.DEFAULT_INJURY_STATUS));
 
-        Person person = new Person(name, phone, email, address, team, tagList, position,
+        Person person = new Person(name, phone, email, address, team, tagList, Position.DEFAULT_POSITION,
                 injuryList, Person.DEFAULT_CAPTAIN_STATUS);
         return new AddCommand(person);
     }

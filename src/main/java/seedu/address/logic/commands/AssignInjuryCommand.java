@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -28,11 +31,14 @@ public class AssignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
+    private static final Logger logger = LogsCenter.getLogger(AssignInjuryCommand.class);
+
     private final Name personNameToAssign;
     private final Injury injuryToAssign;
 
     /**
-     * Creates an {@code AssignInjuryCommand} that assigns the specified {@code injury} to the specified {@code Person}.
+     * Creates an {@code AssignInjuryCommand} that assigns the specified {@code injury}
+     * to the {@code Person} identified by {@code personName}.
      */
     public AssignInjuryCommand(Name personName, Injury injury) {
         requireAllNonNull(personName, injury);
@@ -43,29 +49,42 @@ public class AssignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Person personToAssign;
+        logger.info("Executing AssignInjuryCommand: " + injuryToAssign + " to " + personNameToAssign);
 
-        // Check if the player exists
+        Person personToAssign = findPersonByName(model, personNameToAssign);
+
+        validateNotDefaultInjury(injuryToAssign);
+        validateNoDuplicateInjury(personToAssign, injuryToAssign);
+
+        Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
+        logger.info("Successfully assigned injury " + injuryToAssign + " to " + personToAssign.getName()
+                + ". Current injuries: " + updatedPerson.getInjuries());
+
+        return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
+                personToAssign.getName(), updatedPerson.getInjuries()));
+    }
+
+    private Person findPersonByName(Model model, Name name) throws CommandException {
         try {
-            personToAssign = model.getPersonByName(personNameToAssign);
+            return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
-            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToAssign));
+            logger.warning("Player not found: " + name);
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
         }
+    }
 
-        // Check if the player has already been assigned the same injury
-        if (personToAssign.getInjuries().contains(injuryToAssign)) {
-            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                    personToAssign.getName(), personToAssign.getInjuries()));
-        }
-
-        // Disallow assigning "FIT" as an injury status
-        if (injuryToAssign.equals(Person.DEFAULT_INJURY_STATUS)) {
+    private void validateNotDefaultInjury(Injury injury) throws CommandException {
+        if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
+            logger.warning("Assignment of the default status " + injury.getInjuryName() + " is not allowed");
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
+    }
 
-        model.addInjury(personToAssign, injuryToAssign);
-        return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
-                personToAssign.getName(), model.getPersonByName(personNameToAssign).getInjuries()));
+    private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
+        if (person.getInjuries().contains(injury)) {
+            logger.warning("Player " + person.getName() + " is already assigned to injury " + injury.getInjuryName());
+            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
+        }
     }
 
     /**
@@ -92,7 +111,7 @@ public class AssignInjuryCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("personToAssign", personNameToAssign)
+                .add("personNameToAssign", personNameToAssign)
                 .add("injuryToAssign", injuryToAssign)
                 .toString();
     }

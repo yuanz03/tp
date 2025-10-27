@@ -58,7 +58,7 @@ public class AssignInjuryCommandTest {
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class, String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                validPerson.getName(), validPerson.getInjuries()), () ->
+                validPerson.getName(), duplicateInjury.getInjuryName()), () ->
                 new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
     }
 
@@ -70,7 +70,7 @@ public class AssignInjuryCommandTest {
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class, Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
-                new AssignInjuryCommand(name, Person.DEFAULT_INJURY_STATUS).execute(modelStub));
+                new AssignInjuryCommand(name, Injury.DEFAULT_INJURY_STATUS).execute(modelStub));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class AssignInjuryCommandTest {
 
         assertEquals(newInjury, modelStub.injuryAssigned);
         assertTrue(modelStub.personUpdated.getInjuries().contains(newInjury));
-        assertFalse(modelStub.personUpdated.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(modelStub.personUpdated.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class AssignInjuryCommandTest {
     public void toStringMethod() {
         AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(),
                 ALICE.getInjuries().iterator().next());
-        String expected = AssignInjuryCommand.class.getCanonicalName() + "{personToAssign=" + ALICE.getName() + ", "
+        String expected = AssignInjuryCommand.class.getCanonicalName() + "{personNameToAssign=" + ALICE.getName() + ", "
                 + "injuryToAssign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, assignInjuryCommand.toString());
     }
@@ -137,7 +137,7 @@ public class AssignInjuryCommandTest {
     private static class ModelStubAcceptingInjuryAssigned extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryAssigned = Person.DEFAULT_INJURY_STATUS;
+        private Injury injuryAssigned = Injury.DEFAULT_INJURY_STATUS;
 
         ModelStubAcceptingInjuryAssigned(Person person) {
             requireNonNull(person);
@@ -158,23 +158,32 @@ public class AssignInjuryCommandTest {
         }
 
         @Override
-        public void addInjury(Person target, Injury injury) {
+        public Person addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
 
             Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
 
             // Remove FIT status when assigning any other injury
-            if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
-                updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+            if (updatedInjuries.contains(Injury.DEFAULT_INJURY_STATUS)) {
+                updatedInjuries.remove(Injury.DEFAULT_INJURY_STATUS);
             }
             updatedInjuries.add(injury);
 
-            Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
-                    target.getAddress(), target.getTeam(), target.getTags(), target.getPosition(),
-                    updatedInjuries, target.isCaptain());
+            Person updatedPerson = new Person(
+                    target.getName(),
+                    target.getPhone(),
+                    target.getEmail(),
+                    target.getAddress(),
+                    target.getTeam(),
+                    target.getTags(),
+                    target.getPosition(),
+                    updatedInjuries,
+                    target.isCaptain()
+            );
 
             this.personUpdated = updatedPerson;
             this.injuryAssigned = injury;
+            return updatedPerson;
         }
 
         @Override

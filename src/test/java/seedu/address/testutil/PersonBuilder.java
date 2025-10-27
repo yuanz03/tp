@@ -45,7 +45,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        injuries = new HashSet<>(Set.of(Person.DEFAULT_INJURY_STATUS));
+        injuries = new HashSet<>(Set.of(Injury.DEFAULT_INJURY_STATUS));
         team = new Team(DEFAULT_TEAM);
         tags = new HashSet<>();
         isCaptain = DEFAULT_CAPTAINCY;

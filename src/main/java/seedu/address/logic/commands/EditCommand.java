@@ -26,7 +26,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.position.Position;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -50,10 +49,6 @@ public class EditCommand extends Command {
             + PREFIX_PLAYER + "John Doe "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com ";
-
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
 
     private final Name personNameToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -84,38 +79,48 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Position updatedPosition = personToEdit.getPosition(); // TODO: add position edit functionality
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, personToEdit.getTeam(), updatedTags,
-                updatedPosition, personToEdit.getInjuries(), personToEdit.isCaptain());
+                personToEdit.getPosition(), personToEdit.getInjuries(), personToEdit.isCaptain());
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToEdit;
-
-        try {
-            personToEdit = model.getPersonByName(personNameToEdit);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToEdit.toString()));
-        }
+        // Check if the player exists
+        Person personToEdit = findPersonByName(model, personNameToEdit);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         // Check if all identity and data fields were not edited (case-insensitive)
-        if (personToEdit.equals(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+        validatePersonUnchanged(personToEdit, editedPerson);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+        validateNoDuplicatePerson(model, personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return CommandResult.showPersonCommandResult(
-                String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+                String.format(Messages.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private Person findPersonByName(Model model, Name name) throws CommandException {
+        try {
+            return model.getPersonByName(name);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
+        }
+    }
+
+    private void validatePersonUnchanged(Person target, Person editedPerson) throws CommandException {
+        if (target.equals(editedPerson)) {
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    private void validateNoDuplicatePerson(Model model, Person target, Person editedPerson) throws CommandException {
+        if (!target.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+        }
     }
 
     @Override

@@ -23,6 +23,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.IllegalInjuryException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.team.Team;
 import seedu.address.model.team.exceptions.TeamNotFoundException;
@@ -160,7 +161,7 @@ public class ModelManagerTest {
 
     @Test
     public void addInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -230,7 +231,7 @@ public class ModelManagerTest {
     public void addInjury_defaultInjury_throwsIllegalArgumentException() {
         modelManager.addPerson(ALICE);
 
-        assertThrows(IllegalArgumentException.class, () -> modelManager.addInjury(ALICE, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(IllegalInjuryException.class, () -> modelManager.addInjury(ALICE, Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -239,7 +240,7 @@ public class ModelManagerTest {
         modelManager.addPerson(personWithDefaultInjury);
 
         // Verify the initial injury status is the default "FIT" status
-        assertTrue(personWithDefaultInjury.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(personWithDefaultInjury.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
 
         // Add a different injury
         Injury newInjury = new Injury("ACL");
@@ -247,53 +248,54 @@ public class ModelManagerTest {
 
         // Verify that the default "FIT" status is removed and the new injury is added
         Person updatedPerson = modelManager.getPersonByName(personWithDefaultInjury.getName());
-        assertFalse(updatedPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(updatedPerson.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
         assertTrue(updatedPerson.getInjuries().contains(newInjury));
     }
 
     @Test
-    public void hasInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasInjury(null));
+    public void hasNonDefaultInjury_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasNonDefaultInjury(null));
     }
 
     @Test
-    public void hasInjury_personWithOnlyDefaultInjury_returnsFalse() {
+    public void hasNonDefaultInjury_personWithOnlyDefaultInjury_returnsFalse() {
         Person personWithDefaultInjury = new PersonBuilder().build();
         modelManager.addPerson(personWithDefaultInjury);
-        assertFalse(modelManager.hasInjury(modelManager.getPersonByName(personWithDefaultInjury.getName())));
+        assertFalse(modelManager.hasNonDefaultInjury(modelManager.getPersonByName(personWithDefaultInjury.getName())));
     }
 
     @Test
-    public void hasInjury_personWithSingleInjury_returnsTrue() {
+    public void hasNonDefaultInjury_personWithSingleInjury_returnsTrue() {
         Person personWithInjury = new PersonBuilder().withInjuries("ACL").build();
         modelManager.addPerson(personWithInjury);
-        assertTrue(modelManager.hasInjury(modelManager.getPersonByName(personWithInjury.getName())));
+        assertTrue(modelManager.hasNonDefaultInjury(modelManager.getPersonByName(personWithInjury.getName())));
     }
 
     @Test
-    public void hasInjury_personWithMultipleInjuries_returnsTrue() {
+    public void hasNonDefaultInjury_personWithMultipleInjuries_returnsTrue() {
         Person personWithMultipleInjuries = new PersonBuilder().withInjuries("ACL", "MCL").build();
         modelManager.addPerson(personWithMultipleInjuries);
-        assertTrue(modelManager.hasInjury(modelManager.getPersonByName(personWithMultipleInjuries.getName())));
+        Person updatedPerson = modelManager.getPersonByName(personWithMultipleInjuries.getName());
+        assertTrue(modelManager.hasNonDefaultInjury(updatedPerson));
     }
 
     @Test
-    public void hasInjury_personNotInAddressBook_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> modelManager.hasInjury(ALICE));
+    public void hasNonDefaultInjury_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.hasNonDefaultInjury(ALICE));
     }
 
     @Test
-    public void hasInjury_caseInsensitiveDefaultInjury_returnsFalse() {
+    public void hasNonDefaultInjury_caseInsensitiveDefaultInjury_returnsFalse() {
         Person personWithLowercaseDefaultInjury = new PersonBuilder().withInjuries("fit").build();
         modelManager.addPerson(personWithLowercaseDefaultInjury);
-        assertFalse(modelManager.hasInjury(personWithLowercaseDefaultInjury));
+        assertFalse(modelManager.hasNonDefaultInjury(personWithLowercaseDefaultInjury));
     }
 
     @Test
-    public void hasInjury_caseInsensitiveActualInjury_returnsTrue() {
+    public void hasNonDefaultInjury_caseInsensitiveActualInjury_returnsTrue() {
         Person personWithLowercaseInjury = new PersonBuilder().withInjuries("acl").build();
         modelManager.addPerson(personWithLowercaseInjury);
-        assertTrue(modelManager.hasInjury(personWithLowercaseInjury));
+        assertTrue(modelManager.hasNonDefaultInjury(personWithLowercaseInjury));
     }
 
     @Test
@@ -357,7 +359,7 @@ public class ModelManagerTest {
         modelManager.deleteInjury(ALICE, existingInjury);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
-        assertTrue(personAfterDelete.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(personAfterDelete.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
         assertEquals(1, personAfterDelete.getInjuries().size());
     }
 

@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -49,70 +48,86 @@ public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_INVALID_FORMAT = "\n" + EditCommand.MESSAGE_USAGE;
 
     private EditCommandParser parser = new EditCommandParser();
 
     @Test
-    public void parse_compulsoryFieldMissing_failure() {
+    public void parse_noArguments_failure() {
         // Empty input
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        String expectedMessage = String.format(Messages.MESSAGE_EMPTY_COMMAND, EditCommand.COMMAND_WORD)
+                + MESSAGE_INVALID_FORMAT;
+        assertParseFailure(parser, "", expectedMessage);
+    }
 
-        // no player prefix specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+    @Test
+    public void parse_missingPlayerPrefix_failure() {
+        String expectedMessage = String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, EditCommand.COMMAND_WORD)
+                + MESSAGE_INVALID_FORMAT;
+        assertParseFailure(parser, VALID_NAME_AMY, expectedMessage);
+    }
 
-        // no player details specified
-        assertParseFailure(parser, PLAYER_DESC_AMY, EditCommand.MESSAGE_NOT_EDITED);
+    @Test
+    public void parse_missingPlayerDetails_failure() {
+        String expectedMessage = Messages.MESSAGE_NOT_EDITED + MESSAGE_INVALID_FORMAT;
+        assertParseFailure(parser, PLAYER_DESC_AMY, expectedMessage);
     }
 
     @Test
     public void parse_invalidPreamble_failure() {
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_AMY + NAME_DESC_AMY,
-                MESSAGE_INVALID_FORMAT);
+        String expectedMessage = String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, EditCommand.COMMAND_WORD)
+                + MESSAGE_INVALID_FORMAT;
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_AMY + NAME_DESC_AMY, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_NAME_DESC,
-                String.format("Invalid player name: %s\n%s", "James&", Name.MESSAGE_CONSTRAINTS));
+                String.format("Invalid player name: %s\n%s", "James&",
+                        Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // invalid phone
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC,
-                String.format("Invalid phone number: %s\n%s", "911a", Phone.MESSAGE_CONSTRAINTS));
+                String.format("Invalid phone number: %s\n%s", "911a",
+                        Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // invalid email
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_EMAIL_DESC,
-                String.format("Invalid email: %s\n%s", "bob!yahoo", Email.MESSAGE_CONSTRAINTS));
+                String.format("Invalid email: %s\n%s", "bob!yahoo",
+                        Email.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // invalid address
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_ADDRESS_DESC,
-                String.format("Invalid address: %s\n%s", "", Address.MESSAGE_CONSTRAINTS));
+                String.format("Invalid address: %s\n%s", "",
+                        Address.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // invalid tag
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TAG_DESC,
-                String.format("Invalid tag name: %s\n%s", "hubby*", Tag.MESSAGE_CONSTRAINTS));
+                String.format("Invalid tag name: %s\n%s", "hubby*",
+                        Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // invalid phone followed by valid email
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
-                String.format("Invalid phone number: %s\n%s", "911a", Phone.MESSAGE_CONSTRAINTS));
+                String.format("Invalid phone number: %s\n%s", "911a",
+                        Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
                 PLAYER_DESC_AMY + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                String.format("Invalid player name: %s\n%s", "James&", Name.MESSAGE_CONSTRAINTS));
+                String.format("Invalid player name: %s\n%s", "James&",
+                        Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
     }
 
     @Test
@@ -180,12 +195,14 @@ public class EditCommandParserTest {
         // invalid followed by valid
         String userInput = PLAYER_DESC_AMY + INVALID_PHONE_DESC + PHONE_DESC_BOB;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, userInput,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE) + MESSAGE_INVALID_FORMAT);
 
         // valid followed by invalid
         userInput = PLAYER_DESC_AMY + PHONE_DESC_BOB + INVALID_PHONE_DESC;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, userInput,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE) + MESSAGE_INVALID_FORMAT);
 
         // multiple valid fields repeated
         userInput = PLAYER_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
@@ -193,14 +210,16 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
+                        + MESSAGE_INVALID_FORMAT);
 
         // multiple invalid values
         userInput = PLAYER_DESC_AMY + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
                 + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
+                        + MESSAGE_INVALID_FORMAT);
     }
 
     @Test
