@@ -84,7 +84,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addInjury(Person target, Injury injury) {
+    public Person addInjury(Person target, Injury injury) {
         throw new AssertionError("This method should not be called.");
     }
 

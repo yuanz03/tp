@@ -58,7 +58,7 @@ public class AssignInjuryCommandTest {
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class, String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                validPerson.getName(), validPerson.getInjuries()), () ->
+                validPerson.getName(), duplicateInjury.getInjuryName()), () ->
                 new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
     }
 
@@ -126,7 +126,7 @@ public class AssignInjuryCommandTest {
     public void toStringMethod() {
         AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(),
                 ALICE.getInjuries().iterator().next());
-        String expected = AssignInjuryCommand.class.getCanonicalName() + "{personToAssign=" + ALICE.getName() + ", "
+        String expected = AssignInjuryCommand.class.getCanonicalName() + "{personNameToAssign=" + ALICE.getName() + ", "
                 + "injuryToAssign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, assignInjuryCommand.toString());
     }
@@ -158,7 +158,7 @@ public class AssignInjuryCommandTest {
         }
 
         @Override
-        public void addInjury(Person target, Injury injury) {
+        public Person addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
 
             Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
@@ -169,12 +169,21 @@ public class AssignInjuryCommandTest {
             }
             updatedInjuries.add(injury);
 
-            Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
-                    target.getAddress(), target.getTeam(), target.getTags(), target.getPosition(),
-                    updatedInjuries, target.isCaptain());
+            Person updatedPerson = new Person(
+                    target.getName(),
+                    target.getPhone(),
+                    target.getEmail(),
+                    target.getAddress(),
+                    target.getTeam(),
+                    target.getTags(),
+                    target.getPosition(),
+                    updatedInjuries,
+                    target.isCaptain()
+            );
 
             this.personUpdated = updatedPerson;
             this.injuryAssigned = injury;
+            return updatedPerson;
         }
 
         @Override

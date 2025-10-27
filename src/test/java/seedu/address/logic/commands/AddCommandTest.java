@@ -155,9 +155,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addInjury(Person target, Injury injury) {
+        public Person addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
-            // Simulate update
+            return target;
         }
 
         @Override
