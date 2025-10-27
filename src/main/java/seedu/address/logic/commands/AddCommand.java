@@ -40,7 +40,6 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New player added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the PlayBook";
     public static final String MESSAGE_TEAM_NOT_FOUND = "The team '%1$s' does not exist. "
             + "Please create the team first using the 'addteam' command.";
 
@@ -59,7 +58,7 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }
 
         if (!model.hasTeam(toAdd.getTeam())) {
