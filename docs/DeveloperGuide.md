@@ -6,19 +6,44 @@
 
 # PlayBook Developer Guide
 
-<!-- * Table of Contents -->
-<page-nav-print />
+#### Table of Contents
+
+* [Acknowledgements](#acknowledgements)
+* [Setting up, getting started](#setting-up-getting-started)
+* [Design](#design)
+    * [Architecture](#architecture)
+    * [UI component](#ui-component)
+    * [Logic component](#logic-component)
+    * [Model component](#model-component)
+    * [Storage component](#storage-component)
+    * [Common classes](#common-classes)
+* [Implementation](#implementation)
+    * [\[Proposed\] Undo/redo feature](#proposed-undoredo-feature)
+* [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix: Requirements](#appendix-requirements)
+    * [Product scope](#product-scope)
+    * [User stories](#user-stories)
+    * [Use cases](#use-cases)
+    * [Non-Functional Requirements](#non-functional-requirements)
+    * [Glossary](#glossary)
+* [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+    * [Launch and shutdown](#launch-and-shutdown)
+    * [Deleting a player](#deleting-a-player)
+    * [Assigning an injury status to a player](#assigning-an-injury-status-to-a-player)
+    * [Saving data](#saving-data)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
-
 PlayBook is adapted from AddressBook-Level3 by SE-EDU. We would like to acknowledge the following sources:
 - [AB3 Tutorials & Guides](https://github.com/se-edu/guides)
-
 - [AB3 Sample Code](https://github.com/nus-cs2103-AY2526S1/tp)
+
+Libraries used:
+- [JavaFX](https://openjfx.io/) - Used for building the graphical user interface
+- [Jackson](https://github.com/FasterXML/jackson) - Used for JSON data serialization and deserialization
+- [JUnit5](https://github.com/junit-team/junit5) - Used for unit testing
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -257,11 +282,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -323,18 +343,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
 
-*{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `PlayBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: UC01 - Add a player**
 
 **MSS**
 
-1.  User requests to add a player with all relevant details
-2.  AddressBook adds the player
+1.  User requests to add a player with all relevant details.
+2.  PlayBook adds the player with the specified details.
 
     Use case ends.
 
@@ -342,19 +361,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given player details are invalid.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 1b. The player to be added already exists in the list.
+* 1b. The player name already exists in the list.
 
-    * 1b1. AddressBook shows an error message.
+    * 1b1. PlayBook shows an error message.
 
       Use case ends.
 
 * 1c. The team specified for the player does not exist.
 
-    * 1c1. AddressBook shows an error message.
+    * 1c1. PlayBook shows an error message prompting user to create the team first.
+
+      Use case ends.
+
+* 1d. A required field is missing (name, phone, email, address, or team).
+
+    * 1d1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -362,17 +387,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to list players
-2.  User requests to delete a specific player in the list
-3.  AddressBook deletes the player
+1.  User requests to delete a specific player by name.
+2.  PlayBook deletes the player and all associated data.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The given player name does not exist.
+* 1a. The given player name does not exist.
 
-    * 2a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -381,44 +405,58 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a team with a unique name
-2.  AddressBook adds the team
-
-**Extensions**
-
-* 1a. The given team name is invalid.
-
-    * 1a1. AddressBook shows an error message.
-
-      Use case ends.
-
-* 1b. The team to be added already exists.
-
-    *  1b1. AddressBook shows an error message.
-
-       Use case ends.
-
-**Use case: UC04 - Delete a team**
-
-**MSS**
-
-1. User requests to list teams
-2. User requests to delete a specific team
-3. AddressBook deletes the team
+1.  User requests to add a team with a unique name.
+2.  PlayBook adds the team with the specified name.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The given team name does not exist.
+* 1a. The given team name is invalid (contains non-alphanumeric characters except spaces).
 
-    * 2a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 2b. The given team has players assigned to it.
+* 1b. The team name already exists (case-insensitive check).
 
-    * 2b1. AddressBook shows an error message.
+    *  1b1. PlayBook shows an error message.
+
+       Use case ends.
+
+* 1c. The team name is blank or empty.
+
+    * 1c1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC04 - Delete a team**
+
+**MSS**
+
+1. User requests to delete a specific team by name.
+2. PlayBook verifies the team has no players assigned.
+3. PlayBook deletes the team.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given team name does not exist.
+
+    * 1a1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 2a. The team has players assigned to it.
+
+    * 2a1. PlayBook shows an error message indicating the team cannot be deleted while it has players.
+
+      Use case ends.
+
+* 1b. Multiple delete parameters are provided (e.g., both team and player).
+
+    * 1b1. PlayBook shows an error message indicating only one entity can be deleted at a time.
 
       Use case ends.
 
@@ -426,41 +464,49 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to list players
-2. AddressBook shows a list of players
-3. User requests to add a specific player to a specific team
-4. AddressBook adds the player to the team
+1. User requests to reassign a specific player to a different team.
+2. PlayBook checks if the player is a captain of their current team.
+3. PlayBook reassigns the player to the new team.
+4. If the player was a captain, PlayBook removes their captain status and notifies the user.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The player list is empty.
+* 1a. The given player name does not exist.
 
-  Use case ends.
+    * 1a1. PlayBook shows an error message.
 
-* 4a. The given player or team selection is invalid.
+      Use case ends.
 
-    * 4a1. AddressBook shows an error message.
+* 1b. The given team name does not exist.
 
-      Use case resumes at step 2.
+    * 1b1. PlayBook shows an error message.
 
-* 4b. The given player or team doesn't exist.
+      Use case ends.
 
-    * 4b1. AddressBook shows an error message.
+* 1c. The player is already in the specified team.
 
-      Use case resumes at step 2.
+    * 1c1. PlayBook shows an error message indicating the player is already in that team.
+
+      Use case ends.
+
+* 1d. The player name or team name is invalid.
+
+    * 1d1. PlayBook shows an error message.
+
+      Use case ends.
 
 **Use case: UC06 - Assign an injury status to a player**
 
-**Guarantees**: Player's injury status is updated and persisted
+**Guarantees**: Player's injury status is updated and persisted.
 
 **MSS**
 
-1.  User requests to list players
-2.  AddressBook shows a list of players
-3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe
-4.  AddressBook updates the player's availability and rehab timeline
+1.  User requests to list players.
+2.  PlayBook shows a list of players.
+3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe.
+4.  PlayBook updates the player's availability and rehab timeline.
 
     Use case ends.
 
@@ -470,40 +516,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The specified player does not exist in the AddressBook.
+* 3a. The specified player does not exist in PlayBook.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. PlayBook shows an error message.
 
       Use case ends.
 
 * 3b. The specified injury name is invalid (contains non-alphanumeric characters or is blank).
 
-    * 3b1. AddressBook shows an error message.
+    * 3b1. PlayBook shows an error message.
 
       Use case ends.
 
 * 3c. The specified injury is the default injury status, `FIT`.
 
-    * 3c1. AddressBook shows an error message and prompts users to use the `unassigninjury` command instead.
+    * 3c1. PlayBook shows an error message and prompts users to use the `unassigninjury` command instead.
 
       Use case ends.
 
 * 3d. The specified injury status has already been assigned to the specified player.
 
-    * 3d1. AddressBook shows an error message.
+    * 3d1. PlayBook shows an error message.
 
       Use case ends.
 
 **Use case: UC07 - Remove an injury status from a player**
 
-**Guarantees**: Player's injury status is removed and default `FIT` status is restored if player has no remaining injuries 
+**Guarantees**: Player's injury status is removed and default `FIT` status is restored if player has no remaining injuries.
 
 **MSS**
 
-1.  User requests to list players
-2.  AddressBook shows a list of players
-3.  User requests to remove an injury status from an existing player by specifying the player name and injury name
-4.  AddressBook removes the specified injury from the player's injury list
+1.  User requests to list players.
+2.  PlayBook shows a list of players.
+3.  User requests to remove an injury status from an existing player by specifying the player name and injury name.
+4.  PlayBook removes the specified injury from the player's injury list.
 
     Use case ends.
 
@@ -513,31 +559,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The specified player does not exist in the AddressBook.
+* 3a. The specified player does not exist in PlayBook.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. PlayBook shows an error message.
 
       Use case ends.
 
 * 3b. The specified injury name is invalid (contains non-alphanumeric characters or is blank).
 
-    * 3b1. AddressBook shows an error message.
+    * 3b1. PlayBook shows an error message.
 
       Use case ends.
 
 * 3c. The specified player has no injuries (already has the default `FIT` status).
 
-    * 3c1. AddressBook shows an error message.
+    * 3c1. PlayBook shows an error message.
 
       Use case ends.
 
 * 3d. The specified injury status has not been assigned to the specified player before.
 
-    * 3d1. AddressBook shows an error message.
+    * 3d1. PlayBook shows an error message.
 
       Use case ends.
 
-=======
 **Use case: UC08 - List all players**
 
 **MSS**
@@ -603,19 +648,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 * 1b. The team name is invalid.
-    
+
   * 1b1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2a. The team does not exist.
-    
+
   * 2a1. PlayBook shows an error message.
 
     Use case ends.
 
 * 2b. The team exists but has no players.
-    
+
   * 2b1. PlayBook shows an error message.
 
     Use case ends.
@@ -682,23 +727,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to create a position with specific details
+1.  User requests to create a position with specific details.
 
-2.  AddressBook adds a position with given details
+2.  PlayBook adds a position with given details.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. Position detail is invalid
+* 1a. Position detail is invalid.
 
-  * 1a1. AddressBook shows an error message
+  * 1a1. PlayBook shows an error message.
 
     Use case ends.
 
-* 2a. Position already exists
+* 2a. Position already exists.
 
-  * 2a1. AddressBook shows an error message
+  * 2a1. PlayBook shows an error message.
 
     Use case ends.
 
@@ -706,21 +751,35 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to delete a position with specific details
+1.  User requests to delete a position by name.
+2.  PlayBook verifies the position is not assigned to any players.
+3.  PlayBook deletes the position.
 
-2.  AddressBook deletes a position with given details
+    Use case ends.
 
 **Extensions**
 
-* 1a. Position detail is invalid
+* 1a. Position name is invalid (contains non-alphanumeric characters or spaces).
 
-    * 1a1. AddressBook shows an error message
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 2a. Position does not exist
+* 1b. Position does not exist.
 
-    * 2a1. AddressBook shows an error message
+    * 1b1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 2a. The position is assigned to one or more players.
+
+    * 2a1. PlayBook shows an error message indicating the position cannot be deleted while assigned to players.
+
+      Use case ends.
+
+* 1c. Multiple delete parameters are provided (e.g., both position and player).
+
+    * 1c1. PlayBook shows an error message indicating only one entity can be deleted at a time.
 
       Use case ends.
 
@@ -728,34 +787,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to assign a position to a player with specific details
-2.  AddressBook assigns a position to a player with given details
+1.  User requests to assign a position to a player with specific details.
+2.  PlayBook assigns a position to a player with given details.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. Position detail is invalid
+* 1a. Position detail is invalid.
 
-    * 1a1. AddressBook shows an error message
-
-      Use case ends.
-
-* 2a. Player detail is invalid
-
-    * 2a1. AddressBook shows an error message
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 3a. Position does not exist
+* 2a. Player detail is invalid.
 
-    * 3a1. AddressBook shows an error message
+    * 2a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 4a. Player does not exist
+* 3a. Position does not exist.
 
-    * 4a1. AddressBook shows an error message
+    * 3a1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 4a. Player does not exist.
+
+    * 4a1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -763,8 +822,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to save a player's email under player's details
-2.  AddressBook updates email under player's detail
+1.  User requests to save a player's email under player's details.
+2.  PlayBook updates email under player's detail.
 
     Use case ends.
 
@@ -772,7 +831,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given player is invalid.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -780,8 +839,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to assign the captain role to a player
-2.  AddressBook updates the player's details to reflect they are now their team's captain
+1.  User requests to assign the captain role to a player.
+2.  PlayBook updates the player's details to reflect they are now their team's captain.
 
     Use case ends.
 
@@ -789,20 +848,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given player is invalid.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
 * 1b. The player is already a captain.
 
-    * 1b1. AddressBook shows an error message.
+    * 1b1. PlayBook shows an error message.
 
       Use case ends.
 
 * 1c. Another player is already the captain.
 
-    * 1c1. AddressBook unassigns previous captain
-    * 1c2. AddressBook assigns the player as new captain
+    * 1c1. PlayBook unassigns previous captain.
+    * 1c2. PlayBook assigns the player as new captain.
 
       Use case ends.
 
@@ -810,8 +869,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to remove the captain role from a player
-2.  AddressBook updates the player's details to reflect they are no longer captain
+1.  User requests to remove the captain role from a player.
+2.  PlayBook updates the player's details to reflect they are no longer captain.
 
     Use case ends.
 
@@ -819,13 +878,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given player is invalid.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
 * 1b. The player is not currently a captain.
 
-    * 1b1. AddressBook shows an error message.
+    * 1b1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -850,8 +909,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to save a player as captain under player's details
-2.  AddressBook updates if player is captain under player's detail
+1.  User requests to save a player as captain under player's details.
+2.  PlayBook updates if player is captain under player's detail.
 
     Use case ends.
 
@@ -859,11 +918,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given player is invalid.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. PlayBook shows an error message.
 
       Use case ends.
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -878,15 +935,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once.
 10. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
 
-*{More to be added}*
-
 ### Glossary
 
+* **AB3 (AddressBook-Level3)**: The original application that PlayBook was adapted from, developed by SE-EDU
+* **API (Application Programming Interface)**: A set of definitions and protocols that specifies how software components should interact with each other
+* **Captain**: A player designated as the leader of their team. Each team can have at most one captain
+* **CLI (Command Line Interface)**: A text-based interface where users interact with the application by typing commands
+* **Command**: A user instruction that performs a specific action in the application (e.g., `add`, `delete`, `filter`)
+* **Entity**: A distinct object or concept in the system (e.g., Player, Team, Position, Injury)
+* **FIT**: The default injury status indicating a player has no injuries and is available for selection
+* **GUI (Graphical User Interface)**: The visual interface that displays information and allows user interaction through graphical elements
+* **Injury**: A medical condition that affects a player's availability. A player can have multiple concurrent injuries
+* **JAR (Java Archive)**: A package file format used to distribute Java applications as a single executable file
+* **JSON (JavaScript Object Notation)**: A lightweight data format used to store and exchange data. PlayBook uses JSON files to persist data locally
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Player**: An individual footballer managed by the coach
-* **Team**: A named group of players (eg. U15, First Team) managed by the coach
-* **Position**: The role of a player on the field (eg. Goalkeeper (GK), Center Back (CB), Striker (ST))
+* **Model**: The component that holds and manages the application's data in memory
+* **Parser**: A component that interprets user input and converts it into executable commands
+* **Player**: An individual footballer managed by the coach. Each player must belong to exactly one team
+* **Position**: The role of a player on the field (e.g., Goalkeeper (GK), Center Back (CB), Striker (ST))
+* **Team**: A named group of players (e.g., U15, First Team) managed by the coach
+* **ViewType**: The current display mode of the UI (Players, Teams, or Positions panel)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -916,8 +984,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a player
 
 1. Deleting a player while all players are being shown
@@ -932,8 +998,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` <br>
       Expected: Similar to previous.
-
-1. _{ more test cases …​ }
 
 ### Assigning an injury status to a player
 
@@ -959,12 +1023,8 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect delete commands to try: `assigninjury`, `assigninjury pl/Alex Yeoh`, `assigninjury i/ACL`, `...`<br>
        Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
-
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
