@@ -129,7 +129,7 @@ public class UnassignInjuryCommandTest {
     public void toStringMethod() {
         UnassignInjuryCommand unassignInjuryCommand = new UnassignInjuryCommand(ALICE.getName(),
                 ALICE.getInjuries().iterator().next());
-        String expected = UnassignInjuryCommand.class.getCanonicalName() + "{personToUnassign=" + ALICE.getName()
+        String expected = UnassignInjuryCommand.class.getCanonicalName() + "{personNameToUnassign=" + ALICE.getName()
                 + ", injuryToUnassign=" + ALICE.getInjuries().iterator().next() + "}";
         assertEquals(expected, unassignInjuryCommand.toString());
     }
@@ -161,7 +161,7 @@ public class UnassignInjuryCommandTest {
         }
 
         @Override
-        public void deleteInjury(Person target, Injury injury) {
+        public Person deleteInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
 
             Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
@@ -178,12 +178,19 @@ public class UnassignInjuryCommandTest {
 
             this.personUpdated = updatedPerson;
             this.injuryUnassigned = injury;
+            return updatedPerson;
         }
 
         @Override
-        public boolean hasInjury(Person target) {
+        public boolean hasNonDefaultInjury(Person target) {
             requireNonNull(target);
             return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
+        }
+
+        @Override
+        public boolean hasSpecificInjury(Person target, Injury injury) {
+            requireAllNonNull(target, injury);
+            return target.getInjuries().contains(injury);
         }
 
         @Override
