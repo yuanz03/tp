@@ -18,8 +18,6 @@ import seedu.address.model.team.Team;
  */
 public class AddTeamCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(AddTeamCommand.class);
-
     public static final String COMMAND_WORD = "addteam";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team to the PlayBook. \n"
@@ -30,6 +28,8 @@ public class AddTeamCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New team added: %1$s";
     public static final String MESSAGE_DUPLICATE_TEAM = "This team already exists in the PlayBook";
+
+    private static final Logger logger = LogsCenter.getLogger(AddTeamCommand.class);
 
     private final Team toAdd;
 

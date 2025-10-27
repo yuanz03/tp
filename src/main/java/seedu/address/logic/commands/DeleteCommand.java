@@ -27,8 +27,6 @@ import seedu.address.model.team.Team;
  */
 public class DeleteCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
-
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -44,7 +42,6 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Player: %1$s has been deleted successfully!";
     public static final String MESSAGE_DELETE_TEAM_SUCCESS = "Team: %s has been deleted successfully!";
     public static final String MESSAGE_DELETE_POSITION_SUCCESS = "Position: %s has been deleted successfully!";
-
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_EMPTY = "Team: %s still has players assigned to it!\n"
             + "Please either delete the player if no longer managing them, "
@@ -52,6 +49,8 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_POSITION_NOT_FOUND = "Position: %s doesn't exist!";
     public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
             + " one or more players.";
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
 
     private final Name personNameToDelete;
     private final Team teamToDelete;
