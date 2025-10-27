@@ -39,8 +39,8 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     private void checkEmptyArguments(String args) throws ParseException {
         if (args.trim().isEmpty()) {
             throw new ParseException(
-                    String.format(Messages.MESSAGE_EMPTY_COMMAND, UnassignInjuryCommand.COMMAND_WORD)
-                            + UnassignInjuryCommand.MESSAGE_USAGE);
+                    formatParseErrorMessage(
+                            String.format(Messages.MESSAGE_EMPTY_COMMAND, UnassignInjuryCommand.COMMAND_WORD)));
         }
     }
 
@@ -50,18 +50,18 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
 
         if (!hasPlayerPrefix && !hasInjuryPrefix) {
             throw new ParseException(
-                    String.format(Messages.MESSAGE_MISSING_BOTH_PREFIXES, UnassignInjuryCommand.COMMAND_WORD)
-                            + UnassignInjuryCommand.MESSAGE_USAGE);
+                    formatParseErrorMessage(
+                            String.format(Messages.MESSAGE_MISSING_BOTH_PREFIXES, UnassignInjuryCommand.COMMAND_WORD)));
         }
         if (!hasPlayerPrefix) {
             throw new ParseException(
-                    String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                            + UnassignInjuryCommand.MESSAGE_USAGE);
+                    formatParseErrorMessage(
+                            String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, UnassignInjuryCommand.COMMAND_WORD)));
         }
         if (!hasInjuryPrefix) {
             throw new ParseException(
-                    String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                            + UnassignInjuryCommand.MESSAGE_USAGE);
+                    formatParseErrorMessage(
+                            String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, UnassignInjuryCommand.COMMAND_WORD)));
         }
     }
 
@@ -69,15 +69,15 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
         } catch (ParseException exception) {
-            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
         }
     }
 
     private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
-                    String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, UnassignInjuryCommand.COMMAND_WORD)
-                            + UnassignInjuryCommand.MESSAGE_USAGE);
+                    formatParseErrorMessage(
+                            String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, UnassignInjuryCommand.COMMAND_WORD)));
         }
     }
 
@@ -85,7 +85,7 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         try {
             return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
         } catch (ParseException exception) {
-            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
         }
     }
 
@@ -93,7 +93,11 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         try {
             return ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
         } catch (ParseException exception) {
-            throw new ParseException(exception.getMessage() + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
+            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
         }
+    }
+
+    private String formatParseErrorMessage(String message) {
+        return message + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
     }
 }
