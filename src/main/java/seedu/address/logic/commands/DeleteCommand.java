@@ -5,6 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,6 +26,8 @@ import seedu.address.model.team.Team;
  * Where exactly one prefix must be present
  */
 public class DeleteCommand extends Command {
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
 
     public static final String COMMAND_WORD = "delete";
 
@@ -85,6 +90,8 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing DeleteCommand");
+
         if (isDeletePlayerCommand()) {
             return executeDeletePlayer(model);
         } else if (isDeleteTeamCommand()) {
@@ -123,14 +130,17 @@ public class DeleteCommand extends Command {
      */
     private CommandResult executeDeleteTeam(Model model) throws CommandException {
         if (!model.hasTeam(teamToDelete)) {
+            logger.warning("Team not found: " + teamToDelete.getName());
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, teamToDelete.getName()));
         }
 
         if (!model.isTeamEmpty(teamToDelete)) {
+            logger.warning("Cannot delete team " + teamToDelete.getName() + " - team is not empty");
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_EMPTY, teamToDelete.getName()));
         }
 
         model.deleteTeam(teamToDelete);
+        logger.info("Deleted team: " + teamToDelete.getName());
         return CommandResult.showTeamCommandResult(String.format(MESSAGE_DELETE_TEAM_SUCCESS, teamToDelete.getName()));
     }
 
@@ -143,10 +153,12 @@ public class DeleteCommand extends Command {
         try {
             personToDelete = model.getPersonByName(personNameToDelete);
         } catch (PersonNotFoundException e) {
+            logger.warning("Person not found: " + personNameToDelete);
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToDelete.toString()));
         }
 
         model.deletePerson(personToDelete);
+        logger.info("Deleted person: " + personToDelete.getName());
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(personToDelete)));
@@ -159,6 +171,7 @@ public class DeleteCommand extends Command {
     private CommandResult executeDeletePosition(Model model) throws CommandException {
 
         String name = positionToDelete.getName();
+        logger.info("Attempting to delete position: " + name);
         final Position toDelete;
         try {
             toDelete = model.getPositionByName(name);
@@ -167,10 +180,12 @@ public class DeleteCommand extends Command {
         }
 
         if (model.isPositionAssigned(toDelete)) {
+            logger.warning("Cannot delete position " + name + " - still assigned to players");
             throw new CommandException(String.format(MESSAGE_POSITION_ASSIGNED, name));
         }
 
         model.deletePosition(toDelete);
+        logger.info("Deleted position: " + name);
 
         return new CommandResult(String.format(MESSAGE_DELETE_POSITION_SUCCESS,
                 name));

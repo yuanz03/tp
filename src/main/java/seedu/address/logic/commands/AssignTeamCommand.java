@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -28,7 +31,6 @@ public class AssignTeamCommand extends Command {
     public static final String MESSAGE_PLAYER_NOT_FOUND = "Player: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_ALREADY_ASSIGNED = "Player: %s is already assigned to Team: %s!";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a team to a player in the PlayBook. \n"
             + "Parameters: "
             + PREFIX_PLAYER + "PLAYER_NAME "
@@ -36,7 +38,7 @@ public class AssignTeamCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe "
             + PREFIX_TEAM + "u16 ";
-
+    private static final Logger logger = LogsCenter.getLogger(AssignTeamCommand.class);
     private final Team team;
     private final Name playerName;
 
@@ -53,16 +55,20 @@ public class AssignTeamCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        logger.info("Executing AssignTeamCommand: " + playerName + " to " + team.getName());
+
         // Check if player exists
         Person player;
         try {
             player = model.getPersonByName(playerName);
         } catch (PersonNotFoundException e) {
+            logger.warning("Player not found: " + playerName);
             throw new CommandException(String.format(MESSAGE_PLAYER_NOT_FOUND, playerName));
         }
 
         // Check if team exists
         if (!model.hasTeam(team)) {
+            logger.warning("Team not found: " + team.getName());
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, team.getName()));
         }
 
@@ -71,6 +77,7 @@ public class AssignTeamCommand extends Command {
 
         // Check if player is already assigned to the team
         if (player.getTeam() != null && player.getTeam().isSameTeam(canonicalTeam)) {
+            logger.info("Player " + playerName + " already in team " + canonicalTeam.getName());
             throw new CommandException(String.format(MESSAGE_ALREADY_ASSIGNED, playerName, canonicalTeam.getName()));
         }
 
@@ -78,6 +85,8 @@ public class AssignTeamCommand extends Command {
         boolean wasCaptain = player.isCaptain();
 
         model.assignTeam(player, canonicalTeam);
+
+        logger.info("Successfully assigned " + playerName + " to " + canonicalTeam.getName());
 
         // Generate appropriate success message
         String successMessage = wasCaptain

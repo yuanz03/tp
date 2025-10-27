@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -14,6 +17,8 @@ import seedu.address.model.team.Team;
  * Usage: addteam tm/TEAM_NAME
  */
 public class AddTeamCommand extends Command {
+
+    private static final Logger logger = LogsCenter.getLogger(AddTeamCommand.class);
 
     public static final String COMMAND_WORD = "addteam";
 
@@ -40,11 +45,15 @@ public class AddTeamCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        logger.info("Executing AddTeamCommand for team: " + toAdd.getName());
+
         if (model.hasTeam(toAdd)) {
+            logger.warning("Duplicate team: " + toAdd.getName());
             throw new CommandException(MESSAGE_DUPLICATE_TEAM);
         }
 
         model.addTeam(toAdd);
+        logger.info("Added team: " + toAdd.getName());
         return CommandResult.showTeamCommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
