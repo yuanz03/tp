@@ -377,7 +377,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* 1d. A required field is missing (name, phone, email, address, or team).
+* 1d. A required field is missing.
 
     * 1d1. PlayBook shows an error message.
 
@@ -412,13 +412,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The given team name is invalid (contains non-alphanumeric characters except spaces).
+* 1a. The given team name is invalid.
 
     * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 1b. The team name already exists (case-insensitive check).
+* 1b. The team name already exists.
 
     *  1b1. PlayBook shows an error message.
 
@@ -435,8 +435,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to delete a specific team by name.
-2. PlayBook verifies the team has no players assigned.
-3. PlayBook deletes the team.
+2. PlayBook deletes the team.
 
     Use case ends.
 
@@ -454,20 +453,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* 1b. Multiple delete parameters are provided (e.g., both team and player).
-
-    * 1b1. PlayBook shows an error message indicating only one entity can be deleted at a time.
-
-      Use case ends.
-
 **Use case: UC05 - Assign a player to a team**
 
 **MSS**
 
-1. User requests to reassign a specific player to a different team.
-2. PlayBook checks if the player is a captain of their current team.
-3. PlayBook reassigns the player to the new team.
-4. If the player was a captain, PlayBook removes their captain status and notifies the user.
+1. User requests to reassign a specific player to a different team. 
+2. PlayBook reassigns the player to the new team.
 
     Use case ends.
 
@@ -496,6 +487,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1d1. PlayBook shows an error message.
 
       Use case ends.
+
+* 2a. Player was a captain.
+
+  * 2a1. PlayBook removes their captain status.
+  * 2a2. PlayBook notifies the user.
+
+    Use case ends.
 
 **Use case: UC06 - Assign an injury status to a player**
 
@@ -751,35 +749,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to delete a position by name.
-2.  PlayBook verifies the position is not assigned to any players.
-3.  PlayBook deletes the position.
+1.  User requests to delete a position with specific details.
 
-    Use case ends.
+2.  PlayBook deletes a position with given details.
 
 **Extensions**
 
-* 1a. Position name is invalid (contains non-alphanumeric characters or spaces).
+* 1a. Position detail is invalid.
 
     * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
-* 1b. Position does not exist.
+* 2a. Position does not exist.
 
-    * 1b1. PlayBook shows an error message.
-
-      Use case ends.
-
-* 2a. The position is assigned to one or more players.
-
-    * 2a1. PlayBook shows an error message indicating the position cannot be deleted while assigned to players.
-
-      Use case ends.
-
-* 1c. Multiple delete parameters are provided (e.g., both position and player).
-
-    * 1c1. PlayBook shows an error message indicating only one entity can be deleted at a time.
+    * 2a1. PlayBook shows an error message.
 
       Use case ends.
 
