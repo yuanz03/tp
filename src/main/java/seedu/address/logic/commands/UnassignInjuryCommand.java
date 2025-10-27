@@ -46,8 +46,6 @@ public class UnassignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        // Check if the player exists
         Person personToUnassign = findPersonByName(model, personNameToUnassign);
 
         // Ensure the player is currently injured before attempting to unassign

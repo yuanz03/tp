@@ -25,10 +25,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
 
-        // Validate that all required prefixes are present
         checkCompulsoryPrefixes(argMultimap);
-
-        // Ensure that no duplicate prefixes are used
         verifyNoDuplicatePrefixes(argMultimap);
 
         Name playerName = parsePlayerName(argMultimap);

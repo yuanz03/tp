@@ -44,14 +44,9 @@ public class AssignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        // Check if the player exists
         Person personToAssign = findPersonByName(model, personNameToAssign);
 
-        // Disallow assigning "FIT" as an injury status
         validateNotDefaultInjury(injuryToAssign);
-
-        // Check if the player has already been assigned the same injury
         validateNoDuplicateInjury(personToAssign, injuryToAssign);
 
         Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
