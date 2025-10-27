@@ -63,9 +63,9 @@ public class AssignInjuryCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 
-        model.addInjury(personToAssign, injuryToAssign);
+        Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
-                personToAssign.getName(), model.getPersonByName(personNameToAssign).getInjuries()));
+                personToAssign.getName(), updatedPerson.getInjuries()));
     }
 
     /**

@@ -123,7 +123,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addInjury(Person target, Injury injury) {
+    public Person addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
         // Disallow assigning "FIT" as an injury
@@ -139,10 +139,20 @@ public class ModelManager implements Model {
         }
         updatedInjuries.add(injury);
 
-        Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                target.getTeam(), target.getTags(), target.getPosition(), updatedInjuries, target.isCaptain());
+        Person updatedPerson = new Person(
+                target.getName(),
+                target.getPhone(),
+                target.getEmail(),
+                target.getAddress(),
+                target.getTeam(),
+                target.getTags(),
+                target.getPosition(),
+                updatedInjuries,
+                target.isCaptain()
+        );
 
         setPerson(target, updatedPerson);
+        return updatedPerson;
     }
 
     @Override

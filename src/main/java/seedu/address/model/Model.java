@@ -92,9 +92,10 @@ public interface Model {
 
     /**
      * Adds the specified {@code injury} to the given person {@code target}'s injury list.
+     * Returns a new {@code Person} instance with the updated injuries.
      * {@code target} must exist in the address book.
      */
-    void addInjury(Person target, Injury injury);
+    Person addInjury(Person target, Injury injury);
 
     /**
      * Removes the specified {@code injury} from the given person {@code target}'s injury list.
