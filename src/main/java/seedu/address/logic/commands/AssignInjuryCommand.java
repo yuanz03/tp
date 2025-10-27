@@ -92,7 +92,7 @@ public class AssignInjuryCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("personToAssign", personNameToAssign)
+                .add("personNameToAssign", personNameToAssign)
                 .add("injuryToAssign", injuryToAssign)
                 .toString();
     }
