@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.NON_EXISTENT_TEAM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -32,6 +33,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.FilterByInjuryPredicate;
 import seedu.address.model.position.FilterByPositionPredicate;
+import seedu.address.model.position.Position;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
 import seedu.address.testutil.TeamBuilder;
@@ -332,5 +334,111 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
+    }
+
+    @Test
+    public void execute_validPositionNoPlayers_throwsCommandException() {
+        // Create a position that exists but no players have it
+        Position emptyPosition = new Position("GK"); // Assuming GK doesn't exist in typical data
+        model.addPosition(emptyPosition);
+
+        FilterCommand command = new FilterCommand(
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                new FilterByPositionPredicate("GK"),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.of("GK"));
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, "GK"), exception.getMessage());
+    }
+
+    @Test
+    public void execute_validTeamAndPositionNoOverlap_throwsCommandException() {
+        model.addPosition(new Position(VALID_POSITION_BOB));
+
+        // Both team and position exist, but no player has both
+        FilterCommand command = new FilterCommand(
+                new FilterByTeamPredicate(VALID_TEAM_AMY),
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                new FilterByPositionPredicate(VALID_POSITION_BOB),
+                Optional.of(VALID_TEAM_AMY),
+                Optional.empty(),
+                Optional.of(VALID_POSITION_BOB));
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION,
+                VALID_TEAM_AMY, VALID_POSITION_BOB), exception.getMessage());
+    }
+
+    @Test
+    public void execute_allValidNoMatchingPlayer_throwsCommandException() {
+        model.addPosition(new Position(VALID_POSITION_AMY));
+
+        // All criteria valid but no single player matches all three
+        FilterCommand command = new FilterCommand(
+                new FilterByTeamPredicate(VALID_TEAM_AMY),
+                new FilterByInjuryPredicate(VALID_INJURY_AMY),
+                new FilterByPositionPredicate(VALID_POSITION_AMY),
+                Optional.of(VALID_TEAM_AMY),
+                Optional.of(VALID_INJURY_AMY),
+                Optional.of(VALID_POSITION_AMY));
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
+                VALID_TEAM_AMY, VALID_INJURY_AMY, VALID_POSITION_AMY), exception.getMessage());
+    }
+
+    @Test
+    public void execute_teamNotPresent_noValidation() {
+        // Test that when team is not present, no team validation occurs
+        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(VALID_INJURY_BOB);
+        FilterCommand command = new FilterCommand(
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                injPred,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.empty(), // Team NOT present
+                Optional.of(VALID_INJURY_BOB),
+                Optional.empty());
+
+        // Should execute without team validation errors
+        expectedModel.updateFilteredPersonList(injPred);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedModel.getFilteredPersonList().size());
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_positionNotPresent_noValidation() {
+        // Test that when position is not present, no position validation occurs
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate(VALID_TEAM_AMY);
+        FilterCommand command = new FilterCommand(
+                teamPred,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.of(VALID_TEAM_AMY),
+                Optional.empty(),
+                Optional.empty()); // Position NOT present
+
+        // Should execute without position validation errors
+        expectedModel.updateFilteredPersonList(teamPred);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedModel.getFilteredPersonList().size());
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_injuryOnlyNoMatchingPlayers_throwsCommandException() {
+        // Test the final else branch in createNoMatchingPlayersException()
+        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(NON_EXISTENT_INJURY);
+        FilterCommand command = new FilterCommand(
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                injPred,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.empty(), // No team
+                Optional.of(NON_EXISTENT_INJURY),
+                Optional.empty()); // No position
+
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, NON_EXISTENT_INJURY),
+                        exception.getMessage());
     }
 }

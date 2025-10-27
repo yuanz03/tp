@@ -220,4 +220,25 @@ public class FilterCommandParserTest {
         String dupPosition = POSITION_DESC_BOB + POSITION_DESC_BOB;
         assertParseFailure(parser, dupPosition, MESSAGE_DUPLICATE_FIELDS + String.join(" ", "ps/"));
     }
+
+    @Test
+    public void parse_allFieldsEmpty_throwsParseException() {
+        String input = TEAM_PREFIX_WITH_NO_FIELD + INJURY_PREFIX_WITH_NO_FIELD + POSITION_PREFIX_WITH_NO_FIELD;
+        assertParseFailure(parser, input, String.format("Invalid team name: %s\n%s",
+                 "", Team.MESSAGE_CONSTRAINTS));
+    }
+
+    @Test
+    public void parse_validTeamInvalidPosition_throwsParseException() {
+        String input = TEAM_DESC_AMY + INVALID_POSITION_DESC;
+        assertParseFailure(parser, input, String.format("Invalid position name: %s\n%s",
+                "MF*", Position.MESSAGE_CONSTRAINTS));
+    }
+
+    @Test
+    public void parse_validPositionInvalidTeam_throwsParseException() {
+        String input = INVALID_TEAM_DESC + POSITION_DESC_BOB;
+        assertParseFailure(parser, input, String.format("Invalid team name: %s\n%s",
+                "U@16", Team.MESSAGE_CONSTRAINTS));
+    }
 }
