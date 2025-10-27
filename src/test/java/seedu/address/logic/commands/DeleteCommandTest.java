@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.NON_EXISTENT_NAME;
+import static seedu.address.logic.commands.CommandTestUtil.NON_EXISTENT_POSITION;
 import static seedu.address.logic.commands.CommandTestUtil.NON_EXISTENT_TEAM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -80,31 +81,19 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_positionNotFound_throwsCommandException() {
-        String nonExistentPosition = "NonExistentPosition";
-        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(new Position(nonExistentPosition));
+        DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(new Position(NON_EXISTENT_POSITION));
 
         assertCommandFailure(deleteCommand, model,
-                String.format(DeleteCommand.MESSAGE_POSITION_NOT_FOUND, nonExistentPosition));
+                String.format(DeleteCommand.MESSAGE_POSITION_NOT_FOUND, NON_EXISTENT_POSITION));
     }
 
     @Test
     public void execute_positionAssignedToPlayers_throwsCommandException() {
-        // Add a position and assign it to a player
         Position position = new Position(VALID_POSITION_FW);
         model.addPosition(position);
 
         Person personWithPosition = ALICE;
-        Person updatedPerson = new Person(
-                personWithPosition.getName(),
-                personWithPosition.getPhone(),
-                personWithPosition.getEmail(),
-                personWithPosition.getAddress(),
-                personWithPosition.getTeam(),
-                personWithPosition.getTags(),
-                position,
-                personWithPosition.getInjuries(),
-                personWithPosition.isCaptain());
-
+        Person updatedPerson = createPersonWithPosition(personWithPosition, position);
         model.setPerson(personWithPosition, updatedPerson);
 
         DeleteCommand deleteCommand = DeleteCommand.createDeletePositionCommand(position);
@@ -297,6 +286,22 @@ public class DeleteCommandTest {
 
         // Verify commands are not equal
         assertFalse(command1.equals(command2));
+    }
+
+    /**
+     * Creates a copy of the given person with a different position.
+     */
+    private Person createPersonWithPosition(Person original, Position position) {
+        return new Person(
+                original.getName(),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getTeam(),
+                original.getTags(),
+                position,
+                original.getInjuries(),
+                original.isCaptain());
     }
 
 }

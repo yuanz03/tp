@@ -13,6 +13,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
+import seedu.address.model.position.exceptions.PositionNotFoundException;
 import seedu.address.model.team.Team;
 
 /**
@@ -41,8 +42,8 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_EMPTY = "Team: %s still has players assigned to it!\n"
-            + "Please either delete player if no longer managing player"
-            + "or reassign player to another team before deleting this team.";
+            + "Please either delete the player if no longer managing them, "
+            + "or reassign the player to another team before deleting this team.";
     public static final String MESSAGE_POSITION_NOT_FOUND = "Position: %s doesn't exist!";
     public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
             + " one or more players.";
@@ -118,14 +119,13 @@ public class DeleteCommand extends Command {
 
     /**
      * Executes the delete team command.
+     * Team must exist and be empty before deletion.
      */
     private CommandResult executeDeleteTeam(Model model) throws CommandException {
-        // Check if team exists
         if (!model.hasTeam(teamToDelete)) {
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, teamToDelete.getName()));
         }
 
-        // Check if team is empty
         if (!model.isTeamEmpty(teamToDelete)) {
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_EMPTY, teamToDelete.getName()));
         }
@@ -162,11 +162,10 @@ public class DeleteCommand extends Command {
         final Position toDelete;
         try {
             toDelete = model.getPositionByName(name);
-        } catch (RuntimeException e) {
+        } catch (PositionNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_POSITION_NOT_FOUND, name));
         }
 
-        // Check if the position is assigned to any player
         if (model.isPositionAssigned(toDelete)) {
             throw new CommandException(String.format(MESSAGE_POSITION_ASSIGNED, name));
         }
