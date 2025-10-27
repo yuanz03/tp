@@ -5,6 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -39,7 +42,6 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Player: %1$s has been deleted successfully!";
     public static final String MESSAGE_DELETE_TEAM_SUCCESS = "Team: %s has been deleted successfully!";
     public static final String MESSAGE_DELETE_POSITION_SUCCESS = "Position: %s has been deleted successfully!";
-
     public static final String MESSAGE_TEAM_NOT_FOUND = "Team: %s doesn't exist!";
     public static final String MESSAGE_TEAM_NOT_EMPTY = "Team: %s still has players assigned to it!\n"
             + "Please either delete the player if no longer managing them, "
@@ -47,6 +49,8 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_POSITION_NOT_FOUND = "Position: %s doesn't exist!";
     public static final String MESSAGE_POSITION_ASSIGNED = "Cannot delete position %s as it is currently assigned to"
             + " one or more players.";
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
 
     private final Name personNameToDelete;
     private final Team teamToDelete;
@@ -85,6 +89,8 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing DeleteCommand");
+
         if (isDeletePlayerCommand()) {
             return executeDeletePlayer(model);
         } else if (isDeleteTeamCommand()) {
@@ -123,14 +129,17 @@ public class DeleteCommand extends Command {
      */
     private CommandResult executeDeleteTeam(Model model) throws CommandException {
         if (!model.hasTeam(teamToDelete)) {
+            logger.warning("Team not found: " + teamToDelete.getName());
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, teamToDelete.getName()));
         }
 
         if (!model.isTeamEmpty(teamToDelete)) {
+            logger.warning("Cannot delete team " + teamToDelete.getName() + " - team is not empty");
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_EMPTY, teamToDelete.getName()));
         }
 
         model.deleteTeam(teamToDelete);
+        logger.info("Deleted team: " + teamToDelete.getName());
         return CommandResult.showTeamCommandResult(String.format(MESSAGE_DELETE_TEAM_SUCCESS, teamToDelete.getName()));
     }
 
@@ -143,10 +152,12 @@ public class DeleteCommand extends Command {
         try {
             personToDelete = model.getPersonByName(personNameToDelete);
         } catch (PersonNotFoundException e) {
+            logger.warning("Person not found: " + personNameToDelete);
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, personNameToDelete.toString()));
         }
 
         model.deletePerson(personToDelete);
+        logger.info("Deleted person: " + personToDelete.getName());
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(personToDelete)));
@@ -159,6 +170,7 @@ public class DeleteCommand extends Command {
     private CommandResult executeDeletePosition(Model model) throws CommandException {
 
         String name = positionToDelete.getName();
+        logger.info("Attempting to delete position: " + name);
         final Position toDelete;
         try {
             toDelete = model.getPositionByName(name);
@@ -167,10 +179,12 @@ public class DeleteCommand extends Command {
         }
 
         if (model.isPositionAssigned(toDelete)) {
+            logger.warning("Cannot delete position " + name + " - still assigned to players");
             throw new CommandException(String.format(MESSAGE_POSITION_ASSIGNED, name));
         }
 
         model.deletePosition(toDelete);
+        logger.info("Deleted position: " + name);
 
         return new CommandResult(String.format(MESSAGE_DELETE_POSITION_SUCCESS,
                 name));

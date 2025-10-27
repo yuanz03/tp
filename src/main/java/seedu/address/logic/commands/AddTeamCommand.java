@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,6 +29,8 @@ public class AddTeamCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New team added: %1$s";
     public static final String MESSAGE_DUPLICATE_TEAM = "This team already exists in the PlayBook";
 
+    private static final Logger logger = LogsCenter.getLogger(AddTeamCommand.class);
+
     private final Team toAdd;
 
     /**
@@ -40,11 +45,15 @@ public class AddTeamCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        logger.info("Executing AddTeamCommand for team: " + toAdd.getName());
+
         if (model.hasTeam(toAdd)) {
+            logger.warning("Duplicate team: " + toAdd.getName());
             throw new CommandException(MESSAGE_DUPLICATE_TEAM);
         }
 
         model.addTeam(toAdd);
+        logger.info("Added team: " + toAdd.getName());
         return CommandResult.showTeamCommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
@@ -58,8 +67,8 @@ public class AddTeamCommand extends Command {
             return false;
         }
 
-        AddTeamCommand e = (AddTeamCommand) other;
-        return toAdd.equals(e.toAdd);
+        AddTeamCommand otherCommand = (AddTeamCommand) other;
+        return toAdd.equals(otherCommand.toAdd);
     }
 
     @Override
