@@ -67,8 +67,8 @@ public class AddTeamCommand extends Command {
             return false;
         }
 
-        AddTeamCommand e = (AddTeamCommand) other;
-        return toAdd.equals(e.toAdd);
+        AddTeamCommand otherCommand = (AddTeamCommand) other;
+        return toAdd.equals(otherCommand.toAdd);
     }
 
     @Override
