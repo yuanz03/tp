@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -28,6 +31,8 @@ public class AssignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
+    public static final Logger logger = LogsCenter.getLogger(AssignInjuryCommand.class);
+
     private final Name personNameToAssign;
     private final Injury injuryToAssign;
 
@@ -44,12 +49,17 @@ public class AssignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing AssignInjuryCommand: " + injuryToAssign + " to " + personNameToAssign);
+
         Person personToAssign = findPersonByName(model, personNameToAssign);
 
         validateNotDefaultInjury(injuryToAssign);
         validateNoDuplicateInjury(personToAssign, injuryToAssign);
 
         Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
+        logger.info("Successfully assigned injury " + injuryToAssign + " to " + personToAssign.getName()
+                + ". Current injuries: " + updatedPerson.getInjuries());
+
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
                 personToAssign.getName(), updatedPerson.getInjuries()));
     }
@@ -58,18 +68,21 @@ public class AssignInjuryCommand extends Command {
         try {
             return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
+            logger.warning("Player not found: " + name);
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
         }
     }
 
     private void validateNotDefaultInjury(Injury injury) throws CommandException {
         if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
+            logger.warning("Assignment of the default status " + injury.getInjuryName() + " is not allowed");
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
     }
 
     private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
         if (person.getInjuries().contains(injury)) {
+            logger.warning("Player " + person.getName() + " is already assigned to injury " + injury.getInjuryName());
             throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
         }
     }

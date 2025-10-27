@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PLAYER;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -30,6 +33,8 @@ public class UnassignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
+    public static final Logger logger = LogsCenter.getLogger(UnassignInjuryCommand.class);
+
     private final Name personNameToUnassign;
     private final Injury injuryToUnassign;
 
@@ -46,6 +51,8 @@ public class UnassignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing UnassignInjuryCommand: " + injuryToUnassign + " from " + personNameToUnassign);
+
         Person personToUnassign = findPersonByName(model, personNameToUnassign);
 
         // Ensure the player is currently injured before attempting to unassign
@@ -55,6 +62,9 @@ public class UnassignInjuryCommand extends Command {
         validatePlayerHasInjury(model, personToUnassign, injuryToUnassign);
 
         Person updatedPerson = model.deleteInjury(personToUnassign, injuryToUnassign);
+        logger.info("Successfully unassigned injury " + injuryToUnassign + " from " + personToUnassign.getName()
+                + ". Current injuries: " + updatedPerson.getInjuries());
+
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 updatedPerson.getName(), injuryToUnassign.getInjuryName()));
     }
@@ -63,12 +73,14 @@ public class UnassignInjuryCommand extends Command {
         try {
             return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
+            logger.warning("Player not found: " + name);
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, name));
         }
     }
 
     private void validatePlayerIsInjured(Model model, Person person) throws CommandException {
         if (!model.hasNonDefaultInjury(person)) {
+            logger.warning("Player " + person.getName() + " is not injured");
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
                     person.getName()));
         }
@@ -76,6 +88,7 @@ public class UnassignInjuryCommand extends Command {
 
     private void validatePlayerHasInjury(Model model, Person person, Injury injury) throws CommandException {
         if (!model.hasSpecificInjury(person, injury)) {
+            logger.warning("Player " + person.getName() + " has no record of this injury " + injury.getInjuryName());
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
                     person.getName(), injury.getInjuryName()));
         }
