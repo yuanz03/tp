@@ -21,9 +21,10 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
      * @throws ParseException If the user input does not conform to the expected format.
      */
     public AssignInjuryCommand parse(String args) throws ParseException {
+        checkEmptyArguments(args);
+
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
 
-        checkEmptyArguments(args);
         checkCompulsoryPrefixes(argMultimap);
         verifyNoDuplicatePrefixes(argMultimap);
 
