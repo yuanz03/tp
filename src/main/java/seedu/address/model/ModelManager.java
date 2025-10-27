@@ -122,6 +122,8 @@ public class ModelManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    //=========== Injury Commands =============================================================
+
     @Override
     public Person addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
@@ -150,7 +152,6 @@ public class ModelManager implements Model {
                 updatedInjuries,
                 target.isCaptain()
         );
-
         setPerson(target, updatedPerson);
         return updatedPerson;
     }
@@ -174,7 +175,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasInjury(Person target) {
+    public boolean hasNonDefaultInjury(Person target) {
         requireNonNull(target);
 
         if (!hasPerson(target)) {
@@ -182,6 +183,16 @@ public class ModelManager implements Model {
         }
         // Check whether the person has at least one injury that is not the default "FIT" status
         return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
+    }
+
+    @Override
+    public boolean hasSpecificInjury(Person target, Injury injury) {
+        requireAllNonNull(target, injury);
+
+        if (!hasPerson(target)) {
+            throw new PersonNotFoundException();
+        }
+        return target.getInjuries().contains(injury);
     }
 
     @Override

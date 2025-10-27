@@ -54,7 +54,7 @@ public class UnassignInjuryCommand extends Command {
         validatePlayerIsInjured(model, personToUnassign);
 
         // Check if the player has the specified injury before updating the injury status
-        validatePlayerHasInjury(personToUnassign, injuryToUnassign);
+        validatePlayerHasInjury(model, personToUnassign, injuryToUnassign);
 
         model.deleteInjury(personToUnassign, injuryToUnassign);
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
@@ -70,15 +70,14 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private void validatePlayerIsInjured(Model model, Person person) throws CommandException {
-        if (!model.hasInjury(person)) {
+        if (!model.hasNonDefaultInjury(person)) {
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
                     person.getName()));
         }
-
     }
 
-    private void validatePlayerHasInjury(Person person, Injury injury) throws CommandException {
-        if (!person.getInjuries().contains(injury)) {
+    private void validatePlayerHasInjury(Model model, Person person, Injury injury) throws CommandException {
+        if (!model.hasSpecificInjury(person, injury)) {
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
                     person.getName(), injury.getInjuryName()));
         }

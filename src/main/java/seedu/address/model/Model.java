@@ -108,7 +108,12 @@ public interface Model {
      * that is not the default {@code "FIT"} status.
      * {@code target} must exist in the address book.
      */
-    boolean hasInjury(Person target);
+    boolean hasNonDefaultInjury(Person target);
+
+    /**
+     * Returns true if the given person {@code target} has the specified {@code injury}.
+     */
+    boolean hasSpecificInjury(Person target, Injury injury);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
