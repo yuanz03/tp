@@ -121,7 +121,7 @@ class JsonAdaptedPerson {
 
         // Ensure at least the default injury is present if the list is empty
         if (personInjuries.isEmpty()) {
-            personInjuries.add(Person.DEFAULT_INJURY_STATUS);
+            personInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
         final List<Tag> personTags = new ArrayList<>();

@@ -127,15 +127,15 @@ public class ModelManager implements Model {
         requireAllNonNull(target, injury);
 
         // Disallow assigning "FIT" as an injury
-        if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
+        if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
             throw new IllegalArgumentException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
 
         // Remove FIT status when assigning any other injury
-        if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
-            updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+        if (updatedInjuries.contains(Injury.DEFAULT_INJURY_STATUS)) {
+            updatedInjuries.remove(Injury.DEFAULT_INJURY_STATUS);
         }
         updatedInjuries.add(injury);
 
@@ -154,7 +154,7 @@ public class ModelManager implements Model {
 
         // Ensure that the person has at least the default injury status
         if (updatedInjuries.isEmpty()) {
-            updatedInjuries.add(Person.DEFAULT_INJURY_STATUS);
+            updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
         Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
@@ -171,7 +171,7 @@ public class ModelManager implements Model {
             throw new PersonNotFoundException();
         }
         // Check whether the person has at least one injury that is not the default "FIT" status
-        return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
+        return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Override

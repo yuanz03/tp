@@ -140,7 +140,7 @@ public class UnassignInjuryCommandTest {
     private static class ModelStubWithPerson extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryUnassigned = Person.DEFAULT_INJURY_STATUS;
+        private Injury injuryUnassigned = Injury.DEFAULT_INJURY_STATUS;
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
@@ -169,7 +169,7 @@ public class UnassignInjuryCommandTest {
 
             // Ensure that the person has at least the default injury status
             if (updatedInjuries.isEmpty()) {
-                updatedInjuries.add(Person.DEFAULT_INJURY_STATUS);
+                updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
             }
 
             Person updatedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
@@ -183,7 +183,7 @@ public class UnassignInjuryCommandTest {
         @Override
         public boolean hasInjury(Person target) {
             requireNonNull(target);
-            return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Person.DEFAULT_INJURY_STATUS));
+            return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
         }
 
         @Override

@@ -131,7 +131,7 @@ public class JsonAdaptedPersonTest {
                 emptyInjuries, VALID_TEAM, VALID_POSITION, VALID_TAGS);
         Person modelPerson = person.toModelType();
 
-        assertTrue(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(modelPerson.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
         assertEquals(1, modelPerson.getInjuries().size());
     }
 
@@ -149,7 +149,7 @@ public class JsonAdaptedPersonTest {
         assertEquals(2, modelPerson.getInjuries().size());
 
         // Should not contain the default "FIT" injury status when other injuries are present
-        assertFalse(modelPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(modelPerson.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test

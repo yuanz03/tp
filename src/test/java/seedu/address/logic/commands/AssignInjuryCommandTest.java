@@ -70,7 +70,7 @@ public class AssignInjuryCommandTest {
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class, Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT, () ->
-                new AssignInjuryCommand(name, Person.DEFAULT_INJURY_STATUS).execute(modelStub));
+                new AssignInjuryCommand(name, Injury.DEFAULT_INJURY_STATUS).execute(modelStub));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class AssignInjuryCommandTest {
 
         assertEquals(newInjury, modelStub.injuryAssigned);
         assertTrue(modelStub.personUpdated.getInjuries().contains(newInjury));
-        assertFalse(modelStub.personUpdated.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(modelStub.personUpdated.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -137,7 +137,7 @@ public class AssignInjuryCommandTest {
     private static class ModelStubAcceptingInjuryAssigned extends ModelStub {
         private final Person person;
         private Person personUpdated = null;
-        private Injury injuryAssigned = Person.DEFAULT_INJURY_STATUS;
+        private Injury injuryAssigned = Injury.DEFAULT_INJURY_STATUS;
 
         ModelStubAcceptingInjuryAssigned(Person person) {
             requireNonNull(person);
@@ -164,8 +164,8 @@ public class AssignInjuryCommandTest {
             Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
 
             // Remove FIT status when assigning any other injury
-            if (updatedInjuries.contains(Person.DEFAULT_INJURY_STATUS)) {
-                updatedInjuries.remove(Person.DEFAULT_INJURY_STATUS);
+            if (updatedInjuries.contains(Injury.DEFAULT_INJURY_STATUS)) {
+                updatedInjuries.remove(Injury.DEFAULT_INJURY_STATUS);
             }
             updatedInjuries.add(injury);
 

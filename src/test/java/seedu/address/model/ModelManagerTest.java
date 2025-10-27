@@ -160,7 +160,7 @@ public class ModelManagerTest {
 
     @Test
     public void addInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -230,7 +230,7 @@ public class ModelManagerTest {
     public void addInjury_defaultInjury_throwsIllegalArgumentException() {
         modelManager.addPerson(ALICE);
 
-        assertThrows(IllegalArgumentException.class, () -> modelManager.addInjury(ALICE, Person.DEFAULT_INJURY_STATUS));
+        assertThrows(IllegalArgumentException.class, () -> modelManager.addInjury(ALICE, Injury.DEFAULT_INJURY_STATUS));
     }
 
     @Test
@@ -239,7 +239,7 @@ public class ModelManagerTest {
         modelManager.addPerson(personWithDefaultInjury);
 
         // Verify the initial injury status is the default "FIT" status
-        assertTrue(personWithDefaultInjury.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(personWithDefaultInjury.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
 
         // Add a different injury
         Injury newInjury = new Injury("ACL");
@@ -247,7 +247,7 @@ public class ModelManagerTest {
 
         // Verify that the default "FIT" status is removed and the new injury is added
         Person updatedPerson = modelManager.getPersonByName(personWithDefaultInjury.getName());
-        assertFalse(updatedPerson.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertFalse(updatedPerson.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
         assertTrue(updatedPerson.getInjuries().contains(newInjury));
     }
 
@@ -357,7 +357,7 @@ public class ModelManagerTest {
         modelManager.deleteInjury(ALICE, existingInjury);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
-        assertTrue(personAfterDelete.getInjuries().contains(Person.DEFAULT_INJURY_STATUS));
+        assertTrue(personAfterDelete.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
         assertEquals(1, personAfterDelete.getInjuries().size());
     }
 

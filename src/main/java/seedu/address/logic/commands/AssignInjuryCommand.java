@@ -59,7 +59,7 @@ public class AssignInjuryCommand extends Command {
         }
 
         // Disallow assigning "FIT" as an injury status
-        if (injuryToAssign.equals(Person.DEFAULT_INJURY_STATUS)) {
+        if (injuryToAssign.equals(Injury.DEFAULT_INJURY_STATUS)) {
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
         }
 

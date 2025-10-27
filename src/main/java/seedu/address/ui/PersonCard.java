@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Injury;
 import seedu.address.model.person.Person;
 
 /**
@@ -77,7 +78,7 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(injury -> injury.getInjuryName()))
                 .forEach(injury -> {
                     Label injuryLabel = new Label();
-                    if (injury.equals(Person.DEFAULT_INJURY_STATUS)) {
+                    if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
                         injuryLabel.setText("🏥 " + injury.getInjuryName());
                         injuryLabel.getStyleClass().add("fit-status");
                     } else {
