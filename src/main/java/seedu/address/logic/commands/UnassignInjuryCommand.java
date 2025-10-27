@@ -96,7 +96,7 @@ public class UnassignInjuryCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("personToUnassign", personNameToUnassign)
+                .add("personNameToUnassign", personNameToUnassign)
                 .add("injuryToUnassign", injuryToUnassign)
                 .toString();
     }
