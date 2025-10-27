@@ -36,7 +36,7 @@ class JsonAdaptedInjury {
     /**
      * Converts this Jackson-friendly adapted Injury object into the model's {@code Injury} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted injury.
+     * @throws IllegalValueException If there were any data constraints violated in the adapted injury.
      */
     public Injury toModelType() throws IllegalValueException {
         if (!Injury.isValidInjuryName(this.injuryName)) {
