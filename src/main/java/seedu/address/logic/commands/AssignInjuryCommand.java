@@ -31,7 +31,7 @@ public class AssignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
-    public static final Logger logger = LogsCenter.getLogger(AssignInjuryCommand.class);
+    private static final Logger logger = LogsCenter.getLogger(AssignInjuryCommand.class);
 
     private final Name personNameToAssign;
     private final Injury injuryToAssign;

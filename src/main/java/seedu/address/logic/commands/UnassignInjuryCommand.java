@@ -33,7 +33,7 @@ public class UnassignInjuryCommand extends Command {
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME " + PREFIX_INJURY + "INJURY\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "John Doe " + PREFIX_INJURY + "ACL";
 
-    public static final Logger logger = LogsCenter.getLogger(UnassignInjuryCommand.class);
+    private static final Logger logger = LogsCenter.getLogger(UnassignInjuryCommand.class);
 
     private final Name personNameToUnassign;
     private final Injury injuryToUnassign;
