@@ -41,8 +41,8 @@ public class Messages {
 
     public static final String MESSAGE_ASSIGN_INJURY_SUCCESS = "%1$s's injury status has been set to: %2$s";
     public static final String MESSAGE_UNASSIGN_INJURY_SUCCESS = "%1$s's %2$s injury status has been removed!";
-    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s's injury status is already set as: %2$s";
-    public static final String MESSAGE_INJURY_NOT_FOUND = "%1$s has no record of this %2$s injury status!";
+    public static final String MESSAGE_ASSIGNED_SAME_INJURY = "%1$s is already assigned the injury status: %2$s";
+    public static final String MESSAGE_INJURY_NOT_FOUND = "%1$s has no record of the injury status: %2$s";
     public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
             "%1$s's injury status has already been set to the default 'FIT' status!";
     public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"

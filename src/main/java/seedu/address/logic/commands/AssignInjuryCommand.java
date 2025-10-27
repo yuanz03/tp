@@ -55,7 +55,7 @@ public class AssignInjuryCommand extends Command {
         // Check if the player has already been assigned the same injury
         if (personToAssign.getInjuries().contains(injuryToAssign)) {
             throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                    personToAssign.getName(), personToAssign.getInjuries()));
+                    personToAssign.getName(), injuryToAssign));
         }
 
         // Disallow assigning "FIT" as an injury status
