@@ -35,7 +35,7 @@ public class UnassignInjuryCommand extends Command {
 
     /**
      * Creates an {@code UnassignInjuryCommand} that removes the specified {@code injury}
-     * from the specified {@code Person}.
+     * from the {@code Person} identified by {@code personName}.
      */
     public UnassignInjuryCommand(Name personName, Injury injury) {
         requireAllNonNull(personName, injury);

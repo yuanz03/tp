@@ -32,7 +32,8 @@ public class AssignInjuryCommand extends Command {
     private final Injury injuryToAssign;
 
     /**
-     * Creates an {@code AssignInjuryCommand} that assigns the specified {@code injury} to the specified {@code Person}.
+     * Creates an {@code AssignInjuryCommand} that assigns the specified {@code injury}
+     * to the {@code Person} identified by {@code personName}.
      */
     public AssignInjuryCommand(Name personName, Injury injury) {
         requireAllNonNull(personName, injury);
