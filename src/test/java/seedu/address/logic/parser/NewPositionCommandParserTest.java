@@ -25,7 +25,7 @@ public class NewPositionCommandParserTest {
 
     @Test
     public void parse_invalidFormat_failure() {
-        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+        assertThrows(ParseException.class, NewPositionCommand.MESSAGE_USAGE, () ->
                 parser.parse(" ps/LW ps/ST"));
     }
 }

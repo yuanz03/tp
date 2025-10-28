@@ -49,26 +49,26 @@ public class AssignPositionCommandParserTest {
 
     @Test
     public void parse_emptyArgs_failure() {
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_USAGE, () ->
                 parser.parse(""));
     }
 
     @Test
     public void parse_nullArgs_failure() {
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_USAGE, () ->
                 parser.parse(null));
     }
 
     @Test
     public void parse_emptyPlayerName_failure() {
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_USAGE, () ->
                 parser.parse(" pl/" + POSITION_DESC_FW));
     }
 
     @Test
     public void parse_emptyPositionName_failure() {
         // Empty position name fails to parse due to regex requiring \S+
-        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_INVALID_FORMAT, () ->
+        assertThrows(ParseException.class, AssignPositionCommand.MESSAGE_USAGE, () ->
                 parser.parse(PLAYER_DESC_AMY + " ps/"));
     }
 

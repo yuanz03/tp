@@ -14,13 +14,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AssignPositionCommandParser implements Parser<AssignPositionCommand> {
     private static final Pattern ARG_PATTERN =
-            Pattern.compile("(?i).*\\bpl/(?<player>[^\\s].*?)\\s+ps/(?<position>\\S+)\\s*");
+            Pattern.compile("(?i).*\\bpl/(?<player>[^\\s].*?)\\s+ps/(?<position>.+)");
 
     @Override
     public AssignPositionCommand parse(String args) throws ParseException {
         // Validates presence of both pl/ and ps/ flags and extracts values
         if (args == null || args.trim().isEmpty()) {
-            throw new ParseException(AssignPositionCommand.MESSAGE_INVALID_FORMAT);
+            throw new ParseException(AssignPositionCommand.MESSAGE_USAGE);
         }
         Matcher m = ARG_PATTERN.matcher(args.trim());
         if (!m.matches()) {
@@ -32,12 +32,12 @@ public class AssignPositionCommandParser implements Parser<AssignPositionCommand
             if (!hasPosition) {
                 throw new ParseException(AssignPositionCommand.MESSAGE_MISSING_POSITION_FLAG);
             }
-            throw new ParseException(AssignPositionCommand.MESSAGE_INVALID_FORMAT);
+            throw new ParseException(AssignPositionCommand.MESSAGE_USAGE);
         }
         String player = m.group("player").trim();
         String position = m.group("position").trim();
         if (player.isEmpty()) {
-            throw new ParseException(AssignPositionCommand.MESSAGE_INVALID_FORMAT);
+            throw new ParseException(AssignPositionCommand.MESSAGE_USAGE);
         }
         return new AssignPositionCommand(player, position);
     }
