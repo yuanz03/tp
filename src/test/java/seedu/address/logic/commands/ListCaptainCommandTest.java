@@ -33,8 +33,7 @@ public class ListCaptainCommandTest {
     @Test
     public void execute_listCaptains() {
         // Create a captain first
-        Person captain = new PersonBuilder().withName("Captain Player").build();
-        captain.assignCaptain(); // Make this person a captain
+        Person captain = new PersonBuilder().withName("Captain Player").withCaptain(true).build();
         model.addPerson(captain);
 
         ListCaptainCommand command = new ListCaptainCommand();
