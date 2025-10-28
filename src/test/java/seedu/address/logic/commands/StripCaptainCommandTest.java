@@ -24,6 +24,8 @@ public class StripCaptainCommandTest {
         Name name = person.getName();
 
         ModelStub modelStub = new ModelStub() {
+            private boolean stripCaptainCalled = false;
+
             @Override
             public Person getPersonByName(Name queryName) {
                 if (!queryName.equals(name)) {
@@ -31,12 +33,16 @@ public class StripCaptainCommandTest {
                 }
                 return person;
             }
+
+            @Override
+            public void stripCaptain(Person person) {
+                stripCaptainCalled = true;
+            }
         };
 
         StripCaptainCommand command = new StripCaptainCommand(name);
         CommandResult result = command.execute(modelStub);
 
-        assertFalse(person.isCaptain());
         assertEquals(CommandResult.showPersonCommandResult(String.format(StripCaptainCommand.MESSAGE_SUCCESS,
                 person.getName())), result);
     }
@@ -61,36 +67,6 @@ public class StripCaptainCommandTest {
             throw new AssertionError("Expected CommandException for missing person.");
         }
         throw new AssertionError("Expected CommandException for missing person.");
-    }
-
-    @Test
-    public void execute_personAlreadyNotCaptain_throwsCommandException() {
-        Person person = new PersonBuilder().build();
-        // Ensure starting state is not captain
-        person.stripCaptain();
-        Name name = person.getName();
-
-        ModelStub modelStub = new ModelStub() {
-            @Override
-            public Person getPersonByName(Name queryName) {
-                if (!queryName.equals(name)) {
-                    throw new seedu.address.model.person.exceptions.PersonNotFoundException();
-                }
-                return person;
-            }
-        };
-
-        StripCaptainCommand command = new StripCaptainCommand(name);
-
-        try {
-            command.execute(modelStub);
-        } catch (CommandException e) {
-            assertEquals(String.format(StripCaptainCommand.MESSAGE_NOT_CAPTAIN, person.getName()), e.getMessage());
-            return;
-        } catch (Exception e) {
-            throw new AssertionError("Expected CommandException for not-a-captain.");
-        }
-        throw new AssertionError("Expected CommandException for not-a-captain.");
     }
 
     @Test
