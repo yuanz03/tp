@@ -17,6 +17,7 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.team.Team;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -115,7 +116,7 @@ public class PersonTest {
         Person originalPerson = new PersonBuilder(ALICE).withTeam("U16").build();
 
         // Create new team
-        seedu.address.model.team.Team newTeam = new seedu.address.model.team.Team("U21");
+        Team newTeam = new Team("U21");
 
         // Create person with new team
         Person personWithNewTeam = originalPerson.withTeam(newTeam);
