@@ -441,20 +441,4 @@ public class FilterCommandTest {
         assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, NON_EXISTENT_INJURY),
                         exception.getMessage());
     }
-
-    @Test
-    public void execute_emptyFilters_coversAssertions() {
-        FilterCommand command = new FilterCommand(
-                FilterByTeamPredicate.ALWAYS_TRUE,
-                FilterByInjuryPredicate.ALWAYS_TRUE,
-                FilterByPositionPredicate.ALWAYS_TRUE,
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty()
-        );
-
-        assertCommandSuccess(command, model,
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()),
-                expectedModel);
-    }
 }

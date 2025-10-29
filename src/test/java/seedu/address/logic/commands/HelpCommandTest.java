@@ -20,15 +20,4 @@ public class HelpCommandTest {
         CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE, true, false);
         assertCommandSuccess(new HelpCommand(), model, expectedCommandResult, expectedModel);
     }
-
-    @Test
-    public void execute_nullModel_logsErrorButDoesNotFail() {
-        HelpCommand helpCommand = new HelpCommand();
-
-        CommandResult result = helpCommand.execute(null);
-
-        assertEquals(SHOWING_HELP_MESSAGE, result.getFeedbackToUser());
-        assertTrue(result.isShowHelp());
-        assertFalse(result.isExit());
-    }
 }

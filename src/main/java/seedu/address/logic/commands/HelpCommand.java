@@ -24,9 +24,7 @@ public class HelpCommand extends Command {
         logger.log(Level.INFO, "Executing help command");
 
         // Defensive check
-        if (model == null) {
-            logger.log(Level.SEVERE, "Model is null in help command");
-        }
+        assert model != null : "Model should not be null";
 
         logger.log(Level.INFO, "Help command completed successfully");
         return new CommandResult(SHOWING_HELP_MESSAGE, true, false);

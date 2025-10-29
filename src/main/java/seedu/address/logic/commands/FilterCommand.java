@@ -69,7 +69,10 @@ public class FilterCommand extends Command {
                 new Object[]{teamArg.orElse("none"), injuryArg.orElse("none"), positionArg.orElse("none")});
 
         requireNonNull(model);
-        validatePredicates();
+
+        assert teamPredicate != null : "Team predicate should not be null";
+        assert injuryPredicate != null : "Injury predicate should not be null";
+        assert positionPredicate != null : "Position predicate should not be null";
 
         // Assert model state
         assert model.getAddressBook() != null : "Model should have address book";
@@ -171,11 +174,5 @@ public class FilterCommand extends Command {
                 .add("injuryPredicate", injuryPredicate)
                 .add("positionPredicate", positionPredicate)
                 .toString();
-    }
-
-    private void validatePredicates() {
-        assert teamPredicate != null : "Team predicate should not be null";
-        assert injuryPredicate != null : "Injury predicate should not be null";
-        assert positionPredicate != null : "Position predicate should not be null";
     }
 }

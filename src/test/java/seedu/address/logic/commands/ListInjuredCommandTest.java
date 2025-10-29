@@ -39,11 +39,4 @@ class ListInjuredCommandTest {
 
         assertCommandFailure(new ListInjuredCommand(), emptyModel, MESSAGE_NO_INJURED);
     }
-
-    @Test
-    public void execute_validModel_coversAssertions() {
-        ListInjuredCommand command = new ListInjuredCommand();
-
-        assertCommandSuccess(command, model, ListInjuredCommand.MESSAGE_SUCCESS, expectedModel);
-    }
 }
