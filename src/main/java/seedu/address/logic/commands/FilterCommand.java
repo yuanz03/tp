@@ -7,7 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -33,6 +36,7 @@ public class FilterCommand extends Command {
             + PREFIX_TEAM + "U16 "
             + PREFIX_INJURY + "ACL "
             + PREFIX_POSITION + "MF";
+    private static final Logger logger = LogsCenter.getLogger(FilterCommand.class);
 
     private final FilterByTeamPredicate teamPredicate;
     private final FilterByInjuryPredicate injuryPredicate;
@@ -61,7 +65,17 @@ public class FilterCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        logger.log(Level.INFO, "Executing filter command with criteria - Team: {0}, Injury: {1}, Position: {2}",
+                new Object[]{teamArg.orElse("none"), injuryArg.orElse("none"), positionArg.orElse("none")});
+
         requireNonNull(model);
+
+        assert teamPredicate != null : "Team predicate should not be null";
+        assert injuryPredicate != null : "Injury predicate should not be null";
+        assert positionPredicate != null : "Position predicate should not be null";
+
+        // Assert model state
+        assert model.getAddressBook() != null : "Model should have address book";
 
         validateTeamIfPresent(model);
         validatePositionIfPresent(model);
@@ -70,11 +84,14 @@ public class FilterCommand extends Command {
             teamPredicate.test(person) && injuryPredicate.test(person) && positionPredicate.test(person));
 
         int filteredSize = model.getFilteredPersonList().size();
+        logger.log(Level.INFO, "Filtered {0} players matching criteria", filteredSize);
 
         if (filteredSize == 0) {
+            logger.log(Level.WARNING, "No players found matching filter criteria");
             throw createNoMatchingPlayersException();
         }
 
+        logger.log(Level.INFO, "Filter command completed successfully");
         return CommandResult.showPersonCommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, filteredSize));
     }

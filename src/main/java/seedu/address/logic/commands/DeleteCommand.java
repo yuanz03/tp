@@ -31,11 +31,11 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the player, team or position from PlayBook.\n"
+            + "At least one parameter is required.\n"
             + "Parameters: "
             + "[" + PREFIX_PLAYER + "PLAYER_NAME] "
             + "[" + PREFIX_TEAM + "TEAM_NAME] "
             + "[" + PREFIX_POSITION + "POSITION_NAME]\n"
-            + "Note: Must provide exactly one parameter above.\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PLAYER + "John Doe ";
 
