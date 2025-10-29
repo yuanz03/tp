@@ -98,6 +98,7 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     }
 
     private String formatParseErrorMessage(String message) {
-        return message + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                message + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
     }
 }

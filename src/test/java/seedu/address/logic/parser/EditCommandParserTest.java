@@ -57,77 +57,86 @@ public class EditCommandParserTest {
         // Empty input
         String expectedMessage = String.format(Messages.MESSAGE_EMPTY_COMMAND, EditCommand.COMMAND_WORD)
                 + MESSAGE_INVALID_FORMAT;
-        assertParseFailure(parser, "", expectedMessage);
+        assertParseFailure(parser, "", String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
     }
 
     @Test
     public void parse_missingPlayerPrefix_failure() {
         String expectedMessage = String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, EditCommand.COMMAND_WORD)
                 + MESSAGE_INVALID_FORMAT;
-        assertParseFailure(parser, VALID_NAME_AMY, expectedMessage);
+        assertParseFailure(parser, VALID_NAME_AMY,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
     }
 
     @Test
     public void parse_missingPlayerDetails_failure() {
         String expectedMessage = Messages.MESSAGE_NOT_EDITED + MESSAGE_INVALID_FORMAT;
-        assertParseFailure(parser, PLAYER_DESC_AMY, expectedMessage);
+        assertParseFailure(parser, PLAYER_DESC_AMY,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
     }
 
     @Test
     public void parse_invalidPreamble_failure() {
         String expectedMessage = String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, EditCommand.COMMAND_WORD)
                 + MESSAGE_INVALID_FORMAT;
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_AMY + NAME_DESC_AMY, expectedMessage);
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_AMY + NAME_DESC_AMY,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
+        String expectedInvalidNameMessage = String.format("Invalid player name: %s\n%s", "James&",
+                Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_NAME_DESC,
-                String.format("Invalid player name: %s\n%s", "James&",
-                        Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidNameMessage));
 
         // invalid phone
+        String expectedInvalidPhoneMessage = String.format("Invalid phone number: %s\n%s", "911a",
+                Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC,
-                String.format("Invalid phone number: %s\n%s", "911a",
-                        Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
 
         // invalid email
+        String expectedInvalidEmailMessage = String.format("Invalid email: %s\n%s", "bob!yahoo",
+                Email.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_EMAIL_DESC,
-                String.format("Invalid email: %s\n%s", "bob!yahoo",
-                        Email.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidEmailMessage));
 
         // invalid address
+        String expectedInvalidAddressMessage = String.format("Invalid address: %s\n%s", "",
+                Address.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_ADDRESS_DESC,
-                String.format("Invalid address: %s\n%s", "",
-                        Address.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidAddressMessage));
 
         // invalid tag
+        String expectedInvalidTagMessage = String.format("Invalid tag name: %s\n%s", "hubby*",
+                Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TAG_DESC,
-                String.format("Invalid tag name: %s\n%s", "hubby*",
-                        Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidTagMessage));
 
         // invalid phone followed by valid email
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
-                String.format("Invalid phone number: %s\n%s", "911a",
-                        Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
+        String expectedInvalidMultipleTagsMessage = String.format("Invalid tag name: %s\n%s", "",
+                Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
+
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
-                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
                 PLAYER_DESC_AMY + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                String.format("Invalid player name: %s\n%s", "James&",
-                        Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidNameMessage));
     }
 
     @Test
@@ -192,17 +201,22 @@ public class EditCommandParserTest {
         // More extensive testing of duplicate parameter detections is done in
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
 
+        String expectedInvalidPhoneMessage = Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE)
+                + MESSAGE_INVALID_FORMAT;
+
         // invalid followed by valid
         String userInput = PLAYER_DESC_AMY + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE) + MESSAGE_INVALID_FORMAT);
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
 
         // valid followed by invalid
         userInput = PLAYER_DESC_AMY + PHONE_DESC_BOB + INVALID_PHONE_DESC;
-
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE) + MESSAGE_INVALID_FORMAT);
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
+
+        String expectedDuplicateFieldsMessage =
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
+                        + MESSAGE_INVALID_FORMAT;
 
         // multiple valid fields repeated
         userInput = PLAYER_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
@@ -210,16 +224,14 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
-                        + MESSAGE_INVALID_FORMAT);
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedDuplicateFieldsMessage));
 
         // multiple invalid values
         userInput = PLAYER_DESC_AMY + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
                 + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
-                        + MESSAGE_INVALID_FORMAT);
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedDuplicateFieldsMessage));
     }
 
     @Test

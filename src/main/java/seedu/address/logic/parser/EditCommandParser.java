@@ -140,6 +140,6 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     private String formatParseErrorMessage(String message) {
-        return message + "\n" + EditCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, message + "\n" + EditCommand.MESSAGE_USAGE);
     }
 }

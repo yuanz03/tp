@@ -98,6 +98,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private String formatParseErrorMessage(String message) {
-        return message + "\n" + AssignInjuryCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                message + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
     }
 }
