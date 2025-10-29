@@ -51,4 +51,11 @@ public class ListCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(emptyModel));
         assertEquals(MESSAGE_NO_PLAYERS, exception.getMessage());
     }
+
+    @Test
+    public void execute_validModel_coversAssertions() {
+        ListCommand command = new ListCommand();
+
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
 }

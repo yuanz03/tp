@@ -47,4 +47,11 @@ public class ListTeamCommandTest {
 
         assertCommandFailure(new ListTeamCommand(), emptyModel, MESSAGE_NO_TEAMS);
     }
+
+    @Test
+    public void execute_validModel_coversAssertions() {
+        ListTeamCommand command = new ListTeamCommand();
+
+        assertCommandSuccess(command, model, ListTeamCommand.MESSAGE_SUCCESS, expectedModel);
+    }
 }
