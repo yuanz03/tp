@@ -63,6 +63,26 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_teamWithDifferentCasing_usesCanonicalTeamName() throws Exception {
+        // Create a person with lowercase team name
+        Person personWithLowercaseTeam = new PersonBuilder().withTeam("u21").build();
+
+        // Model stub that returns canonical team name (uppercase)
+        ModelStubWithCanonicalTeam modelStub = new ModelStubWithCanonicalTeam();
+
+        AddCommand addCommand = new AddCommand(personWithLowercaseTeam);
+        CommandResult commandResult = addCommand.execute(modelStub);
+
+        // Verify that the person added to the model has the canonical team name "U21"
+        assertEquals(1, modelStub.personsAdded.size());
+        Person addedPerson = modelStub.personsAdded.get(0);
+        assertEquals("U21", addedPerson.getTeam().getName());
+
+        // Verify that the success message contains the canonical team name
+        assertTrue(commandResult.getFeedbackToUser().contains("U21"));
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -155,9 +175,55 @@ public class AddCommandTest {
         }
 
         @Override
+        public Team getTeamByName(Team team) {
+            requireNonNull(team);
+            // Return the same team as canonical (no casing changes for this basic test)
+            return team;
+        }
+
+        @Override
         public Person addInjury(Person target, Injury injury) {
             requireAllNonNull(target, injury);
             return target;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that returns a canonical team name (with correct casing).
+     */
+    private class ModelStubWithCanonicalTeam extends ModelStub {
+        final ArrayList<Person> personsAdded = new ArrayList<>();
+        private final Team canonicalTeam = new Team("U21");
+
+        @Override
+        public boolean hasPerson(Person person) {
+            requireNonNull(person);
+            return personsAdded.stream().anyMatch(person::isSamePerson);
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            requireNonNull(person);
+            personsAdded.add(person);
+        }
+
+        @Override
+        public boolean hasTeam(Team team) {
+            return team.isSameTeam(canonicalTeam);
+        }
+
+        @Override
+        public Team getTeamByName(Team team) {
+            requireNonNull(team);
+            if (team.isSameTeam(canonicalTeam)) {
+                return canonicalTeam;
+            }
+            throw new RuntimeException("Team not found");
         }
 
         @Override

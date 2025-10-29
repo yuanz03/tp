@@ -110,6 +110,63 @@ public class PersonTest {
     }
 
     @Test
+    public void withTeam_newTeam_returnsPersonWithNewTeam() {
+        // Create a person with original team
+        Person originalPerson = new PersonBuilder(ALICE).withTeam("U16").build();
+
+        // Create new team
+        seedu.address.model.team.Team newTeam = new seedu.address.model.team.Team("U21");
+
+        // Create person with new team
+        Person personWithNewTeam = originalPerson.withTeam(newTeam);
+
+        // Verify team changed
+        assertEquals(newTeam, personWithNewTeam.getTeam());
+        assertEquals("U21", personWithNewTeam.getTeam().getName());
+
+        // Verify all other fields remain the same
+        assertEquals(originalPerson.getName(), personWithNewTeam.getName());
+        assertEquals(originalPerson.getPhone(), personWithNewTeam.getPhone());
+        assertEquals(originalPerson.getEmail(), personWithNewTeam.getEmail());
+        assertEquals(originalPerson.getAddress(), personWithNewTeam.getAddress());
+        assertEquals(originalPerson.getTags(), personWithNewTeam.getTags());
+        assertEquals(originalPerson.getPosition(), personWithNewTeam.getPosition());
+        assertEquals(originalPerson.getInjuries(), personWithNewTeam.getInjuries());
+        assertEquals(originalPerson.isCaptain(), personWithNewTeam.isCaptain());
+
+        // Verify original person is unchanged
+        assertEquals("U16", originalPerson.getTeam().getName());
+    }
+
+    @Test
+    public void withCaptain_newCaptainStatus_returnsPersonWithNewCaptainStatus() {
+        // Create a person who is not a captain
+        Person nonCaptain = new PersonBuilder(ALICE).withCaptain(false).build();
+
+        // Create person as captain
+        Person captain = nonCaptain.withCaptain(true);
+
+        // Verify captain status changed
+        assertFalse(nonCaptain.isCaptain());
+        assertTrue(captain.isCaptain());
+
+        // Verify all other fields remain the same
+        assertEquals(nonCaptain.getName(), captain.getName());
+        assertEquals(nonCaptain.getPhone(), captain.getPhone());
+        assertEquals(nonCaptain.getEmail(), captain.getEmail());
+        assertEquals(nonCaptain.getAddress(), captain.getAddress());
+        assertEquals(nonCaptain.getTeam(), captain.getTeam());
+        assertEquals(nonCaptain.getTags(), captain.getTags());
+        assertEquals(nonCaptain.getPosition(), captain.getPosition());
+        assertEquals(nonCaptain.getInjuries(), captain.getInjuries());
+
+        // Test stripping captain
+        Person strippedCaptain = captain.withCaptain(false);
+        assertFalse(strippedCaptain.isCaptain());
+        assertEquals(captain.getName(), strippedCaptain.getName());
+    }
+
+    @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
