@@ -173,17 +173,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         Person personToEdit = internalList.get(index);
-        Person editedPerson = new Person(
-                personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getEmail(),
-                personToEdit.getAddress(),
-                team,
-                personToEdit.getTags(),
-                personToEdit.getPosition(),
-                personToEdit.getInjuries(),
-                Person.DEFAULT_CAPTAIN_STATUS
-        );
+        Person editedPerson = personToEdit.withTeam(team).withCaptain(Person.DEFAULT_CAPTAIN_STATUS);
 
         setPerson(personToEdit, editedPerson);
     }
