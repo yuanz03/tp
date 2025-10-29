@@ -32,7 +32,7 @@ public class ListPositionCommand extends Command {
 
         model.updateFilteredPositionList(PREDICATE_SHOW_ALL_POSITIONS);
 
-        int listSize = model.getFilteredPersonList().size();
+        int listSize = model.getFilteredPositionList().size();
         logger.log(Level.INFO, "Found {0} items in list", listSize);
 
         if (listSize == 0) {

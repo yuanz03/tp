@@ -32,7 +32,7 @@ public class ListTeamCommand extends Command {
 
         model.updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
 
-        int listSize = model.getFilteredPersonList().size();
+        int listSize = model.getFilteredTeamList().size();
         logger.log(Level.INFO, "Found {0} items in list", listSize);
 
         if (listSize == 0) {
