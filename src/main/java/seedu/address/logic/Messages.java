@@ -49,7 +49,7 @@ public class Messages {
     public static final String MESSAGE_INJURY_ALREADY_UNASSIGNED =
             "%1$s's injury status has already been set to the default 'FIT' status!";
     public static final String MESSAGE_INVALID_INJURY_ASSIGNMENT = "'FIT' cannot be assigned as an injury status!\n"
-            + "Please use the unassigninjury pl/<player> i/<injury> command instead to restore 'FIT' status.";
+            + "Please use the unassigninjury command instead to restore 'FIT' status.";
 
     // Filter Command Messages
     public static final String MESSAGE_NO_PLAYERS_IN_TEAM = "No players assigned to team \"%1$s\".";
