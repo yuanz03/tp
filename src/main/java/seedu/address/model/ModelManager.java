@@ -258,33 +258,13 @@ public class ModelManager implements Model {
 
     @Override
     public void assignCaptain(Person person) {
-        Person updatedPerson = new Person(
-                person.getName(),
-                person.getPhone(),
-                person.getEmail(),
-                person.getAddress(),
-                person.getTeam(),
-                person.getTags(),
-                person.getPosition(),
-                person.getInjuries(),
-                true
-        );
+        Person updatedPerson = person.withCaptain(true);
         setPerson(person, updatedPerson);
     }
 
     @Override
     public void stripCaptain(Person person) {
-        Person updatedPerson = new Person(
-                person.getName(),
-                person.getPhone(),
-                person.getEmail(),
-                person.getAddress(),
-                person.getTeam(),
-                person.getTags(),
-                person.getPosition(),
-                person.getInjuries(),
-                Person.DEFAULT_CAPTAIN_STATUS
-        );
+        Person updatedPerson = person.withCaptain(Person.DEFAULT_CAPTAIN_STATUS);
         setPerson(person, updatedPerson);
     }
 

@@ -118,6 +118,20 @@ public class Person {
     }
 
     /**
+     * Returns a new Person with the specified team, keeping all other fields the same.
+     */
+    public Person withTeam(Team newTeam) {
+        return new Person(name, phone, email, address, newTeam, tags, position, injuries, isCaptain);
+    }
+
+    /**
+     * Returns a new Person with the specified captain status, keeping all other fields the same.
+     */
+    public Person withCaptain(boolean newCaptainStatus) {
+        return new Person(name, phone, email, address, team, tags, position, injuries, newCaptainStatus);
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */

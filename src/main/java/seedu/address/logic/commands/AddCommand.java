@@ -13,6 +13,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.team.Team;
 
 /**
  * Adds a player to the PlayBook.
@@ -65,8 +66,12 @@ public class AddCommand extends Command {
             throw new CommandException(String.format(MESSAGE_TEAM_NOT_FOUND, toAdd.getTeam().getName()));
         }
 
-        model.addPerson(toAdd);
-        return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        Team canonicalTeam = model.getTeamByName(toAdd.getTeam());
+        Person personWithCanonicalTeam = toAdd.withTeam(canonicalTeam);
+
+        model.addPerson(personWithCanonicalTeam);
+        return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
+                Messages.format(personWithCanonicalTeam)));
     }
 
     @Override
