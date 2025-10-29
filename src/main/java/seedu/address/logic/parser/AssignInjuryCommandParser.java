@@ -28,8 +28,8 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
         checkCompulsoryPrefixes(argMultimap);
         verifyNoDuplicatePrefixes(argMultimap);
 
-        Name playerName = parsePlayerName(argMultimap);
-        Injury injury = parseInjury(argMultimap);
+        Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        Injury injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
 
         checkEmptyPreamble(argMultimap);
 
@@ -78,22 +78,6 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
             throw new ParseException(
                     formatParseErrorMessage(
                             String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, AssignInjuryCommand.COMMAND_WORD)));
-        }
-    }
-
-    private Name parsePlayerName(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
-        }
-    }
-
-    private Injury parseInjury(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            return ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
         }
     }
 

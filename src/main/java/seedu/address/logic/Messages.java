@@ -19,7 +19,7 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_PERSON = "This player already exists in the address book.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_NON_EMPTY_PREAMBLE =
-            "Your %1$s command contains extra parameters or irrelevant prefixes!";
+            "Unexpected parameters detected at the start of your %1$s command!";
 
     // General Error Messages for Input Validation
     public static final String MESSAGE_TOO_MANY_PREFIXES = "There are too many prefixes specified. \n%1$s";

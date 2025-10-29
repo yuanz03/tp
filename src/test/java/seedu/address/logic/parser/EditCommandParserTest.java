@@ -86,57 +86,44 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        String expectedInvalidNameMessage = String.format("Invalid player name: %s\n%s", "James&",
-                Name.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_NAME_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidNameMessage));
+                String.format("Invalid player name: %s\n%s", "James&", Name.MESSAGE_CONSTRAINTS));
 
         // invalid phone
-        String expectedInvalidPhoneMessage = String.format("Invalid phone number: %s\n%s", "911a",
-                Phone.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
+                String.format("Invalid phone number: %s\n%s", "911a", Phone.MESSAGE_CONSTRAINTS));
 
         // invalid email
-        String expectedInvalidEmailMessage = String.format("Invalid email: %s\n%s", "bob!yahoo",
-                Email.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_EMAIL_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidEmailMessage));
+                String.format("Invalid email: %s\n%s", "bob!yahoo", Email.MESSAGE_CONSTRAINTS));
 
         // invalid address
-        String expectedInvalidAddressMessage = String.format("Invalid address: %s\n%s", "",
-                Address.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_ADDRESS_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidAddressMessage));
+                String.format("Invalid address: %s\n%s", "", Address.MESSAGE_CONSTRAINTS));
 
         // invalid tag
-        String expectedInvalidTagMessage = String.format("Invalid tag name: %s\n%s", "hubby*",
-                Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TAG_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidTagMessage));
+                String.format("Invalid tag name: %s\n%s", "hubby*", Tag.MESSAGE_CONSTRAINTS ));
 
         // invalid phone followed by valid email
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidPhoneMessage));
+                String.format("Invalid phone number: %s\n%s", "911a", Phone.MESSAGE_CONSTRAINTS));
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        String expectedInvalidMultipleTagsMessage = String.format("Invalid tag name: %s\n%s", "",
-                Tag.MESSAGE_CONSTRAINTS + MESSAGE_INVALID_FORMAT);
-
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
 
         assertParseFailure(parser, PLAYER_DESC_AMY + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidMultipleTagsMessage));
+                String.format("Invalid tag name: %s\n%s", "", Tag.MESSAGE_CONSTRAINTS));
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
                 PLAYER_DESC_AMY + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedInvalidNameMessage));
+                String.format("Invalid player name: %s\n%s", "James&", Name.MESSAGE_CONSTRAINTS));
     }
 
     @Test

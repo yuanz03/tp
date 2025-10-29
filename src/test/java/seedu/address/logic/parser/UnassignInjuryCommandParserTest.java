@@ -88,19 +88,14 @@ public class UnassignInjuryCommandParserTest {
 
     @Test
     public void parse_invalidPlayer_failure() {
-        String expectedMessage = String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS)
-                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
-
-        assertParseFailure(parser, PREAMBLE_WHITESPACE + INVALID_PLAYER_DESC + INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+        String expectedMessage = String.format("Invalid player name: %s\n%s", "hubby*", Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, PREAMBLE_WHITESPACE + INVALID_PLAYER_DESC + INJURY_DESC_BOB, expectedMessage);
     }
 
     @Test
     public void parse_invalidInjury_failure() {
-        String expectedMessage = String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS)
-                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
-        assertParseFailure(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + INVALID_INJURY_DESC,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+        String expectedMessage = String.format("Invalid injury: %s\n%s", "@CL", Injury.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, PREAMBLE_WHITESPACE + PLAYER_DESC_BOB + INVALID_INJURY_DESC, expectedMessage);
     }
 
     @Test
