@@ -125,6 +125,13 @@ public class Person {
     }
 
     /**
+     * Returns a new Person with the specified set of injuries, keeping all other fields the same.
+     */
+    public Person withInjuries(Set<Injury> newInjuries) {
+        return new Person(name, phone, email, address, team, tags, position, newInjuries, isCaptain);
+    }
+
+    /**
      * Returns a new Person with the specified captain status, keeping all other fields the same.
      */
     public Person withCaptain(boolean newCaptainStatus) {

@@ -141,17 +141,7 @@ public class ModelManager implements Model {
         }
         updatedInjuries.add(injury);
 
-        Person updatedPerson = new Person(
-                target.getName(),
-                target.getPhone(),
-                target.getEmail(),
-                target.getAddress(),
-                target.getTeam(),
-                target.getTags(),
-                target.getPosition(),
-                updatedInjuries,
-                target.isCaptain()
-        );
+        Person updatedPerson = target.withInjuries(updatedInjuries);
         setPerson(target, updatedPerson);
         return updatedPerson;
     }
@@ -168,17 +158,7 @@ public class ModelManager implements Model {
             updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
-        Person updatedPerson = new Person(
-                target.getName(),
-                target.getPhone(),
-                target.getEmail(),
-                target.getAddress(),
-                target.getTeam(),
-                target.getTags(),
-                target.getPosition(),
-                updatedInjuries,
-                target.isCaptain()
-        );
+        Person updatedPerson = target.withInjuries(updatedInjuries);
         setPerson(target, updatedPerson);
         return updatedPerson;
     }
