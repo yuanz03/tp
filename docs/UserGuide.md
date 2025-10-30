@@ -691,6 +691,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Players matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `John Bo` will return `John Gruber`, `Bo Yang`.
 
+**Warnings:**
+* Duplicate keywords are not allowed when using the command.
+
 <box type="tip" seamless>
 
 **Tips:**
@@ -814,6 +817,10 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
   * e.g., `filter i/Broken Leg` returns only players whose `INJURY` is `Broken Leg` or `broken leg` (case-insensitive)
   * e.g., `filter tm/Manchester United` returns only players whose `TEAM_NAME` is `Manchester United` or `manchester United` (case-insensitive)
 
+**Warnings:**
+* For `TEAM_NAME` and `POSITION_NAME`, only leading and trailing spaces will be trimmed, any spaces in the name will be used for exact matching.
+  * e.g., `John Doe` will match `   John Doe` but not match `John     Doe`.
+
 <box type="tip" seamless>
 
 **Tips:**
@@ -828,7 +835,7 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 2. `filter ps/FW tm/U17 i/FIT` - Shows the fit Forwards from U17 team
 3. `filter i/Leg Broken ps/MF` - Shows the Midfielders with a leg broken injury
 4. `filter tm/Chelsea` - Shows all the Chelsea team players
-5. `filter tm/Manchester i/Leg Arm` - Shows all the Manchester team players with injuries containing the words Leg or Arm
+5. `filter tm/Manchester United i/Leg Broken` - Shows all the Manchester United team players with their leg broken
 
 <box type="info" seamless>
 
