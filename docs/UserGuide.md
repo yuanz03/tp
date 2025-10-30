@@ -32,7 +32,7 @@
         - [Assigning player as captain: `assigncaptain`](#assigning-player-as-captain-assigncaptain)
         - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
         - [Unassign an injury from player: `unassigninjury`](#unassign-an-injury-from-player-unassigninjury)
-        - [Unassigning player as captain: `stripcaptain`](#unassigning-player-as-captain-stripcaptain)
+        - [Unassigning player as captain: `unassigncaptain`](#unassigning-player-as-captain-stripcaptain)
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Listing all players: `list`](#listing-all-players-list)
