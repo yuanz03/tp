@@ -31,6 +31,7 @@ public class Messages {
     public static final String MESSAGE_MISSING_PLAYER_PREFIX = "Your %1$s command is missing the player parameter!";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Player: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_EDIT_NO_CHANGES = "No changes detected. Please modify at least one field.";
 
     // Team Command Messages
     public static final String MESSAGE_INVALID_TEAM = "No such team in the PlayBook.";
