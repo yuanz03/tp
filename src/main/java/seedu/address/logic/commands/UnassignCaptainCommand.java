@@ -22,7 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * </pre>
  */
 public class UnassignCaptainCommand extends Command {
-    public static final String COMMAND_WORD = "unassignCaptain";
+    public static final String COMMAND_WORD = "unassigncaptain";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
             + "as no longer captain.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME "
