@@ -66,6 +66,8 @@ public class AssignInjuryCommand extends Command {
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
+        assert model != null : "model should not be null";
+        assert name != null : "player name to assign should not be null";
         try {
             return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
@@ -75,6 +77,7 @@ public class AssignInjuryCommand extends Command {
     }
 
     private void validateNotDefaultInjury(Injury injury) throws CommandException {
+        assert injury != null : "injury to assign should not be null";
         if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
             logger.warning("Assignment of the default status " + injury.getInjuryName() + " is not allowed");
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
@@ -82,6 +85,8 @@ public class AssignInjuryCommand extends Command {
     }
 
     private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
+        assert person != null: "person to assign should not be null";
+        assert injury != null : "injury to assign should not be null";
         if (person.getInjuries().contains(injury)) {
             logger.warning("Player " + person.getName() + " is already assigned to injury " + injury.getInjuryName());
             throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,

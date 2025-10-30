@@ -21,6 +21,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
      * @throws ParseException If the user input does not conform to the expected format.
      */
     public AssignInjuryCommand parse(String args) throws ParseException {
+        assert args != null : "args should not be null";
         checkEmptyArguments(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
@@ -37,6 +38,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private void checkEmptyArguments(String args) throws ParseException {
+        assert args != null : "args should not be null";
         if (args.trim().isEmpty()) {
             throw new ParseException(
                     formatParseErrorMessage(
@@ -45,6 +47,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private void checkCompulsoryPrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        assert argMultimap != null : "argMultimap should not be null";
         boolean hasPlayerPrefix = arePrefixesPresent(argMultimap, PREFIX_PLAYER);
         boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
@@ -66,6 +69,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        assert argMultimap != null : "argMultimap should not be null";
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
         } catch (ParseException exception) {
@@ -74,6 +78,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
+        assert argMultimap != null : "argMultimap should not be null";
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     formatParseErrorMessage(
@@ -82,6 +87,7 @@ public class AssignInjuryCommandParser implements Parser<AssignInjuryCommand> {
     }
 
     private String formatParseErrorMessage(String message) {
+        assert message != null : "error message should not be null";
         return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                 message + "\n" + AssignInjuryCommand.MESSAGE_USAGE);
     }
