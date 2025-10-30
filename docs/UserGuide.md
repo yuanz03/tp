@@ -219,7 +219,7 @@ This section explains how to read and use commands in PlayBook.
 
 **Notes:**
 * The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
-* See below for the specific behaviours of the different types of list commands.
+* Refer to the respective list section for the detailed behaviour of each type of list command.
 
 </box>
 
@@ -922,8 +922,23 @@ _Details coming soon ..._
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. 
+   - **Remedy**: delete the `preferences.json` file created by the application before running the application again
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. 
+   - **Remedy**: manually restore the minimized Help Window
+3. **Due to Playbook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
+   - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
+   - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
+4. **Playbook's duplicate detection** treats names with different spacing as different entries.
+   - **Example**: `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered separate players, which can create unintended duplicate entries due to spacing variations
+   - **Remedy**: ensure the player name is entered with the exact spacing you intend
+5. **Incorrect or misplaced prefixes may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
+   - **Example**: `assigninjury pl/John Doe i/ACL tm/U16` — invalid `tm/` prefix for `assigninjury` is interpreted as part of the injury value, causing an invalid injury error rather than an invalid prefix error
+   - **Remedy**: follow the exact command format for each command and use only the correct prefixes
+6. **Strict validation rules** are enforced for certain player fields, meaning inputs that deviate from the expected format are rejected.
+   - **Example**: Phone number accepts only digits — you can enter multiple phone numbers only if they are entered as a continuous string of digits because spaces or special characters like (`-`, `+`, `)`, etc.) are rejected
+     - An input like `1234 5678 (HP) 1111-3333 (Office)` will be rejected and triggers an error message to notify you of this behaviour
+   - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which satisfies the functional needs of Playbook users
 
 --------------------------------------------------------------------------------------------------------------------
 
