@@ -10,13 +10,15 @@
 
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
-        - [Who is PlayBook for?](#who-is-playbook-for)
-        - [What you should know before using PlayBook](#what-you-should-know-before-using-playbook)
-        - [Why choose PlayBook?](#why-choose-playbook)
+        - [Who is PlayBook for?](#who-should-use-playbook) 
+        - [Why choose PlayBook?](#why-playbook)
     - [Quick start](#quick-start)
-        - [Installation and setup](#installation-and-setup)
-        - [Understanding the PlayBook GUI](#understanding-the-playbook-gui)
-        - [Your First Commands](#your-first-commands)
+        - [Java Installation](#1-verify-java-installation)
+        - [Download PlayBook](#2-download-playbook)
+        - [Launch PlayBook](#3-launch-the-application)
+        - [Understanding the PlayBook GUI](#4-understanding-the-interface)
+        - [Your First Commands](#5-try-your-first-commands)
+        - [Enjoy PlayBook](#next-steps)
     - [Command Reference](#command-reference)
         - [Command Format Conventions](#command-format-conventions)
         - [Global Feature Behaviours](#global-feature-behaviours)
@@ -40,13 +42,12 @@
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
         - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
-        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
+        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-position-filter)
         - [Clearing all entries: `clear`](#clearing-all-entries-clear)
         - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
         - [Editing the data file](#editing-the-data-file)
-        - [Generating sample data](#generating-sample-data)
-        - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+        - [Archiving data files](#archiving-data-files)
     - [FAQ](#faq)
     - [Known issues](#known-issues)
     - [Command summary](#command-summary)
@@ -232,7 +233,7 @@ This section explains how to read and use commands in PlayBook.
 
 **Notes:**
 * The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
-* See below for the specific behaviours of the different types of list commands.
+* Refer to the respective list section for the detailed behaviour of each type of list command.
 
 </box>
 
@@ -655,7 +656,7 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 **Warnings:**
 * When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
-* You cannot edit team, injury status or position through this command - use `assignteam`, `assigninjury` or `assignposition` commands instead.
+* You cannot edit team, injury status, position, or captain status through this command - use `assignteam`, `assigninjury`, `assignposition`, or `assigncaptain` commands instead.
 </box>
 
 <box type="tip" seamless>
@@ -799,7 +800,7 @@ Format: `listinjured`
 
 </box>
 
-#### Filtering players by team, injury and/or position: `filter`
+#### Filtering players by team, injury, position: `filter`
 
 Filter players by team, injury and/or position.
 
@@ -809,9 +810,9 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 * At least one of the optional fields must be provided.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 * `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
-* `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
+* `TEAM_NAME`, `INJURY`, and `POSITION_NAME` use exact whole-field string matching (i.e. `AND` search).
+  * e.g., `filter i/Broken Leg` returns only players whose `INJURY` is `Broken Leg` or `broken leg` (case-insensitive)
+  * e.g., `filter tm/Manchester United` returns only players whose `TEAM_NAME` is `Manchester United` or `manchester United` (case-insensitive)
 
 <box type="tip" seamless>
 
@@ -904,9 +905,9 @@ PlayBook data are saved automatically as a JSON file `/data/playbook.json`. Adva
 * Only edit the data file if you are confident that you can update it correctly.
 </box>
 
-#### Archiving data files `[coming in v2.0]`
+#### Archiving data files
 
-_Details coming soon ..._
+_Details coming soon in v2.0 ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -943,8 +944,23 @@ _Details coming soon ..._
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. 
+   - **Remedy**: delete the `preferences.json` file created by the application before running the application again
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. 
+   - **Remedy**: manually restore the minimized Help Window
+3. **Due to Playbook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
+   - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
+   - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
+4. **Playbook's duplicate detection** treats names with different spacing as different entries.
+   - **Example**: `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered separate players, which can create unintended duplicate entries due to spacing variations
+   - **Remedy**: ensure the player name is entered with the exact spacing you intend
+5. **Incorrect or misplaced prefixes** may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
+   - **Example**: `assigninjury pl/John Doe i/ACL tm/U16` — invalid `tm/` prefix for `assigninjury` is interpreted as part of the injury value, causing an invalid injury error rather than an invalid prefix error
+   - **Remedy**: follow the exact command format for each command and use only the correct prefixes
+6. **Strict validation rules** are enforced for certain player fields, meaning inputs that deviate from the expected format are rejected.
+   - **Example**: Phone number accepts only digits — you can enter multiple phone numbers only if they are entered as a continuous string of digits because spaces or special characters like (`-`, `+`, `)`, etc.) are rejected
+     - An input like `1234 5678 (HP) 1111-3333 (Office)` will be rejected and triggers an error message to notify you of this behaviour
+   - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which is sufficient to satisfy the functional needs of Playbook users
 
 --------------------------------------------------------------------------------------------------------------------
 
