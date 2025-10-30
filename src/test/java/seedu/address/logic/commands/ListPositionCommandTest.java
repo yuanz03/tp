@@ -28,7 +28,6 @@ public class ListPositionCommandTest {
 
     @Test
     public void execute_emptyPlayBook_showsEmptyPositionList() {
-        // Boundary Value: No position in list
         // Create a model with an empty PlayBook
         Model emptyModel = new ModelManager(new AddressBook(), new UserPrefs());
         Model expectedEmptyModel = new ModelManager(new AddressBook(), new UserPrefs());
