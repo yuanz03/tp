@@ -85,7 +85,7 @@ public class AssignInjuryCommand extends Command {
     }
 
     private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
-        assert person != null: "person to assign should not be null";
+        assert person != null : "person to assign should not be null";
         assert injury != null : "injury to assign should not be null";
         if (person.getInjuries().contains(injury)) {
             logger.warning("Player " + person.getName() + " is already assigned to injury " + injury.getInjuryName());
