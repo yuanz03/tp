@@ -103,7 +103,7 @@ public class EditCommandParserTest {
 
         // invalid tag
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_TAG_DESC,
-                String.format("Invalid tag name: %s\n%s", "hubby*", Tag.MESSAGE_CONSTRAINTS ));
+                String.format("Invalid tag name: %s\n%s", "hubby*", Tag.MESSAGE_CONSTRAINTS));
 
         // invalid phone followed by valid email
         assertParseFailure(parser, PLAYER_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
