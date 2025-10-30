@@ -30,52 +30,117 @@ public class FindCommandParser implements Parser<FindCommand> {
         logger.info("Parsing find command arguments: " + args);
 
         String trimmedArgs = args.trim();
+        validateArgumentsNotEmpty(trimmedArgs);
+
+        String[] nameKeywords = splitKeywords(trimmedArgs);
+        validateNoDuplicateKeywords(nameKeywords);
+
+        logParsingSuccess(nameKeywords);
+        return createFindCommand(nameKeywords);
+    }
+
+    /**
+     * Validates that arguments are not empty.
+     */
+    private void validateArgumentsNotEmpty(String trimmedArgs) throws ParseException {
         if (trimmedArgs.isEmpty()) {
             logger.warning("Empty arguments provided to find command");
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-
-        // Check for duplicate keywords
-        validateNoDuplicateKeywords(nameKeywords);
-
-        logger.info("Parsed " + nameKeywords.length + " keywords: " + Arrays.toString(nameKeywords));
-
-        logger.info("Successfully parsed find command");
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    /**
+     * Splits the trimmed arguments into individual keywords.
+     */
+    private String[] splitKeywords(String trimmedArgs) {
+        return trimmedArgs.split("\\s+");
     }
 
     /**
      * Validates that there are no duplicate keywords in the input array.
-     *
-     * @throws ParseException if duplicate keywords are found
      */
     private void validateNoDuplicateKeywords(String[] keywords) throws ParseException {
-        Map<String, String> normalizedToOriginal = new HashMap<>(); // Track first occurrence
+        Set<String> duplicates = findDuplicateKeywords(keywords);
+        if (!duplicates.isEmpty()) {
+            throw createDuplicateKeywordsException(duplicates);
+        }
+    }
+
+    /**
+     * Finds duplicate keywords in the input array.
+     */
+    private Set<String> findDuplicateKeywords(String[] keywords) {
+        Map<String, String> normalizedToOriginal = createNormalizedKeywordMap();
         Set<String> duplicates = new HashSet<>();
 
         for (String keyword : keywords) {
-            String normalized = keyword.trim().toLowerCase(); // Case-insensitive comparison
-            if (!normalized.isEmpty()) {
-                if (normalizedToOriginal.containsKey(normalized)) {
-                    // Found duplicate - use the first occurrence for error message
-                    duplicates.add(normalizedToOriginal.get(normalized));
-                } else {
-                    // First time seeing this keyword - store the original case
-                    normalizedToOriginal.put(normalized, keyword.trim());
-                }
+            processKeywordForDuplicates(keyword, normalizedToOriginal, duplicates);
+        }
+        return duplicates;
+    }
+
+    /**
+     * Creates a new map for tracking normalized keywords.
+     */
+    private Map<String, String> createNormalizedKeywordMap() {
+        return new HashMap<>();
+    }
+
+    /**
+     * Processes a single keyword for duplicate detection.
+     */
+    private void processKeywordForDuplicates(String keyword, Map<String, String> normalizedToOriginal,
+                                           Set<String> duplicates) {
+        String normalized = normalizeKeyword(keyword);
+        if (!normalized.isEmpty()) {
+            if (normalizedToOriginal.containsKey(normalized)) {
+                duplicates.add(normalizedToOriginal.get(normalized));
+            } else {
+                normalizedToOriginal.put(normalized, keyword.trim());
             }
         }
+    }
 
-        if (!duplicates.isEmpty()) {
-            String duplicateList = duplicates.stream()
-                    .map(dup -> "\"" + dup + "\"")
-                    .collect(Collectors.joining(", "));
-            throw new ParseException(String.format(
-                    "Duplicate name keyword%s found: %s. Please remove duplicate keywords.",
-                    duplicates.size() > 1 ? "s" : "", duplicateList));
-        }
+    /**
+     * Normalizes a keyword by trimming and converting to lowercase.
+     */
+    private String normalizeKeyword(String keyword) {
+        return keyword.trim().toLowerCase();
+    }
+
+    /**
+     * Creates exception for duplicate keywords.
+     */
+    private ParseException createDuplicateKeywordsException(Set<String> duplicates) {
+        String duplicateList = formatDuplicateList(duplicates);
+        String pluralSuffix = duplicates.size() > 1 ? "s" : "";
+        return new ParseException(String.format(
+                "Duplicate name keyword%s found: %s. Please remove duplicate keywords.",
+                pluralSuffix, duplicateList));
+    }
+
+    /**
+     * Formats the duplicate list for the error message.
+     */
+    private String formatDuplicateList(Set<String> duplicates) {
+        return duplicates.stream()
+                .map(dup -> "\"" + dup + "\"")
+                .collect(Collectors.joining(", "));
+    }
+
+    /**
+     * Logs successful parsing of keywords.
+     */
+    private void logParsingSuccess(String[] nameKeywords) {
+        logger.info("Parsed " + nameKeywords.length + " keywords: " + Arrays.toString(nameKeywords));
+        logger.info("Successfully parsed find command");
+    }
+
+    /**
+     * Creates a new FindCommand with the parsed keywords.
+     */
+    private FindCommand createFindCommand(String[] nameKeywords) {
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 }
