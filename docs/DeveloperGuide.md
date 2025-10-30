@@ -18,7 +18,7 @@
     * [Storage component](#storage-component)
     * [Common classes](#common-classes)
 * [Implementation](#implementation)
-    * [\[Proposed\] Undo/redo feature](#proposed-undoredo-feature)
+    * [Proposed Undo/redo feature](#proposed-undoredo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
@@ -31,6 +31,12 @@
     * [Deleting a player](#deleting-a-player)
     * [Assigning an injury status to a player](#assigning-an-injury-status-to-a-player)
     * [Saving data](#saving-data)
+* [Appendix: Effort](#appendix-effort)
+  * [Difficulty Level](#difficulty-level)
+  * [Challenges Faced](#challenges-faced)
+  * [Effort Required](#effort-required)
+  * [Achievements](#achievements)
+  * [Reuse and Adaptation](#reuse-and-adaptation)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -189,7 +195,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Proposed Undo/redo feature
 
 #### Proposed Implementation
 
