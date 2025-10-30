@@ -312,7 +312,6 @@ Format: `addteam tm/TEAM_NAME`
 
 **Expected behaviour:** Creates a new team named `U16`.
 
-![add team message](images/addTeamResult.png)
 </box>
 
 #### Adding a player: `add`
@@ -345,7 +344,6 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 
 **Expected behaviour:** The player will appear in the player list panel with the "FIT" status, no assigned position, and not designated as a captain by default.
 
-![add message](images/addPlayerResult.png)
 </box>
 
 
@@ -373,7 +371,6 @@ Format: `addposition ps/POSITION_NAME`
 
 **Expected behaviour:** Creates a new position named `LW`.
 
-![add position message](images/newPositionResult.png)
 </box>
 
 #### Assign player to team: `assignteam`
@@ -415,7 +412,6 @@ You will be notified when this happens, and you can reassign captaincy using the
 
 **Expected behaviour:** The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
 
-![assign team message](images/assignTeamResult.png)
 </box>
 
 #### Assigning a position to player: `assignposition`
@@ -449,7 +445,6 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 
 **Expected behaviour:** The position will be immediately visible in the player's card.
 
-![assign position message](images/assignPositionResult.png)
 </box>
 
 #### Assign an injury to player: `assigninjury`
@@ -485,7 +480,6 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected behaviour:** The player's injury status will be updated immediately and reflected in their player card.
 
-![assign an injury message](images/assignInjuryResult.png)
 </box>
 
 #### Assigning player as captain: `assigncaptain`
@@ -517,7 +511,6 @@ Format: `assigncaptain pl/PLAYER_NAME`
 
 **Expected behaviour:** A captain badge will appear on the player's card.
 
-![assign captain message](images/assignCaptainResult.png)
 </box>
 
 #### Deleting a player, team or position: `delete`
@@ -558,19 +551,15 @@ Consider making a backup of your data file before bulk deletions.
 
 * **Expected behaviour:** The player card will immediately disappear from the player list.
 
-![delete player message](images/deletePlayerResult.png)
-
 **For team deletion** (Example 2): "Team: U16 has been deleted successfully!"
 
 * **Expected behaviour:** The team card will immediately disappear from the team list.
 
-![delete team message](images/deleteTeamResult.png)
 
 **For position deletion** (Example 3): "Position: LW has been deleted successfully!"
 
 * **Expected behaviour:** The position card will immediately disappear from the position list.
 
-![delete position message](images/deletePositionResult.png)
 </box>
 
 #### Unassign an injury from player: `unassigninjury`
@@ -606,7 +595,6 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected behaviour:** If the player has no other injury status, their status will automatically return to the default "FIT" status.
 
-![unassign an injury message](images/unassignInjuryResult.png)
 </box>
 
 #### Unassigning player as captain: `stripcaptain`
@@ -629,7 +617,6 @@ Format: `stripcaptain pl/PLAYER_NAME`
 
 **Expected behaviour:** The captain badge will be removed from the player's card.
 
-![strip captain message](images/stripCaptainResult.png)
 </box>
 
 #### Editing a player: `edit`
@@ -669,7 +656,6 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 **Expected behaviour:** The player card will immediately display all newly updated field changes.
 
-![edit message](images/editResult.png)
 </box>
 
 #### Locating players by name: `find`
@@ -701,7 +687,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Expected behaviour:** The player list panel will show only the matching players.
 
-![result for 'find Doe'](images/findResult.png)
 </box>
 
 #### Listing all players: `list`
@@ -737,7 +722,6 @@ Format: `listcaptain`
 
 **Expected behaviour:** Only players designated as captains will be displayed in the `Viewing Players` panel.
 
-![list captains message](images/listCaptainsResult.png)
 </box>
 
 #### Listing all teams: `listteam`
@@ -755,7 +739,6 @@ Format: `listteam`
 
 **Expected behaviour:** A list of all team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
 
-![list team message](images/listTeamResult.png)
 </box>
 
 #### Listing all positions: `listposition`
@@ -773,7 +756,6 @@ Format: `listposition`
 
 **Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, CB").
 
-![list position message](images/listPositionResult.png)
 </box>
 
 #### Listing all injured players: `listinjured`
@@ -794,7 +776,6 @@ Format: `listinjured`
 
 **Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details will be visible on their player cards.
 
-![list injured message](images/listInjuredResult.png)
 </box>
 
 #### Filtering players by team, injury and/or position: `filter`
