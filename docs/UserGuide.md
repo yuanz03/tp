@@ -10,13 +10,15 @@
 
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
-        - [Who is PlayBook for?](#who-is-playbook-for)
-        - [What you should know before using PlayBook](#what-you-should-know-before-using-playbook)
-        - [Why choose PlayBook?](#why-choose-playbook)
+        - [Who is PlayBook for?](#who-should-use-playbook) 
+        - [Why choose PlayBook?](#why-playbook)
     - [Quick start](#quick-start)
-        - [Installation and setup](#installation-and-setup)
-        - [Understanding the PlayBook GUI](#understanding-the-playbook-gui)
-        - [Your First Commands](#your-first-commands)
+        - [Java Installation](#1-verify-java-installation)
+        - [Download PlayBook](#2-download-playbook)
+        - [Launch PlayBook](#3-launch-the-application)
+        - [Understanding the PlayBook GUI](#4-understanding-the-interface)
+        - [Your First Commands](#5-try-your-first-commands)
+        - [Enjoy PlayBook](#next-steps)
     - [Command Reference](#command-reference)
         - [Command Format Conventions](#command-format-conventions)
         - [Global Feature Behaviours](#global-feature-behaviours)
@@ -40,13 +42,12 @@
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
         - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
-        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
+        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-position-filter)
         - [Clearing all entries: `clear`](#clearing-all-entries-clear)
         - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
         - [Editing the data file](#editing-the-data-file)
-        - [Generating sample data](#generating-sample-data)
-        - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+        - [Archiving data files](#archiving-data-files)
     - [FAQ](#faq)
     - [Known issues](#known-issues)
     - [Command summary](#command-summary)
@@ -61,6 +62,7 @@ PlayBook is a **desktop application for semi-professional youth football coaches
 
 PlayBook is designed for semi-professional youth football coaches who:
 * Manage multiple teams
+* Familiar with football terminology (positions, injuries)
 * Track 20-50+ players across different age groups
 * Need quick access to player availability, positions, captaincy and injury status
 * Prefer typing commands over navigating complex GUIs
@@ -118,8 +120,6 @@ The PlayBook window should open with sample data loaded.
 
 #### 4. Understanding the interface
 
-![Ui](images/Ui.png)
-
 The PlayBook interface consists of:
 
 | Component          | Description                                                          |
@@ -128,6 +128,20 @@ The PlayBook interface consists of:
 | **Result Display** | Shows command feedback, success messages, and error details.         |
 | **List View**      | Displays players, teams, or positions based on your current command. |
 | **Detail Cards**   | Shows complete information for each item in the list.                |
+
+The PlayBook comes with 3 unique panels that can be toggled between each other via commands.
+
+**Players view:**
+
+![playersViewUi](images/playersViewUi.png)
+
+**Teams view:**
+
+![teamsViewUi](images/teamsViewUi.png)
+
+**Positions view:**
+
+![positionsViewUi](images/positionsViewUi.png)
 
 #### 5. Try your first commands
 
@@ -219,7 +233,7 @@ This section explains how to read and use commands in PlayBook.
 
 **Notes:**
 * The view switches **only after the command succeeds**. If the command fails, the current view remains unchanged and an error message is displayed.
-* See below for the specific behaviours of the different types of list commands.
+* Refer to the respective list section for the detailed behaviour of each type of list command.
 
 </box>
 
@@ -412,6 +426,8 @@ You will be notified when this happens, and you can reassign captaincy using the
 
 **Expected behaviour:** The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
 
+![teamUi](images/teamUi.png)
+
 </box>
 
 #### Assigning a position to player: `assignposition`
@@ -444,6 +460,8 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 **Expected success message** (Example 1): "John Doe has been successfully assigned position LW!"
 
 **Expected behaviour:** The position will be immediately visible in the player's card.
+
+![positionUi](images/positionUi.png)
 
 </box>
 
@@ -480,6 +498,8 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected behaviour:** The player's injury status will be updated immediately and reflected in their player card.
 
+![injuryUi](images/injuryUi.png)
+
 </box>
 
 #### Assigning player as captain: `assigncaptain`
@@ -510,6 +530,8 @@ Format: `assigncaptain pl/PLAYER_NAME`
 **Expected success message** (Example 1): "John Doe is now captain of U16"
 
 **Expected behaviour:** A captain badge will appear on the player's card.
+
+![captainUi](images/captainUi.png)
 
 </box>
 
@@ -634,7 +656,7 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 **Warnings:**
 * When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
-* You cannot edit team, injury status or position through this command - use `assignteam`, `assigninjury` or `assignposition` commands instead.
+* You cannot edit team, injury status, position, or captain status through this command - use `assignteam`, `assigninjury`, `assignposition`, or `assigncaptain` commands instead.
 </box>
 
 <box type="tip" seamless>
@@ -660,49 +682,49 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 #### Locating players by name: `find`
 
-Finds players whose names contain any of the given keywords.
+Finds players whose names contain any of the given keywords provided.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Requirements:**
-* Keywords will only match full words e.g. `Han` will not match `Hans`.
+* Keywords will only match full words e.g. `John` will not match `Johnny`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+  e.g. `John Bo` will return `John Gruber`, `Bo Yang`.
 
 <box type="tip" seamless>
 
 **Tips:**
-* Use `find` when you remember part of a player's name but not the full name.
-* To return to viewing all players after a search, use the `list` command.
-* For more advanced filtering by team, position, or injury status, use the `filter` command instead.
+* Use `find` when you remember part of a player's name but not their full name.
+* To return to the view of all players after a search, use the `list` command.
+* For more advanced filtering by team, position, or injury status, use the `filter` command.
 </box>
 
 **Examples:**
-1. `find John` - Returns players like "John Doe" and "John Smith"
-2. `find alex david` - Returns "Alex Yeoh" and "David Li" (matches either keyword)
+1. `find John` - Returns players named "John Doe" and "John Smith"
+2. `find alex david` - Returns "Alex Yeo" and "David Li" (matches either keyword)
 
 <box type="info" seamless>
 
-**Expected success message:** "X persons listed!" where X is the number of matching players. 
+**Expected success message:** "X persons listed!" where X is the number of players matching either of the keyword(s).
 
-**Expected behaviour:** The player list panel will show only the matching players.
+**Expected behaviour:** The player list panel will show the matching players.
 
 </box>
 
 #### Listing all players: `list`
 
-Shows a list of all players in the PlayBook.
+Shows a list of all the players in the PlayBook.
 
 Format: `list`
 
 <box type="tip" seamless>
 
-**Tip:** Use this command to reset your view after using filters or searches. It displays all players regardless of team, position, or injury status.
+**Tip:** Use this command to return to viewing all players after using filters or searches.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** All players in your PlayBook will be displayed in the `Viewing Players` panel.
+**Expected behaviour:** All the players in your PlayBook will be displayed in the `Viewing Players` panel.
 
 ![list message](images/listResult.png)
 </box>
@@ -726,59 +748,59 @@ Format: `listcaptain`
 
 #### Listing all teams: `listteam`
 
-Shows a list of all teams in the PlayBook.
+Shows a list of all the teams in the PlayBook.
 
 Format: `listteam`
 
 <box type="tip" seamless>
 
-**Tip:** Use this to quickly see all teams you've created. Helpful for verifying team names before adding new players.
+**Tip:** Use this to quickly see all the teams you have created. Helpful for verifying team names before adding new players.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** A list of all team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
+**Expected behaviour:** A list of all the team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
 
 </box>
 
 #### Listing all positions: `listposition`
 
-Shows a list of all positions in the PlayBook.
+Shows a list of the all positions in the PlayBook.
 
 Format: `listposition`
 
 <box type="tip" seamless>
 
-**Tip:** Use this to check which positions you've already created before assigning positions to players.
+**Tip:** Use this to check which positions you have already created before assigning positions to players.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, CB").
+**Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, MF").
 
 </box>
 
 #### Listing all injured players: `listinjured`
 
-Shows a list of all injured players in the PlayBook.
+Shows a list of all the injured players in the PlayBook.
 
 Format: `listinjured`
 
 <box type="tip" seamless>
 
 **Tips:**
-* Use this command before match day to quickly see who's unavailable.
-* Combine with team information in the player cards to see which teams are affected by injuries.
-* This shows all players with any injury status other than "FIT".
+* Use this command before match day to quickly see who is unavailable.
+* Combine the result with team information in the player cards to see which teams are affected by injuries.
+* This shows all the players with any injury status other than "FIT".
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details will be visible on their player cards.
+**Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details can be viewed on their player cards.
 
 </box>
 
-#### Filtering players by team, injury and/or position: `filter`
+#### Filtering players by team, injury, position: `filter`
 
 Filter players by team, injury and/or position.
 
@@ -788,31 +810,31 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 * At least one of the optional fields must be provided.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 * `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
-* `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
+* `TEAM_NAME`, `INJURY`, and `POSITION_NAME` use exact whole-field string matching (i.e. `AND` search).
+  * e.g., `filter i/Broken Leg` returns only players whose `INJURY` is `Broken Leg` or `broken leg` (case-insensitive)
+  * e.g., `filter tm/Manchester United` returns only players whose `TEAM_NAME` is `Manchester United` or `manchester United` (case-insensitive)
 
 <box type="tip" seamless>
 
 **Tips:**
-* **Pre-match planning**: Use `filter tm/U16 i/FIT` to see all available U16 players.
-* **Position planning**: Use `filter ps/ST i/FIT` to find all fit strikers across teams.
-* **Injury tracking**: Use `filter tm/U18 i/ACL` to see all U18 players with ACL injuries.
-* Combine multiple filters for precise results. All conditions must be met (AND logic).
+* **Pre-match planning**: Use `filter tm/U16 i/FIT` to see all the available U16 players.
+* **Position planning**: Use `filter ps/ST i/FIT` to find all the fit strikers across teams.
+* **Injury tracking**: Use `filter tm/U18 i/ACL` to see all the U18 players with ACL injuries.
+* Combine multiple filters for precise results. All conditions must be met (`AND` logic).
 </box>
 
 **Examples:**
-1. `filter tm/U16 ps/FW` - Shows U16 players who play Forward
-2. `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
-3. `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
-4. `filter tm/Chelsea` - Shows all Chelsea team players
-5. `filter tm/Manchester i/Leg Arm` - Shows all Manchester team players with an injuries with the words Leg or Arm in them
+1. `filter tm/U16 ps/FW` - Shows the U16 players who play Forward
+2. `filter ps/FW tm/U17 i/FIT` - Shows the fit Forwards from U17 team
+3. `filter i/Leg Broken ps/MF` - Shows the Midfielders with a leg broken injury
+4. `filter tm/Chelsea` - Shows all the Chelsea team players
+5. `filter tm/Manchester i/Leg Arm` - Shows all the Manchester team players with injuries containing the words Leg or Arm
 
 <box type="info" seamless>
 
-**Expected success message:** "X persons listed!" where X is the number of players matching all filter criteria. 
+**Expected success message:** "X persons listed!" where X is the number of players matching all the filtering criteria(s). 
 
-**Expected behaviour:** Only matching players will be displayed.
+**Expected behaviour:** Only the matching players will be displayed.
 
 ![result for filter](images/filterResult.png)
 </box>
@@ -883,9 +905,9 @@ PlayBook data are saved automatically as a JSON file `/data/playbook.json`. Adva
 * Only edit the data file if you are confident that you can update it correctly.
 </box>
 
-#### Archiving data files `[coming in v2.0]`
+#### Archiving data files
 
-_Details coming soon ..._
+_Details coming soon in v2.0 ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -922,8 +944,23 @@ _Details coming soon ..._
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. 
+   - **Remedy**: delete the `preferences.json` file created by the application before running the application again
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. 
+   - **Remedy**: manually restore the minimized Help Window
+3. **Due to Playbook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
+   - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
+   - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
+4. **Playbook's duplicate detection** treats names with different spacing as different entries.
+   - **Example**: `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered separate players, which can create unintended duplicate entries due to spacing variations
+   - **Remedy**: ensure the player name is entered with the exact spacing you intend
+5. **Incorrect or misplaced prefixes** may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
+   - **Example**: `assigninjury pl/John Doe i/ACL tm/U16` — invalid `tm/` prefix for `assigninjury` is interpreted as part of the injury value, causing an invalid injury error rather than an invalid prefix error
+   - **Remedy**: follow the exact command format for each command and use only the correct prefixes
+6. **Strict validation rules** are enforced for certain player fields, meaning inputs that deviate from the expected format are rejected.
+   - **Example**: Phone number accepts only digits — you can enter multiple phone numbers only if they are entered as a continuous string of digits because spaces or special characters like (`-`, `+`, `)`, etc.) are rejected
+     - An input like `1234 5678 (HP) 1111-3333 (Office)` will be rejected and triggers an error message to notify you of this behaviour
+   - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which is sufficient to satisfy the functional needs of Playbook users
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -949,5 +986,5 @@ _Details coming soon ..._
 | **List Teams**                      | `listteam`                                                                                                                                                                                        |
 | **List Positions**                  | `listposition`                                                                                                                                                                                    |
 | **List Injured Players**            | `listinjured`                                                                                                                                                                                     |
-| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                             |
+| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/MF`                                                                                                             |
 | **Clear**                           | `clear`                                                                                                                                                                                           |
