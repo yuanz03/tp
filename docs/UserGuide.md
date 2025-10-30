@@ -61,6 +61,7 @@ PlayBook is a **desktop application for semi-professional youth football coaches
 
 PlayBook is designed for semi-professional youth football coaches who:
 * Manage multiple teams
+* Familiar with football terminology (positions, injuries)
 * Track 20-50+ players across different age groups
 * Need quick access to player availability, positions, captaincy and injury status
 * Prefer typing commands over navigating complex GUIs
@@ -118,8 +119,6 @@ The PlayBook window should open with sample data loaded.
 
 #### 4. Understanding the interface
 
-![Ui](images/Ui.png)
-
 The PlayBook interface consists of:
 
 | Component          | Description                                                          |
@@ -128,6 +127,20 @@ The PlayBook interface consists of:
 | **Result Display** | Shows command feedback, success messages, and error details.         |
 | **List View**      | Displays players, teams, or positions based on your current command. |
 | **Detail Cards**   | Shows complete information for each item in the list.                |
+
+The PlayBook comes with 3 unique panels that can be toggled between each other via commands.
+
+**Players view:**
+
+![playersViewUi](images/playersViewUi.png)
+
+**Teams view:**
+
+![teamsViewUi](images/teamsViewUi.png)
+
+**Positions view:**
+
+![positionsViewUi](images/positionsViewUi.png)
 
 #### 5. Try your first commands
 
@@ -412,6 +425,8 @@ You will be notified when this happens, and you can reassign captaincy using the
 
 **Expected behaviour:** The player's team will be immediately updated in their player card, and if they were a captain, the captain badge will be removed.
 
+![teamUi](images/teamUi.png)
+
 </box>
 
 #### Assigning a position to player: `assignposition`
@@ -444,6 +459,8 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 **Expected success message** (Example 1): "John Doe has been successfully assigned position LW!"
 
 **Expected behaviour:** The position will be immediately visible in the player's card.
+
+![positionUi](images/positionUi.png)
 
 </box>
 
@@ -480,6 +497,8 @@ Format: `assigninjury pl/PLAYER_NAME i/INJURY`
 
 **Expected behaviour:** The player's injury status will be updated immediately and reflected in their player card.
 
+![injuryUi](images/injuryUi.png)
+
 </box>
 
 #### Assigning player as captain: `assigncaptain`
@@ -510,6 +529,8 @@ Format: `assigncaptain pl/PLAYER_NAME`
 **Expected success message** (Example 1): "John Doe is now captain of U16"
 
 **Expected behaviour:** A captain badge will appear on the player's card.
+
+![captainUi](images/captainUi.png)
 
 </box>
 
@@ -660,49 +681,49 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 #### Locating players by name: `find`
 
-Finds players whose names contain any of the given keywords.
+Finds players whose names contain any of the given keywords provided.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 **Requirements:**
-* Keywords will only match full words e.g. `Han` will not match `Hans`.
+* Keywords will only match full words e.g. `John` will not match `Johnny`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+  e.g. `John Bo` will return `John Gruber`, `Bo Yang`.
 
 <box type="tip" seamless>
 
 **Tips:**
-* Use `find` when you remember part of a player's name but not the full name.
-* To return to viewing all players after a search, use the `list` command.
-* For more advanced filtering by team, position, or injury status, use the `filter` command instead.
+* Use `find` when you remember part of a player's name but not their full name.
+* To return to the view of all players after a search, use the `list` command.
+* For more advanced filtering by team, position, or injury status, use the `filter` command.
 </box>
 
 **Examples:**
-1. `find John` - Returns players like "John Doe" and "John Smith"
-2. `find alex david` - Returns "Alex Yeoh" and "David Li" (matches either keyword)
+1. `find John` - Returns players named "John Doe" and "John Smith"
+2. `find alex david` - Returns "Alex Yeo" and "David Li" (matches either keyword)
 
 <box type="info" seamless>
 
-**Expected success message:** "X persons listed!" where X is the number of matching players. 
+**Expected success message:** "X persons listed!" where X is the number of players matching either of the keyword(s).
 
-**Expected behaviour:** The player list panel will show only the matching players.
+**Expected behaviour:** The player list panel will show the matching players.
 
 </box>
 
 #### Listing all players: `list`
 
-Shows a list of all players in the PlayBook.
+Shows a list of all the players in the PlayBook.
 
 Format: `list`
 
 <box type="tip" seamless>
 
-**Tip:** Use this command to reset your view after using filters or searches. It displays all players regardless of team, position, or injury status.
+**Tip:** Use this command to return to viewing all players after using filters or searches.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** All players in your PlayBook will be displayed in the `Viewing Players` panel.
+**Expected behaviour:** All the players in your PlayBook will be displayed in the `Viewing Players` panel.
 
 ![list message](images/listResult.png)
 </box>
@@ -726,55 +747,55 @@ Format: `listcaptain`
 
 #### Listing all teams: `listteam`
 
-Shows a list of all teams in the PlayBook.
+Shows a list of all the teams in the PlayBook.
 
 Format: `listteam`
 
 <box type="tip" seamless>
 
-**Tip:** Use this to quickly see all teams you've created. Helpful for verifying team names before adding new players.
+**Tip:** Use this to quickly see all the teams you have created. Helpful for verifying team names before adding new players.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** A list of all team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
+**Expected behaviour:** A list of all the team names will be displayed in the `Viewing Teams` panel (e.g., "U16, U18, Reserves").
 
 </box>
 
 #### Listing all positions: `listposition`
 
-Shows a list of all positions in the PlayBook.
+Shows a list of the all positions in the PlayBook.
 
 Format: `listposition`
 
 <box type="tip" seamless>
 
-**Tip:** Use this to check which positions you've already created before assigning positions to players.
+**Tip:** Use this to check which positions you have already created before assigning positions to players.
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, CB").
+**Expected behaviour:** A list of all position names will be displayed in the `Viewing Positions` panel (e.g., "LW, ST, GK, MF").
 
 </box>
 
 #### Listing all injured players: `listinjured`
 
-Shows a list of all injured players in the PlayBook.
+Shows a list of all the injured players in the PlayBook.
 
 Format: `listinjured`
 
 <box type="tip" seamless>
 
 **Tips:**
-* Use this command before match day to quickly see who's unavailable.
-* Combine with team information in the player cards to see which teams are affected by injuries.
-* This shows all players with any injury status other than "FIT".
+* Use this command before match day to quickly see who is unavailable.
+* Combine the result with team information in the player cards to see which teams are affected by injuries.
+* This shows all the players with any injury status other than "FIT".
 </box>
 
 <box type="info" seamless>
 
-**Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details will be visible on their player cards.
+**Expected behaviour:** Only players with injuries (non-FIT status) will be displayed in the `Viewing Players` panel. Their injury details can be viewed on their player cards.
 
 </box>
 
@@ -795,24 +816,24 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 <box type="tip" seamless>
 
 **Tips:**
-* **Pre-match planning**: Use `filter tm/U16 i/FIT` to see all available U16 players.
-* **Position planning**: Use `filter ps/ST i/FIT` to find all fit strikers across teams.
-* **Injury tracking**: Use `filter tm/U18 i/ACL` to see all U18 players with ACL injuries.
-* Combine multiple filters for precise results. All conditions must be met (AND logic).
+* **Pre-match planning**: Use `filter tm/U16 i/FIT` to see all the available U16 players.
+* **Position planning**: Use `filter ps/ST i/FIT` to find all the fit strikers across teams.
+* **Injury tracking**: Use `filter tm/U18 i/ACL` to see all the U18 players with ACL injuries.
+* Combine multiple filters for precise results. All conditions must be met (`AND` logic).
 </box>
 
 **Examples:**
-1. `filter tm/U16 ps/FW` - Shows U16 players who play Forward
-2. `filter ps/FW tm/U17 i/FIT` - Shows fit Forwards from U17 team
-3. `filter i/Leg Broken ps/MF` - Shows Midfielders with leg broken injury
-4. `filter tm/Chelsea` - Shows all Chelsea team players
-5. `filter tm/Manchester i/Leg Arm` - Shows all Manchester team players with an injuries with the words Leg or Arm in them
+1. `filter tm/U16 ps/FW` - Shows the U16 players who play Forward
+2. `filter ps/FW tm/U17 i/FIT` - Shows the fit Forwards from U17 team
+3. `filter i/Leg Broken ps/MF` - Shows the Midfielders with a leg broken injury
+4. `filter tm/Chelsea` - Shows all the Chelsea team players
+5. `filter tm/Manchester i/Leg Arm` - Shows all the Manchester team players with injuries containing the words Leg or Arm
 
 <box type="info" seamless>
 
-**Expected success message:** "X persons listed!" where X is the number of players matching all filter criteria. 
+**Expected success message:** "X persons listed!" where X is the number of players matching all the filtering criteria(s). 
 
-**Expected behaviour:** Only matching players will be displayed.
+**Expected behaviour:** Only the matching players will be displayed.
 
 ![result for filter](images/filterResult.png)
 </box>
@@ -943,11 +964,11 @@ _Details coming soon ..._
 | **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `unassigninjury pl/John Doe i/Ankle sprain`                                                                                                   |
 | **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                               |
 | **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
-| **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                        |
-| **List**                            | `list`                                                                                                                                                                                            |
+| **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Johnny Jake`                                                                                                                                        |
+| **List Players**                            | `list`                                                                                                                                                                                            |
 | **List Captains**                   | `listcaptain`                                                                                                                                                                                     |
 | **List Teams**                      | `listteam`                                                                                                                                                                                        |
 | **List Positions**                  | `listposition`                                                                                                                                                                                    |
 | **List Injured Players**            | `listinjured`                                                                                                                                                                                     |
-| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/FW`                                                                                                             |
+| **Filter Players**                  | `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION]`<br> e.g.,`filter tm/U16 i/ACL ps/MF`                                                                                                             |
 | **Clear**                           | `clear`                                                                                                                                                                                           |
