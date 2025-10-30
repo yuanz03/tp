@@ -62,6 +62,7 @@ public class AssignPositionCommand extends Command {
         } catch (RuntimeException e) {
             throw new CommandException(String.format(MESSAGE_POSITION_NOT_FOUND, positionNameStr));
         }
+        assert position != null : "getPositionByName should return non-null or throw exception";
 
         final Person person;
         try {
