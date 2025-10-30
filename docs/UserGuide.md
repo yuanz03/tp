@@ -10,13 +10,15 @@
 
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
-        - [Who is PlayBook for?](#who-is-playbook-for)
-        - [What you should know before using PlayBook](#what-you-should-know-before-using-playbook)
-        - [Why choose PlayBook?](#why-choose-playbook)
+        - [Who is PlayBook for?](#who-should-use-playbook) 
+        - [Why choose PlayBook?](#why-playbook)
     - [Quick start](#quick-start)
-        - [Installation and setup](#installation-and-setup)
-        - [Understanding the PlayBook GUI](#understanding-the-playbook-gui)
-        - [Your First Commands](#your-first-commands)
+        - [Java Installation](#1-verify-java-installation)
+        - [Download PlayBook](#2-download-playbook)
+        - [Launch PlayBook](#3-launch-the-application)
+        - [Understanding the PlayBook GUI](#4-understanding-the-interface)
+        - [Your First Commands](#5-try-your-first-commands)
+        - [Enjoy PlayBook](#next-steps)
     - [Command Reference](#command-reference)
         - [Command Format Conventions](#command-format-conventions)
         - [Global Feature Behaviours](#global-feature-behaviours)
@@ -40,13 +42,12 @@
         - [Listing all teams: `listteam`](#listing-all-teams-listteam)
         - [Listing all positions: `listposition`](#listing-all-positions-listposition)
         - [Listing all injured players: `listinjured`](#listing-all-injured-players-listinjured)
-        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-andor-position-filter)
+        - [Filtering players by team, injury and/or position: `filter`](#filtering-players-by-team-injury-position-filter)
         - [Clearing all entries: `clear`](#clearing-all-entries-clear)
         - [Exiting the program: `exit`](#exiting-the-program-exit)
         - [Saving the data](#saving-the-data)
         - [Editing the data file](#editing-the-data-file)
-        - [Generating sample data](#generating-sample-data)
-        - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+        - [Archiving data files](#archiving-data-files)
     - [FAQ](#faq)
     - [Known issues](#known-issues)
     - [Command summary](#command-summary)
@@ -778,7 +779,7 @@ Format: `listinjured`
 
 </box>
 
-#### Filtering players by team, injury and/or position: `filter`
+#### Filtering players by team, injury, position: `filter`
 
 Filter players by team, injury and/or position.
 
@@ -883,9 +884,9 @@ PlayBook data are saved automatically as a JSON file `/data/playbook.json`. Adva
 * Only edit the data file if you are confident that you can update it correctly.
 </box>
 
-#### Archiving data files `[coming in v2.0]`
+#### Archiving data files
 
-_Details coming soon ..._
+_Details coming soon in v2.0 ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
