@@ -18,7 +18,7 @@
     * [Storage component](#storage-component)
     * [Common classes](#common-classes)
 * [Implementation](#implementation)
-    * [Proposed Undo/redo feature](#proposed-undoredo-feature)
+    * [Proposed undo or redo feature](#proposed-undo-or-redo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
@@ -195,7 +195,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Proposed Undo/redo feature
+### Proposed undo or redo feature
 
 #### Proposed Implementation
 
