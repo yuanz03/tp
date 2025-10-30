@@ -18,11 +18,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * <p>
  * Example usage:
  * <pre>
- * {@code stripCaptain p/Sergio Ramos}
+ * {@code unassignCaptain p/Sergio Ramos}
  * </pre>
  */
-public class StripCaptainCommand extends Command {
-    public static final String COMMAND_WORD = "stripcaptain";
+public class UnassignCaptainCommand extends Command {
+    public static final String COMMAND_WORD = "unassigncaptain";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the player "
             + "as no longer captain.\n"
             + "Parameters: " + PREFIX_PLAYER + "PLAYER_NAME "
@@ -33,13 +33,13 @@ public class StripCaptainCommand extends Command {
     private final Name targetName;
 
     /**
-     * Creates a {@code StripCaptainCommand} targeting the person with
+     * Creates a {@code unassignCaptainCommand} targeting the person with
      * {@code targetName}.
      *
      * @param targetName the name of the person to strip captaincy from; must not be
      *                   null.
      */
-    public StripCaptainCommand(Name targetName) {
+    public UnassignCaptainCommand(Name targetName) {
         this.targetName = targetName;
     }
 
@@ -55,7 +55,7 @@ public class StripCaptainCommand extends Command {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
         }
 
-        model.stripCaptain(targetPerson);
+        model.unassignCaptain(targetPerson);
 
         return CommandResult.showPersonCommandResult(String.format(MESSAGE_SUCCESS,
                 targetPerson.getName()));
@@ -74,11 +74,11 @@ public class StripCaptainCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof StripCaptainCommand)) {
+        if (!(other instanceof UnassignCaptainCommand)) {
             return false;
         }
 
-        StripCaptainCommand otherCommand = (StripCaptainCommand) other;
+        UnassignCaptainCommand otherCommand = (UnassignCaptainCommand) other;
         return targetName.equals(otherCommand.targetName);
     }
 }

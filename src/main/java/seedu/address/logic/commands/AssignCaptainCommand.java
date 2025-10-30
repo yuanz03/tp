@@ -60,7 +60,7 @@ public class AssignCaptainCommand extends Command {
         Person currentCaptain = model.getTeamCaptain(targetPerson.getTeam());
         String resultMessage = "";
         if (currentCaptain != null) {
-            model.stripCaptain(currentCaptain);
+            model.unassignCaptain(currentCaptain);
             resultMessage = String.format(MESSAGE_STRIPPED_PREVIOUS_CAPTAIN, currentCaptain.getName());
         }
 

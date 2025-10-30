@@ -199,7 +199,7 @@ public interface Model {
 
     void assignCaptain(Person person);
 
-    void stripCaptain(Person person);
+    void unassignCaptain(Person person);
 
     /**
      * Returns the current captain of the given team, if one exists.
