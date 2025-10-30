@@ -55,18 +55,6 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        // Test with empty keywords - should show custom message
-        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
-        FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-
-        // Update to match new message format
-        String expectedMessage = "No player with name matching: ";
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
@@ -112,7 +100,7 @@ public class FindCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         // Update to match new message format with quoted keyword
-        String expectedMessage = "No player with name matching: \"Car\"";
+        String expectedMessage = "No player with name matching keyword(s): \"Car\"";
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 

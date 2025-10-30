@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,13 +43,7 @@ public class FilterByInjuryPredicateTest {
     public void toString_containsKeyword() {
         FilterByInjuryPredicate pred = new FilterByInjuryPredicate("ACL");
         String str = pred.toString();
-        assertTrue(str.contains("injury keyword"));
+        assertTrue(str.contains("injury name"));
         assertTrue(str.contains("ACL"));
-    }
-
-    @Test
-    public void getKeyword_returnsKeyword() {
-        FilterByInjuryPredicate pred = new FilterByInjuryPredicate("ACL");
-        assertEquals("ACL", pred.getKeyword());
     }
 }

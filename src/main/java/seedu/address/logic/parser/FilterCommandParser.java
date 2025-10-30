@@ -6,11 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -88,11 +84,6 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         for (Prefix prefix : presentPrefixes) {
             String value = argMultimap.getValue(prefix).get();
 
-            // Check for duplicate keywords in team and injury fields
-            if (prefix == PREFIX_TEAM || prefix == PREFIX_INJURY) {
-                validateNoDuplicateKeywords(value, prefix);
-            }
-
             if (prefix == PREFIX_TEAM) {
                 ParserUtil.parseTeam(value);
             } else if (prefix == PREFIX_INJURY) {
@@ -100,44 +91,6 @@ public class FilterCommandParser implements Parser<FilterCommand> {
             } else if (prefix == PREFIX_POSITION) {
                 ParserUtil.parsePosition(value);
             }
-        }
-    }
-
-    /**
-     * Validates that there are no duplicate keywords in the input string.
-     *
-     * @throws ParseException if duplicate keywords are found
-     */
-    private void validateNoDuplicateKeywords(String value, Prefix prefix) throws ParseException {
-        if (value == null || value.trim().isEmpty()) {
-            return;
-        }
-
-        String[] keywords = value.trim().split("\\s+");
-        Map<String, String> normalizedToOriginal = new HashMap<>(); // Track first occurrence
-        Set<String> duplicates = new HashSet<>();
-
-        for (String keyword : keywords) {
-            String normalized = keyword.trim().toLowerCase(); // Case-insensitive comparison
-            if (!normalized.isEmpty()) {
-                if (normalizedToOriginal.containsKey(normalized)) {
-                    // Found duplicate - use the first occurrence for error message
-                    duplicates.add(normalizedToOriginal.get(normalized));
-                } else {
-                    // First time seeing this keyword - store the original case
-                    normalizedToOriginal.put(normalized, keyword.trim());
-                }
-            }
-        }
-
-        if (!duplicates.isEmpty()) {
-            String duplicateList = duplicates.stream()
-                    .map(dup -> "\"" + dup + "\"")
-                    .collect(Collectors.joining(", "));
-            String fieldName = prefix == PREFIX_TEAM ? "team" : "injury";
-            throw new ParseException(String.format(
-                    "Duplicate %s keyword%s found: %s. Please remove duplicate keywords.",
-                    fieldName, duplicates.size() > 1 ? "s" : "", duplicateList));
         }
     }
 }
