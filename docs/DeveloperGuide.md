@@ -18,7 +18,7 @@
     * [Storage component](#storage-component)
     * [Common classes](#common-classes)
 * [Implementation](#implementation)
-    * [Proposed undo or redo feature](#proposed-undoredo-feature)
+    * [Proposed undo or redo feature](#proposed-undo-or-redo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
