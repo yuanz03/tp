@@ -635,7 +635,7 @@ Format: `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 
 **Warnings:**
 * When editing tags, all existing tags will be replaced with the new ones. If you want to keep existing tags, you must include them in the edit command.
-* You cannot edit team, injury status or position through this command - use `assignteam`, `assigninjury` or `assignposition` commands instead.
+* You cannot edit team, injury status, position, or captain status through this command - use `assignteam`, `assigninjury`, `assignposition`, or `assigncaptain` commands instead.
 </box>
 
 <box type="tip" seamless>
@@ -789,9 +789,9 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 * At least one of the optional fields must be provided.
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 * `POSITION_NAME` must be an existing position in the PlayBook. Use the `addposition` command to add a position first.
-* `INJURY` will only match full words e.g. `ACL` will not match `ACLS`.
-* `INJURY` matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Leg Arm` will return `Leg Broken`, `Arm Fractured`.
+* `TEAM_NAME`, `INJURY`, and `POSITION_NAME` use exact whole-field string matching (i.e. `AND` search).
+  * e.g., `filter i/Broken Leg` returns only players whose `INJURY` is `Broken Leg` or `broken leg` (case-insensitive)
+  * e.g., `filter tm/Manchester United` returns only players whose `TEAM_NAME` is `Manchester United` or `manchester United` (case-insensitive)
 
 <box type="tip" seamless>
 
