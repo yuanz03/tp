@@ -60,7 +60,7 @@ public class FindCommand extends Command {
                         .collect(Collectors.joining(", "));
             }
 
-            String noMatchMessage = "No player with name matching: " + keywordsString;
+            String noMatchMessage = "No player with name matching keyword(s): " + keywordsString;
             logger.info("No players found matching search criteria");
             return CommandResult.showPersonCommandResult(noMatchMessage);
         }
