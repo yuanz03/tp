@@ -818,6 +818,7 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
   * e.g., `filter tm/Manchester United` returns only players whose `TEAM_NAME` is `Manchester United` or `manchester United` (case-insensitive)
 
 **Warnings:**
+* `POSITION_NAME` cannot be `NONE` when filtering by position.
 * For `TEAM_NAME` and `POSITION_NAME`, only leading and trailing spaces will be trimmed, any spaces in the name will be used for exact matching.
   * e.g., `John Doe` will match `   John Doe` but not match `John     Doe`.
 
