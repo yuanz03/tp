@@ -5,10 +5,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
@@ -99,13 +101,27 @@ public class FilterCommand extends Command {
     /**
      * Validates the team if it is present in the filter criteria.
      *
-     * @throws CommandException if the team does not exist
+     * @throws CommandException if no teams match the filter criteria
      */
     private void validateTeamIfPresent(Model model) throws CommandException {
         if (teamArg.isPresent()) {
-            Team teamToCheck = new Team(teamArg.get());
-            if (!model.hasTeam(teamToCheck)) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TEAM);
+            String teamName = teamArg.get();
+
+            // Validate team name format first
+            if (!Team.isValidTeamName(teamName)) {
+                throw new CommandException(String.format("Invalid team name: %s\n%s",
+                        teamName, Team.MESSAGE_CONSTRAINTS));
+            }
+
+            // Check if any team in the model matches the filter criteria
+            boolean hasMatchingTeam = model.getAddressBook().getTeamList().stream()
+                    .anyMatch(team -> {
+                        FilterByTeamPredicate predicate = new FilterByTeamPredicate(teamName);
+                        return predicate.testTeam(team);
+                    });
+
+            if (!hasMatchingTeam) {
+                throw new CommandException(String.format(Messages.MESSAGE_INVALID_TEAM, teamName));
             }
         }
     }
@@ -119,7 +135,7 @@ public class FilterCommand extends Command {
         if (positionArg.isPresent()) {
             Position positionToCheck = new Position(positionArg.get());
             if (!model.hasPosition(positionToCheck)) {
-                throw new CommandException(Messages.MESSAGE_INVALID_POSITION);
+                throw new CommandException(String.format(Messages.MESSAGE_INVALID_POSITION, positionToCheck.getName()));
             }
         }
     }
@@ -131,26 +147,43 @@ public class FilterCommand extends Command {
         if (teamArg.isPresent() && injuryArg.isPresent() && positionArg.isPresent()) {
             return new CommandException(
                 String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
-                        teamArg.get(), injuryArg.get(), positionArg.get()));
+                        formatKeywords(teamArg.get()), formatKeywords(injuryArg.get()), positionArg.get()));
         } else if (teamArg.isPresent() && injuryArg.isPresent()) {
             return new CommandException(
-                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY, teamArg.get(), injuryArg.get()));
+                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY,
+                        formatKeywords(teamArg.get()), formatKeywords(injuryArg.get())));
         } else if (teamArg.isPresent() && positionArg.isPresent()) {
             return new CommandException(
-                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION, teamArg.get(), positionArg.get()));
+                String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION,
+                        formatKeywords(teamArg.get()), positionArg.get()));
         } else if (positionArg.isPresent() && injuryArg.isPresent()) {
             return new CommandException(
-                String.format(Messages.MESSAGE_NO_MATCHING_INJURY_AND_POSITION, injuryArg.get(), positionArg.get()));
+                String.format(Messages.MESSAGE_NO_MATCHING_INJURY_AND_POSITION,
+                        formatKeywords(injuryArg.get()), positionArg.get()));
         } else if (teamArg.isPresent()) {
             return new CommandException(
-                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, teamArg.get()));
+                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, formatKeywords(teamArg.get())));
         } else if (positionArg.isPresent()) {
             return new CommandException(
                 String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, positionArg.get()));
         } else {
             return new CommandException(
-                String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, injuryArg.get()));
+                String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, formatKeywords(injuryArg.get())));
         }
+    }
+
+    /**
+     * Formats keywords by splitting on whitespace and joining with commas.
+     * Example: "u16 u17" becomes "u16, u17"
+     */
+    private String formatKeywords(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return input;
+        }
+        return Arrays.stream(input.trim().split("\\s+"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.joining(", "));
     }
 
     @Override

@@ -47,4 +47,15 @@ public class ListTeamCommandTest {
 
         assertCommandFailure(new ListTeamCommand(), emptyModel, MESSAGE_NO_TEAMS);
     }
+
+    @Test
+    public void execute_singleTeam_showsSingleTeam() {
+        Model singleTeamModel = new ModelManager(new AddressBook(), new UserPrefs());
+        singleTeamModel.addTeam(U12); // Add one team
+        Model expectedSingleTeamModel = new ModelManager(new AddressBook(), new UserPrefs());
+        expectedSingleTeamModel.addTeam(U12);
+
+        assertCommandSuccess(new ListTeamCommand(), singleTeamModel,
+                ListTeamCommand.MESSAGE_SUCCESS, expectedSingleTeamModel);
+    }
 }

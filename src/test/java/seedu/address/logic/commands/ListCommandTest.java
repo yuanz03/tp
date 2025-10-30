@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_NO_PLAYERS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -50,5 +52,16 @@ public class ListCommandTest {
         ListCommand command = new ListCommand();
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(emptyModel));
         assertEquals(MESSAGE_NO_PLAYERS, exception.getMessage());
+    }
+
+    @Test
+    public void execute_singlePlayer_showsSinglePlayer() {
+        Model singlePlayerModel = new ModelManager(new AddressBook(), new UserPrefs());
+        singlePlayerModel.addPerson(CARL); // Add one player
+        Model expectedSinglePlayerModel = new ModelManager(new AddressBook(), new UserPrefs());
+        expectedSinglePlayerModel.addPerson(CARL);
+
+        assertCommandSuccess(new ListCommand(), singlePlayerModel,
+                ListCommand.MESSAGE_SUCCESS, expectedSinglePlayerModel);
     }
 }
