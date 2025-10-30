@@ -1012,3 +1012,54 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing/corrupted data files
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+### Difficulty Level
+**High** - PlayBook represents a significant enhancement over AB3, managing multiple interconnected entity types with complex rules and validation logic.
+
+### Challenges Faced
+
+**Complex Entity Relationships**
+- Managing 4 entity types (Person, Team, Position, Injury) with intricate relationships
+- Implementing validation for team-player assignments with captain constraints
+- Handling multiple concurrent injuries per player with proper state management
+
+**Advanced Command System**
+- Developing 10+ specialised commands beyond basic CRUD operations
+- Implementing complex validation for injury assignments, captain assignments, and position assignments
+- Creating multi-entity operations that span across different entity types
+
+**Storage Complexity**
+- Complex JSON serialisation with nested entities and collections
+- Maintaining backward compatibility with legacy data formats
+- Ensuring data integrity across multiple entity types during save/load operations
+
+**UI Adaptation**
+- Adapting the UI to display and manage multiple entity types (Players, Teams, Positions)
+- Implementing filtering and display logic for different entity relationships
+
+### Effort Required
+The effort required for PlayBook was substantially higher than AB3 due to:
+- **Multiple Entity Management**: While AB3 deals with only one entity type (Person), PlayBook manages four interconnected entity types
+- **Complex Business Logic**: Implementing domain-specific rules for football team management
+- **Advanced Validation**: Complex validation spanning across entity relationships
+- **Enhanced User Experience**: More sophisticated command system and filtering capabilities
+
+### Achievements
+- Successfully implemented a comprehensive football team management system
+- Maintained clean architecture while significantly expanding functionality
+- Delivered a robust application with complex entity relationships
+- Achieved feature parity with professional sports management tools
+
+### Reuse and Adaptation
+Approximately **10%** of development effort was saved through strategic reuse:
+
+**Jackson Library** - Used for JSON data serialisation and deserialisation. Our work on adapting Jackson to handle PlayBook's complex entity relationships is contained in the storage component classes (`JsonAdaptedPerson`, `JsonAdaptedTeam`, `JsonAdaptedPosition`, `JsonAdaptedInjury`).
+
+**JavaFX Framework** - Reused from AB3 for building the graphical user interface, but significantly adapted to support multiple entity displays and complex filtering operations.
+
+**JUnit5 Testing Framework** - Reused for unit testing, with extensive test suites developed for the new entity types and complex business logic.
+
