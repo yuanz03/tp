@@ -66,7 +66,6 @@ public class AssignInjuryCommand extends Command {
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
-        assert model != null : "model should not be null";
         assert name != null : "player name to assign should not be null";
         try {
             return model.getPersonByName(name);

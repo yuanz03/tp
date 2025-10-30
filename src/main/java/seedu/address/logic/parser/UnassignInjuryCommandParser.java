@@ -38,7 +38,6 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     }
 
     private void checkEmptyArguments(String args) throws ParseException {
-        assert args != null : "args should not be null";
         if (args.trim().isEmpty()) {
             throw new ParseException(
                     formatParseErrorMessage(
@@ -47,7 +46,6 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     }
 
     private void checkCompulsoryPrefixes(ArgumentMultimap argMultimap) throws ParseException {
-        assert argMultimap != null : "argMultimap should not be null";
         boolean hasPlayerPrefix = arePrefixesPresent(argMultimap, PREFIX_PLAYER);
         boolean hasInjuryPrefix = arePrefixesPresent(argMultimap, PREFIX_INJURY);
 
@@ -69,7 +67,6 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     }
 
     private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
-        assert argMultimap != null : "argMultimap should not be null";
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PLAYER, PREFIX_INJURY);
         } catch (ParseException exception) {
@@ -78,7 +75,6 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
     }
 
     private void checkEmptyPreamble(ArgumentMultimap argMultimap) throws ParseException {
-        assert argMultimap != null : "argMultimap should not be null";
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     formatParseErrorMessage(

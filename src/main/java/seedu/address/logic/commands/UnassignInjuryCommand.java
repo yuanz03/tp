@@ -71,7 +71,6 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
-        assert model != null : "model should not be null";
         assert name != null : "player name to unassign should not be null";
         try {
             return model.getPersonByName(name);
@@ -82,7 +81,6 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private void validatePlayerIsInjured(Model model, Person person) throws CommandException {
-        assert model != null : "model should not be null";
         assert person != null : "person to unassign should not be null";
         if (!model.hasNonDefaultInjury(person)) {
             logger.warning("Player " + person.getName() + " is not injured");
@@ -92,7 +90,6 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private void validatePlayerHasInjury(Model model, Person person, Injury injury) throws CommandException {
-        assert model != null : "model should not be null";
         assert person != null : "person to unassign should not be null";
         assert injury != null : "injury to unassign should not be null";
         if (!model.hasSpecificInjury(person, injury)) {
