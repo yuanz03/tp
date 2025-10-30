@@ -41,4 +41,11 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     public String toString() {
         return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
+
+    /**
+     * Returns the list of keywords used in this predicate.
+     */
+    public List<String> getKeywords() {
+        return keywords;
+    }
 }

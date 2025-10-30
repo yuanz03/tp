@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
@@ -43,6 +45,25 @@ public class FindCommand extends Command {
 
         int foundCount = model.getFilteredPersonList().size();
         logger.info("Found " + foundCount + " players matching search criteria");
+
+        // Custom message for no matches
+        if (foundCount == 0) {
+            List<String> keywords = predicate.getKeywords();
+            String keywordsString;
+
+            if (keywords.isEmpty() || (keywords.size() == 1 && keywords.get(0).isEmpty())) {
+                keywordsString = "";
+            } else {
+                keywordsString = keywords.stream()
+                        .filter(keyword -> !keyword.isEmpty())
+                        .map(keyword -> "\"" + keyword + "\"")
+                        .collect(Collectors.joining(", "));
+            }
+
+            String noMatchMessage = "No player with name matching: " + keywordsString;
+            logger.info("No players found matching search criteria");
+            return CommandResult.showPersonCommandResult(noMatchMessage);
+        }
 
         logger.info("FindCommand completed successfully");
 

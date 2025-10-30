@@ -369,4 +369,28 @@ public class FilterCommandParserTest {
                 Optional.of(VALID_TEAM_BOB), Optional.of(VALID_INJURY_BOB), Optional.of(VALID_POSITION_BOB));
         assertParseSuccess(parser, input, expected);
     }
+
+    @Test
+    public void parse_duplicateTeamKeywords_throwsParseException() {
+        assertParseFailure(parser, " tm/U16 U16 Boys",
+                "Duplicate team keyword found: \"U16\". Please remove duplicate keywords.");
+    }
+
+    @Test
+    public void parse_duplicateInjuryKeywords_throwsParseException() {
+        assertParseFailure(parser, " i/ACL ACL Hamstring",
+                "Duplicate injury keyword found: \"ACL\". Please remove duplicate keywords.");
+    }
+
+    @Test
+    public void parse_caseInsensitiveDuplicateTeamKeywords_throwsParseException() {
+        assertParseFailure(parser, " tm/U16 u16 Boys",
+                "Duplicate team keyword found: \"U16\". Please remove duplicate keywords.");
+    }
+
+    @Test
+    public void parse_caseInsensitiveDuplicateInjuryKeywords_throwsParseException() {
+        assertParseFailure(parser, " i/ACL Acl aCl",
+                "Duplicate injury keyword found: \"ACL\". Please remove duplicate keywords.");
+    }
 }
