@@ -14,9 +14,9 @@ import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains unit tests for {@code StripCaptainCommand}.
+ * Contains unit tests for {@code UnassignCaptainCommand}.
  */
-public class StripCaptainCommandTest {
+public class UnassignCaptainCommandTest {
 
     @Test
     public void execute_personExistsAndIsCaptain_stripsCaptaincy() throws Exception {
@@ -24,7 +24,7 @@ public class StripCaptainCommandTest {
         Name name = person.getName();
 
         ModelStub modelStub = new ModelStub() {
-            private boolean stripCaptainCalled = false;
+            private boolean unassignCaptainCalled = false;
 
             @Override
             public Person getPersonByName(Name queryName) {
@@ -35,15 +35,15 @@ public class StripCaptainCommandTest {
             }
 
             @Override
-            public void stripCaptain(Person person) {
-                stripCaptainCalled = true;
+            public void unassignCaptain(Person person) {
+                unassignCaptainCalled = true;
             }
         };
 
-        StripCaptainCommand command = new StripCaptainCommand(name);
+        UnassignCaptainCommand command = new UnassignCaptainCommand(name);
         CommandResult result = command.execute(modelStub);
 
-        assertEquals(CommandResult.showPersonCommandResult(String.format(StripCaptainCommand.MESSAGE_SUCCESS,
+        assertEquals(CommandResult.showPersonCommandResult(String.format(UnassignCaptainCommand.MESSAGE_SUCCESS,
                 person.getName())), result);
     }
 
@@ -57,7 +57,7 @@ public class StripCaptainCommandTest {
             }
         };
 
-        StripCaptainCommand command = new StripCaptainCommand(name);
+        UnassignCaptainCommand command = new UnassignCaptainCommand(name);
         try {
             command.execute(modelStub);
         } catch (CommandException e) {
@@ -73,9 +73,9 @@ public class StripCaptainCommandTest {
     public void equals() {
         Name sergio = new Name("Sergio Ramos");
         Name leo = new Name("Lionel Messi");
-        StripCaptainCommand stripSergio = new StripCaptainCommand(sergio);
-        StripCaptainCommand stripSergioCopy = new StripCaptainCommand(sergio);
-        StripCaptainCommand stripLeo = new StripCaptainCommand(leo);
+        UnassignCaptainCommand stripSergio = new UnassignCaptainCommand(sergio);
+        UnassignCaptainCommand stripSergioCopy = new UnassignCaptainCommand(sergio);
+        UnassignCaptainCommand stripLeo = new UnassignCaptainCommand(leo);
 
         // same object -> true
         assertTrue(stripSergio.equals(stripSergio));

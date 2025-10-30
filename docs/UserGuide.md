@@ -32,7 +32,7 @@
         - [Assigning player as captain: `assigncaptain`](#assigning-player-as-captain-assigncaptain)
         - [Deleting a player, team or position: `delete`](#deleting-a-player-team-or-position-delete)
         - [Unassign an injury from player: `unassigninjury`](#unassign-an-injury-from-player-unassigninjury)
-        - [Unassigning player as captain: `unassigncaptain`](#unassigning-player-as-captain-stripcaptain)
+        - [Unassigning player as captain: `unassigncaptain`](#unassigning-player-as-captain-unassigncaptain)
         - [Editing a player: `edit`](#editing-a-player-edit)
         - [Locating players by name: `find`](#locating-players-by-name-find)
         - [Listing all players: `list`](#listing-all-players-list)
@@ -597,19 +597,19 @@ Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
 </box>
 
-#### Unassigning player as captain: `stripcaptain`
+#### Unassigning player as captain: `unassigncaptain`
 
 Removes captain status from an existing player in the PlayBook.
 
-Format: `stripcaptain pl/PLAYER_NAME`
+Format: `unassigncaptain pl/PLAYER_NAME`
 
 **Requirements:**
 * `PLAYER_NAME` must be an existing player in the PlayBook.
 * The player must already be an assigned captain.
 
 **Examples:**
-1. `stripcaptain pl/John Doe` - Removes captain status from John Doe
-2. `stripcaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
+1. `unassigncaptain pl/John Doe` - Removes captain status from John Doe
+2. `unassigncaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
 
 <box type="info" seamless>
 
@@ -941,8 +941,8 @@ _Details coming soon ..._
 | **Assign Captain**                  | `assigncaptain pl/PLAYER_NAME` <br> e.g., `assigncaptain pl/John Doe`                                                                                                                             |
 | **Delete Player, Team or Position** | `delete [pl/PLAYER_NAME] [tm/TEAM_NAME] [ps/POSITION_NAME]`<br> e.g., `delete pl/James Ho`, `delete tm/u16`, `delete ps/LW`                                                                       |
 | **Unassign Injury from Player**     | `unassigninjury pl/PLAYER_NAME i/INJURY` <br> e.g., `unassigninjury pl/John Doe i/Ankle sprain`                                                                                                   |
-| **Strip Captain**                   | `stripcaptain pl/PLAYER_NAME` <br> e.g., `stripcaptain pl/John Doe`                                                                                                                               |
-| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                  |
+| **Unassign Captain**                | `unassigncaptain pl/PLAYER_NAME` <br> e.g., `unassigncaptain pl/John Doe`                                                                                                                         |
+| **Edit**                            | `edit pl/PLAYER_NAME [n/NEW_PLAYER_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit pl/John Doe n/James Lee e/jameslee@example.com`                                                 |
 | **Find**                            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                        |
 | **List**                            | `list`                                                                                                                                                                                            |
 | **List Captains**                   | `listcaptain`                                                                                                                                                                                     |

@@ -35,7 +35,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCaptainCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTeamCommand;
-import seedu.address.logic.commands.StripCaptainCommand;
+import seedu.address.logic.commands.UnassignCaptainCommand;
 import seedu.address.logic.commands.UnassignInjuryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Injury;
@@ -178,10 +178,10 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_stripCaptain() throws Exception {
+    public void parseCommand_unassignCaptain() throws Exception {
         Name name = new Name(VALID_NAME_AMY);
-        assertEquals(new StripCaptainCommand(name),
-                parser.parseCommand(StripCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
+        assertEquals(new UnassignCaptainCommand(name),
+                parser.parseCommand(UnassignCaptainCommand.COMMAND_WORD + PLAYER_DESC_AMY));
     }
 
     @Test

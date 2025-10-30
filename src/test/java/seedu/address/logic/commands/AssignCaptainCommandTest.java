@@ -101,7 +101,7 @@ public class AssignCaptainCommandTest {
             }
 
             @Override
-            public void stripCaptain(Person person) {
+            public void unassignCaptain(Person person) {
                 if (person.equals(oldCaptain)) {
                     oldCaptainStripped = true;
                 }

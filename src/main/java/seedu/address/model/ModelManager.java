@@ -219,7 +219,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void stripCaptain(Person person) {
+    public void unassignCaptain(Person person) {
         Person updatedPerson = person.withCaptain(Person.DEFAULT_CAPTAIN_STATUS);
         setPerson(person, updatedPerson);
     }
