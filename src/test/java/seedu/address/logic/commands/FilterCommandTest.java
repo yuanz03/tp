@@ -50,7 +50,7 @@ public class FilterCommandTest {
     private Model expectedModel;
 
     /**
-     * Formats keywords by splitting on whitespace and joining with commas.
+     * Formats keywords by splitting on whitespace and joining with commas and quotes.
      * Used to match the formatting in FilterCommand.
      */
     private String formatKeywords(String input) {
@@ -61,8 +61,10 @@ public class FilterCommandTest {
         return Arrays.stream(input.trim().split("\\s+"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
+                .map(s -> "\"" + s + "\"")
                 .collect(Collectors.joining(", "));
     }
+
 
     @BeforeEach
     public void setUp() {
@@ -107,7 +109,7 @@ public class FilterCommandTest {
 
         // Construct and execute the filter command
         FilterCommand command =
-            new FilterCommand(new FilterByTeamPredicate(VALID_TEAM_AMY),
+                new FilterCommand(new FilterByTeamPredicate(VALID_TEAM_AMY),
                 FilterByInjuryPredicate.ALWAYS_TRUE,
                 FilterByPositionPredicate.ALWAYS_TRUE,
                 Optional.of(VALID_TEAM_AMY),
@@ -115,7 +117,7 @@ public class FilterCommandTest {
                 Optional.empty());
 
         assertCommandFailure(command, model,
-                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, VALID_TEAM_AMY));
+                String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, formatKeywords(VALID_TEAM_AMY)));
     }
 
     @Test
@@ -227,7 +229,7 @@ public class FilterCommandTest {
                 Optional.empty());
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY,
-                NON_EXISTENT_INJURY), exception.getMessage());
+                formatKeywords(NON_EXISTENT_INJURY)), exception.getMessage());
     }
 
     @Test
@@ -272,7 +274,7 @@ public class FilterCommandTest {
                 Optional.empty());
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY,
-                 VALID_TEAM_AMY, NON_EXISTENT_INJURY), exception.getMessage());
+                formatKeywords(VALID_TEAM_AMY), formatKeywords(NON_EXISTENT_INJURY)), exception.getMessage());
     }
 
     @Test
@@ -388,7 +390,7 @@ public class FilterCommandTest {
                 Optional.of(VALID_POSITION_BOB));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_POSITION,
-                VALID_TEAM_AMY, VALID_POSITION_BOB), exception.getMessage());
+                formatKeywords(VALID_TEAM_AMY), VALID_POSITION_BOB), exception.getMessage());
     }
 
     @Test
@@ -424,8 +426,8 @@ public class FilterCommandTest {
                 Optional.empty()); // No position
 
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, NON_EXISTENT_INJURY),
-                        exception.getMessage());
+        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, formatKeywords(NON_EXISTENT_INJURY)),
+                exception.getMessage());
     }
 
     @Test

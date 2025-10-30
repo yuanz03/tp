@@ -173,8 +173,8 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Formats keywords by splitting on whitespace and joining with commas.
-     * Example: "u16 u17" becomes "u16, u17"
+     * Formats keywords by splitting on whitespace and joining with commas and quotes.
+     * Example: "u16 u17" becomes "\"u16\", \"u17\""
      */
     private String formatKeywords(String input) {
         if (input == null || input.trim().isEmpty()) {
@@ -183,6 +183,7 @@ public class FilterCommand extends Command {
         return Arrays.stream(input.trim().split("\\s+"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
+                .map(s -> "\"" + s + "\"")
                 .collect(Collectors.joining(", "));
     }
 
