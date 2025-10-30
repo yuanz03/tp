@@ -19,8 +19,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Removes an injury status from an existing {@code Person} in the PlayBook.
- * Resets the {@code Person}'s injury status to the default {@code "FIT"} status
- * if the {@code Person} has no more injuries.
+ * Delegates the removal operation to the model which resets the {@code Person}'s injury status
+ * to the default {@code "FIT"} status if the {@code Person} has no remaining injuries.
  * <p>
  * Usage: {@code unassigninjury pl/<player> i/<injury>}.
  */
@@ -51,7 +51,8 @@ public class UnassignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        logger.info("Executing UnassignInjuryCommand: " + injuryToUnassign + " from " + personNameToUnassign);
+        logger.info("Executing UnassignInjuryCommand: " + injuryToUnassign.getInjuryName() + " from "
+                + personNameToUnassign);
 
         Person personToUnassign = findPersonByName(model, personNameToUnassign);
 
@@ -62,14 +63,15 @@ public class UnassignInjuryCommand extends Command {
         validatePlayerHasInjury(model, personToUnassign, injuryToUnassign);
 
         Person updatedPerson = model.deleteInjury(personToUnassign, injuryToUnassign);
-        logger.info("Successfully unassigned injury " + injuryToUnassign + " from " + personToUnassign.getName()
-                + ". Current injuries: " + updatedPerson.getInjuries());
+        logger.info("Successfully unassigned injury " + injuryToUnassign.getInjuryName() + " from "
+                + updatedPerson.getName() + ". Current injuries: " + updatedPerson.getInjuries());
 
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_UNASSIGN_INJURY_SUCCESS,
                 updatedPerson.getName(), injuryToUnassign.getInjuryName()));
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
+        assert name != null : "player name to unassign should not be null";
         try {
             return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
@@ -79,6 +81,7 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private void validatePlayerIsInjured(Model model, Person person) throws CommandException {
+        assert person != null : "person to unassign should not be null";
         if (!model.hasNonDefaultInjury(person)) {
             logger.warning("Player " + person.getName() + " is not injured");
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_ALREADY_UNASSIGNED,
@@ -87,6 +90,8 @@ public class UnassignInjuryCommand extends Command {
     }
 
     private void validatePlayerHasInjury(Model model, Person person, Injury injury) throws CommandException {
+        assert person != null : "person to unassign should not be null";
+        assert injury != null : "injury to unassign should not be null";
         if (!model.hasSpecificInjury(person, injury)) {
             logger.warning("Player " + person.getName() + " has no record of this injury " + injury.getInjuryName());
             throw new CommandException(String.format(Messages.MESSAGE_INJURY_NOT_FOUND,
@@ -96,7 +101,7 @@ public class UnassignInjuryCommand extends Command {
 
     /**
      * Returns true if this {@code UnassignInjuryCommand} is equal to another object.
-     * Two {@code UnassignInjuryCommand} are considered equal if they have the same
+     * Two {@code UnassignInjuryCommand} objects are considered equal if they have the same
      * {@code personNameToUnassign} and {@code injuryToUnassign}.
      */
     @Override

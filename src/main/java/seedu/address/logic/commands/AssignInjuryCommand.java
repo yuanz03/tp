@@ -49,7 +49,8 @@ public class AssignInjuryCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        logger.info("Executing AssignInjuryCommand: " + injuryToAssign + " to " + personNameToAssign);
+        logger.info("Executing AssignInjuryCommand: " + injuryToAssign.getInjuryName() + " to "
+                + personNameToAssign);
 
         Person personToAssign = findPersonByName(model, personNameToAssign);
 
@@ -57,14 +58,15 @@ public class AssignInjuryCommand extends Command {
         validateNoDuplicateInjury(personToAssign, injuryToAssign);
 
         Person updatedPerson = model.addInjury(personToAssign, injuryToAssign);
-        logger.info("Successfully assigned injury " + injuryToAssign + " to " + personToAssign.getName()
-                + ". Current injuries: " + updatedPerson.getInjuries());
+        logger.info("Successfully assigned injury " + injuryToAssign.getInjuryName() + " to "
+                + updatedPerson.getName() + ". Current injuries: " + updatedPerson.getInjuries().toString());
 
         return CommandResult.showPersonCommandResult(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
-                personToAssign.getName(), updatedPerson.getInjuries()));
+                updatedPerson.getName(), updatedPerson.getInjuries()));
     }
 
     private Person findPersonByName(Model model, Name name) throws CommandException {
+        assert name != null : "player name to assign should not be null";
         try {
             return model.getPersonByName(name);
         } catch (PersonNotFoundException e) {
@@ -74,6 +76,7 @@ public class AssignInjuryCommand extends Command {
     }
 
     private void validateNotDefaultInjury(Injury injury) throws CommandException {
+        assert injury != null : "injury to assign should not be null";
         if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
             logger.warning("Assignment of the default status " + injury.getInjuryName() + " is not allowed");
             throw new CommandException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
@@ -81,15 +84,18 @@ public class AssignInjuryCommand extends Command {
     }
 
     private void validateNoDuplicateInjury(Person person, Injury injury) throws CommandException {
+        assert person != null : "person to assign should not be null";
+        assert injury != null : "injury to assign should not be null";
         if (person.getInjuries().contains(injury)) {
             logger.warning("Player " + person.getName() + " is already assigned to injury " + injury.getInjuryName());
-            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY, person.getName(), injury));
+            throw new CommandException(String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
+                    person.getName(), injury.getInjuryName()));
         }
     }
 
     /**
      * Returns true if this {@code AssignInjuryCommand} is equal to another object.
-     * Two {@code AssignInjuryCommand} are considered equal if they have the same
+     * Two {@code AssignInjuryCommand} objects are considered equal if they have the same
      * {@code personNameToAssign} and {@code injuryToAssign}.
      */
     @Override

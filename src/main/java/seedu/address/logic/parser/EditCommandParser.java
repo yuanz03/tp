@@ -42,7 +42,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         verifyNoDuplicatePrefixes(argMultimap);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        Name playerName = parsePlayerName(argMultimap);
+        Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
 
         parsePlayerFieldsForEdit(argMultimap, editPersonDescriptor);
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
@@ -78,31 +78,19 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
     }
 
-    private Name parsePlayerName(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
-        }
-    }
-
     private void parsePlayerFieldsForEdit(ArgumentMultimap argMultimap, EditPersonDescriptor editPersonDescriptor)
             throws ParseException {
-        try {
-            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-                editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
-            }
-            if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-                editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
-            }
-            if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-                editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-            }
-            if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-                editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
-            }
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
     }
 
@@ -135,11 +123,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
             return Optional.of(ParserUtil.parseTags(tagSet));
         } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
+            throw new ParseException(exception.getMessage());
         }
     }
 
     private String formatParseErrorMessage(String message) {
-        return message + "\n" + EditCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, message + "\n" + EditCommand.MESSAGE_USAGE);
     }
 }

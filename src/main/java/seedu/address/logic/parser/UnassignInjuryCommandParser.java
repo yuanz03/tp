@@ -21,6 +21,7 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
      * @throws ParseException If the user input does not conform to the expected format.
      */
     public UnassignInjuryCommand parse(String args) throws ParseException {
+        assert args != null : "args should not be null";
         checkEmptyArguments(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PLAYER, PREFIX_INJURY);
@@ -28,8 +29,8 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         checkCompulsoryPrefixes(argMultimap);
         verifyNoDuplicatePrefixes(argMultimap);
 
-        Name playerName = parsePlayerName(argMultimap);
-        Injury injury = parseInjury(argMultimap);
+        Name playerName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
+        Injury injury = ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
 
         checkEmptyPreamble(argMultimap);
 
@@ -81,23 +82,9 @@ public class UnassignInjuryCommandParser implements Parser<UnassignInjuryCommand
         }
     }
 
-    private Name parsePlayerName(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            return ParserUtil.parseName(argMultimap.getValue(PREFIX_PLAYER).get());
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
-        }
-    }
-
-    private Injury parseInjury(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            return ParserUtil.parseInjury(argMultimap.getValue(PREFIX_INJURY).get());
-        } catch (ParseException exception) {
-            throw new ParseException(formatParseErrorMessage(exception.getMessage()));
-        }
-    }
-
     private String formatParseErrorMessage(String message) {
-        return message + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
+        assert message != null : "error message should not be null";
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                message + "\n" + UnassignInjuryCommand.MESSAGE_USAGE);
     }
 }

@@ -13,12 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Messages;
 import seedu.address.model.person.Injury;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.IllegalInjuryException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.Team;
 
@@ -136,15 +133,6 @@ public class ModelManager implements Model {
     public Person addInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
 
-        if (!hasPerson(target)) {
-            throw new PersonNotFoundException();
-        }
-
-        // Disallow assigning "FIT" as an injury
-        if (injury.equals(Injury.DEFAULT_INJURY_STATUS)) {
-            throw new IllegalInjuryException(Messages.MESSAGE_INVALID_INJURY_ASSIGNMENT);
-        }
-
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
 
         // Remove FIT status when assigning any other injury
@@ -153,17 +141,7 @@ public class ModelManager implements Model {
         }
         updatedInjuries.add(injury);
 
-        Person updatedPerson = new Person(
-                target.getName(),
-                target.getPhone(),
-                target.getEmail(),
-                target.getAddress(),
-                target.getTeam(),
-                target.getTags(),
-                target.getPosition(),
-                updatedInjuries,
-                target.isCaptain()
-        );
+        Person updatedPerson = target.withInjuries(updatedInjuries);
         setPerson(target, updatedPerson);
         return updatedPerson;
     }
@@ -171,10 +149,6 @@ public class ModelManager implements Model {
     @Override
     public Person deleteInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
-
-        if (!hasPerson(target)) {
-            throw new PersonNotFoundException();
-        }
 
         Set<Injury> updatedInjuries = new HashSet<>(target.getInjuries());
         updatedInjuries.remove(injury);
@@ -184,17 +158,7 @@ public class ModelManager implements Model {
             updatedInjuries.add(Injury.DEFAULT_INJURY_STATUS);
         }
 
-        Person updatedPerson = new Person(
-                target.getName(),
-                target.getPhone(),
-                target.getEmail(),
-                target.getAddress(),
-                target.getTeam(),
-                target.getTags(),
-                target.getPosition(),
-                updatedInjuries,
-                target.isCaptain()
-        );
+        Person updatedPerson = target.withInjuries(updatedInjuries);
         setPerson(target, updatedPerson);
         return updatedPerson;
     }
@@ -202,10 +166,6 @@ public class ModelManager implements Model {
     @Override
     public boolean hasNonDefaultInjury(Person target) {
         requireNonNull(target);
-
-        if (!hasPerson(target)) {
-            throw new PersonNotFoundException();
-        }
         // Check whether the person has at least one injury that is not the default "FIT" status
         return target.getInjuries().stream().anyMatch(injury -> !injury.equals(Injury.DEFAULT_INJURY_STATUS));
     }
@@ -213,10 +173,6 @@ public class ModelManager implements Model {
     @Override
     public boolean hasSpecificInjury(Person target, Injury injury) {
         requireAllNonNull(target, injury);
-
-        if (!hasPerson(target)) {
-            throw new PersonNotFoundException();
-        }
         return target.getInjuries().contains(injury);
     }
 
