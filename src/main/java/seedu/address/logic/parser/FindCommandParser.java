@@ -92,7 +92,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private void processKeywordForDuplicates(String keyword, Map<String, String> normalizedToOriginal,
                                            Set<String> duplicates) {
-        String normalized = normalizeKeyword(keyword);
+        String normalized = keyword.trim().toLowerCase();
         if (!normalized.isEmpty()) {
             if (normalizedToOriginal.containsKey(normalized)) {
                 duplicates.add(normalizedToOriginal.get(normalized));
@@ -100,13 +100,6 @@ public class FindCommandParser implements Parser<FindCommand> {
                 normalizedToOriginal.put(normalized, keyword.trim());
             }
         }
-    }
-
-    /**
-     * Normalizes a keyword by trimming and converting to lowercase.
-     */
-    private String normalizeKeyword(String keyword) {
-        return keyword.trim().toLowerCase();
     }
 
     /**

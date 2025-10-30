@@ -2,7 +2,6 @@ package seedu.address.model.position;
 
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 
@@ -22,7 +21,7 @@ public class FilterByPositionPredicate implements Predicate<Person> {
         if (positionName.isEmpty()) {
             return true;
         }
-        return StringUtil.containsWordIgnoreCase(person.getPosition().getName(), positionName);
+        return person.getPosition().getName().equalsIgnoreCase(positionName);
     }
 
     @Override
