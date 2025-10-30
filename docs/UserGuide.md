@@ -932,13 +932,13 @@ _Details coming soon ..._
 4. **Playbook's duplicate detection** treats names with different spacing as different entries.
    - **Example**: `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered separate players, which can create unintended duplicate entries due to spacing variations
    - **Remedy**: ensure the player name is entered with the exact spacing you intend
-5. **Incorrect or misplaced prefixes may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
+5. **Incorrect or misplaced prefixes** may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
    - **Example**: `assigninjury pl/John Doe i/ACL tm/U16` — invalid `tm/` prefix for `assigninjury` is interpreted as part of the injury value, causing an invalid injury error rather than an invalid prefix error
    - **Remedy**: follow the exact command format for each command and use only the correct prefixes
 6. **Strict validation rules** are enforced for certain player fields, meaning inputs that deviate from the expected format are rejected.
    - **Example**: Phone number accepts only digits — you can enter multiple phone numbers only if they are entered as a continuous string of digits because spaces or special characters like (`-`, `+`, `)`, etc.) are rejected
      - An input like `1234 5678 (HP) 1111-3333 (Office)` will be rejected and triggers an error message to notify you of this behaviour
-   - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which satisfies the functional needs of Playbook users
+   - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which is sufficient to satisfy the functional needs of Playbook users
 
 --------------------------------------------------------------------------------------------------------------------
 
