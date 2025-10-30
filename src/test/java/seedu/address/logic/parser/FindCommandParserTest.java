@@ -31,4 +31,24 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
     }
 
+    @Test
+    public void parse_duplicateKeywords_throwsParseException() {
+        // Single duplicate
+        assertParseFailure(parser, "alice alice",
+            "Duplicate name keyword found: \"alice\". Please remove duplicate keywords.");
+
+        // Multiple duplicates
+        assertParseFailure(parser, "alice bob alice bob",
+            "Duplicate name keywords found: \"bob\", \"alice\". Please remove duplicate keywords.");
+    }
+
+    @Test
+    public void parse_caseInsensitiveDuplicates_throwsParseException() {
+        // Case insensitive duplicates
+        assertParseFailure(parser, "Alice alice",
+            "Duplicate name keyword found: \"Alice\". Please remove duplicate keywords.");
+
+        assertParseFailure(parser, "BOB bob Bob",
+            "Duplicate name keyword found: \"BOB\". Please remove duplicate keywords.");
+    }
 }

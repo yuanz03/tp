@@ -94,8 +94,22 @@ public class CommandTestUtil {
     public static final String TEAM_NAME_DESC_16 = " " + PREFIX_TEAM + VALID_TEAM_NAME_16;
     public static final String VALID_TEAM_NAME_12 = "U12";
     public static final String TEAM_NAME_DESC_12 = " " + PREFIX_TEAM + VALID_TEAM_NAME_12;
+    public static final String VALID_LOWER_CASE_TEAM_NAME_16 = "u16";
+    public static final String TEAM_NAME_DESC_LOWER_CASE_16 = " " + PREFIX_TEAM + VALID_LOWER_CASE_TEAM_NAME_16;
 
     public static final String INVALID_TEAM_NAME_DESC = " " + PREFIX_TEAM + "U@16"; // '@' not allowed in team names
+
+    public static final String VALID_SINGLE_CHAR_POSITION = "A";
+    public static final String POSITION_NAME_DESC_SINGLE_CHAR = " " + PREFIX_POSITION + VALID_SINGLE_CHAR_POSITION;
+
+    public static final String VALID_LOWER_CASE_POSITION_LW = "lw";
+    public static final String POSITION_NAME_DESC_LOWER_CASE_LW = " " + PREFIX_POSITION + VALID_LOWER_CASE_POSITION_LW;
+
+    public static final String VALID_SINGLE_CHAR_INJURY = "B";
+    public static final String INJURY_NAME_DESC_SINGLE_CHAR = " " + PREFIX_INJURY + VALID_SINGLE_CHAR_INJURY;
+
+    public static final String VALID_SINGLE_CHAR_TEAM = "C";
+    public static final String TEAM_NAME_DESC_SINGLE_CHAR = " " + PREFIX_TEAM + VALID_SINGLE_CHAR_TEAM;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

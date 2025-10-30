@@ -2,44 +2,44 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s injury matches the given injury keyword (case-insensitive).
+ * Tests that a {@code Person}'s injuries contain the exact injury name (case-insensitive).
  */
 public class FilterByInjuryPredicate implements Predicate<Person> {
     public static final FilterByInjuryPredicate ALWAYS_TRUE = new FilterByInjuryPredicate("");
-    private final String keyword;
-    private final List<String> keywords;
+    private final String injuryName;
 
     /**
-     * Constructs a {@code FilterByInjuryPredicate}.
-     *
-     * @param keyword A keyword to filter by.
+     * Constructs a FilterByInjuryPredicate to filter persons by exact injury name match.
      */
-    public FilterByInjuryPredicate(String keyword) {
-        requireNonNull(keyword);
-        this.keyword = keyword;
-        this.keywords = Arrays.asList(keyword.split("\\s+"));
+    public FilterByInjuryPredicate(String injuryName) {
+        requireNonNull(injuryName);
+        this.injuryName = injuryName;
     }
 
     @Override
     public boolean test(Person person) {
         requireNonNull(person);
-        if (keyword.isEmpty()) {
-            return true;
-        }
+        return isEmptyInjuryName() || hasExactInjury(person);
+    }
+
+    /**
+     * Checks if the injury name is empty (always matches).
+     */
+    private boolean isEmptyInjuryName() {
+        return injuryName.isEmpty();
+    }
+
+    /**
+     * Checks if the person has the exact injury (case-insensitive).
+     */
+    private boolean hasExactInjury(Person person) {
         return person.getInjuries().stream()
-        .map(Injury::getInjuryName)
-        .anyMatch(injuryName ->
-            keywords.stream()
-                    .anyMatch(keyword ->
-                        StringUtil.containsWordIgnoreCase(injuryName, keyword)));
+                .anyMatch(injury -> injury.toString().equalsIgnoreCase(injuryName));
     }
 
     @Override
@@ -47,18 +47,21 @@ public class FilterByInjuryPredicate implements Predicate<Person> {
         if (other == this) {
             return true;
         }
+
         if (!(other instanceof FilterByInjuryPredicate)) {
             return false;
         }
-        return keyword.equals(((FilterByInjuryPredicate) other).keyword);
+
+        FilterByInjuryPredicate otherFilterByInjuryPredicate = (FilterByInjuryPredicate) other;
+        return injuryName.equals(otherFilterByInjuryPredicate.injuryName);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("injury keyword", keyword).toString();
+        return new ToStringBuilder(this).add("injury name", injuryName).toString();
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getInjuryName() {
+        return injuryName;
     }
 }

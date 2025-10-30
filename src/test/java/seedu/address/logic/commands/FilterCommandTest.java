@@ -17,6 +17,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTeams.U12;
 
@@ -32,10 +34,12 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.FilterByInjuryPredicate;
+import seedu.address.model.person.Person;
 import seedu.address.model.position.FilterByPositionPredicate;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.FilterByTeamPredicate;
 import seedu.address.model.team.Team;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TeamBuilder;
 
 public class FilterCommandTest {
@@ -73,7 +77,7 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_TEAM),
                 Optional.empty(),
                 Optional.empty());
-        assertCommandFailure(command, model, MESSAGE_INVALID_TEAM);
+        assertCommandFailure(command, model, String.format(MESSAGE_INVALID_TEAM, NON_EXISTENT_TEAM));
     }
 
     @Test
@@ -86,7 +90,7 @@ public class FilterCommandTest {
 
         // Construct and execute the filter command
         FilterCommand command =
-            new FilterCommand(new FilterByTeamPredicate(VALID_TEAM_AMY),
+                new FilterCommand(new FilterByTeamPredicate(VALID_TEAM_AMY),
                 FilterByInjuryPredicate.ALWAYS_TRUE,
                 FilterByPositionPredicate.ALWAYS_TRUE,
                 Optional.of(VALID_TEAM_AMY),
@@ -148,6 +152,21 @@ public class FilterCommandTest {
 
     @Test
     public void execute_validInjuryName_filtersCorrectly() {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Add teams
+        Team u16Team = new Team(VALID_TEAM_BOB);
+        customModel.addTeam(u16Team);
+        expectedCustomModel.addTeam(u16Team);
+
+        // Create and add BOB with Meniscus tear injury
+        Person bobWithMeniscusTear = new PersonBuilder(BOB)
+                .withInjuries(VALID_INJURY_BOB)
+                .build();
+        customModel.addPerson(bobWithMeniscusTear);
+        expectedCustomModel.addPerson(bobWithMeniscusTear);
+
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(VALID_INJURY_BOB);
         FilterCommand command = new FilterCommand(FilterByTeamPredicate.ALWAYS_TRUE,
                 injPred,
@@ -155,15 +174,30 @@ public class FilterCommandTest {
                 Optional.empty(),
                 Optional.of(VALID_INJURY_BOB),
                 Optional.empty());
-        expectedModel.updateFilteredPersonList(person -> injPred.test(person));
+        expectedCustomModel.updateFilteredPersonList(person -> injPred.test(person));
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
-                expectedModel.getFilteredPersonList().size());
+                expectedCustomModel.getFilteredPersonList().size());
 
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
     }
 
     @Test
     public void execute_bothValidFilters_filtersCorrectly() {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Add teams
+        Team u16Team = new Team(VALID_TEAM_BOB);
+        customModel.addTeam(u16Team);
+        expectedCustomModel.addTeam(u16Team);
+
+        // Create and add BOB with Meniscus tear injury
+        Person bobWithMeniscusTear = new PersonBuilder(BOB)
+                .withInjuries(VALID_INJURY_BOB)
+                .build();
+        customModel.addPerson(bobWithMeniscusTear);
+        expectedCustomModel.addPerson(bobWithMeniscusTear);
+
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate(VALID_TEAM_BOB);
         FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(VALID_INJURY_BOB);
         FilterCommand command = new FilterCommand(teamPred,
@@ -172,12 +206,12 @@ public class FilterCommandTest {
                 Optional.of(VALID_TEAM_BOB),
                 Optional.of(VALID_INJURY_BOB),
                 Optional.empty());
-        expectedModel.updateFilteredPersonList(
+        expectedCustomModel.updateFilteredPersonList(
                 person -> teamPred.test(person) && injPred.test(person));
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
-                expectedModel.getFilteredPersonList().size());
+                expectedCustomModel.getFilteredPersonList().size());
 
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
     }
 
     @Test
@@ -191,7 +225,7 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_TEAM),
                 Optional.of(NON_EXISTENT_INJURY),
                 Optional.empty());
-        assertCommandFailure(command, model, MESSAGE_INVALID_TEAM);
+        assertCommandFailure(command, model, String.format(MESSAGE_INVALID_TEAM, NON_EXISTENT_TEAM));
     }
 
     @Test
@@ -220,7 +254,7 @@ public class FilterCommandTest {
                 Optional.empty(),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
+        assertEquals(String.format(Messages.MESSAGE_INVALID_POSITION, NON_EXISTENT_POSITION), exception.getMessage());
     }
 
     @Test
@@ -235,10 +269,9 @@ public class FilterCommandTest {
                 Optional.empty(),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
+        assertEquals(String.format(Messages.MESSAGE_INVALID_POSITION, NON_EXISTENT_POSITION), exception.getMessage());
     }
 
-    // Matching team but no one matching injury (equivalent to both-present failure)
     @Test
     public void execute_matchingTeamButNoOneMatchingInjury_throwsCommandException() {
         FilterByTeamPredicate teamPred = new FilterByTeamPredicate(VALID_TEAM_AMY);
@@ -252,7 +285,7 @@ public class FilterCommandTest {
                 Optional.empty());
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_AND_INJURY,
-                 VALID_TEAM_AMY, NON_EXISTENT_INJURY), exception.getMessage());
+                VALID_TEAM_AMY, NON_EXISTENT_INJURY), exception.getMessage());
     }
 
     @Test
@@ -266,7 +299,7 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_TEAM),
                 Optional.of(VALID_INJURY_BOB),
                 Optional.empty());
-        assertCommandFailure(command, model, MESSAGE_INVALID_TEAM);
+        assertCommandFailure(command, model, String.format(MESSAGE_INVALID_TEAM, NON_EXISTENT_TEAM));
     }
 
     // toString: injury-only predicate
@@ -333,24 +366,25 @@ public class FilterCommandTest {
                 Optional.of(NON_EXISTENT_INJURY),
                 Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_POSITION, exception.getMessage());
+        assertEquals(String.format(Messages.MESSAGE_INVALID_POSITION, NON_EXISTENT_POSITION), exception.getMessage());
     }
 
     @Test
     public void execute_validPositionNoPlayers_throwsCommandException() {
         // Create a position that exists but no players have it
-        Position emptyPosition = new Position("GK"); // Assuming GK doesn't exist in typical data
+        Position emptyPosition = new Position(NON_EXISTENT_POSITION);
         model.addPosition(emptyPosition);
 
         FilterCommand command = new FilterCommand(
                 FilterByTeamPredicate.ALWAYS_TRUE,
                 FilterByInjuryPredicate.ALWAYS_TRUE,
-                new FilterByPositionPredicate("GK"),
+                new FilterByPositionPredicate(NON_EXISTENT_POSITION),
                 Optional.empty(),
                 Optional.empty(),
-                Optional.of("GK"));
+                Optional.of(NON_EXISTENT_POSITION));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, "GK"), exception.getMessage());
+        assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, NON_EXISTENT_POSITION),
+                exception.getMessage());
     }
 
     @Test
@@ -383,46 +417,11 @@ public class FilterCommandTest {
                 Optional.of(VALID_INJURY_AMY),
                 Optional.of(VALID_POSITION_AMY));
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
-                VALID_TEAM_AMY, VALID_INJURY_AMY, VALID_POSITION_AMY), exception.getMessage());
-    }
 
-    @Test
-    public void execute_teamNotPresent_noValidation() {
-        // Test that when team is not present, no team validation occurs
-        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(VALID_INJURY_BOB);
-        FilterCommand command = new FilterCommand(
-                FilterByTeamPredicate.ALWAYS_TRUE,
-                injPred,
-                FilterByPositionPredicate.ALWAYS_TRUE,
-                Optional.empty(), // Team NOT present
-                Optional.of(VALID_INJURY_BOB),
-                Optional.empty());
-
-        // Should execute without team validation errors
-        expectedModel.updateFilteredPersonList(injPred);
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
-                expectedModel.getFilteredPersonList().size());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_positionNotPresent_noValidation() {
-        // Test that when position is not present, no position validation occurs
-        FilterByTeamPredicate teamPred = new FilterByTeamPredicate(VALID_TEAM_AMY);
-        FilterCommand command = new FilterCommand(
-                teamPred,
-                FilterByInjuryPredicate.ALWAYS_TRUE,
-                FilterByPositionPredicate.ALWAYS_TRUE,
-                Optional.of(VALID_TEAM_AMY),
-                Optional.empty(),
-                Optional.empty()); // Position NOT present
-
-        // Should execute without position validation errors
-        expectedModel.updateFilteredPersonList(teamPred);
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
-                expectedModel.getFilteredPersonList().size());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        // Update to match new message format with comma-separated keywords
+        String expectedMessage = String.format(Messages.MESSAGE_NO_MATCHING_TEAM_INJURY_AND_POSITION,
+                VALID_TEAM_AMY, VALID_INJURY_AMY, VALID_POSITION_AMY);
+        assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
@@ -439,6 +438,184 @@ public class FilterCommandTest {
 
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, NON_EXISTENT_INJURY),
-                        exception.getMessage());
+                exception.getMessage());
+    }
+
+    @Test
+    public void execute_validPositionOnly_filtersCorrectly() {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Add the position to both models first
+        Position position = new Position(VALID_POSITION_AMY);
+        customModel.addPosition(position);
+        expectedCustomModel.addPosition(position);
+
+        // Add a player with position
+        Person playerWithPosition = new PersonBuilder(AMY).withPosition(VALID_POSITION_AMY).build();
+        customModel.addPerson(playerWithPosition);
+        expectedCustomModel.addPerson(playerWithPosition);
+
+        FilterByPositionPredicate posPred = new FilterByPositionPredicate(VALID_POSITION_AMY);
+        FilterCommand command = new FilterCommand(
+                FilterByTeamPredicate.ALWAYS_TRUE,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                posPred,
+                Optional.empty(),
+                Optional.empty(),
+                Optional.of(VALID_POSITION_AMY));
+
+        // Update the expected model with the filter predicate
+        expectedCustomModel.updateFilteredPersonList(posPred);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedCustomModel.getFilteredPersonList().size());
+
+        // Use customModel for execution, expectedCustomModel for comparison
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
+
+        assertEquals(1, expectedCustomModel.getFilteredPersonList().size());
+        assertEquals(playerWithPosition, expectedCustomModel.getFilteredPersonList().get(0));
+    }
+
+    @Test
+    public void execute_allThreeCriteria_filtersCorrectly() {
+        // Create custom models
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Add position to both models
+        Position position = new Position(VALID_POSITION_BOB);
+        customModel.addPosition(position);
+        expectedCustomModel.addPosition(position);
+
+        Team team = new Team(VALID_TEAM_BOB);
+        customModel.addTeam(team);
+        expectedCustomModel.addTeam(team);
+
+        // Build BOB with all three criteria: team, injury, and position
+        Person bobWithAllCriteria = new PersonBuilder(BOB)
+                .withPosition(VALID_POSITION_BOB)
+                .build();
+
+        customModel.addPerson(bobWithAllCriteria);
+        expectedCustomModel.addPerson(bobWithAllCriteria);
+
+        // Create predicates for all three criteria
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate(VALID_TEAM_BOB);
+        FilterByInjuryPredicate injPred = new FilterByInjuryPredicate(VALID_INJURY_BOB);
+        FilterByPositionPredicate posPred = new FilterByPositionPredicate(VALID_POSITION_BOB);
+
+        FilterCommand command = new FilterCommand(
+                teamPred,
+                injPred,
+                posPred,
+                Optional.of(VALID_TEAM_BOB),
+                Optional.of(VALID_INJURY_BOB),
+                Optional.of(VALID_POSITION_BOB));
+
+        // Update expected model with the combined filter
+        expectedCustomModel.updateFilteredPersonList(
+                person -> teamPred.test(person) && injPred.test(person) && posPred.test(person));
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedCustomModel.getFilteredPersonList().size());
+
+        // Execute command on customModel and compare with expectedCustomModel
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
+
+        // Verify only BOB is shown (matches all three criteria)
+        assertEquals(1, expectedCustomModel.getFilteredPersonList().size());
+        assertEquals(bobWithAllCriteria, expectedCustomModel.getFilteredPersonList().get(0));
+    }
+
+    @Test
+    public void execute_caseInsensitiveTeamName_filtersCorrectly() {
+        FilterByTeamPredicate predicate = new FilterByTeamPredicate("u16"); // Lowercase team name
+        FilterCommand command = new FilterCommand(predicate,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.of("u16"), // Lowercase
+                Optional.empty(),
+                Optional.empty());
+        expectedModel.updateFilteredPersonList(predicate);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedModel.getFilteredPersonList().size());
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_multipleKeywordsTeam_filtersCorrectly() {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Create teams
+        Team u16Team = new Team("U16 Boys");
+        Team u18Team = new Team("U18 Girls");
+        customModel.addTeam(u16Team);
+        customModel.addTeam(u18Team);
+        expectedCustomModel.addTeam(u16Team);
+        expectedCustomModel.addTeam(u18Team);
+
+        // Create players with different teams
+        Person u16Player = new PersonBuilder(AMY).withTeam(u16Team.getName()).build();
+        Person u18Player = new PersonBuilder(BOB).withTeam(u18Team.getName()).build();
+
+        customModel.addPerson(u16Player);
+        customModel.addPerson(u18Player);
+        expectedCustomModel.addPerson(u16Player);
+        expectedCustomModel.addPerson(u18Player);
+
+        // Test filtering by "U16 Boys" - should match U16 team
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate("U16 Boys");
+        FilterCommand command = new FilterCommand(
+                teamPred,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.of("U16 Boys"),
+                Optional.empty(),
+                Optional.empty());
+
+        expectedCustomModel.updateFilteredPersonList(teamPred);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedCustomModel.getFilteredPersonList().size());
+
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
+        // Verify only U16 player is shown
+        assertEquals(1, expectedCustomModel.getFilteredPersonList().size());
+        assertEquals(u16Player, expectedCustomModel.getFilteredPersonList().get(0));
+    }
+
+    @Test
+    public void execute_caseInsensitiveTeam_filtersCorrectly() {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        Model expectedCustomModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Create team
+        Team u16Team = new Team("U16 Boys");
+        customModel.addTeam(u16Team);
+        expectedCustomModel.addTeam(u16Team);
+
+        // Create player
+        Person u16Player = new PersonBuilder(AMY).withTeam(u16Team.getName()).build();
+        customModel.addPerson(u16Player);
+        expectedCustomModel.addPerson(u16Player);
+
+        // Test filtering by "u16 boys" (lowercase) - should match U16 Boys team
+        FilterByTeamPredicate teamPred = new FilterByTeamPredicate("u16 boys");
+        FilterCommand command = new FilterCommand(
+                teamPred,
+                FilterByInjuryPredicate.ALWAYS_TRUE,
+                FilterByPositionPredicate.ALWAYS_TRUE,
+                Optional.of("u16 boys"),
+                Optional.empty(),
+                Optional.empty());
+
+        expectedCustomModel.updateFilteredPersonList(teamPred);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
+                expectedCustomModel.getFilteredPersonList().size());
+
+        assertCommandSuccess(command, customModel, expectedMessage, expectedCustomModel);
+        // Verify player is shown (case insensitive match)
+        assertEquals(1, expectedCustomModel.getFilteredPersonList().size());
+        assertEquals(u16Player, expectedCustomModel.getFilteredPersonList().get(0));
     }
 }
