@@ -113,7 +113,7 @@ public class EditCommand extends Command {
 
     private void validatePersonUnchanged(Person target, Person editedPerson) throws CommandException {
         if (target.equals(editedPerson)) {
-            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(Messages.MESSAGE_EDIT_NO_CHANGES);
         }
     }
 
