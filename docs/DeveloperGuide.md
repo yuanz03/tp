@@ -292,11 +292,11 @@ _{more aspects and alternatives to be added}_
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-* [Documentation guide](Documentation.md)
-* [Testing guide](Testing.md)
-* [Logging guide](Logging.md)
-* [Configuration guide](Configuration.md)
-* [DevOps guide](DevOps.md)
+* [Documentation guide]({{baseUrl}}/Documentation.html)
+* [Testing guide]({{baseUrl}}/Testing.html)
+* [Logging guide]({{baseUrl}}/Logging.html)
+* [Configuration guide]({{baseUrl}}/Configuration.html)
+* [DevOps guide]({{baseUrl}}/{{baseUrl}}/DevOps.html)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -337,14 +337,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
+| `* * *`  | coach    | list all the teams                             | view all the teams that have been added                              |
+| `* * *`  | coach    | list all the injured players                   | view all the players that are currently unavailable                  |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
 | `* * *`  | coach    | remove captain from a player                   | update leadership assignments when needed                            |
 | `* *`    | coach    | filter players by captain status               | quickly view all captains                                            |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
-| `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
-| `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
+| `* *`    | coach    | filter player by injury                        | focus only on players who currently have a certain injury            |
+| `* *`    | coach    | filter players by position                     | focus only on players who can play a certain position                |
 | `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
 | `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
