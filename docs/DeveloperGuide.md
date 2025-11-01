@@ -311,11 +311,11 @@ _{more aspects and alternatives to be added}_
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-* [Documentation guide]({{baseUrl}}/Documentation.html)
-* [Testing guide]({{baseUrl}}/Testing.html)
-* [Logging guide]({{baseUrl}}/Logging.html)
-* [Configuration guide]({{baseUrl}}/Configuration.html)
-* [DevOps guide]({{baseUrl}}/{{baseUrl}}/DevOps.html)
+* [Documentation guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Documentation.html)
+* [Testing guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Testing.html)
+* [Logging guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Logging.html)
+* [Configuration guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Configuration.html)
+* [DevOps guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/DevOps.html)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1181,4 +1181,3 @@ Approximately **10%** of development effort was saved through strategic reuse:
 **JavaFX Framework** - Reused from AB3 for building the graphical user interface, but significantly adapted to support multiple entity displays and complex filtering operations.
 
 **JUnit5 Testing Framework** - Reused for unit testing, with extensive test suites developed for the new entity types and complex business logic.
-
