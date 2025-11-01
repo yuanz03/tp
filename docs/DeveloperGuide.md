@@ -371,7 +371,7 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 
 ### 5. Enhanced Prefix Validation and Error Messages
 
-**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error).
+**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error as `tm/` is an invalid prefix for `assigninjury`, thus it treats `INJURY` as `ACL tm/U16`).
 
 **Planned Enhancement**: Implement stricter command parsing that:
 - Detects invalid prefixes for each command
@@ -387,28 +387,27 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 - Redo previously undone operations
 - View a history of recent commands for context
 
-### 7. Bulk Delete Operation
+### 7. Enhanced Delete Operation to Support Bulk Deletion
 
 **Current Limitation**: Users can only delete one player, team, or position at a time using the `delete` command, making it time-consuming to remove multiple entities when restructuring teams or cleaning up data.
 
 **Planned Enhancement**: Implement bulk delete functionality that allows users to:
 - Delete multiple players at once by specifying multiple player names (e.g., `delete pl/John Doe pl/Jane Smith pl/Alex Tan`)
-- Delete multiple teams simultaneously (e.g., `deleteteam tm/U16 tm/U18`)
-- Delete multiple positions at once (e.g., `deleteposition ps/LW ps/RW ps/CF`)
+- Delete multiple teams simultaneously (e.g., `delete tm/U16 tm/U18 tm/Senior`)
+- Delete multiple positions at once (e.g., `delete ps/ST ps/LW ps/RW`)
+- Use a single command to delete a combination of players, teams, and positions (e.g., `delete pl/John Doe tm/U16 ps/ST`)
 - Provide clear confirmation messages showing all entities that will be deleted
-- Include validation to prevent accidental deletion of teams with assigned players
 - Display a summary of successfully deleted entities and any that failed with reasons
 
-### 8. Extended Add Command with Injury and Position Support
+### 8. Enhanced Add Command to Support Optional Position and Injury Assignment
 
 **Current Limitation**: When adding a new player using the `add` command, users can only specify basic information (name, phone, email, address, team, tags). To assign injuries or positions, users must execute separate `assigninjury` and `assignposition` commands after adding the player, which adds extra steps to the workflow.
 
 **Planned Enhancement**: Extend the `add` command to support optional injury and position parameters, allowing users to:
-- Assign one or more positions during player creation (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 ps/ST ps/LW`)
-- Assign one or more injuries during player creation (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 i/Ankle Sprain i/Hamstring Strain`)
-- Combine both position and injury assignments in a single command (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 ps/ST i/Ankle Sprain t/captain`)
-- Validate that specified positions and injuries exist before creating the player
-- Streamline the player onboarding process by reducing the number of commands needed from 3+ to just 1
+- Assign position directly when adding a player
+- Assign injury status directly when adding a player
+- Validate that specified position exists before creating the player if position argument is provided
+- Streamline the player onboarding process by reducing the number of commands needed
 
 --------------------------------------------------------------------------------------------------------------------
 
