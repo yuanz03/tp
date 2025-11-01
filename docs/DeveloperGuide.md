@@ -456,11 +456,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | create a position                              | assign a position to a player                                        |
 | `* * *`  | coach    | delete a position                              | delete a position that I created                                     |
 | `* * *`  | coach    | assign a player a position                     | keep track of a player's position                                    |
-| `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
-| `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* * *`  | coach    | assign an injury status to a player            | view and track their availability                                    |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | list all the teams                             | view all the teams that have been added                              |
-| `* * *`  | coach    | list all the injured players                   | view all the players that are currently not fully fit.               |
+| `* * *`  | coach    | list all the injured players                   | view all the players that are currently not fully fit                |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
@@ -470,7 +469,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | coach    | filter player by injury                        | focus only on players who currently have a certain injury            |
 | `* *`    | coach    | filter players by position                     | focus only on players who can play a certain position                |
 | `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
-| `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
+| `*`      | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
 
 
@@ -633,8 +632,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list players.
 2.  PlayBook shows a list of players.
-3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe.
-4.  PlayBook updates the player's availability and rehab timeline.
+3.  User requests to assign an injury status to a player by specifying the injury name.
+4.  PlayBook updates the player's availability.
 
     Use case ends.
 
