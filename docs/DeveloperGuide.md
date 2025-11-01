@@ -20,6 +20,7 @@
 * [Implementation](#implementation)
     * [Proposed undo or redo feature](#proposed-undo-or-redo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
     * [User stories](#user-stories)
@@ -60,6 +61,24 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
+
+<box type="info" seamless>
+
+**Note on Naming Conventions in Code:**
+
+PlayBook is adapted from AddressBook-Level3 (AB3). To maintain compatibility and ease of adaptation, certain class and package names in the codebase retain their original AB3 naming:
+
+* **`Person`** in the code refers to a **`Player`** in the application
+* **`AddressBook`** in the code refers to **`PlayBook`** in the application
+
+For example:
+* The `Person` class represents player data
+* The `AddressBook` class manages the collection of players
+* Package names like `seedu.address` are retained from the original AB3 structure
+
+Throughout this guide, we use these code-level names when discussing implementation details, but they conceptually represent players and PlayBook respectively.
+
+</box>
 
 ### Architecture
 
@@ -300,6 +319,98 @@ _{more aspects and alternatives to be added}_
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+Given below are planned enhancements to address current limitations and improve user experience in future versions of PlayBook.
+
+### 1. Enhanced Name Validation with Case-Insensitive Duplicate Detection
+
+**Current Limitation**: The system treats names with different spacing as separate entities (e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` are all considered different players).
+
+**Planned Enhancement**: Implement a normalized name comparison system that:
+- Trims leading and trailing whitespace
+- Collapses multiple consecutive spaces into a single space
+- Performs case-insensitive comparison
+- Prevents duplicate entries that differ only in spacing or capitalization
+
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognized as the same player.
+
+### 2. Case-Only Name Edit Support
+
+**Current Limitation**: Editing a player's name to change only capitalization fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
+
+**Planned Enhancement**: Allow capitalization-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalization in a single step.
+
+### 3. Flexible Phone Number Format Support
+
+**Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes (e.g., `1234-5678` or `+65 1234 5678` are rejected).
+
+**Planned Enhancement**: Support internationally recognized phone number formats including:
+- Country codes with `+` prefix
+- Spaces and hyphens as separators
+- Parentheses for area codes
+- Multiple phone numbers separated by commas or semicolons
+
+Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678; 87654321`
+
+### 4. Enhanced Tag Management
+
+**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means:
+- `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
+- Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
+- Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
+
+**Planned Enhancement**: Enhance tag functionality to be more flexible and user-friendly by:
+- Implementing case-insensitive tag comparison and storage, where all tags are normalized to a consistent case format (e.g., lowercase or title case) to prevent duplicate tags that differ only in capitalization
+- Allowing spaces in tags so users can create multi-word tags (e.g., `senior player`, `injury prone`, `parent contact`)
+- Supporting special characters including hyphens (`-`), underscores (`_`), apostrophes (`'`), periods (`.`), and parentheses (`()`) to enable more descriptive tags
+
+Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `parent's contact`, `vice_captain`, `top-scorer`
+
+### 5. Enhanced Prefix Validation and Error Messages
+
+**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error as `tm/` is an invalid prefix for `assigninjury`, thus it treats `INJURY` as `ACL tm/U16`).
+
+**Planned Enhancement**: Implement stricter command parsing that:
+- Detects invalid prefixes for each command
+- Provides specific error messages indicating which prefix is not valid for the given command
+- Suggests the correct command format when invalid prefixes are detected
+
+### 6. Undo/Redo Functionality
+
+**Current Limitation**: There is no way to undo accidental operations such as deleting a player, editing information, or removing assignments.
+
+**Planned Enhancement**: Implement a comprehensive undo/redo system. This will allow users to:
+- Undo the last N operations
+- Redo previously undone operations
+- View a history of recent commands for context
+
+### 7. Enhanced Delete Operation to Support Bulk Deletion
+
+**Current Limitation**: Users can only delete one player, team, or position at a time using the `delete` command, making it time-consuming to remove multiple entities when restructuring teams or cleaning up data.
+
+**Planned Enhancement**: Implement bulk delete functionality that allows users to:
+- Delete multiple players at once by specifying multiple player names (e.g., `delete pl/John Doe pl/Jane Smith pl/Alex Tan`)
+- Delete multiple teams simultaneously (e.g., `delete tm/U16 tm/U18 tm/Senior`)
+- Delete multiple positions at once (e.g., `delete ps/ST ps/LW ps/RW`)
+- Use a single command to delete a combination of players, teams, and positions (e.g., `delete pl/John Doe tm/U16 ps/ST`)
+- Provide clear confirmation messages showing all entities that will be deleted
+- Display a summary of successfully deleted entities and any that failed with reasons
+
+### 8. Enhanced Add Command to Support Optional Position and Injury Assignment
+
+**Current Limitation**: When adding a new player using the `add` command, users can only specify basic information (name, phone, email, address, team, tags). To assign injuries or positions, users must execute separate `assigninjury` and `assignposition` commands after adding the player, which adds extra steps to the workflow.
+
+**Planned Enhancement**: Extend the `add` command to support optional injury and position parameters, allowing users to:
+- Assign position directly when adding a player
+- Assign injury status directly when adding a player
+- Validate that specified position exists before creating the player if position argument is provided
+- Streamline the player onboarding process by reducing the number of commands needed
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Requirements**
 
 ### Product scope
@@ -315,8 +426,8 @@ _{more aspects and alternatives to be added}_
 
 **Value proposition**:
 - manage contacts faster than a typical mouse/GUI driven app
-- **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
-- optimised for fast, command-line style data entry and squad management
+- **specifically for football coaches: quickly organize and access player, parent, and assistant contacts across multiple teams**
+- optimized for fast, command-line style data entry and squad management
 
 ### User stories
 
