@@ -294,6 +294,7 @@ The same applies to positions: if you create `addposition ps/LW`, all players as
 * Should not be blank
 
 **Address (`ADDRESS`):**
+* Can contain any characters
 * Should not be blank
 
 **Injury (`INJURY`):**
@@ -302,7 +303,7 @@ The same applies to positions: if you create `addposition ps/LW`, all players as
 * Is case-insensitive (e.g., `acl` is the same as `ACL`)
 
 **Tag (`TAG`):**
-* Should contain alphanumeric characters only
+* Should contain alphanumeric characters only, with no spaces
 * Is case-sensitive (e.g., `Friend` is different from `friend`)
 
 --------------------------------------------------------------------------------------------------------------------

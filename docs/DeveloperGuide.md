@@ -62,6 +62,24 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ## **Design**
 
+<box type="info" seamless>
+
+**Note on Naming Conventions in Code:**
+
+PlayBook is adapted from AddressBook-Level3 (AB3). To maintain compatibility and ease of adaptation, certain class and package names in the codebase retain their original AB3 naming:
+
+* **`Person`** in the code refers to a **`Player`** in the application
+* **`AddressBook`** in the code refers to **`PlayBook`** in the application
+
+For example:
+* The `Person` class represents player data
+* The `AddressBook` class manages the collection of players
+* Package names like `seedu.address` are retained from the original AB3 structure
+
+Throughout this guide, we use these code-level names when discussing implementation details, but they conceptually represent players and PlayBook respectively.
+
+</box>
+
 ### Architecture
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
