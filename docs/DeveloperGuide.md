@@ -20,6 +20,7 @@
 * [Implementation](#implementation)
     * [Proposed undo or redo feature](#proposed-undo-or-redo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
     * [User stories](#user-stories)
@@ -297,6 +298,99 @@ _{more aspects and alternatives to be added}_
 * [Logging guide](Logging.md)
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+Given below are planned enhancements to address current limitations and improve user experience in future versions of PlayBook.
+
+### 1. Enhanced Name Validation with Case-Insensitive Duplicate Detection
+
+**Current Limitation**: The system treats names with different spacing as separate entities (e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` are all considered different players).
+
+**Planned Enhancement**: Implement a normalised name comparison system that:
+- Trims leading and trailing whitespace
+- Collapses multiple consecutive spaces into a single space
+- Performs case-insensitive comparison
+- Prevents duplicate entries that differ only in spacing or capitalisation
+
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognised as the same player.
+
+### 2. Case-Only Name Edit Support
+
+**Current Limitation**: Editing a player's name to change only capitalisation fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
+
+**Planned Enhancement**: Allow capitalisation-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalisation in a single step.
+
+### 3. Flexible Phone Number Format Support
+
+**Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes (e.g., `1234-5678` or `+65 1234 5678` are rejected).
+
+**Planned Enhancement**: Support internationally recognised phone number formats including:
+- Country codes with `+` prefix
+- Spaces and hyphens as separators
+- Parentheses for area codes
+- Multiple phone numbers separated by commas or semicolons
+
+Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678; 87654321`
+
+### 4. Enhanced Tag Management
+
+**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means:
+- `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
+- Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
+- Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
+
+**Planned Enhancement**: Enhance tag functionality to be more flexible and user-friendly by:
+- Implementing case-insensitive tag comparison and storage, where all tags are normalised to a consistent case format (e.g., lowercase or title case) to prevent duplicate tags that differ only in capitalisation
+- Allowing spaces in tags so users can create multi-word tags (e.g., `senior player`, `injury prone`, `parent contact`)
+- Supporting special characters including hyphens (`-`), underscores (`_`), apostrophes (`'`), periods (`.`), and parentheses (`()`) to enable more descriptive tags
+
+Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `parent's contact`, `vice_captain`, `top-scorer`
+
+### 5. Enhanced Prefix Validation and Error Messages
+
+**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error).
+
+**Planned Enhancement**: Implement stricter command parsing that:
+- Detects invalid prefixes for each command
+- Provides specific error messages indicating which prefix is not valid for the given command
+- Suggests the correct command format when invalid prefixes are detected
+
+### 6. Undo/Redo Functionality
+
+**Current Limitation**: There is no way to undo accidental operations such as deleting a player, editing information, or removing assignments.
+
+**Planned Enhancement**: Implement a comprehensive undo/redo system. This will allow users to:
+- Undo the last N operations
+- Redo previously undone operations
+- View a history of recent commands for context
+
+### 7. Bulk Delete Operation
+
+**Current Limitation**: Users can only delete one player, team, or position at a time using the `delete` command, making it time-consuming to remove multiple entities when restructuring teams or cleaning up data.
+
+**Planned Enhancement**: Implement bulk delete functionality that allows users to:
+- Delete multiple players at once by specifying multiple player names (e.g., `delete pl/John Doe pl/Jane Smith pl/Alex Tan`)
+- Delete multiple teams simultaneously (e.g., `deleteteam tm/U16 tm/U18`)
+- Delete multiple positions at once (e.g., `deleteposition ps/LW ps/RW ps/CF`)
+- Provide clear confirmation messages showing all entities that will be deleted
+- Include validation to prevent accidental deletion of teams with assigned players
+- Display a summary of successfully deleted entities and any that failed with reasons
+
+### 8. Extended Add Command with Injury and Position Support
+
+**Current Limitation**: When adding a new player using the `add` command, users can only specify basic information (name, phone, email, address, team, tags). To assign injuries or positions, users must execute separate `assigninjury` and `assignposition` commands after adding the player, which adds extra steps to the workflow.
+
+**Planned Enhancement**: Extend the `add` command to support optional injury and position parameters, allowing users to:
+- Assign one or more positions during player creation (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 ps/ST ps/LW`)
+- Assign one or more injuries during player creation (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 i/Ankle Sprain i/Hamstring Strain`)
+- Combine both position and injury assignments in a single command (e.g., `add pl/John Doe p/12345678 e/john@example.com a/123 Street tm/U16 ps/ST i/Ankle Sprain t/captain`)
+- Validate that specified positions and injuries exist before creating the player
+- Streamline the player onboarding process by reducing the number of commands needed from 3+ to just 1
 
 --------------------------------------------------------------------------------------------------------------------
 
