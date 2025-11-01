@@ -259,29 +259,6 @@ The following requirements apply to all commands unless otherwise specified:
 * Should not be blank
 * Is case-insensitive (e.g., `fw` is the same as `FW`)
 
-**Phone Number (`PHONE_NUMBER`):**
-* Should only contain numbers
-* Should be at least 3 digits long
-* Should not be blank
-
-**Email (`EMAIL`):**
-* Should be a valid email format (e.g., `john@example.com`)
-* Should not be blank
-
-**Address (`ADDRESS`):**
-* Should not be blank
-
-**Injury (`INJURY`):**
-* Should contain alphanumeric characters and spaces only
-* Should not be blank
-* Is case-insensitive (e.g., `acl` is the same as `ACL`)
-
-**Tag (`TAG`):**
-* Should contain alphanumeric characters only
-* Is case-sensitive (e.g., `Friend` is different from `friend`)
-
-</box>
-
 <box type="info" seamless>
 
 **Important Note on Team and Position Names:**
@@ -296,6 +273,36 @@ When you create a team or position, PlayBook stores the exact capitalization you
 The same applies to positions: if you create `addposition ps/LW`, all players assigned to that position will show "LW" even if you type `assignposition pl/John ps/lw`.
 
 </box>
+
+**Phone Number (`PHONE_NUMBER`):**
+* Should only contain numbers
+* Should be at least 3 digits long
+* Should not be blank
+
+**Email (`EMAIL`):**
+* Should be of the format `local-part@domain` and adhere to the following constraints:
+  * The local-part should only contain alphanumeric characters and these special characters: `+`, `_`, `.`, `-`
+  * The local-part may not start or end with any special characters
+  * This is followed by a `@` and then a domain name
+  * The domain name is made up of domain labels separated by periods
+  * The domain name must:
+    * End with a domain label at least 2 characters long
+    * Have each domain label start and end with alphanumeric characters
+    * Have each domain label consist of alphanumeric characters, separated only by hyphens, if any
+  * Examples of valid emails: `john@example.com`, `john@example`, `john_doe@mail-server.org`, `alice+work@company.co`
+* Should not be blank
+
+**Address (`ADDRESS`):**
+* Should not be blank
+
+**Injury (`INJURY`):**
+* Should contain alphanumeric characters and spaces only
+* Should not be blank
+* Is case-insensitive (e.g., `acl` is the same as `ACL`)
+
+**Tag (`TAG`):**
+* Should contain alphanumeric characters only
+* Is case-sensitive (e.g., `Friend` is different from `friend`)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -339,6 +346,8 @@ Format: `add pl/PLAYER_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tm/TEAM_NAME [t/TAG
 
 **Requirements:**
 * `PLAYER_NAME` must not be the same as an existing player in the PlayBook.
+  * Only player name is used to identify a player as unique.
+  * Reason: In real life, players may share the same address, phone number or email (e.g., siblings sharing a family address/phone/email).
 * `TEAM_NAME` must be an existing team in the PlayBook. Use the `addteam` command to add a team first.
 
 <box type="warning" seamless>
@@ -972,6 +981,9 @@ _Details coming soon in v2.0 ..._
    - **Example**: Phone number accepts only digits — you can enter multiple phone numbers only if they are entered as a continuous string of digits because spaces or special characters like (`-`, `+`, `)`, etc.) are rejected
      - An input like `1234 5678 (HP) 1111-3333 (Office)` will be rejected and triggers an error message to notify you of this behaviour
    - **Remedy**: provide a single phone number—typically the player's personal number or their designated emergency contact—using digits only, which is sufficient to satisfy the functional needs of Playbook users
+7. **Tags are case-sensitive**: Tags like `Friend` and `friend` are treated as different tags.
+   - **Problem**: This can lead to confusion if users expect tags to be case-insensitive.
+   - **Remedy**: Be consistent with tag capitalization when adding or editing tags.
 
 --------------------------------------------------------------------------------------------------------------------
 
