@@ -10,9 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
+  <GridPane HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
     <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="0"  />
+      <ColumnConstraints hgrow="NEVER" minWidth="0" />
     </columnConstraints>
     <VBox alignment="TOP_LEFT" minHeight="135" spacing="6" GridPane.columnIndex="0">
       <padding>
@@ -26,14 +27,20 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-        <Label fx:id="captainBadge" text="⭐ CAPTAIN" styleClass="captain-badge" />
+        <Label fx:id="name" text="\$first" wrapText="true" styleClass="cell_name_label" />
+        <Label fx:id="captainBadge" GridPane.columnIndex="1" text="⭐ CAPTAIN" styleClass="captain-badge" />
       </HBox>
 
-      <!-- Team & Position Row -->
-      <HBox fx:id="teamPositionRow" spacing="10" alignment="CENTER_LEFT">
-        <Label fx:id="teamLabel" styleClass="team-info-label" />
-        <Label fx:id="positionLabel" styleClass="position-info-label" />
+      <!-- Team Row -->
+      <HBox fx:id="teamRow" spacing="5" alignment="CENTER_LEFT">
+        <Label fx:id="teamIcon" text="📋" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="teamLabel" wrapText="true" styleClass="team-info-label" />
+      </HBox>
+
+      <!-- Position Row -->
+      <HBox fx:id="positionRow" spacing="10" alignment="CENTER_LEFT">
+          <Label fx:id="positionIcon" text="⚽" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+          <Label fx:id="positionLabel" wrapText="true" styleClass="position-info-label" />
       </HBox>
 
       <!-- Injury Status Row -->
@@ -45,16 +52,16 @@
       <GridPane styleClass="contact-block" hgap="8" vgap="4">
         <columnConstraints>
           <ColumnConstraints hgrow="NEVER" minWidth="25" prefWidth="25" maxWidth="25" />
-          <ColumnConstraints hgrow="ALWAYS" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="0" />
         </columnConstraints>
         <Label fx:id="phoneIcon" text="📞" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label fx:id="phone" wrapText="true" styleClass="cell_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
         <Label fx:id="emailIcon" text="📧" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label fx:id="email" wrapText="true" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label fx:id="addressIcon" text="📍" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label fx:id="address" wrapText="true" styleClass="cell_small_label" text="\$address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       </GridPane>
 
       <!-- Tags at bottom -->

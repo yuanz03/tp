@@ -37,6 +37,7 @@
   -fx-text-fill: #64B5F6;
   -fx-font-size: 12px;
   -fx-font-weight: bold;
+  -fx-max-width: 1300px;
   -fx-padding: 0;
 }
 
@@ -44,6 +45,7 @@
   -fx-text-fill: #81C784;
   -fx-font-size: 12px;
   -fx-font-weight: bold;
+  -fx-max-width: 1300px;
   -fx-padding: 0;
 }
 
@@ -70,6 +72,8 @@
   -fx-border-color: #C62828;
   -fx-border-width: 1px;
   -fx-border-radius: 10;
+  -fx-max-width: 1300px;
+  -fx-wrap-text: true;
 }
 
 /* Contact Block */

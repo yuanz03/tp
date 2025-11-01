@@ -69,9 +69,9 @@ public class PersonCard extends UiPart<Region> {
         captainBadge.setManaged(isCaptain);
 
         // Team and Position Labels
-        teamLabel.setText("📋 " + person.getTeam().getName());
+        teamLabel.setText(person.getTeam().getName());
 
-        positionLabel.setText("⚽ " + person.getPosition().getName());
+        positionLabel.setText(person.getPosition().getName());
 
         // Injury Status
         person.getInjuries().stream()
