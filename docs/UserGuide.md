@@ -132,7 +132,13 @@ The PlayBook interface consists of:
 | **List View**      | Displays players, teams, or positions based on your current command. |
 | **Detail Cards**   | Shows complete information for each item in the list.                |
 
-The PlayBook comes with 3 unique panels that can be toggled between each other via commands.
+The PlayBook comes with an interactive command section where commands can be entered by the user.
+
+**Command section:**
+
+![commandSectionUi](images/commandSectionUi.png)
+
+The PlayBook also comes with 3 unique panels that can be toggled between each other via commands.
 
 **Players view:**
 
@@ -207,7 +213,7 @@ This section explains how to read and use commands in PlayBook.
   e.g. in `add pl/PLAYER_NAME`, `PLAYER_NAME` is a parameter which can be used as `add pl/John Doe`.
 
 * Items in square brackets are optional.<br>
-  - e.g. `pl/PLAYER_NAME [t/TAG]` can be used as `pl/John Doe t/friend` or as `pl/John Doe`.
+  e.g `pl/PLAYER_NAME [t/TAG]` can be used as `pl/John Doe t/friend` or as `pl/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -215,8 +221,10 @@ This section explains how to read and use commands in PlayBook.
 * Parameters can be in any order.<br>
   e.g. if the command specifies `pl/PLAYER_NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER pl/PLAYER_NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `listteam`, `listposition`, `listinjured`, `listcaptain`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+
+* Leading or trailing spaces surrounding parameters supplied by the user will be ignored by the application.<br>
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
@@ -833,7 +841,6 @@ Format: `filter [tm/TEAM_NAME] [i/INJURY] [ps/POSITION_NAME]`
 **Warnings:**
 * `POSITION_NAME` cannot be `NONE` when filtering by position.
 * For `TEAM_NAME` and `POSITION_NAME`, only leading and trailing spaces will be trimmed, any spaces in the name will be used for exact matching.
-  * e.g., `John Doe` will match `   John Doe` but not match `John     Doe`.
 
 <box type="tip" seamless>
 
