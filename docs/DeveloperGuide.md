@@ -329,25 +329,25 @@ Given below are planned enhancements to address current limitations and improve 
 
 **Current Limitation**: The system treats names with different spacing as separate entities (e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` are all considered different players).
 
-**Planned Enhancement**: Implement a normalised name comparison system that:
+**Planned Enhancement**: Implement a normalized name comparison system that:
 - Trims leading and trailing whitespace
 - Collapses multiple consecutive spaces into a single space
 - Performs case-insensitive comparison
-- Prevents duplicate entries that differ only in spacing or capitalisation
+- Prevents duplicate entries that differ only in spacing or capitalization
 
-This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognised as the same player.
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognized as the same player.
 
 ### 2. Case-Only Name Edit Support
 
-**Current Limitation**: Editing a player's name to change only capitalisation fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
+**Current Limitation**: Editing a player's name to change only capitalization fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
 
-**Planned Enhancement**: Allow capitalisation-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalisation in a single step.
+**Planned Enhancement**: Allow capitalization-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalization in a single step.
 
 ### 3. Flexible Phone Number Format Support
 
 **Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes (e.g., `1234-5678` or `+65 1234 5678` are rejected).
 
-**Planned Enhancement**: Support internationally recognised phone number formats including:
+**Planned Enhancement**: Support internationally recognized phone number formats including:
 - Country codes with `+` prefix
 - Spaces and hyphens as separators
 - Parentheses for area codes
@@ -363,7 +363,7 @@ Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678
 - Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
 
 **Planned Enhancement**: Enhance tag functionality to be more flexible and user-friendly by:
-- Implementing case-insensitive tag comparison and storage, where all tags are normalised to a consistent case format (e.g., lowercase or title case) to prevent duplicate tags that differ only in capitalisation
+- Implementing case-insensitive tag comparison and storage, where all tags are normalized to a consistent case format (e.g., lowercase or title case) to prevent duplicate tags that differ only in capitalization
 - Allowing spaces in tags so users can create multi-word tags (e.g., `senior player`, `injury prone`, `parent contact`)
 - Supporting special characters including hyphens (`-`), underscores (`_`), apostrophes (`'`), periods (`.`), and parentheses (`()`) to enable more descriptive tags
 
@@ -427,8 +427,8 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 
 **Value proposition**:
 - manage contacts faster than a typical mouse/GUI driven app
-- **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
-- optimised for fast, command-line style data entry and squad management
+- **specifically for football coaches: quickly organize and access player, parent, and assistant contacts across multiple teams**
+- optimized for fast, command-line style data entry and squad management
 
 ### User stories
 
