@@ -357,7 +357,7 @@ Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678
 
 ### 4. Enhanced Tag Management
 
-**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means:
+**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means that:
 - `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
 - Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
 - Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
