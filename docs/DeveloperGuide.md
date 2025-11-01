@@ -112,7 +112,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -357,7 +357,7 @@ Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678
 
 ### 4. Enhanced Tag Management
 
-**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means:
+**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means that:
 - `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
 - Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
 - Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
@@ -408,6 +408,17 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 - Assign injury status directly when adding a player
 - Validate that specified position exists before creating the player if position argument is provided
 - Streamline the player onboarding process by reducing the number of commands needed
+
+### 9. Enhanced Filter Command Success Message
+
+**Current Limitation**: After the filter command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
+
+**Planned Enhancement**: Implement customised success messages for the filter command:
+- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters.
+
+Example filter command success message after enhancement: "Found 3 player(s) matching the criteria team: "Chelsea", injury: "Leg Broken" and position: "RW"."
+
+This will ensure that users are clear on what filtering criteria they used to result in the current players being displayed.
 
 --------------------------------------------------------------------------------------------------------------------
 
