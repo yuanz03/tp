@@ -223,14 +223,14 @@ This section explains how to read and use commands in PlayBook.
 
 ### Global Feature Behaviours
 
-1. **Team creation and deletion commands**:
-    - Automatically switches to the `Viewing Teams` panel (if not already in that view).
+1. **Team creation and deletion commands**: Automatically switches to the `Viewing Teams` panel (if not already in that view).
 
-2. **Position creation and deletion commands**:
-    - Automatically switches to the `Viewing Positions` panel (if not already in that view).
 
-3. **Player-related commands**: (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)
-    - Automatically switches to the `Viewing Players` panel (if not already in that view).
+2. **Position creation and deletion commands**: Automatically switches to the `Viewing Positions` panel (if not already in that view).
+
+
+3. **Player-related commands (`add`, `edit`, `delete`, `assign`, `unassign`, `filter`)**: Automatically switches to the `Viewing Players` panel (if not already in that view).
+
 
 <box type="info" seamless>
 
