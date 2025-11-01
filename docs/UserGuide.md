@@ -10,15 +10,15 @@
 
 - [PlayBook User Guide](#playbook-user-guide) 
     - [Introduction](#introduction)
-        - [Who is PlayBook for?](#who-should-use-playbook) 
-        - [Why choose PlayBook?](#why-playbook)
+        - [Who should use PlayBook?](#who-should-use-playbook) 
+        - [Why PlayBook?](#why-playbook)
     - [Quick start](#quick-start)
-        - [Java Installation](#1-verify-java-installation)
-        - [Download PlayBook](#2-download-playbook)
-        - [Launch PlayBook](#3-launch-the-application)
-        - [Understanding the PlayBook GUI](#4-understanding-the-interface)
-        - [Your First Commands](#5-try-your-first-commands)
-        - [Enjoy PlayBook](#next-steps)
+        - [1. Verify Java installation](#1-verify-java-installation)
+        - [2. Download PlayBook](#2-download-playbook)
+        - [3. Launch the application](#3-launch-the-application)
+        - [4. Understanding the interface](#4-understanding-the-interface)
+        - [5. Try your first commands](#5-try-your-first-commands)
+        - [Next steps](#next-steps)
     - [Command Reference](#command-reference)
         - [Command Format Conventions](#command-format-conventions)
         - [Global Feature Behaviours](#global-feature-behaviours)
@@ -66,8 +66,9 @@ PlayBook is designed for semi-professional youth football coaches who:
 * Track 20-50+ players across different age groups
 * Need quick access to player availability, positions, captaincy and injury status
 * Prefer typing commands over navigating complex GUIs
+* Have basic computer skills
 
-No coding experience required. Commands use simple English keywords like `add`, `delete`, `list`, and `filter`.
+Minimal coding experience required. Commands use simple English keywords like `add`, `delete`, `list`, and `filter`.
 
 #### Why PlayBook?
 
@@ -105,14 +106,16 @@ Save it to a dedicated folder (e.g., `Documents/PlayBook`). PlayBook will create
 
 #### 3. Launch the application
 
-Navigate to your PlayBook folder and run:
+Navigate to your PlayBook folder:
 
 ```bash
-# Navigate to your folder (example paths)
 cd ~/Documents/PlayBook          # macOS/Linux
 cd %USERPROFILE%\Documents\PlayBook    # Windows
+```
 
-# Launch PlayBook
+Run the application inside the PlayBook folder with:
+
+```bash
 java -jar playbook.jar
 ```
 
