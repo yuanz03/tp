@@ -289,7 +289,8 @@ The same applies to positions: if you create `addposition ps/LW`, all players as
     * End with a domain label at least 2 characters long
     * Have each domain label start and end with alphanumeric characters
     * Have each domain label consist of alphanumeric characters, separated only by hyphens, if any
-  * Examples of valid emails: `john@example.com`, `john@example`, `john_doe@mail-server.org`, `alice+work@company.co`
+  * Top-level domains are optional for greater flexibility (e.g., `john@example` is valid)
+  * Examples of valid emails: `john@example.com`, `john_doe@mail-server.org`, `alice+work@company.co`
 * Should not be blank
 
 **Address (`ADDRESS`):**
