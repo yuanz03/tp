@@ -338,7 +338,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
 | `* * *`  | coach    | list all the teams                             | view all the teams that have been added                              |
-| `* * *`  | coach    | list all the injured players                   | view all the players that are currently unavailable                  |
+| `* * *`  | coach    | list all the injured players                   | view all the players that are currently not fully fit.               |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
