@@ -1126,6 +1126,28 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
+### Adding a player
+
+1. Adding a player with valid details
+
+    1. Prerequisites: No specific prerequisites needed.
+
+    1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16 t/friend`<br>
+       Expected: A new player `John Doe` is added to the player list. Details of the added player are shown in the status message.
+   
+   1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/NonExistentTeam`<br>
+      Expected: No player is added. Error details shown in the status message indicating the team does not exist.
+
+   1. Other incorrect add commands to try: `add`, `add pl/John Doe`, `...` <br>
+      Expected: Similar to previous.
+
+2. Adding a player with duplicate player name
+
+    1. Prerequisites: At least one player must already exist in PlayBook.
+
+    1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16 t/friend`(where `John Doe` already exists in the player list)<br>
+       Expected: No player is added. Error details shown in the status message indicating the duplicate player.
+
 ### Deleting a player
 
 1. Deleting a player while all players are being shown
@@ -1133,7 +1155,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all players using the `list` command. Multiple players in the list.
 
    1. Test case: `delete pl/Bernice Yu`<br>
-      Expected: Bernice Yu is deleted from the list. Details of the deleted contact shown in the status message.
+      Expected: Bernice Yu is deleted from the list. Details of the deleted player are shown in the status message.
 
    1. Test case: `delete pl/Invalid_Name`<br>
       Expected: No player is deleted. Error details shown in the status message.
