@@ -36,54 +36,35 @@ public class UnassignInjuryCommandParserTest {
 
     @Test
     public void parse_noArguments_failure() {
-        // Empty input
-        String expectedMessage = String.format(Messages.MESSAGE_EMPTY_COMMAND, UnassignInjuryCommand.COMMAND_WORD)
-                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
-        assertParseFailure(parser, "", String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+        assertParseFailure(parser, "", formatExpectedMessage(Messages.MESSAGE_EMPTY_COMMAND));
     }
 
     @Test
     public void parse_missingPlayerField_failure() {
-        String expectedMessage =
-                String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                        + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
-        assertParseFailure(parser, INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+        assertParseFailure(parser, INJURY_DESC_BOB, formatExpectedMessage(Messages.MESSAGE_MISSING_PLAYER_PREFIX));
     }
 
     @Test
     public void parse_missingInjuryField_failure() {
-        String expectedMessage =
-                String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                        + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
-        assertParseFailure(parser, PLAYER_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+        assertParseFailure(parser, PLAYER_DESC_BOB, formatExpectedMessage(Messages.MESSAGE_MISSING_INJURY_PREFIX));
     }
 
     @Test
     public void parse_missingPlayerPrefix_failure() {
-        String expectedMessage =
-                String.format(Messages.MESSAGE_MISSING_PLAYER_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                        + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
         assertParseFailure(parser, VALID_NAME_BOB + INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+                formatExpectedMessage(Messages.MESSAGE_MISSING_PLAYER_PREFIX));
     }
 
     @Test
     public void parse_missingInjuryPrefix_failure() {
-        String expectedMessage =
-                String.format(Messages.MESSAGE_MISSING_INJURY_PREFIX, UnassignInjuryCommand.COMMAND_WORD)
-                        + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
         assertParseFailure(parser, PLAYER_DESC_BOB + VALID_INJURY_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+                formatExpectedMessage(Messages.MESSAGE_MISSING_INJURY_PREFIX));
     }
 
     @Test
     public void parse_nonEmptyPreamble_failure() {
-        String expectedMessage = String.format(Messages.MESSAGE_NON_EMPTY_PREAMBLE, UnassignInjuryCommand.COMMAND_WORD)
-                + "\n" + UnassignInjuryCommand.MESSAGE_USAGE;
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + PLAYER_DESC_BOB + INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+                formatExpectedMessage(Messages.MESSAGE_NON_EMPTY_PREAMBLE));
     }
 
     @Test
@@ -109,15 +90,24 @@ public class UnassignInjuryCommandParserTest {
     @Test
     public void parse_duplicatePlayerPrefix_failure() {
         // duplicate player prefix
-        String expectedDuplicatePlayerMessage = Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PLAYER) + "\n"
-                + UnassignInjuryCommand.MESSAGE_USAGE;
         assertParseFailure(parser, PLAYER_DESC_BOB + PLAYER_DESC_BOB + INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedDuplicatePlayerMessage));
+                formatDuplicatePrefixesMessage(PREFIX_PLAYER));
 
         // duplicate injury prefix
-        String expectedDuplicateInjuryMessage = Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INJURY) + "\n"
-                + UnassignInjuryCommand.MESSAGE_USAGE;
         assertParseFailure(parser, PLAYER_DESC_BOB + INJURY_DESC_BOB + INJURY_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedDuplicateInjuryMessage));
+                formatDuplicatePrefixesMessage(PREFIX_INJURY));
+    }
+
+    //=========== Helper Methods ========================================================
+    private static String formatExpectedMessage(String message) {
+        String expectedMessage = String.format(message, UnassignInjuryCommand.COMMAND_WORD) + "\n"
+                + UnassignInjuryCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage);
+    }
+
+    private static String formatDuplicatePrefixesMessage(Prefix prefix) {
+        String expectedMessage = Messages.getErrorMessageForDuplicatePrefixes(prefix) + "\n"
+                + UnassignInjuryCommand.MESSAGE_USAGE;
+        return String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage);
     }
 }
