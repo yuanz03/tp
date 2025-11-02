@@ -31,16 +31,12 @@
         <Label fx:id="captainBadge" GridPane.columnIndex="1" text="⭐ CAPTAIN" styleClass="captain-badge" />
       </HBox>
 
-      <!-- Team Row -->
-      <HBox fx:id="teamRow" spacing="5" alignment="CENTER_LEFT">
+      <!-- Team & Position Row -->
+      <HBox fx:id="teamPositionRow" spacing="5" alignment="CENTER_LEFT">
         <Label fx:id="teamIcon" text="📋" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <Label fx:id="teamLabel" wrapText="true" styleClass="team-info-label" />
-      </HBox>
-
-      <!-- Position Row -->
-      <HBox fx:id="positionRow" spacing="10" alignment="CENTER_LEFT">
-          <Label fx:id="positionIcon" text="⚽" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-          <Label fx:id="positionLabel" wrapText="true" styleClass="position-info-label" />
+        <Label fx:id="positionIcon" text="⚽" styleClass="contact-icon" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label fx:id="positionLabel" wrapText="true" styleClass="position-info-label" />
       </HBox>
 
       <!-- Injury Status Row -->

@@ -99,6 +99,8 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> {
                     Label tagLabel = new Label(tag.tagName);
                     tagLabel.getStyleClass().add("tag-label");
+                    tagLabel.setWrapText(true);
+                    tagLabel.setMaxWidth(1300);
                     tags.getChildren().add(tagLabel);
                 });
     }

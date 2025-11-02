@@ -37,7 +37,7 @@
   -fx-text-fill: #64B5F6;
   -fx-font-size: 12px;
   -fx-font-weight: bold;
-  -fx-max-width: 1300px;
+  -fx-max-width: 750px;
   -fx-padding: 0;
 }
 
@@ -45,7 +45,7 @@
   -fx-text-fill: #81C784;
   -fx-font-size: 12px;
   -fx-font-weight: bold;
-  -fx-max-width: 1300px;
+  -fx-max-width: 600px;
   -fx-padding: 0;
 }
 
