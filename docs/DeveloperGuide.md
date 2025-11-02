@@ -477,7 +477,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `PlayBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: UC01 - Add a player**
+**Use case: UC01 - Add a team**
+
+**MSS**
+
+1.  User requests to add a team with a unique name.
+2.  PlayBook adds the team with the specified name.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given team name is invalid.
+
+    * 1a1. PlayBook shows an error message.
+
+      Use case ends.
+
+* 1b. The team name already exists.
+
+    *  1b1. PlayBook shows an error message.
+
+       Use case ends.
+
+* 1c. The team name is blank or empty.
+
+    * 1c1. PlayBook shows an error message.
+
+      Use case ends.
+
+**Use case: UC02 - Add a player**
 
 **MSS**
 
@@ -512,7 +541,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC02 - Delete a player**
+**Use case: UC03 - Delete a player**
 
 **MSS**
 
@@ -526,36 +555,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given player name does not exist.
 
     * 1a1. PlayBook shows an error message.
-
-      Use case ends.
-
-
-**Use case: UC03 - Add a team**
-
-**MSS**
-
-1.  User requests to add a team with a unique name.
-2.  PlayBook adds the team with the specified name.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. The given team name is invalid.
-
-    * 1a1. PlayBook shows an error message.
-
-      Use case ends.
-
-* 1b. The team name already exists.
-
-    *  1b1. PlayBook shows an error message.
-
-       Use case ends.
-
-* 1c. The team name is blank or empty.
-
-    * 1c1. PlayBook shows an error message.
 
       Use case ends.
 
@@ -1044,7 +1043,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 5.  Should work fully offline and must not depend on any custom remote server for normal operations.
 6.  User data should be stored locally in a human editable JSON file, without using a DBMS.
 7.  GUI should render optimally at 1920x1080 and above (for 100% & 125% scaling) and remain fully functional at 1280x720 and above (for 150% scaling) on any _mainstream OS_.
-8.  Response to any single user command should be visible within 3 seconds on any _mainstream OS_.
+8.  Response to 95% of single-command user interactions should be visible within 3 seconds when running on any _mainstream OS_., and handling PlayBook datasets containing up to 1000 players and 50 teams.
 9.  User interface should be intuitive for football coaches with limited technical background to complete core tasks after reading the user guide once.
 10. Sensitive player data should be safeguarded against accidental disclosure via manual export and delete options, and by running the app in a secure environment where local files are protected by the device's password.
 
