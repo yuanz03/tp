@@ -1138,9 +1138,19 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Dealing with missing data files
+   1. Terminate the application if it is currently running.
+   2. Re-launch the application using the jar file.<br>
+      **Expected**: The application launches successfully and displays the preloaded sample data. The data file is only created
+      after the user executes a command which triggers a save (i.e., any valid command). Once this happens, a new `playbook.json` file
+      containing the sample data will be generated in the `data` folder.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+2. Dealing with corrupted data file
+   1. Terminate the application if it is currently running.
+   2. Navigate to the `data` folder and delete the existing corrupted `playbook.json` file.
+   3. Re-launch the application using the jar file.<br>
+      **Expected**: The application launches successfully and displays the preloaded sample data. The save behaviour for the data file
+      is identical to the scenario above on missing data files.
 
 --------------------------------------------------------------------------------------------------------------------
 
