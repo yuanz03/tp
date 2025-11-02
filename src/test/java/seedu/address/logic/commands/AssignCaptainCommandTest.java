@@ -153,6 +153,48 @@ public class AssignCaptainCommandTest {
     }
 
     @Test
+    public void execute_personNotInTeam_throwsCommandException() {
+        Person base = new PersonBuilder().withCaptain(false).build();
+        Person noTeam = new PersonWithNullTeam(base);
+
+        Name name = base.getName();
+
+        ModelStub modelStub = new ModelStub() {
+            @Override
+            public Person getPersonByName(Name queryName) {
+                if (!queryName.equals(name)) {
+                    throw new seedu.address.model.person.exceptions.PersonNotFoundException();
+                }
+                return noTeam;
+            }
+        };
+
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
+        try {
+            command.execute(modelStub);
+        } catch (CommandException e) {
+            String expected = String.format(AssignCaptainCommand.MESSAGE_NOT_IN_TEAM, base.getName());
+            assertEquals(expected, e.getMessage());
+            return;
+        } catch (Exception e) {
+            throw new AssertionError("Expected CommandException for person not in team.");
+        }
+        throw new AssertionError("Expected CommandException for person not in team.");
+    }
+
+    private static class PersonWithNullTeam extends Person {
+        PersonWithNullTeam(Person p) {
+            super(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                    p.getTeam(), p.getTags(), p.getPosition(), p.getInjuries(), p.isCaptain());
+        }
+
+        @Override
+        public seedu.address.model.team.Team getTeam() {
+            return null;
+        }
+    }
+
+    @Test
     public void equals() {
         Name sergio = new Name("Sergio Ramos");
         Name leo = new Name("Lionel Messi");
