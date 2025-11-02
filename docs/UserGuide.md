@@ -608,7 +608,7 @@ Consider making a backup of your data file before bulk deletions.
 
 #### Unassign an injury from player: `unassigninjury`
 
-Removes an injury status currently assigned to an existing player in the Playbook.
+Removes an injury status currently assigned to an existing player in the PlayBook.
 
 Format: `unassigninjury pl/PLAYER_NAME i/INJURY`
 
@@ -895,7 +895,7 @@ This command will permanently delete:
 
 <box type="info" seamless>
 
-**Expected success message:** "Playbook has been cleared!"
+**Expected success message:** "PlayBook has been cleared!"
 
 **Expected behaviour:** The player list panel will be completely empty.
 </box>
@@ -964,7 +964,7 @@ _Details coming soon in v2.0 ..._
 **A:** Use the `edit` command to correct it. For example: `edit pl/Jon Doe n/John Doe` will rename "Jon Doe" to "John Doe".
 
 **Q: Why can't I delete a team?**<br>
-**A:** Teams can only be deleted if they have no players assigned. First reassign all players to other teams using `assignteam`, or delete the players, then delete the team using `deleteteam`.
+**A:** Teams can only be deleted if they have no players assigned. First reassign all players to other teams using `assignteam`, or delete the players, then delete the team using `delete tm/TEAM_NAME`.
 
 **Q: Does PlayBook work offline?**<br>
 **A:** Yes! PlayBook works completely offline and stores all data locally on your computer.
@@ -977,10 +977,10 @@ _Details coming soon in v2.0 ..._
    - **Remedy**: delete the `preferences.json` file created by the application before running the application again
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. 
    - **Remedy**: manually restore the minimized Help Window
-3. **Due to Playbook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
+3. **Due to PlayBook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
    - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
    - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
-4. **Playbook's duplicate detection** treats names with different spacing as different entries.
+4. **PlayBook's duplicate detection** treats names with different spacing as different entries.
    - **Example**: `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered separate players, which can create unintended duplicate entries due to spacing variations
    - **Remedy**: ensure the player name is entered with the exact spacing you intend
 5. **Incorrect or misplaced prefixes** may be parsed as part of the value for the nearest preceding valid prefix, if one exists.
