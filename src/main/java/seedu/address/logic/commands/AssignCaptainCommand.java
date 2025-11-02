@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * or is already a captain, a {@link CommandException} is thrown.
  * <p>
  * Example usage:
+ * 
  * <pre>
  * {@code assigncaptain pl/Sergio Ramos}
  * </pre>
@@ -32,6 +33,7 @@ public class AssignCaptainCommand extends Command {
     public static final String MESSAGE_SUCCESS = "%1$s is now captain of %2$s";
     public static final String MESSAGE_STRIPPED_PREVIOUS_CAPTAIN = "%1$s is no longer captain. ";
     public static final String MESSAGE_ALREADY_CAPTAIN = "%1$s is already captain of %2$s";
+    public static final String MESSAGE_NOT_IN_TEAM = "%1$s is not assigned to any team.";
 
     private final Name targetName;
 
@@ -56,6 +58,10 @@ public class AssignCaptainCommand extends Command {
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
+        }
+
+        if (targetPerson.getTeam() == null) {
+            throw new CommandException(String.format(MESSAGE_NOT_IN_TEAM, targetPerson.getName()));
         }
 
         if (targetPerson.isCaptain()) {

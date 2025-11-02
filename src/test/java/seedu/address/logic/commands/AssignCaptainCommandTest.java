@@ -148,7 +148,7 @@ public class AssignCaptainCommandTest {
         String expectedMessage = String.format(AssignCaptainCommand.MESSAGE_STRIPPED_PREVIOUS_CAPTAIN,
                 oldCaptain.getName())
                 + String.format(AssignCaptainCommand.MESSAGE_SUCCESS,
-                newCaptain.getName(), newCaptain.getTeam().getName());
+                        newCaptain.getName(), newCaptain.getTeam().getName());
         assertEquals(CommandResult.showPersonCommandResult(expectedMessage), result);
     }
 
