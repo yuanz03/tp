@@ -31,6 +31,11 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
 
+    // Common injury constants used across tests
+    private static final Injury ACL = new Injury("ACL");
+    private static final Injury MCL = new Injury("MCL");
+    private static final Injury PCL = new Injury("PCL");
+
     private ModelManager modelManager = new ModelManager();
 
     @Test
@@ -158,9 +163,11 @@ public class ModelManagerTest {
         assertTrue(modelManager.hasTeam(U12));
     }
 
+    //=========== Null-check tests ========================================================
+
     @Test
     public void addInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, Injury.DEFAULT_INJURY_STATUS));
+        assertThrows(NullPointerException.class, () -> modelManager.addInjury(null, ACL));
     }
 
     @Test
@@ -170,20 +177,37 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasNonDefaultInjury_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasNonDefaultInjury(null));
+    }
+
+    @Test
+    public void deleteInjury_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(null, ACL));
+    }
+
+    @Test
+    public void deleteInjury_nullInjury_throwsNullPointerException() {
+        modelManager.addPerson(ALICE);
+        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(ALICE, null));
+    }
+
+    //=========== addInjury behaviour tests ========================================================
+
+    @Test
     public void addInjury_personNotInAddressBook_throwsPersonNotFoundException() {
-        Injury injury = new Injury("Knee fracture");
-        assertThrows(PersonNotFoundException.class, () -> modelManager.addInjury(ALICE, injury));
+        assertThrows(PersonNotFoundException.class, () -> modelManager.addInjury(ALICE, MCL));
     }
 
     @Test
     public void addInjury_validPersonAndInjury_addsInjuryStatusCorrectly() {
         modelManager.addPerson(ALICE);
-        Injury injury = new Injury("Knee fracture");
-        modelManager.addInjury(ALICE, injury);
+        modelManager.addInjury(ALICE, MCL);
 
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
-        assertTrue(updatedPerson.getInjuries().contains(injury));
+        assertTrue(updatedPerson.getInjuries().contains(MCL));
 
+        // verify other player fields are unchanged
         assertEquals(ALICE.getName(), updatedPerson.getName());
         assertEquals(ALICE.getPhone(), updatedPerson.getPhone());
         assertEquals(ALICE.getEmail(), updatedPerson.getEmail());
@@ -196,34 +220,31 @@ public class ModelManagerTest {
     @Test
     public void addInjury_duplicateInjury_noDuplicateInjuryAdded() {
         modelManager.addPerson(ALICE);
-        Injury sameInjury = new Injury("ACL");
-        modelManager.addInjury(ALICE, sameInjury);
+        modelManager.addInjury(ALICE, MCL);
 
         Person firstPerson = modelManager.getPersonByName(ALICE.getName());
         int firstInjuryCount = firstPerson.getInjuries().size();
 
         // Add the same injury again
-        modelManager.addInjury(ALICE, sameInjury);
+        modelManager.addInjury(firstPerson, MCL);
 
         Person secondPerson = modelManager.getPersonByName(ALICE.getName());
         assertEquals(firstInjuryCount, secondPerson.getInjuries().size());
-        assertTrue(secondPerson.getInjuries().contains(sameInjury));
+        assertTrue(secondPerson.getInjuries().contains(MCL));
     }
 
     @Test
     public void addInjury_multipleInjuryUpdates_addsAllInjuries() {
         modelManager.addPerson(ALICE);
+        modelManager.addInjury(ALICE, MCL);
 
-        Injury firstInjury = new Injury("Knee fracture");
-        modelManager.addInjury(ALICE, firstInjury);
-        assertTrue(modelManager.getPersonByName(ALICE.getName()).getInjuries().contains(firstInjury));
+        assertTrue(modelManager.getPersonByName(ALICE.getName()).getInjuries().contains(MCL));
 
-        Injury secondInjury = new Injury("Sprained finger");
-        modelManager.addInjury(modelManager.getPersonByName(ALICE.getName()), secondInjury);
+        modelManager.addInjury(modelManager.getPersonByName(ALICE.getName()), PCL);
 
         Person updatedPerson = modelManager.getPersonByName(ALICE.getName());
-        assertTrue(updatedPerson.getInjuries().contains(firstInjury));
-        assertTrue(updatedPerson.getInjuries().contains(secondInjury));
+        assertTrue(updatedPerson.getInjuries().contains(MCL));
+        assertTrue(updatedPerson.getInjuries().contains(PCL));
     }
 
     @Test
@@ -234,20 +255,16 @@ public class ModelManagerTest {
         // Verify the initial injury status is the default "FIT" status
         assertTrue(personWithDefaultInjury.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
 
-        // Add a different injury
-        Injury newInjury = new Injury("ACL");
-        modelManager.addInjury(personWithDefaultInjury, newInjury);
+        // Add a new injury
+        modelManager.addInjury(personWithDefaultInjury, ACL);
 
         // Verify that the default "FIT" status is removed and the new injury is added
         Person updatedPerson = modelManager.getPersonByName(personWithDefaultInjury.getName());
         assertFalse(updatedPerson.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
-        assertTrue(updatedPerson.getInjuries().contains(newInjury));
+        assertTrue(updatedPerson.getInjuries().contains(ACL));
     }
 
-    @Test
-    public void hasNonDefaultInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasNonDefaultInjury(null));
-    }
+    //=========== hasNonDefaultInjury behaviour tests ========================================================
 
     @Test
     public void hasNonDefaultInjury_personWithOnlyDefaultInjury_returnsFalse() {
@@ -285,65 +302,51 @@ public class ModelManagerTest {
         assertTrue(modelManager.hasNonDefaultInjury(personWithLowercaseInjury));
     }
 
-    @Test
-    public void deleteInjury_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(null, new Injury("ACL")));
-    }
-
-    @Test
-    public void deleteInjury_nullInjury_throwsNullPointerException() {
-        modelManager.addPerson(ALICE);
-        assertThrows(NullPointerException.class, () -> modelManager.deleteInjury(ALICE, null));
-    }
+    //=========== deleteInjury behaviour tests ========================================================
 
     @Test
     public void deleteInjury_personNotInAddressBook_throwsPersonNotFoundException() {
-        Injury injury = new Injury("Knee fracture");
-        assertThrows(PersonNotFoundException.class, () -> modelManager.deleteInjury(ALICE, injury));
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deleteInjury(ALICE, MCL));
     }
 
     @Test
     public void deleteInjury_validInjury_removesInjuryStatusCorrectly() {
         modelManager.addPerson(ALICE);
-        Injury injury = new Injury("Knee fracture");
-        modelManager.addInjury(ALICE, injury);
+        modelManager.addInjury(ALICE, MCL);
 
         // Verify injury was added
         Person personAfterAdd = modelManager.getPersonByName(ALICE.getName());
-        assertTrue(personAfterAdd.getInjuries().contains(injury));
+        assertTrue(personAfterAdd.getInjuries().contains(MCL));
 
         // Remove the injury from the person
-        modelManager.deleteInjury(modelManager.getPersonByName(ALICE.getName()), injury);
+        modelManager.deleteInjury(modelManager.getPersonByName(ALICE.getName()), MCL);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
-        assertFalse(personAfterDelete.getInjuries().contains(injury));
+        assertFalse(personAfterDelete.getInjuries().contains(MCL));
     }
 
     @Test
     public void deleteInjury_nonExistentInjury_noInjuryStatusChange() {
         modelManager.addPerson(ALICE);
-        Injury existingInjury = new Injury("ACL");
-        Injury nonExistentInjury = new Injury("Hamstring strain");
+        modelManager.addInjury(ALICE, MCL);
 
-        modelManager.addInjury(ALICE, existingInjury);
         Person personBeforeDelete = modelManager.getPersonByName(ALICE.getName());
         int injuryCountBeforeDelete = personBeforeDelete.getInjuries().size();
 
-        // Attempt to remove the non-existent injury
-        modelManager.deleteInjury(ALICE, nonExistentInjury);
+        // Attempt to remove a non-existent injury
+        modelManager.deleteInjury(personBeforeDelete, PCL);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
         assertEquals(injuryCountBeforeDelete, personAfterDelete.getInjuries().size());
-        assertTrue(personAfterDelete.getInjuries().contains(existingInjury));
+        assertTrue(personAfterDelete.getInjuries().contains(MCL));
     }
 
     @Test
     public void deleteInjury_lastInjuryInList_addsDefaultInjury() {
         modelManager.addPerson(ALICE);
-        Injury existingInjury = new Injury("ACL");
 
-        // Remove all injuries in injury list
-        modelManager.deleteInjury(ALICE, existingInjury);
+        // Remove all injuries in injury list (default ALICE already has ACL)
+        modelManager.deleteInjury(ALICE, ACL);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
         assertTrue(personAfterDelete.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
