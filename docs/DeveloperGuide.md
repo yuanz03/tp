@@ -325,9 +325,10 @@ Team size: 5
 
 Given below are planned enhancements to address current limitations and improve user experience in future versions of PlayBook.
 
-### 1. Enhanced Name Validation with Case-Insensitive Duplicate Detection
+### 1. Enhanced Name Validation with Whitespace Normalization and Case-Insensitive Duplicate Detection
 
-**Current Limitation**: The system treats names with different spacing as separate entities (e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` are all considered different players).
+**Current Limitation**: The system treats names with different spacing as separate entities. This means that:
+- e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered different players
 
 **Planned Enhancement**: Implement a normalized name comparison system that:
 - Trims leading and trailing whitespace
@@ -335,17 +336,20 @@ Given below are planned enhancements to address current limitations and improve 
 - Performs case-insensitive comparison
 - Prevents duplicate entries that differ only in spacing or capitalization
 
-This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognized as the same player.
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh` (double-spacing), and `ALEX YEOH` are all recognized as the same player, preventing unintended duplicates caused by spacing and casing variations.
 
 ### 2. Case-Only Name Edit Support
 
-**Current Limitation**: Editing a player's name to change only capitalization fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
+**Current Limitation**: Editing a player's name to change only capitalization fails because the system treats case-insensitive names as duplicates. This means that:
+- e.g., `edit pl/john doe n/John Doe` fails
 
 **Planned Enhancement**: Allow capitalization-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalization in a single step.
 
 ### 3. Flexible Phone Number Format Support
 
-**Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes (e.g., `1234-5678` or `+65 1234 5678` are rejected).
+**Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes. This means that:
+- Inputs that deviate from this strict validation rule are rejected
+- e.g., `1234-5678`, `+65 1234 5678` or `1234 5678 (HP) 1111-3333 (Office)` are all rejected
 
 **Planned Enhancement**: Support internationally recognized phone number formats including:
 - Country codes with `+` prefix
@@ -358,7 +362,7 @@ Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678
 ### 4. Enhanced Tag Management
 
 **Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means that:
-- `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
+- `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency if users expect tags to be case-insensitive
 - Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
 - Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
 
@@ -371,12 +375,16 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 
 ### 5. Enhanced Prefix Validation and Error Messages
 
-**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error as `tm/` is an invalid prefix for `assigninjury`, thus it treats `INJURY` as `ACL tm/U16`).
+**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages. This means that:
+- e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error because the parser treats `tm/U16` as part of the `i/` value, effectively parsing `INJURY` as `ACL tm/U16` 
+- Parser should ideally recognize `tm/` as an invalid prefix for `assigninjury` and return an invalid prefix error instead
 
 **Planned Enhancement**: Implement stricter command parsing that:
 - Detects invalid prefixes for each command
 - Provides specific error messages indicating which prefix is not valid for the given command
 - Suggests the correct command format when invalid prefixes are detected
+
+Example error message after enhancement (for same example): `Invalid prefix: 'tm/' for assigninjury command`. `Expected prefixes: 'pl/', 'i/'`.
 
 ### 6. Undo/Redo Functionality
 
@@ -419,6 +427,28 @@ Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `p
 Example filter command success message after enhancement: "Found 3 player(s) matching the criteria team: "Chelsea", injury: "Leg Broken" and position: "RW"."
 
 This will ensure that users are clear on what filtering criteria they used to result in the current players being displayed.
+
+### 10. Enhanced Injury Assignment Operation to Support Bulk Assignments
+
+**Current Limitation**: Users can assign only one injury to a player at a time using the `assigninjury` command, making it time-consuming to manage multiple injury statuses for players.
+
+**Planned Enhancement**: Implement bulk injury assignment functionality that allows users to:
+- Assign the same injury to multiple players simultaneously (e.g., `assigninjury pl/John Doe pl/Messi pl/Musiala pl/Kane i/ACL`)
+- Assign multiple injuries to the same player in a single command (e.g., `assigninjury pl/John Doe i/ACL i/MCL i/Ankle sprain`)
+- Validate all player names and injury names before executing any assignment operations to ensure data consistency
+- Support mixed operations where some injury assignments succeed while others fail
+- Display a summary of all successful assignments and any that failed with specific reasons
+
+### 11. Enhanced Injury Unassignment Operation to Support Bulk Unassignments
+
+**Current Limitation**: Users can unassign only one injury from a player at a time using the `unassigninjury` command, making it time-consuming to manage multiple injury statuses for players.
+
+**Planned Enhancement**: Implement bulk injury unassignment functionality that allows users to:
+- Unassign the same injury from multiple players simultaneously (e.g., `unassigninjury pl/John Doe pl/Messi pl/Musiala pl/Kane i/ACL`)
+- Unassign multiple injuries from the same player in a single command (e.g., `unassigninjury pl/John Doe i/ACL i/MCL i/Ankle sprain`)
+- Validate all player names and injury names before executing any unassignment operations to ensure data consistency
+- Support mixed operations where some injury unassignments succeed while others fail
+- Display a summary of all successful unassignments and any that failed with specific reasons
 
 --------------------------------------------------------------------------------------------------------------------
 
