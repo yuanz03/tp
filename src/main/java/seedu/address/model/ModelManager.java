@@ -332,6 +332,7 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons)
-                && filteredTeams.equals(otherModelManager.filteredTeams);
+                && filteredTeams.equals(otherModelManager.filteredTeams)
+                && filteredPositions.equals(otherModelManager.filteredPositions);
     }
 }

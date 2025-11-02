@@ -20,6 +20,7 @@
 * [Implementation](#implementation)
     * [Proposed undo or redo feature](#proposed-undo-or-redo-feature)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 * [Appendix: Requirements](#appendix-requirements)
     * [Product scope](#product-scope)
     * [User stories](#user-stories)
@@ -61,6 +62,24 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ## **Design**
 
+<box type="info" seamless>
+
+**Note on Naming Conventions in Code:**
+
+PlayBook is adapted from AddressBook-Level3 (AB3). To maintain compatibility and ease of adaptation, certain class and package names in the codebase retain their original AB3 naming:
+
+* **`Person`** in the code refers to a **`Player`** in the application
+* **`AddressBook`** in the code refers to **`PlayBook`** in the application
+
+For example:
+* The `Person` class represents player data
+* The `AddressBook` class manages the collection of players
+* Package names like `seedu.address` are retained from the original AB3 structure
+
+Throughout this guide, we use these code-level names when discussing implementation details, but they conceptually represent players and PlayBook respectively.
+
+</box>
+
 ### Architecture
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
@@ -93,7 +112,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -292,11 +311,114 @@ _{more aspects and alternatives to be added}_
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-* [Documentation guide](Documentation.md)
-* [Testing guide](Testing.md)
-* [Logging guide](Logging.md)
-* [Configuration guide](Configuration.md)
-* [DevOps guide](DevOps.md)
+* [Documentation guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Documentation.html)
+* [Testing guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Testing.html)
+* [Logging guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Logging.html)
+* [Configuration guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/Configuration.html)
+* [DevOps guide](https://ay2526s1-cs2103t-t13-3.github.io/tp/DevOps.html)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+Given below are planned enhancements to address current limitations and improve user experience in future versions of PlayBook.
+
+### 1. Enhanced Name Validation with Case-Insensitive Duplicate Detection
+
+**Current Limitation**: The system treats names with different spacing as separate entities (e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` are all considered different players).
+
+**Planned Enhancement**: Implement a normalized name comparison system that:
+- Trims leading and trailing whitespace
+- Collapses multiple consecutive spaces into a single space
+- Performs case-insensitive comparison
+- Prevents duplicate entries that differ only in spacing or capitalization
+
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh`, and `ALEX YEOH` are all recognized as the same player.
+
+### 2. Case-Only Name Edit Support
+
+**Current Limitation**: Editing a player's name to change only capitalization fails because the system treats case-insensitive names as duplicates (e.g., `edit pl/john doe n/John Doe` fails).
+
+**Planned Enhancement**: Allow capitalization-only edits by detecting when the new name differs only in case from the existing name. The system will permit such edits without triggering duplicate detection, enabling users to correct capitalization in a single step.
+
+### 3. Flexible Phone Number Format Support
+
+**Current Limitation**: Phone numbers accept only continuous digits without spaces, hyphens, or country codes (e.g., `1234-5678` or `+65 1234 5678` are rejected).
+
+**Planned Enhancement**: Support internationally recognized phone number formats including:
+- Country codes with `+` prefix
+- Spaces and hyphens as separators
+- Parentheses for area codes
+- Multiple phone numbers separated by commas or semicolons
+
+Example valid formats: `+65 1234 5678`, `1234-5678`, `(65) 1234-5678`, `12345678; 87654321`
+
+### 4. Enhanced Tag Management
+
+**Current Limitation**: Tags currently only accept alphanumeric characters and are case-sensitive. This means that:
+- `Friend` and `friend` are treated as different tags, leading to potential confusion and inconsistency
+- Tags cannot contain spaces (e.g., `senior player` must be written as `seniorplayer`)
+- Special characters like hyphens, underscores, or apostrophes are not allowed (e.g., `U-16`, `vice_captain`, or `parent's contact` are invalid)
+
+**Planned Enhancement**: Enhance tag functionality to be more flexible and user-friendly by:
+- Implementing case-insensitive tag comparison and storage, where all tags are normalized to a consistent case format (e.g., lowercase or title case) to prevent duplicate tags that differ only in capitalization
+- Allowing spaces in tags so users can create multi-word tags (e.g., `senior player`, `injury prone`, `parent contact`)
+- Supporting special characters including hyphens (`-`), underscores (`_`), apostrophes (`'`), periods (`.`), and parentheses (`()`) to enable more descriptive tags
+
+Example valid tags after enhancement: `friend`, `senior player`, `U-16 team`, `parent's contact`, `vice_captain`, `top-scorer`
+
+### 5. Enhanced Prefix Validation and Error Messages
+
+**Current Limitation**: Incorrect or misplaced prefixes may be parsed as part of the value for the preceding valid prefix, resulting in misleading error messages (e.g., `assigninjury pl/John Doe i/ACL tm/U16` shows an invalid injury error instead of invalid prefix error as `tm/` is an invalid prefix for `assigninjury`, thus it treats `INJURY` as `ACL tm/U16`).
+
+**Planned Enhancement**: Implement stricter command parsing that:
+- Detects invalid prefixes for each command
+- Provides specific error messages indicating which prefix is not valid for the given command
+- Suggests the correct command format when invalid prefixes are detected
+
+### 6. Undo/Redo Functionality
+
+**Current Limitation**: There is no way to undo accidental operations such as deleting a player, editing information, or removing assignments.
+
+**Planned Enhancement**: Implement a comprehensive undo/redo system. This will allow users to:
+- Undo the last N operations
+- Redo previously undone operations
+- View a history of recent commands for context
+
+### 7. Enhanced Delete Operation to Support Bulk Deletion
+
+**Current Limitation**: Users can only delete one player, team, or position at a time using the `delete` command, making it time-consuming to remove multiple entities when restructuring teams or cleaning up data.
+
+**Planned Enhancement**: Implement bulk delete functionality that allows users to:
+- Delete multiple players at once by specifying multiple player names (e.g., `delete pl/John Doe pl/Jane Smith pl/Alex Tan`)
+- Delete multiple teams simultaneously (e.g., `delete tm/U16 tm/U18 tm/Senior`)
+- Delete multiple positions at once (e.g., `delete ps/ST ps/LW ps/RW`)
+- Use a single command to delete a combination of players, teams, and positions (e.g., `delete pl/John Doe tm/U16 ps/ST`)
+- Provide clear confirmation messages showing all entities that will be deleted
+- Display a summary of successfully deleted entities and any that failed with reasons
+
+### 8. Enhanced Add Command to Support Optional Position and Injury Assignment
+
+**Current Limitation**: When adding a new player using the `add` command, users can only specify basic information (name, phone, email, address, team, tags). To assign injuries or positions, users must execute separate `assigninjury` and `assignposition` commands after adding the player, which adds extra steps to the workflow.
+
+**Planned Enhancement**: Extend the `add` command to support optional injury and position parameters, allowing users to:
+- Assign position directly when adding a player
+- Assign injury status directly when adding a player
+- Validate that specified position exists before creating the player if position argument is provided
+- Streamline the player onboarding process by reducing the number of commands needed
+
+### 9. Enhanced Filter Command Success Message
+
+**Current Limitation**: After the filter command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
+
+**Planned Enhancement**: Implement customised success messages for the filter command:
+- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters.
+
+Example filter command success message after enhancement: "Found 3 player(s) matching the criteria team: "Chelsea", injury: "Leg Broken" and position: "RW"."
+
+This will ensure that users are clear on what filtering criteria they used to result in the current players being displayed.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -315,8 +437,8 @@ _{more aspects and alternatives to be added}_
 
 **Value proposition**:
 - manage contacts faster than a typical mouse/GUI driven app
-- **specifically for football coaches: quickly organise and access player, parent, and assistant contacts across multiple teams**
-- optimised for fast, command-line style data entry and squad management
+- **specifically for football coaches: quickly organize and access player, parent, and assistant contacts across multiple teams**
+- optimized for fast, command-line style data entry and squad management
 
 ### User stories
 
@@ -334,19 +456,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | coach    | create a position                              | assign a position to a player                                        |
 | `* * *`  | coach    | delete a position                              | delete a position that I created                                     |
 | `* * *`  | coach    | assign a player a position                     | keep track of a player's position                                    |
-| `* * *`  | coach    | create a named injury status with a timeframe  | standardize how injuries are tracked and managed                     |
-| `* * *`  | coach    | assign an existing injury status to a player   | view and track their availability and rehab timeline                 |
+| `* * *`  | coach    | assign an injury status to a player            | view and track their availability                                    |
 | `* * *`  | coach    | list all the players                           | view all player information                                          |
+| `* * *`  | coach    | list all the teams                             | view all the teams that have been added                              |
+| `* * *`  | coach    | list all the injured players                   | view all the players that are currently not fully fit                |
 | `* * *`  | coach    | search for a player by name                    | retrieve details of a specific player easily                         |
 | `* * *`  | coach    | save a player's emails                         | have players email to send them documents                            |
 | `* * *`  | coach    | save a player as captain                       | see who my team captains are                                         |
 | `* * *`  | coach    | remove captain from a player                   | update leadership assignments when needed                            |
 | `* *`    | coach    | filter players by captain status               | quickly view all captains                                            |
 | `* *`    | coach    | filter players by team                         | focus only on players from a given team                              |
-| `* *`    | coach    | filter player by injury                        | quickly check which players are unavailable                          |
-| `* *`    | coach    | filter players by position                     | see all players who can play a certain role                          |
+| `* *`    | coach    | filter player by injury                        | focus only on players who currently have a certain injury            |
+| `* *`    | coach    | filter players by position                     | focus only on players who can play a certain position                |
 | `* *`    | coach    | remove an assigned injury status from a player | identify and select players who are fully fit                        |
-| `* *`    | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
+| `*`      | coach    | save players' past injury details              | identify higher-risk players and manage their workload appropriately |
 | `*`      | coach    | create a shortlist of transfer targets         | consolidate potential signings for evaluation and outreach           |
 
 
@@ -509,8 +632,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list players.
 2.  PlayBook shows a list of players.
-3.  User requests to assign an existing injury status to a player by specifying the injury name and timeframe.
-4.  PlayBook updates the player's availability and rehab timeline.
+3.  User requests to assign an injury status to a player by specifying the injury name.
+4.  PlayBook updates the player's availability.
 
     Use case ends.
 
@@ -1068,4 +1191,3 @@ Approximately **10%** of development effort was saved through strategic reuse:
 **JavaFX Framework** - Reused from AB3 for building the graphical user interface, but significantly adapted to support multiple entity displays and complex filtering operations.
 
 **JUnit5 Testing Framework** - Reused for unit testing, with extensive test suites developed for the new entity types and complex business logic.
-

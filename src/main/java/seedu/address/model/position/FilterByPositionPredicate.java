@@ -1,5 +1,7 @@
 package seedu.address.model.position;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -12,12 +14,17 @@ public class FilterByPositionPredicate implements Predicate<Person> {
     public static final FilterByPositionPredicate ALWAYS_TRUE = new FilterByPositionPredicate("");
     private final String positionName;
 
+    /**
+     * Constructs a FilterByPositionPredicate.
+     */
     public FilterByPositionPredicate(String positionName) {
+        requireNonNull(positionName);
         this.positionName = positionName;
     }
 
     @Override
     public boolean test(Person person) {
+        requireNonNull(person);
         if (positionName.isEmpty()) {
             return true;
         }
