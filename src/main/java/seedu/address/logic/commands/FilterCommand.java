@@ -19,7 +19,6 @@ import seedu.address.model.person.FilterByInjuryPredicate;
 import seedu.address.model.position.FilterByPositionPredicate;
 import seedu.address.model.position.Position;
 import seedu.address.model.team.FilterByTeamPredicate;
-import seedu.address.model.team.Team;
 
 /**
  * Filters and lists all persons in address book whose team, position or injury matches the argument.
@@ -94,38 +93,14 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Validates the team if it is present in the filter criteria.
+     * Validates that the team exists in the model.
      */
     private void validateTeamIfPresent(Model model) throws CommandException {
         if (teamArg.isPresent()) {
             String teamName = teamArg.get();
-            validateTeamNameFormat(teamName);
-            validateTeamExistsInModel(model, teamName);
-        }
-    }
-
-    /**
-     * Validates that the team name has the correct format.
-     */
-    private void validateTeamNameFormat(String teamName) throws CommandException {
-        if (!Team.isValidTeamName(teamName)) {
-            throw new CommandException(String.format("Invalid team name: %s\n%s",
-                    teamName, Team.MESSAGE_CONSTRAINTS));
-        }
-    }
-
-    /**
-     * Validates that the team exists in the model.
-     */
-    private void validateTeamExistsInModel(Model model, String teamName) throws CommandException {
-        boolean hasMatchingTeam = model.getAddressBook().getTeamList().stream()
-                .anyMatch(team -> {
-                    FilterByTeamPredicate predicate = new FilterByTeamPredicate(teamName);
-                    return predicate.testTeam(team);
-                });
-
-        if (!hasMatchingTeam) {
-            throw new CommandException(String.format(Messages.MESSAGE_INVALID_TEAM, teamName));
+            if (!teamExistsInModel(model, teamName)) {
+                throw new CommandException(String.format(Messages.MESSAGE_INVALID_TEAM, teamName));
+            }
         }
     }
 
@@ -192,8 +167,11 @@ public class FilterCommand extends Command {
             return new CommandException(String.format(Messages.MESSAGE_NO_PLAYERS_IN_TEAM, teamArg.get()));
         } else if (injuryArg.isPresent()) {
             return new CommandException(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_INJURY, injuryArg.get()));
-        } else {
+        } else if (positionArg.isPresent()) {
             return new CommandException(String.format(Messages.MESSAGE_NO_PLAYERS_WITH_POSITION, positionArg.get()));
+        } else {
+            // This should never happen due to validation, but handle gracefully
+            return new CommandException("No filter criteria specified");
         }
     }
 
