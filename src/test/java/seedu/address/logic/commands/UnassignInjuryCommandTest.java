@@ -29,11 +29,12 @@ import seedu.address.testutil.PersonBuilder;
 
 public class UnassignInjuryCommandTest {
 
-    // Common injury constant used across tests
+    // Common injury constants used across tests
     private static final Injury ACL = new Injury("ACL");
     private static final Injury MCL = new Injury("MCL");
 
     //=========== Constructor null-check tests ========================================================
+
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new UnassignInjuryCommand(null, ACL));
@@ -45,6 +46,7 @@ public class UnassignInjuryCommandTest {
     }
 
     //=========== Execution exception thrown tests ========================================================
+
     @Test
     public void execute_personNotFound_throwsCommandException() {
         Model model = new ModelManager();
@@ -78,6 +80,7 @@ public class UnassignInjuryCommandTest {
     }
 
     //=========== Execution successful tests ========================================================
+
     @Test
     public void execute_validPersonWithInjury_unassignSuccessful() throws Exception {
         Person personWithInjury = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
@@ -106,6 +109,7 @@ public class UnassignInjuryCommandTest {
     }
 
     //=========== equals() and toString() ========================================================
+
     @Test
     public void equals() {
         UnassignInjuryCommand unassignAliceInjuryCommand = new UnassignInjuryCommand(ALICE.getName(), ACL);
@@ -205,6 +209,7 @@ public class UnassignInjuryCommandTest {
     }
 
     //=========== Helper Methods ========================================================
+
     private static String formatPlayerMessage(String expectedMessage, Name name) {
         return String.format(expectedMessage, name);
     }

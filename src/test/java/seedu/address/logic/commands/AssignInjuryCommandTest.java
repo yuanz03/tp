@@ -28,11 +28,12 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AssignInjuryCommandTest {
 
-    // Common injury constant used across tests
+    // Common injury constants used across tests
     private static final Injury ACL = new Injury("ACL");
     private static final Injury MCL = new Injury("MCL");
 
     //=========== Constructor null-check tests ========================================================
+
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new AssignInjuryCommand(null, ACL));
@@ -44,6 +45,7 @@ public class AssignInjuryCommandTest {
     }
 
     //=========== Execution exception thrown tests ========================================================
+
     @Test
     public void execute_personNotFound_throwsCommandException() {
         Model model = new ModelManager();
@@ -77,6 +79,7 @@ public class AssignInjuryCommandTest {
     }
 
     //=========== Execution successful test ========================================================
+
     @Test
     public void execute_personFound_assignSuccessful() throws Exception {
         Person validPerson = new PersonBuilder().withName("Musiala").build();
@@ -95,6 +98,7 @@ public class AssignInjuryCommandTest {
     }
 
     //=========== equals() and toString() ========================================================
+
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();

@@ -99,6 +99,7 @@ public class UnassignInjuryCommandParserTest {
     }
 
     //=========== Helper Methods ========================================================
+
     private static String formatExpectedMessage(String message) {
         String expectedMessage = String.format(message, UnassignInjuryCommand.COMMAND_WORD) + "\n"
                 + UnassignInjuryCommand.MESSAGE_USAGE;

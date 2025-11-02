@@ -117,6 +117,7 @@ public class AssignInjuryCommandParserTest {
     }
 
     //=========== Helper Methods ========================================================
+
     private static String formatExpectedMessage(String message) {
         String expectedMessage = String.format(message, AssignInjuryCommand.COMMAND_WORD) + "\n"
                 + AssignInjuryCommand.MESSAGE_USAGE;
