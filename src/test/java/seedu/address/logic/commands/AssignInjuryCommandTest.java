@@ -27,39 +27,42 @@ import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.PersonBuilder;
 
 public class AssignInjuryCommandTest {
+
+    // Common injury constant used across tests
+    private static final Injury ACL = new Injury("ACL");
+    private static final Injury MCL = new Injury("MCL");
+
+    //=========== Constructor null-check tests ========================================================
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () ->
-                new AssignInjuryCommand(null, new Injury("ACL")));
+        assertThrows(NullPointerException.class, () -> new AssignInjuryCommand(null, ACL));
     }
 
     @Test
     public void constructor_nullInjury_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () ->
-                new AssignInjuryCommand(new Name("Messi"), null));
+        assertThrows(NullPointerException.class, () -> new AssignInjuryCommand(new Name("Messi"), null));
     }
 
+    //=========== Execution exception thrown tests ========================================================
     @Test
     public void execute_personNotFound_throwsCommandException() {
         Model model = new ModelManager();
         Name nonExistentName = new Name("Missing");
-        Injury injury = new Injury("ACL");
 
         assertThrows(CommandException.class, String.format(Messages.MESSAGE_PERSON_NOT_FOUND, nonExistentName), () ->
-                new AssignInjuryCommand(nonExistentName, injury).execute(model));
+                new AssignInjuryCommand(nonExistentName, ACL).execute(model));
     }
 
     @Test
     public void execute_duplicateInjuryAssignment_throwsCommandException() {
         Person validPerson = new PersonBuilder().withName("Musiala").withInjuries("ACL").build();
         Name name = validPerson.getName();
-        Injury duplicateInjury = new Injury("ACL");
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
         assertThrows(CommandException.class, String.format(Messages.MESSAGE_ASSIGNED_SAME_INJURY,
-                validPerson.getName(), duplicateInjury.getInjuryName()), () ->
-                new AssignInjuryCommand(name, duplicateInjury).execute(modelStub));
+                validPerson.getName(), ACL.getInjuryName()), () ->
+                new AssignInjuryCommand(name, ACL).execute(modelStub));
     }
 
     @Test
@@ -73,43 +76,42 @@ public class AssignInjuryCommandTest {
                 new AssignInjuryCommand(name, Injury.DEFAULT_INJURY_STATUS).execute(modelStub));
     }
 
+    //=========== Execution successful test ========================================================
     @Test
     public void execute_personFound_assignSuccessful() throws Exception {
         Person validPerson = new PersonBuilder().withName("Musiala").build();
         Name name = validPerson.getName();
-        Injury newInjury = new Injury("Broken Foot");
 
         ModelStubAcceptingInjuryAssigned modelStub = new ModelStubAcceptingInjuryAssigned(validPerson);
 
-        String expectedInjury = "[" + newInjury + "]";
+        String expectedInjury = "[" + MCL.getInjuryName() + "]";
         assertEquals(String.format(Messages.MESSAGE_ASSIGN_INJURY_SUCCESS,
                 validPerson.getName(), expectedInjury),
-                new AssignInjuryCommand(name, newInjury).execute(modelStub).getFeedbackToUser());
+                new AssignInjuryCommand(name, MCL).execute(modelStub).getFeedbackToUser());
 
-        assertEquals(newInjury, modelStub.injuryAssigned);
-        assertTrue(modelStub.personUpdated.getInjuries().contains(newInjury));
+        assertEquals(MCL, modelStub.injuryAssigned);
+        assertTrue(modelStub.personUpdated.getInjuries().contains(MCL));
         assertFalse(modelStub.personUpdated.getInjuries().contains(Injury.DEFAULT_INJURY_STATUS));
     }
 
+    //=========== equals() and toString() ========================================================
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
 
-        AssignInjuryCommand assignAliceInjuryCommand = new AssignInjuryCommand(alice.getName(), new Injury("ACL"));
-        AssignInjuryCommand assignBobInjuryCommand = new AssignInjuryCommand(bob.getName(), new Injury("Dead leg"));
+        AssignInjuryCommand assignAliceInjuryCommand = new AssignInjuryCommand(alice.getName(), ACL);
+        AssignInjuryCommand assignBobInjuryCommand = new AssignInjuryCommand(bob.getName(), ACL);
 
         // same object -> returns true
         assertTrue(assignAliceInjuryCommand.equals(assignAliceInjuryCommand));
 
         // same values -> returns true
-        AssignInjuryCommand assignAliceInjuryCommandCopy =
-                new AssignInjuryCommand(alice.getName(), new Injury("ACL"));
+        AssignInjuryCommand assignAliceInjuryCommandCopy = new AssignInjuryCommand(alice.getName(), ACL);
         assertTrue(assignAliceInjuryCommand.equals(assignAliceInjuryCommandCopy));
 
         // different injuries -> returns false
-        AssignInjuryCommand assignAliceInjuryCommandDifferent =
-                new AssignInjuryCommand(alice.getName(), new Injury("Concussion"));
+        AssignInjuryCommand assignAliceInjuryCommandDifferent = new AssignInjuryCommand(alice.getName(), MCL);
         assertFalse(assignAliceInjuryCommand.equals(assignAliceInjuryCommandDifferent));
 
         // different person -> returns false
@@ -127,7 +129,7 @@ public class AssignInjuryCommandTest {
         AssignInjuryCommand assignInjuryCommand = new AssignInjuryCommand(ALICE.getName(),
                 ALICE.getInjuries().iterator().next());
         String expected = AssignInjuryCommand.class.getCanonicalName() + "{personNameToAssign=" + ALICE.getName() + ", "
-                + "injuryToAssign=" + ALICE.getInjuries().iterator().next() + "}";
+                + "injuryToAssign=" + ALICE.getInjuries().iterator().next().getInjuryName() + "}";
         assertEquals(expected, assignInjuryCommand.toString());
     }
 
@@ -169,17 +171,7 @@ public class AssignInjuryCommandTest {
             }
             updatedInjuries.add(injury);
 
-            Person updatedPerson = new Person(
-                    target.getName(),
-                    target.getPhone(),
-                    target.getEmail(),
-                    target.getAddress(),
-                    target.getTeam(),
-                    target.getTags(),
-                    target.getPosition(),
-                    updatedInjuries,
-                    target.isCaptain()
-            );
+            Person updatedPerson = target.withInjuries(updatedInjuries);
 
             this.personUpdated = updatedPerson;
             this.injuryAssigned = injury;
