@@ -78,6 +78,35 @@ public class AssignCaptainCommandTest {
     }
 
     @Test
+    public void execute_personAlreadyCaptain_throwsCommandException() {
+        Person person = new PersonBuilder().withCaptain(true).build();
+        Name name = person.getName();
+
+        ModelStub modelStub = new ModelStub() {
+            @Override
+            public Person getPersonByName(Name queryName) {
+                if (!queryName.equals(name)) {
+                    throw new PersonNotFoundException();
+                }
+                return person;
+            }
+        };
+
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
+        try {
+            command.execute(modelStub);
+        } catch (CommandException e) {
+            String expected = String.format(AssignCaptainCommand.MESSAGE_ALREADY_CAPTAIN,
+                    person.getName(), person.getTeam().getName());
+            assertEquals(expected, e.getMessage());
+            return;
+        } catch (Exception e) {
+            throw new AssertionError("Expected CommandException for already captain.");
+        }
+        throw new AssertionError("Expected CommandException for already captain.");
+    }
+
+    @Test
     public void execute_teamAlreadyHasCaptain_stripsOldCaptainAndMakesNewCaptain() throws Exception {
         Person oldCaptain = new PersonBuilder().withName("Old Captain").withCaptain(true).build();
         Person newCaptain = new PersonBuilder().withName("New Captain").withCaptain(false).build();
@@ -119,8 +148,50 @@ public class AssignCaptainCommandTest {
         String expectedMessage = String.format(AssignCaptainCommand.MESSAGE_STRIPPED_PREVIOUS_CAPTAIN,
                 oldCaptain.getName())
                 + String.format(AssignCaptainCommand.MESSAGE_SUCCESS,
-                newCaptain.getName(), newCaptain.getTeam().getName());
+                        newCaptain.getName(), newCaptain.getTeam().getName());
         assertEquals(CommandResult.showPersonCommandResult(expectedMessage), result);
+    }
+
+    @Test
+    public void execute_personNotInTeam_throwsCommandException() {
+        Person base = new PersonBuilder().withCaptain(false).build();
+        Person noTeam = new PersonWithNullTeam(base);
+
+        Name name = base.getName();
+
+        ModelStub modelStub = new ModelStub() {
+            @Override
+            public Person getPersonByName(Name queryName) {
+                if (!queryName.equals(name)) {
+                    throw new seedu.address.model.person.exceptions.PersonNotFoundException();
+                }
+                return noTeam;
+            }
+        };
+
+        AssignCaptainCommand command = new AssignCaptainCommand(name);
+        try {
+            command.execute(modelStub);
+        } catch (CommandException e) {
+            String expected = String.format(AssignCaptainCommand.MESSAGE_NOT_IN_TEAM, base.getName());
+            assertEquals(expected, e.getMessage());
+            return;
+        } catch (Exception e) {
+            throw new AssertionError("Expected CommandException for person not in team.");
+        }
+        throw new AssertionError("Expected CommandException for person not in team.");
+    }
+
+    private static class PersonWithNullTeam extends Person {
+        PersonWithNullTeam(Person p) {
+            super(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                    p.getTeam(), p.getTags(), p.getPosition(), p.getInjuries(), p.isCaptain());
+        }
+
+        @Override
+        public seedu.address.model.team.Team getTeam() {
+            return null;
+        }
     }
 
     @Test
