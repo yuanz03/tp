@@ -62,7 +62,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_missingPlayerDetails_failure() {
-        String expectedMessage = Messages.MESSAGE_NOT_EDITED + "\n" + EditCommand.MESSAGE_USAGE;;
+        String expectedMessage = Messages.MESSAGE_NOT_EDITED + "\n" + EditCommand.MESSAGE_USAGE;
         assertParseFailure(parser, PLAYER_DESC_AMY,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
     }
