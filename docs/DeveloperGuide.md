@@ -880,7 +880,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to delete a position with specific details.
 
-2.  PlayBook deletes a position with given details.
+2. Check that position is not assigned to any players.
+
+3.  PlayBook deletes a position with given details.
 
 **Extensions**
 
@@ -890,9 +892,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* 2a. Position does not exist.
+  2a. Position is assigned to existing players.
 
-    * 2a1. PlayBook shows an error message.
+    * 2a1. PlayBook shows an error message
+
+      Use case ends. 
+
+* 3a. Position does not exist.
+
+    * 3a1. PlayBook shows an error message.
 
       Use case ends.
 
