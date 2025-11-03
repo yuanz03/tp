@@ -974,7 +974,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1c. Another player is already the captain.
 
     * 1c1. PlayBook unassigns previous captain.
-    * 1c2. PlayBook assigns the player as new captain.
+    * 1c2. PlayBook assigns the input player as new captain.
 
       Use case ends.
 
@@ -1001,11 +1001,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC19 - Filter players by captain status**
+**Use case: UC19 - List players with captain status**
 
 **MSS**
 
-1.  User requests to filter players who are captains
+1.  User requests to list players who are captains
 2.  PlayBook shows the list of players marked as captains
 
     Use case ends.
@@ -1015,23 +1015,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. No players are marked as captains.
 
     * 1a1. PlayBook shows an empty list message.
-
-      Use case ends.
-
-**Use case: UC19 - Save a player as captain**
-
-**MSS**
-
-1.  User requests to save a player as captain under player's details.
-2.  PlayBook updates if player is captain under player's detail.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. The given player is invalid.
-
-    * 1a1. PlayBook shows an error message.
 
       Use case ends.
 
