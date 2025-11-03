@@ -1000,6 +1000,14 @@ _Details coming soon in v2.0 ..._
      - Keep field values concise when entering data (use abbreviations where appropriate)
      - For addresses, consider using standardized short forms (e.g., "Blk 123 #01-456" instead of "Block 123 Unit 01-456 Street Name")
    - **Future improvement**: implement expandable fields, tooltips on hover showing full text, or a detailed view panel that displays complete information for selected players without truncation
+6. **Validation errors are reported in a fixed order**, regardless of the order in which you supply the prefixes in your command.
+   - **Problem**: PlayBook validates command parameters in a predetermined internal order, not in the order you typed them. This can be confusing when you receive an error message about a field that appears later in your command, while an earlier field also has issues. For example:
+     - If you type `add pl/John Doe p/123 tm/NonExistentTeam e/invalid a/123 Street` with both an invalid email and a non-existent team, you'll get the invalid email error first, even though the team error might seem more relevant to you
+   - **Remedy**: when you receive a validation error:
+     - Fix the reported error first, even if it wasn't the field you were most concerned about
+     - Re-run the command to see if there are additional validation errors
+     - Refer to the [Field Requirements](#field-requirements) section to validate your input before entering the command
+   - **Future improvement**: validate all fields simultaneously and report all errors at once, or report errors in the order the user supplied the prefixes for more intuitive debugging
 
 --------------------------------------------------------------------------------------------------------------------
 
