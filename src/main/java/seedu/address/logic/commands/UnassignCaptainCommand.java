@@ -29,6 +29,8 @@ public class UnassignCaptainCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_PLAYER + "Sergio Ramos";
 
     public static final String MESSAGE_SUCCESS = "%1$s is no longer team captain.";
+    public static final String MESSAGE_NOT_IN_TEAM = "%1$s is not assigned to any team.";
+    public static final String MESSAGE_NOT_CAPTAIN = "%1$s is already not a team captain.";
 
     private final Name targetName;
 
@@ -53,6 +55,14 @@ public class UnassignCaptainCommand extends Command {
             targetPerson = model.getPersonByName(targetName);
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetName));
+        }
+
+        if (targetPerson.getTeam() == null) {
+            throw new CommandException(String.format(MESSAGE_NOT_IN_TEAM, targetPerson.getName()));
+        }
+
+        if (!targetPerson.isCaptain()) {
+            throw new CommandException(String.format(MESSAGE_NOT_CAPTAIN, targetPerson.getName()));
         }
 
         model.unassignCaptain(targetPerson);

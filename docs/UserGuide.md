@@ -468,11 +468,6 @@ Format: `assignposition pl/PLAYER_NAME ps/POSITION_NAME`
 **Warning:** You must create the position first using `addposition` before assigning it to players. If the position doesn't exist, you'll get an error message.
 </box>
 
-<box type="tip" seamless>
-
-**Tip:** Players can be assigned multiple positions. Use this feature to track versatile players who can play in different roles.
-</box>
-
 **Examples:**
 1. `assignposition pl/John Doe ps/LW` - Assigns `LW` position to John Doe
 2. `assignposition pl/Musiala ps/ST` - Assigns `ST` position to Musiala
