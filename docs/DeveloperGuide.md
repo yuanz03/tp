@@ -427,27 +427,16 @@ Example filter command success message after enhancement: "Found 3 player(s) mat
 
 This will ensure that users are clear on what filtering criteria they used to result in the current players being displayed.
 
-### 10. Enhanced Injury Assignment Operation to Support Bulk Assignments
+### 10. Enhanced Injury Operations with Bulk Support
 
-**Current Limitation**: Users can assign only one injury to a player at a time using the `assigninjury` command, making it time-consuming to manage multiple injury statuses for players.
+**Current Limitation**: Injury operations currently handle only one player-injury pair at a time, making it inefficient to manage multiple injuries or update multiple players simultaneously.
 
-**Planned Enhancement**: Implement bulk injury assignment functionality that allows users to:
-- Assign the same injury to multiple players simultaneously (e.g., `assigninjury pl/John Doe pl/Messi pl/Musiala pl/Kane i/ACL`)
-- Assign multiple injuries to the same player in a single command (e.g., `assigninjury pl/John Doe i/ACL i/MCL i/Ankle sprain`)
-- Validate all player names and injury names before executing any assignment operations to ensure data consistency
-- Support mixed operations where some injury assignments succeed while others fail
-- Display a summary of all successful assignments and any that failed with specific reasons
-
-### 11. Enhanced Injury Unassignment Operation to Support Bulk Unassignments
-
-**Current Limitation**: Users can unassign only one injury from a player at a time using the `unassigninjury` command, making it time-consuming to manage multiple injury statuses for players.
-
-**Planned Enhancement**: Implement bulk injury unassignment functionality that allows users to:
-- Unassign the same injury from multiple players simultaneously (e.g., `unassigninjury pl/John Doe pl/Messi pl/Musiala pl/Kane i/ACL`)
-- Unassign multiple injuries from the same player in a single command (e.g., `unassigninjury pl/John Doe i/ACL i/MCL i/Ankle sprain`)
-- Validate all player names and injury names before executing any unassignment operations to ensure data consistency
-- Support mixed operations where some injury unassignments succeed while others fail
-- Display a summary of all successful unassignments and any that failed with specific reasons
+**Planned Enhancement**: Implement bulk-handling capabilities for injury operations to streamline team management, allowing users to:
+- Apply the same injury to multiple players simultaneously (e.g., `assigninjury pl/John Doe pl/Messi pl/Musiala pl/Kane i/ACL`)
+- Apply multiple injuries to the same player in a single command (e.g., `assigninjury pl/John Doe i/ACL i/MCL i/Ankle sprain`)
+- Validate all player names and injury names before executing any operations to ensure data consistency
+- Support mixed outcomes where some injury operations succeed while others fail
+- Display a summary of all successful updates and any that failed with specific reasons
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -345,7 +345,7 @@ public class ModelManagerTest {
     public void deleteInjury_lastInjuryInList_addsDefaultInjury() {
         modelManager.addPerson(ALICE);
 
-        // Remove all injuries in injury list (default ALICE already has ACL)
+        // Remove ALICE's initial ACL injury (from TypicalPersons)
         modelManager.deleteInjury(ALICE, ACL);
 
         Person personAfterDelete = modelManager.getPersonByName(ALICE.getName());
