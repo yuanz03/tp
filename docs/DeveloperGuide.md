@@ -1126,6 +1126,24 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
+### Adding a team
+
+1. Adding a team with valid details
+
+    1. Prerequisites: No specific prerequisites needed.
+
+    1. Test case: `addteam tm/U16`<br>
+       Expected: A new team `U16` is added to the PlayBook.
+
+### Adding a position
+
+1. Adding a position with valid details
+
+    1. Prerequisites: No specific prerequisites needed.
+
+    1. Test case: `addposition ps/LW`<br>
+       Expected: A new position `LW` is added to the PlayBook.
+
 ### Adding a player
 
 1. Adding a player with valid details
@@ -1135,57 +1153,132 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16 t/friend`<br>
        Expected: A new player `John Doe` is added to the player list. Details of the added player are shown in the status message.
    
-   1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/NonExistentTeam`<br>
-      Expected: No player is added. Error details shown in the status message indicating the team does not exist.
-
-   1. Other incorrect add commands to try: `add`, `add pl/John Doe`, `...` <br>
-      Expected: Similar to previous.
+    1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/NonExistentTeam t/friend`<br>
+       Expected: No player is added. Error details shown in the status message indicating the team does not exist.
 
 2. Adding a player with duplicate player name
 
     1. Prerequisites: At least one player must already exist in PlayBook.
 
-    1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16 t/friend`(where `John Doe` already exists in the player list)<br>
+    1. Test case: `add pl/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tm/U16 t/friend` (where `John Doe` already exists in the player list)<br>
        Expected: No player is added. Error details shown in the status message indicating the duplicate player.
 
-### Deleting a player
+### Editing a player
 
-1. Deleting a player while all players are being shown
+1. Editing a player while all players are being shown
 
-   1. Prerequisites: List all players using the `list` command. Multiple players in the list.
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
 
-   1. Test case: `delete pl/Bernice Yu`<br>
-      Expected: Bernice Yu is deleted from the list. Details of the deleted player are shown in the status message.
+    1. Test case: `edit pl/John Doe p/98767899`<br>
+       Expected: `John Doe`'s phone number is updated to `98767899`. Details of the edited player are shown in the status message.
 
-   1. Test case: `delete pl/Invalid_Name`<br>
-      Expected: No player is deleted. Error details shown in the status message.
+    1. Test case: `edit pl/John Doe n/John Doe`<br>
+       Expected: No player is edited. Error details shown in the status message indicating that no changes were made to any player fields.
+   
+    1. Test case: `edit pl/John Doe n/Alex Yeoh` (where `Alex Yeoh` already exists in the player list)<br>
+       Expected: No player is edited. Error details shown in the status message indicating that a duplicate player already exists in the PlayBook.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` <br>
-      Expected: Similar to previous.
+### Assigning a player to a team 
+
+1. Assigning a player to a team while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `assignteam pl/John Doe tm/U16`<br>
+       Expected: `John Doe` is assigned to the `U16` team.  
+
+    1. Test case: `assignteam pl/John Doe tm/U16` (where `John Doe` is a captain of his previous team)<br>
+       Expected: `John Doe` is assigned to the `U16` team. Additional status message indicating that `John Doe` has been removed from the captaincy of his previous team.
+
+### Assigning a position to a player
+
+1. Assigning a position while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `assignposition pl/John Doe ps/LW`<br>
+       Expected: `John Doe` is assigned the `LW` position.
+
+    1. Test case: `assignposition pl/John Doe ps/NonExistentPosition`<br>
+       Expected: No position is assigned. Error details shown in the status message indicating the position does not exist.
+
+    1. Test case: `assignposition pl/John Doe ps/LW` (where `John Doe` is already assigned the `LW` position)<br>
+       Expected: No position is assigned. Error details shown in the status message indicating `John Doe` is already assigned the `LW` position.
 
 ### Assigning an injury status to a player
 
 1. Assigning an injury status while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. Multiple players in the list.
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
 
-    1. Test case: `assigninjury pl/Alex Yeoh i/ACL`<br>
-       Expected: Alex Yeoh's injury status is updated to include `ACL`.
+    1. Test case: `assigninjury pl/John Doe i/ACL`<br>
+       Expected: `John Doe`'s injury status is updated to include `ACL`.
 
-    1. Test case: `assigninjury pl/Invalid_Name i/ACL`<br>
-       Expected: No injury is assigned. Error details shown in the status message indicating invalid player name.
-
-   1. Test case: `assigninjury pl/Alex Yeoh i/Invalid_Injury`<br>
-      Expected: No injury is assigned. Error details shown in the status message indicating invalid injury name.
-
-   1. Test case: `assigninjury pl/Alex Yeoh i/FIT`<br>
+   1. Test case: `assigninjury pl/John Doe i/FIT`<br>
       Expected: No injury is assigned. Error details shown in the status message indicating `FIT` cannot be assigned as an injury status.
 
-   1. Test case: `assigninjury pl/Alex Yeoh i/ACL` (after already assigning ACL)<br>
-      Expected: No injury is assigned. Error details shown in the status message indicating injury status `ACL` has already been assigned to the player.
+   1. Test case: `assigninjury pl/John Doe i/ACL` (where `John Doe` is already assigned the `ACL` injury status)<br>
+      Expected: No injury is assigned. Error details shown in the status message indicating `John Doe` is already assigned the `ACL` injury.
 
-    1. Other incorrect delete commands to try: `assigninjury`, `assigninjury pl/Alex Yeoh`, `assigninjury i/ACL`, `...`<br>
-       Expected: Similar to previous.
+### Assigning a captaincy to a player
+
+1. Assigning a captaincy while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `assigncaptain pl/John Doe`<br>
+       Expected: `John Doe` is assigned as the captain of his team. If a captain already exists in the team, an additional status message indicates the current captain will be automatically stripped of their captaincy.
+
+    1. Test case: `assigncaptain pl/John Doe` (where `John Doe` is already assigned as captain of his team)<br>
+       Expected: No captaincy is assigned. Error details shown in the status message indicating `John Doe` is already assigned as captain of his team.
+
+### Unassigning an injury status to a player
+
+1. Unassigning an injury status while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `unassigninjury pl/John Doe i/ACL`<br>
+       Expected: `ACL` injury is removed from `John Doe`'s injury status.
+
+    1. Test case: `unassigninjury pl/John Doe i/ACL` (where `John Doe` is not injured, i.e., has the `FIT` status) <br>
+       Expected: No injury is unassigned. Error details shown in the status message indicating `John Doe` is already assigned the default `FIT` status.
+
+    1. Test case: `unassigninjury pl/John Doe i/NonExistentInjury`<br>
+       Expected: No injury is unassigned. Error details shown in the status message indicating `John Doe` has no record of this injury.
+
+### Unassigning a captaincy from a player
+
+1. Unassigning a captaincy while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `unassigncaptain pl/John Doe`<br>
+       Expected: `John Doe` is removed as the captain of his team. 
+
+    1. Test case: `unassigncaptain pl/John Doe` (where `John Doe` is not the captain of his team)<br>
+       Expected: No captaincy is unassigned. Error details shown in the status message indicating `John Doe` is not the captain of his team.
+
+### Deleting a player
+
+1. Deleting a player while all players are being shown
+
+    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+
+    1. Test case: `delete pl/John Doe`<br>
+       Expected: `John Doe` is deleted from the list. Details of the deleted player are shown in the status message.
+
+### Deleting a position or team
+
+1. Deleting a position or team
+
+    1. Prerequisites: For each deletion, at least one corresponding team or position must already exist in PlayBook.
+   
+    1. Test case: `delete tm/U16`<br>
+       Expected: The `U16` team is deleted from the PlayBook, provided it has no players assigned to it.
+
+    1. Test case: `delete ps/LW`<br>
+       Expected: The `LW` position is deleted from the PlayBook, provided it has no players assigned to it.
 
 ### Saving data
 
