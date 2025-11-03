@@ -978,6 +978,18 @@ _Details coming soon in v2.0 ..._
 3. **Due to PlayBook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
    - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
    - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
+4. **Deleting a team requires removing all assigned players first**, which can be tedious when managing large teams with many players.
+   - **Problem**: PlayBook enforces data integrity by preventing team deletion when players are still assigned to it. For teams with 15-20+ players, you must manually unassign or delete each player individually before you can delete the team itself. This multi-step process can be time-consuming and repetitive.
+   - **Remedy**: before deleting a team, use `filter tm/TEAM_NAME` to view all players in that team, then either:
+     - Delete each player with `delete pl/PLAYER_NAME`, or
+     - Reassign players to another team with `assignteam pl/PLAYER_NAME tm/NEW_TEAM`
+   - **Future improvement**: a cascade delete option or bulk unassign feature would streamline this workflow
+5. **No bulk import functionality for adding multiple players at once**, making initial setup time-consuming for coaches with large rosters.
+   - **Problem**: when starting with PlayBook or registering a new team, coaches must add each player individually using the `add` command. For a typical youth football team of 20-30 players, this means typing 20-30 separate commands with full contact details, which can take 15-30 minutes of repetitive data entry.
+   - **Remedy**: currently, the only option is to:
+     - Manually enter each player using `add pl/PLAYER_NAME p/PHONE e/EMAIL a/ADDRESS tm/TEAM`, or
+     - Carefully edit the `addressbook.json` data file directly (advanced users only)
+   - **Future improvement**: a CSV import feature (e.g., `import csv/filepath.csv`) would allow coaches to prepare player data in spreadsheet software and bulk import entire rosters in seconds
 
 --------------------------------------------------------------------------------------------------------------------
 
