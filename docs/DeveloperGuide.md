@@ -325,7 +325,7 @@ Team size: 5
 
 Given below are planned enhancements to address current limitations and improve user experience in future versions of PlayBook.
 
-### 1. Enhanced Name Validation with Whitespace Normalization and Case-Insensitive Duplicate Detection
+### 1. Enhanced Name Validation with Whitespace-normalized Duplicate Detection
 
 **Current Limitation**: The system treats names with different spacing as separate entities. This means that:
 - e.g., `Alex Yeoh`, `AlexYeoh`, and `Alex  Yeoh` (double-spacing) are all considered different players
@@ -333,10 +333,9 @@ Given below are planned enhancements to address current limitations and improve 
 **Planned Enhancement**: Implement a normalized name comparison system that:
 - Trims leading and trailing whitespace
 - Collapses multiple consecutive spaces into a single space
-- Performs case-insensitive comparison
-- Prevents duplicate entries that differ only in spacing or capitalization
+- Prevents duplicate entries that differ only in spacing 
 
-This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh` (double-spacing), and `ALEX YEOH` are all recognized as the same player, preventing unintended duplicates caused by spacing and casing variations.
+This will ensure `Alex Yeoh`, `alex yeoh`, `Alex  Yeoh` (double-spacing), and `ALEX YEOH` are all recognized as the same player.
 
 ### 2. Case-Only Name Edit Support
 
@@ -1133,7 +1132,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: No specific prerequisites needed.
 
     1. Test case: `addteam tm/U16`<br>
-       Expected: A new team `U16` is added to the PlayBook.
+       Expected: A new team `U16` is added to PlayBook.
 
 ### Adding a position
 
@@ -1142,7 +1141,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: No specific prerequisites needed.
 
     1. Test case: `addposition ps/LW`<br>
-       Expected: A new position `LW` is added to the PlayBook.
+       Expected: A new position `LW` is added to PlayBook.
 
 ### Adding a player
 
@@ -1167,7 +1166,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing a player while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `edit pl/John Doe p/98767899`<br>
        Expected: `John Doe`'s phone number is updated to `98767899`. Details of the edited player are shown in the status message.
@@ -1176,13 +1175,13 @@ testers are expected to do more *exploratory* testing.
        Expected: No player is edited. Error details shown in the status message indicating that no changes were made to any player fields.
    
     1. Test case: `edit pl/John Doe n/Alex Yeoh` (where `Alex Yeoh` already exists in the player list)<br>
-       Expected: No player is edited. Error details shown in the status message indicating that a duplicate player already exists in the PlayBook.
+       Expected: No player is edited. Error details shown in the status message indicating that a duplicate player already exists in PlayBook.
 
 ### Assigning a player to a team 
 
 1. Assigning a player to a team while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `assignteam pl/John Doe tm/U16`<br>
        Expected: `John Doe` is assigned to the `U16` team.  
@@ -1194,7 +1193,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Assigning a position while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `assignposition pl/John Doe ps/LW`<br>
        Expected: `John Doe` is assigned the `LW` position.
@@ -1209,7 +1208,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Assigning an injury status while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `assigninjury pl/John Doe i/ACL`<br>
        Expected: `John Doe`'s injury status is updated to include `ACL`.
@@ -1224,7 +1223,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Assigning a captaincy while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `assigncaptain pl/John Doe`<br>
        Expected: `John Doe` is assigned as the captain of his team. If a captain already exists in the team, an additional status message indicates the current captain will be automatically stripped of their captaincy.
@@ -1236,7 +1235,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Unassigning an injury status while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `unassigninjury pl/John Doe i/ACL`<br>
        Expected: `ACL` injury is removed from `John Doe`'s injury status.
@@ -1251,7 +1250,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Unassigning a captaincy while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `unassigncaptain pl/John Doe`<br>
        Expected: `John Doe` is removed as the captain of his team. 
@@ -1263,7 +1262,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a player while all players are being shown
 
-    1. Prerequisites: List all players using the `list` command. At least one player must already exist in PlayBook.
+    1. Prerequisites: At least one player must already exist in PlayBook.
 
     1. Test case: `delete pl/John Doe`<br>
        Expected: `John Doe` is deleted from the list. Details of the deleted player are shown in the status message.
@@ -1275,10 +1274,10 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: For each deletion, at least one corresponding team or position must already exist in PlayBook.
    
     1. Test case: `delete tm/U16`<br>
-       Expected: The `U16` team is deleted from the PlayBook, provided it has no players assigned to it.
+       Expected: The `U16` team is deleted from PlayBook, provided it has no players assigned to it.
 
     1. Test case: `delete ps/LW`<br>
-       Expected: The `LW` position is deleted from the PlayBook, provided it has no players assigned to it.
+       Expected: The `LW` position is deleted from PlayBook, provided it has no players assigned to it.
 
 ### Saving data
 
