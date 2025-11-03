@@ -1323,6 +1323,22 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `listinjured`<br>
        Expected: The injured player(s) added to the PlayBook are displayed in the Players View panel.
 
+### Listing captains
+
+1. Listing captains while no captains exist
+
+    1. Prerequisites: No captains exist in PlayBook.
+
+    1. Test case: `listcaptain`<br>
+       Expected: No captains are listed. Error details shown in the status message indicating there are currently no captains in the PlayBook.
+
+2. Listing captains while captains exist in Playbook
+
+    1. Prerequisites: At least one captain exists in PlayBook.
+
+    1. Test case: `listcaptain`<br>
+       Expected: The captain(s) added to the PlayBook are displayed in the Players View panel.
+
 ### Finding players
 
 1. Finding players with partial name matches
