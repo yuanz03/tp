@@ -854,9 +854,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to create a position with specific details.
+1. User requests to create a position with specific details.
 
-2.  PlayBook adds a position with given details.
+2. PlayBook adds a position with given details.
 
     Use case ends.
 
@@ -908,8 +908,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to assign a position to a player with specific details.
-2.  PlayBook assigns a position to a player with given details.
+1. User requests to assign a position to a player with specific details.
+2. PlayBook assigns a position to a player with given details.
 
     Use case ends.
 
@@ -943,8 +943,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to save a player's email under player's details.
-2.  PlayBook updates email under player's detail.
+1. User requests to save a player's email under player's details.
+2. PlayBook updates email under player's detail.
 
     Use case ends.
 
@@ -960,8 +960,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to assign the captain role to a player.
-2.  PlayBook updates the player's details to reflect they are now their team's captain.
+1. User requests to assign the captain role to a player.
+2. PlayBook updates the player's details to reflect they are now their team's captain.
 
     Use case ends.
 
@@ -990,8 +990,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to remove the captain role from a player.
-2.  PlayBook updates the player's details to reflect they are no longer captain.
+1. User requests to remove the captain role from a player.
+2. PlayBook updates the player's details to reflect they are no longer captain.
 
     Use case ends.
 
@@ -1030,8 +1030,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to save a player as captain under player's details.
-2.  PlayBook updates if player is captain under player's detail.
+1. User requests to save a player as captain under player's details.
+2. PlayBook updates if player is captain under player's detail.
 
     Use case ends.
 
