@@ -989,7 +989,7 @@ _Details coming soon in v2.0 ..._
    - **Future improvement**: a CSV import feature (e.g., `import csv/filepath.csv`) would allow coaches to prepare player data in spreadsheet software and bulk import entire rosters in seconds
 5. **Long text in fields gets truncated in the display**, making it difficult to view complete information at a glance.
    - **Problem**: when field values exceed the available display space in the GUI, PlayBook truncates the text at the end. This affects readability and usability in several ways:
-     - Long player names may be cut off (e.g., "Alexander Christopher Wil..." instead of "Alexander Christopher Williams")
+     - Long player names may be cut off
      - Lengthy addresses are truncated, hiding important details like unit numbers or postal codes
      - Email addresses can be cut off, making it unclear what the full email is
      - Multiple tags or long tag names may not be fully visible
