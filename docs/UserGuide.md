@@ -706,7 +706,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 **Requirements:**
 * Keywords will only match full words e.g. `John` will not match `Johnny`.
 * Players matching at least one keyword will be returned (i.e. `OR` search).
-  * e.g. `John Bo` will return `John Gruber`, `Bo Yang`.
+  * e.g., `John Bo` will return `John Gruber`, `Bo Yang`.
   * e.g., `find john` will return `John Doe`. (case-insensitive)
 
 **Warnings:**
