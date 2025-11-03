@@ -975,9 +975,30 @@ _Details coming soon in v2.0 ..._
    - **Remedy**: delete the `preferences.json` file created by the application before running the application again
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. 
    - **Remedy**: manually restore the minimized Help Window
-3. **Due to PlayBook's case-insensitive name matching system**, names like `john doe` and `John Doe` are treated as the same player.
-   - **Problem**: editing a name only to change its capitalisation, such as `edit pl/john doe n/John Doe`, will fail because the system does not consider capitalisation-only modifications to be meaningful   
-   - **Remedy**: temporarily rename the player to a different name with `edit pl/john doe n/Temp Name`, then re-edit it back to the correct capitalisation using `edit pl/Temp Name n/John Doe`
+3. **Deleting a team requires removing all assigned players first**, which can be tedious when managing large teams with many players.
+   - **Problem**: PlayBook enforces data integrity by preventing team deletion when players are still assigned to it. For teams with 15-20+ players, you must manually unassign or delete each player individually before you can delete the team itself. This multi-step process can be time-consuming and repetitive.
+   - **Remedy**: before deleting a team, use `filter tm/TEAM_NAME` to view all players in that team, then either:
+     - Delete each player with `delete pl/PLAYER_NAME`, or
+     - Reassign players to another team with `assignteam pl/PLAYER_NAME tm/NEW_TEAM`
+   - **Future improvement**: a cascade delete option or bulk unassign feature would streamline this workflow
+4. **No bulk import functionality for adding multiple players at once**, making initial setup time-consuming for coaches with large rosters.
+   - **Problem**: when starting with PlayBook or registering a new team, coaches must add each player individually using the `add` command. For a typical youth football team of 20-30 players, this means typing 20-30 separate commands with full contact details, which can take 15-30 minutes of repetitive data entry.
+   - **Remedy**: currently, the only option is to:
+     - Manually enter each player using `add pl/PLAYER_NAME p/PHONE e/EMAIL a/ADDRESS tm/TEAM`, or
+     - Carefully edit the `addressbook.json` data file directly (advanced users only)
+   - **Future improvement**: a CSV import feature (e.g., `import csv/filepath.csv`) would allow coaches to prepare player data in spreadsheet software and bulk import entire rosters in seconds
+5. **Long text in fields gets truncated in the display**, making it difficult to view complete information at a glance.
+   - **Problem**: when field values exceed the available display space in the GUI, PlayBook truncates the text at the end. This affects readability and usability in several ways:
+     - Long player names may be cut off
+     - Lengthy addresses are truncated, hiding important details like unit numbers or postal codes
+     - Email addresses can be cut off, making it unclear what the full email is
+     - Multiple tags or long tag names may not be fully visible
+     - Injury descriptions with detailed information get shortened
+   - **Remedy**: to view the complete information:
+     - Widen the application window to allow more space for text display
+     - Keep field values concise when entering data (use abbreviations where appropriate)
+     - For addresses, consider using standardized short forms (e.g., "Blk 123 #01-456" instead of "Block 123 Unit 01-456 Street Name")
+   - **Future improvement**: implement expandable fields, tooltips on hover showing full text, or a detailed view panel that displays complete information for selected players without truncation
 
 --------------------------------------------------------------------------------------------------------------------
 
