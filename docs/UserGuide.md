@@ -1008,6 +1008,16 @@ _Details coming soon in v2.0 ..._
      - Re-run the command to see if there are additional validation errors
      - Refer to the [Field Requirements](#field-requirements) section to validate your input before entering the command
    - **Future improvement**: validate all fields simultaneously and report all errors at once, or report errors in the order the user supplied the prefixes for more intuitive debugging
+7. **Players can only be assigned to one position and one team at a time**, which doesn't reflect the reality of versatile players who can play multiple positions or participate in multiple teams.
+    - **Problem**: PlayBook currently enforces a one-position-per-player and one-team-per-player model. This creates several limitations:
+        - When you assign a new position using `assignposition pl/PLAYER_NAME ps/NEW_POSITION`, it replaces the existing position entirely
+        - Using `assignteam pl/PLAYER_NAME tm/NEW_TEAM` overwrites the previous team assignment
+    - **Remedy**:
+        - Use tags to record additional positions (e.g., `t/CanPlayST` for a player whose primary position is LW)
+        - Use tags to indicate multi-team participation (e.g., `t/AlsoInU18` for a U16 player)
+        - Choose the most frequently played position or primary team as the official assignment
+        - Update the position or team assignment before specific matches based on the lineup needs
+    - **Future improvement**: allow multiple position assignments per player (e.g., `assignposition pl/John Doe ps/LW ps/ST ps/CAM`) and multiple team memberships, with the ability to designate primary vs. secondary positions/teams
 
 --------------------------------------------------------------------------------------------------------------------
 
