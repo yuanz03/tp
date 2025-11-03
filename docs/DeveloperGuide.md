@@ -892,7 +892,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-  2a. Position is assigned to existing players.
+* 2a. Position is assigned to existing players.
 
     * 2a1. PlayBook shows an error message
 
