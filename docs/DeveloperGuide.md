@@ -418,10 +418,10 @@ Example error message after enhancement (for same example): `Invalid prefix: 'tm
 
 ### 9. Enhanced Filter Command Success Message
 
-**Current Limitation**: After the filter command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
+**Current Limitation**: After the `filter` command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
 
 **Planned Enhancement**: Implement customised success messages for the filter command:
-- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters.
+- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters
 
 Example filter command success message after enhancement: "Found 3 player(s) matching the criteria team: "Chelsea", injury: "Leg Broken" and position: "RW"."
 
