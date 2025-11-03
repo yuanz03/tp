@@ -878,11 +878,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to delete a position with specific details.
+1. User requests to delete a position with specific details.
 
 2. Check that position is not assigned to any players.
 
-3.  PlayBook deletes a position with given details.
+3. PlayBook deletes a position with given details.
 
 **Extensions**
 
