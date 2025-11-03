@@ -544,9 +544,13 @@ Format: `assigncaptain pl/PLAYER_NAME`
 
 <box type="info" seamless>
 
-**Expected success message** (Example 1): "John Doe is now captain of U16"
+**Expected success message:**
 
-**Expected behaviour:** A captain badge will appear on the player's card.
+* **For no existing captain in team** (Example 1): "John Doe is now captain of U16"
+
+* **For an existing captain in team** (Example 2): "Sergio Ramos is now captain of U16. John Doe is no longer captain."
+
+**Expected behaviour:** A captain badge will appear on the player's card. 
 
 ![captainUi](images/captainUi.png)
 
@@ -648,7 +652,6 @@ Format: `unassigncaptain pl/PLAYER_NAME`
 
 **Examples:**
 1. `unassigncaptain pl/John Doe` - Removes captain status from John Doe
-2. `unassigncaptain pl/Sergio Ramos` - Removes captain status from Sergio Ramos
 
 <box type="info" seamless>
 
