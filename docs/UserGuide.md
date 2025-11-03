@@ -987,14 +987,13 @@ _Details coming soon in v2.0 ..._
      - Manually enter each player using `add pl/PLAYER_NAME p/PHONE e/EMAIL a/ADDRESS tm/TEAM`, or
      - Carefully edit the `addressbook.json` data file directly (advanced users only)
    - **Future improvement**: a CSV import feature (e.g., `import csv/filepath.csv`) would allow coaches to prepare player data in spreadsheet software and bulk import entire rosters in seconds
-5. **Long text in fields gets truncated with "..." in the display**, making it difficult to view complete information at a glance.
-   - **Problem**: when field values exceed the available display space in the GUI, PlayBook truncates the text and shows "..." at the end. This affects readability and usability in several ways:
+5. **Long text in fields gets truncated in the display**, making it difficult to view complete information at a glance.
+   - **Problem**: when field values exceed the available display space in the GUI, PlayBook truncates the text at the end. This affects readability and usability in several ways:
      - Long player names may be cut off (e.g., "Alexander Christopher Wil..." instead of "Alexander Christopher Williams")
      - Lengthy addresses are truncated, hiding important details like unit numbers or postal codes
      - Email addresses can be cut off, making it unclear what the full email is
      - Multiple tags or long tag names may not be fully visible
      - Injury descriptions with detailed information get shortened
-     - This is particularly problematic when trying to distinguish between players with similar names or verify contact information
    - **Remedy**: to view the complete information:
      - Widen the application window to allow more space for text display
      - Keep field values concise when entering data (use abbreviations where appropriate)
