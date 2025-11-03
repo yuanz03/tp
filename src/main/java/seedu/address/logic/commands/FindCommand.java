@@ -21,6 +21,7 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all players whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Duplicate keywords are not allowed when using the command.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 

@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Position {
 
     public static final Position DEFAULT_POSITION = new Position("NONE");
-    public static final String MESSAGE_CONSTRAINTS = "Position name can only contain alphanumeric characters.";
+    public static final String MESSAGE_CONSTRAINTS = "Position name can only contain alphanumeric characters";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String name;

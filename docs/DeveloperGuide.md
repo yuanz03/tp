@@ -418,10 +418,10 @@ Example error message after enhancement (for same example): `Invalid prefix: 'tm
 
 ### 9. Enhanced Filter Command Success Message
 
-**Current Limitation**: After the filter command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
+**Current Limitation**: After the `filter` command executes successfully, it will only provide a success message that notifies the user with the number of players matching the provided criteria, without actually stating the filtering criteria used.
 
 **Planned Enhancement**: Implement customised success messages for the filter command:
-- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters.
+- Provide specific success messages indicating the combination of filtering criteria used as well as their respective parameters
 
 Example filter command success message after enhancement: "Found 3 player(s) matching the criteria team: "Chelsea", injury: "Leg Broken" and position: "RW"."
 
@@ -1258,6 +1258,123 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `delete ps/LW`<br>
        Expected: The `LW` position is deleted from PlayBook, provided it has no players assigned to it.
+
+### Listing players
+
+1. Listing players while no players exist
+
+    1. Prerequisites: No players exist in PlayBook
+
+    1. Test case: `list`<br>
+       Expected: No players are listed. Error details shown in the status message indicating there are currently no players in the PlayBook.
+
+2. Listing players while players exist
+
+    1. Prerequisites: At least one player exists in PlayBook
+
+    1. Test case: `list`<br>
+       Expected: The player(s) added to the PlayBook are displayed in the Players View panel.
+
+### Listing teams
+
+1. Listing teams while no teams exist
+
+    1. Prerequisites: No teams exist in PlayBook
+
+    1. Test case: `listteam`<br>
+       Expected: No teams are listed. Error details shown in the status message indicating there are currently no teams in the PlayBook.
+
+2. Listing teams while teams exist
+
+    1. Prerequisites: At least one team exists in PlayBook
+
+    1. Test case: `listteam`<br>
+       Expected: The team(s) added to the PlayBook are displayed in the Teams View panel.
+
+### Listing positions
+
+1. Listing positions while no positions exist
+
+    1. Prerequisites: No positions exist in PlayBook
+
+    1. Test case: `listposition`<br>
+       Expected: No positions are listed. Error details shown in the status message indicating there are currently no positions in the PlayBook.
+
+2. Listing positions while positions exist
+
+    1. Prerequisites: At least one position exists in PlayBook
+
+    1. Test case: `listposition`<br>
+       Expected: The position(s) added to the PlayBook are displayed in the Positions View panel.
+
+### Listing injured players
+
+1. Listing injured players while no injured players exist
+
+    1. Prerequisites: No injured players exist in PlayBook
+
+    1. Test case: `listinjured`<br>
+       Expected: No injured players are listed. Error details shown in the status message indicating there are currently no injured players in the PlayBook.
+
+2. Listing injured players while injured players exist
+
+    1. Prerequisites: At least one injured player exists in PlayBook
+
+    1. Test case: `listinjured`<br>
+       Expected: The injured player(s) added to the PlayBook are displayed in the Players View panel.
+
+### Finding players
+
+1. Finding players with partial name matches
+
+    1. Prerequisites: At least two players exist in PlayBook with names containing common words (full words).
+
+    1. Test case: `find Doe` (where players `John Doe` and `Johnny Doe` exist)<br>
+       Expected: Both `John Doe` and `Johnny Doe` are displayed in the Players View panel.
+
+2. Finding players with case-insensitive search
+
+    1. Prerequisites: At least one player exists in PlayBook.
+
+    1. Test case: `find JOHN` (where player `John Doe` exists)<br>
+       Expected: `John Doe` is displayed in the Players View panel.
+
+3. Finding players with multiple keywords where no single player matches all
+
+    1. Prerequisites: At least two players exist in PlayBook with different names (no overlapping full words).
+
+    1. Test case: `find john smith` (where `John Doe` and `Jane Smith` exist)<br>
+       Expected: Both `John Doe` and `Jane Smith` are displayed in the Players View panel (OR logic).
+
+4. Finding players with keywords where no player matches any
+
+    1. Prerequisites: There exists no player in the PlayBook with the word (full word), `john`, regardless of casing in their name.
+
+    1. Test case: `find john`<br>
+       Expected: No players are listed. Error details shown in the status message indicating there are currently no players with name matching `john` in the PlayBook.
+
+### Filtering players
+
+1. Filtering players by team with no players in that team
+
+    1. Prerequisites: At least one team exists in PlayBook with no players assigned.
+
+    1. Test case: `filter tm/U16`<br>
+       Expected: No players are listed. Error details shown in the status message indicating no players assigned to a team matching `U16`.
+
+2. Filtering players by injury with case variations
+
+    1. Prerequisites: At least one player exists in PlayBook with an injury assigned.
+
+    1. Test case: `filter i/acl` (where player has `ACL` injury)<br>
+       Expected: The player with `ACL` injury is displayed in the Players View panel (case-insensitive matching).
+
+3. Filtering players with multiple criteria where no player matches all
+
+    1. Prerequisites: Multiple players exist with different combinations of team, position, and injury assignments.
+
+    1. Test case: `filter tm/U16 ps/GK i/FIT` (where no player is in `U16`, player the position `GK` and is `FIT`)<br>
+       Expected: No players are listed. Error details shown in the status message indicating no players matching the combination of criteria.
 
 ### Saving data
 
