@@ -1263,14 +1263,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Listing players while no players exist
 
-    1. Prerequisites: No players exist in PlayBook
+    1. Prerequisites: No players exist in PlayBook.
 
     1. Test case: `list`<br>
        Expected: No players are listed. Error details shown in the status message indicating there are currently no players in the PlayBook.
 
 2. Listing players while players exist
 
-    1. Prerequisites: At least one player exists in PlayBook
+    1. Prerequisites: At least one player exists in PlayBook.
 
     1. Test case: `list`<br>
        Expected: The player(s) added to the PlayBook are displayed in the Players View panel.
@@ -1279,14 +1279,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Listing teams while no teams exist
 
-    1. Prerequisites: No teams exist in PlayBook
+    1. Prerequisites: No teams exist in PlayBook.
 
     1. Test case: `listteam`<br>
        Expected: No teams are listed. Error details shown in the status message indicating there are currently no teams in the PlayBook.
 
 2. Listing teams while teams exist
 
-    1. Prerequisites: At least one team exists in PlayBook
+    1. Prerequisites: At least one team exists in PlayBook.
 
     1. Test case: `listteam`<br>
        Expected: The team(s) added to the PlayBook are displayed in the Teams View panel.
@@ -1295,14 +1295,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Listing positions while no positions exist
 
-    1. Prerequisites: No positions exist in PlayBook
+    1. Prerequisites: No positions exist in PlayBook.
 
     1. Test case: `listposition`<br>
        Expected: No positions are listed. Error details shown in the status message indicating there are currently no positions in the PlayBook.
 
 2. Listing positions while positions exist
 
-    1. Prerequisites: At least one position exists in PlayBook
+    1. Prerequisites: At least one position exists in PlayBook.
 
     1. Test case: `listposition`<br>
        Expected: The position(s) added to the PlayBook are displayed in the Positions View panel.
@@ -1311,14 +1311,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Listing injured players while no injured players exist
 
-    1. Prerequisites: No injured players exist in PlayBook
+    1. Prerequisites: No injured players exist in PlayBook.
 
     1. Test case: `listinjured`<br>
        Expected: No injured players are listed. Error details shown in the status message indicating there are currently no injured players in the PlayBook.
 
 2. Listing injured players while injured players exist
 
-    1. Prerequisites: At least one injured player exists in PlayBook
+    1. Prerequisites: At least one injured player exists in PlayBook.
 
     1. Test case: `listinjured`<br>
        Expected: The injured player(s) added to the PlayBook are displayed in the Players View panel.
@@ -1327,7 +1327,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Finding players with partial name matches
 
-    1. Prerequisites: At least two players exist in PlayBook with names containing common words (full words).
+    1. Prerequisites: At least two players exist in PlayBook with names containing common words.
 
     1. Test case: `find Doe` (where players `John Doe` and `Johnny Doe` exist)<br>
        Expected: Both `John Doe` and `Johnny Doe` are displayed in the Players View panel.
